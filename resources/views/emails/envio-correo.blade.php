@@ -1,0 +1,1 @@
+<pre style="font-size: 18px;"><p style="font-family: 'Times New Roman', Times, serif">{{$envio->mensaje}}</p></pre>

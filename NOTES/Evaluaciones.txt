@@ -1,0 +1,21 @@
+Se agregaron entidades EVALUACIONES y DOCUMENTO
+Se editó la migracion REFACCIONES, ya que antes estaba ligada solo a entradas, ahora con el attributo Morphs MODEL podra ligarse a cualquier entidad
+
+== CRUD EVALUACIONES ==
+*Una evaluacion contiene varios documentos que se alojaran en localstorage ('evaluaciones/documentos'),
+puede ser cualquier extension, se debera ingresar ademas el NAME del documento al subir
+*Una evaluacion contiene varias fotos que se alojaran en localstorage ('evaluaciones/fotos') (Ver ejemplo de ENTRADAS)
+*Una evaluacion contiene varias refacciones con los campos requeridos (descripcion, precio, costo, etc [Ver ejemplo en ENTRADAS])
+*La evaluacion puede o no ser aprobada.
+
+== ENTRADAS ==
+* Una entrada puede o no estar ligada a una evaluacion (campo entrada_id en evaluaciones puede ser null);
+* Al momento de registrar una entrada dar la opcion de seleccionar o no una evaluacion (Como el controlador Livewire MdlSelectCliente),
+solo mostrar evaluaciones aprobadas.
+* Si se selecciona evaluacion, copiar REFACCIONES y FOTOS a la ENTRADA generada.
+
+Notas: Tratar de igualar todas las vistas al mismo estilo de las demas pantallas,
+* Tratar de mantener la misma estructura y estilo de programacion.
+
+Saludos Champ!
+

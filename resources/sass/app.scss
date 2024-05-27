@@ -1,0 +1,39 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic');
+@import '~@fortawesome/fontawesome-free/css/all.css';
+// OverlayScrollbars
+@import '~overlayscrollbars/css/OverlayScrollbars.css';
+// iCheck
+@import '~icheck-bootstrap/icheck-bootstrap.css';
+// AdminLTE
+@import '../../vendor/almasaeed2010/adminlte/dist/css/adminlte.css';
+// Bootstrap
+// Already imported by AdminLTE
+//@import '~bootstrap/scss/bootstrap';
+
+@import '~bootstrap-fileinput/scss/fileinput';
+@import '~jquery-confirm/css/jquery-confirm.css';
+@import '~bootstrap4-toggle/css/bootstrap4-toggle.min.css';
+@import '~bootstrap-select/dist/css/bootstrap-select.min.css';
+
+
+// datatables css
+// @import '~datatables.net-dt/css/jquery.dataTables.min.css';
+@import '~datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+@import '~datatables.net-fixedheader-bs4/css/fixedHeader.bootstrap4.min.css';
+@import '~datatables.net-scroller-bs4/css/scroller.bootstrap4.min.css';
+@import '~datatables.net-select-bs4/css/select.bootstrap4.min.css';
+@import '~datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css';
+
+@import '~bootstrap-icons/font/bootstrap-icons';
+
+//@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// // Bootstrap
+// @import '~bootstrap/scss/bootstrap';
+@import 'custom';
+
+

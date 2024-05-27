@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Costo extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'model_id',
+        'model_type',
+        'concepto',
+        'costo',
+        'pagado',
+    ];
+
+    public function getFechaPagoFormatAttribute()
+    {
+        if ($this->pagado) {
+            return Carbon::parse($this->pagado)->format('M/d/y h:i A');
+        }
+        return "N/A";
+    }
+}
