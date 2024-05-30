@@ -17,6 +17,7 @@ class SelectMaterial extends Component
     public $cantidad;
 
     public $material;
+    public $validStock = true;
 
     public $createMode = false;
 
@@ -33,8 +34,9 @@ class SelectMaterial extends Component
         ];
     }
 
-    public function mount()
+    public function mount($validStock = true)
     {
+        $this->validStock = $validStock;
         $this->material = new Material();
     }
 
@@ -75,8 +77,12 @@ class SelectMaterial extends Component
 
     public function setMaterial()
     {
+        $validateString = "required|numeric|gt:0";
+        if ($this->validStock) {
+            $validateString .= "|lte :{$this->selectedMaterial->existencia}";
+        }
         $this->validate([
-            'cantidad' => "required|numeric|min:0|max:{$this->selectedMaterial->existencia}",
+            'cantidad' => $validateString,
         ]);
         $this->emit('setMaterial', $this->selectedMaterial->id, $this->cantidad);
         $this->emit('closeModal', '#mdlCantidadMaterial');

@@ -4,7 +4,6 @@ namespace App\Models;
 
 use App\Models\shared\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Support\Facades\Auth;
 
 class Material extends BaseModel
 {
@@ -17,22 +16,16 @@ class Material extends BaseModel
         'categoria',
         'descripcion',
         'unidad_medida',
-        'costo',
         'precio',
         'existencia',
         'comentarios',
         'active'
     ];
 
-    // public function inventario(){
-    //     return $this->hasMany(Inventario::class);
-    // }
-
-    // public function current_stock()
-    // {
-    //     return $this->hasOne(Inventario::class, 'material_id')->where('sucursal_id', Auth::user()->sucursal_default);
-    // }    
-
+    protected $attributes = [
+        'existencia' => 0,
+    ];
+    
     public function setNumeroParteAttribute($value){
         $this->attributes['numero_parte'] = strtoupper($value);
     }

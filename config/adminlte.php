@@ -356,6 +356,11 @@ return [
                     'url'    => '/materiales',
                 ],
                 [
+                    'text'   => 'Pedidos de Materiales',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/materiales/pedidos',
+                ],
+                [
                     'text'   => 'Bitacora de Materiales',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/materiales/bitacora',
