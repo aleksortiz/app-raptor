@@ -22,6 +22,33 @@
             </div>
 
             <div class="form-row">
+                <div class="form-group col-md-8">
+                    <div class="form-group">
+                        <label for="proveedor.nombre">Correo</label>
+                        <input {{$inputDisabled}} wire:model="proveedor.correo" type="text" class="form-control" />                            
+
+
+                        @error('proveedor.correo')
+                            <span class="error text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <div class="form-group">
+                        <label for="proveedor.nombre">Teléfono</label>
+                        <input {{$inputDisabled}} wire:model="proveedor.telefono" type="text" class="form-control" />                            
+
+
+                        @error('proveedor.telefono')
+                            <span class="error text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="form-row">
                 <div class="form-group col-md-4">
                     <div class="form-group">
                         <label for="proveedor.rfc">RFC</label>

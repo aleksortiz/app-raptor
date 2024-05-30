@@ -10,10 +10,29 @@
             <div class="modal-body">
                 <form>
                     <div class="row">
-                        <div class="form-group col-8">
+                        <div class="form-group col-12">
                             <label>Nombre</label>
                             <input wire:model.lazy="model.nombre" type="text" class="form-control" required />
                             @error('model.nombre')
+                                <span class="error text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-8">
+                            <label>Correo</label>
+                            <input wire:model.lazy="model.correo" type="text" class="form-control" required />
+                            @error('model.correo')
+                                <span class="error text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-4">
+                            <label>Teléfono</label>
+                            <input maxlength="20" wire:model.lazy="model.telefono" type="text" class="form-control" required />
+                            @error('model.telefono')
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
                         </div>

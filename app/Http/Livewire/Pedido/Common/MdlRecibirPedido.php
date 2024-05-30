@@ -19,6 +19,7 @@ class MdlRecibirPedido extends Component
 
     protected $rules = [
         'productQty.*.recibir' => 'numeric',
+        'productQty.*.precio' => 'numeric',
     ];
 
     public function render()
@@ -33,6 +34,7 @@ class MdlRecibirPedido extends Component
                 $item->id => [
                     'recibir' => 0,
                     'cantidad' => $item->cantidad,
+                    'precio' => $item->precio,
                     'pendiente_recibir' => $item->pendiente_recibir,
                 ]
             ];
@@ -78,9 +80,10 @@ class MdlRecibirPedido extends Component
     public function recibir(){
         foreach ($this->productQty as $id => $item) {
             $recibir = $item['recibir'];
+            $precio = $item['precio'];
             if ($recibir > 0) {
                 $concepto = PedidoConcepto::findOrFail($id);
-                $concepto->recibirProducto($recibir);
+                $concepto->recibirProducto($recibir, $precio);
             }
         }
         $this->emit('ok', 'Se ha recibido productos');

@@ -14,7 +14,7 @@
                     <th>Código</th>
                     <th>Descripción</th>
                     <th>Cantidad</th>
-                    <th>Precio</th>
+                    <th width="150px">Precio</th>
                     <th>Importe</th>
                     <th>Cant. Solicitada</th>
                     <th>Cant. Recibida</th>
@@ -27,7 +27,12 @@
                       <td>{{ $item->codigo }}</td>
                       <td>{{ $item->descripcion }}</td>
                       <td>{{ $item->cantidad }}</td>
-                      <td>@money($item->precio)</td>
+                      <td>
+                        <input wire:model='productQty.{{$item->id}}.precio' style="text-align: right;" type="text" class="form-control" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
+                        @error('productQty.'.$item->id.'.precio')
+                          <span class="error text-danger">Valor inválido</span>
+                        @enderror
+                      </td>
                       <td>@money($item->importe)</td>
                       <td>{{ $item->cantidad }}</td>
                       <td>{{ $item->cantidad_recibida }}</td>

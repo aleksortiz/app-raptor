@@ -42,10 +42,14 @@ class PedidoConcepto extends Model
         return $this->cantidad - $this->cantidad_recibida;
     }
 
-    public function recibirProducto($cantidad){
+    public function recibirProducto($cantidad, $precio){
 
         $material = $this->material;
         $material->existencia += $cantidad;
+
+        PedidoConcepto::where('id', $this->id)->update([
+            'precio' => $precio,
+        ]);
 
         if($material->save()){
             

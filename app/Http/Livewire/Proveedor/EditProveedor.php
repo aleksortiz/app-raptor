@@ -19,7 +19,9 @@ class EditProveedor extends Component
         'proveedor.colonia' => 'string|nullable|min:2|max:255',
         'proveedor.codigo_postal' => 'string|nullable|min:4|max:12',
         'proveedor.ciudad' => 'string|nullable|min:2|max:255',
-        'proveedor.estado' => 'string|nullable|min:2|max:255'
+        'proveedor.estado' => 'string|nullable|min:2|max:255',
+        'proveedor.telefono' => 'string|nullable|min:10|max:15',
+        'proveedor.correo' => 'string|nullable|min:5|max:255',
     ];
 
 

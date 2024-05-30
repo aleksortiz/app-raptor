@@ -17,6 +17,6 @@ class ProveedorSeeder extends Seeder
     public function run()
     {
         Proveedor::factory(200)->create();
-        Contacto::factory(500)->create();
+        // Contacto::factory(500)->create();
     }
 }

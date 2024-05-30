@@ -13,6 +13,8 @@ class Proveedor extends CancelableModel
 
   protected $fillable = [
     'nombre',
+    'telefono',
+    'correo',
     'rfc',
     'razon_social',
     'calle',
@@ -61,11 +63,4 @@ class Proveedor extends CancelableModel
     return $dir;
   }
 
-
-
-
-
-  // public function materiales(){
-  //     return $this->belongsToMany(PrecioMaterial::class);
-  // }
 }

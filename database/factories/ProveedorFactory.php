@@ -25,7 +25,9 @@ class ProveedorFactory extends Factory
             'colonia' => $this->faker->sentence(3),
             'codigo_postal' => $this->faker->postcode,
             'ciudad' => $this->faker->city,
-            'estado' => $this->faker->state
+            'estado' => $this->faker->state,
+            'telefono' => $this->faker->phoneNumber,
+            'correo' => $this->faker->email,
         ];
     }
 }

@@ -12,6 +12,8 @@ class CatalogoProveedores extends LivewireBaseCrudController
     
     protected $rules = [
         'model.nombre' => 'string|required|min:3|max:255',
+        'model.telefono' => 'string|nullable|min:10|max:20',
+        'model.correo' => 'string|nullable|min:5|max:255',
         'model.rfc' => 'string|nullable|min:10|max:13',
         'model.razon_social' => 'string|nullable|min:5|max:255',
         'model.calle' => 'string|nullable|min:5|max:255',
