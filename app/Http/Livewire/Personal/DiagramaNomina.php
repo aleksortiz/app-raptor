@@ -24,7 +24,6 @@ class DiagramaNomina extends Component
     public $searchFolioOver = false;
 
     public $porcentajes;
-    public $materiales = [];
 
     public $week;
     public $year;
@@ -77,8 +76,7 @@ class DiagramaNomina extends Component
         return $total;
     }
 
-    public function mdlMaterialesDetalle(){
-        $this->materiales = [];
+    public function getMaterialesProperty(){
 
         $startDate = $this->dates[0];
         $endDate = $this->dates[5];
@@ -105,7 +103,10 @@ class DiagramaNomina extends Component
             $uniqueIds[] = $pago->entrada->id;  // Track processed entrada IDs
         }
     
-        $this->materiales = $allMateriales;
+        return $allMateriales;
+    }
+
+    public function mdlMaterialesDetalle(){
         $this->emit('showModal','#mdlDetalleMaterial');
     }
     
