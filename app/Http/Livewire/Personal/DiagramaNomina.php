@@ -83,9 +83,9 @@ class DiagramaNomina extends Component
         $startDate = $this->dates[0];
         $endDate = $this->dates[5];
         $pagos = PagoPersonal::where('fecha', '>=', $startDate)
-        ->where('fecha', '<=', $endDate)->whereNotNull('entrada_id')->get();
+        ->where('fecha', '<=', $endDate)->get();
         
-        $materiales = [];
+        $allMateriales = [];
         $uniqueIds = [];
         $materialesIds = [];
         foreach($pagos as $pago){
@@ -93,21 +93,22 @@ class DiagramaNomina extends Component
                 continue;
             }
             $materiales = $pago->entrada->materiales()->whereBetween('created_at', [$startDate, $endDate])->get();
+            
             foreach($materiales as $material){
                 if(in_array($material->id, $materialesIds)){
                     continue;
                 }
-                $materiales[] = $material;
-                $materialesIds[] = $material->id;
+                $allMateriales[] = $material;  // Add to the final collection
+                $materialesIds[] = $material->id;  // Track added material IDs
             }
-            $uniqueIds[] = $pago->entrada->id;
+            
+            $uniqueIds[] = $pago->entrada->id;  // Track processed entrada IDs
         }
-
-        // $this->materiales = $materiales;
-        $this->materiales = collect($materiales)->unique('id')->values();
+    
+        $this->materiales = $allMateriales;
         $this->emit('showModal','#mdlDetalleMaterial');
-
     }
+    
 
     public function fecha_creacion($date){
         $date = Carbon::parse($date);
