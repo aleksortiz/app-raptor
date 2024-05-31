@@ -81,6 +81,18 @@
 
             <div class="col-sm-3">
                 <div class="info-box">
+                    <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-car"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><b>Total Entrada</b></span>
+                        <span class="info-box-number">@money($this->entrada->total)</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="info-box">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                     <div class="info-box-content">
@@ -90,6 +102,8 @@
 
                 </div>
             </div>
+
+
 
         </div>
 
