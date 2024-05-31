@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Personal;
 
 use App\Models\Entrada;
+use App\Models\EntradaMaterial;
 use App\Models\FaltaPersonal;
 use App\Models\PagoPersonal;
 use App\Models\Personal;
@@ -23,6 +24,7 @@ class DiagramaNomina extends Component
     public $searchFolioOver = false;
 
     public $porcentajes;
+    public $materiales = [];
 
     public $week;
     public $year;
@@ -68,11 +70,52 @@ class DiagramaNomina extends Component
             if(in_array($pago->entrada->id, $uniqueIds)){
                 continue;
             }
-            $total += $pago->entrada->total_materiales;
+            $total += $pago->entrada->total_materiales($startDate, $endDate);
             $uniqueIds[] = $pago->entrada->id;
         }
 
         return $total;
+    }
+
+    public function mdlMaterialesDetalle(){
+        $this->materiales = [];
+
+        $startDate = $this->dates[0];
+        $endDate = $this->dates[5];
+        $pagos = PagoPersonal::where('fecha', '>=', $startDate)
+        ->where('fecha', '<=', $endDate)->whereNotNull('entrada_id')->get();
+        
+        $materiales = [];
+        $uniqueIds = [];
+        $materialesIds = [];
+        foreach($pagos as $pago){
+            if(in_array($pago->entrada->id, $uniqueIds)){
+                continue;
+            }
+            $materiales = $pago->entrada->materiales()->whereBetween('created_at', [$startDate, $endDate])->get();
+            foreach($materiales as $material){
+                if(in_array($material->id, $materialesIds)){
+                    continue;
+                }
+                $materiales[] = $material;
+                $materialesIds[] = $material->id;
+            }
+            $uniqueIds[] = $pago->entrada->id;
+        }
+
+        // $this->materiales = $materiales;
+        $this->materiales = collect($materiales)->unique('id')->values();
+        $this->emit('showModal','#mdlDetalleMaterial');
+
+    }
+
+    public function fecha_creacion($date){
+        $date = Carbon::parse($date);
+        $format = 'M/d/Y h:i A';
+        if ($date->year = Carbon::now()->year){
+            $format = 'M/d h:i A';
+        }
+        return $date->format($format);
     }
 
     public function render()

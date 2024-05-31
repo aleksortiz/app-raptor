@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="info-box">
+                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
                         <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cubes"></i></span>
 
                         <div class="info-box-content">
@@ -263,4 +263,5 @@
     </div>
 
     @include('livewire.personal.diagrama-nomina.modal-entradas')
+    @include('livewire.personal.diagrama-nomina.modal-materiales')
 </div>

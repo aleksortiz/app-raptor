@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\shared\BaseModel;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EntradaMaterial extends BaseModel

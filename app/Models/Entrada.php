@@ -137,6 +137,12 @@ class Entrada extends BaseModel
         return $this->materiales->sum('importe');
     }
 
+    public function total_materiales($dateStart, $dateEnd)
+    {
+        $materiales = $this->materiales()->whereBetween('created_at', [$dateStart, $dateEnd])->get();
+        return $materiales->sum('importe');
+    }
+
     public function getTotalRefaccionesAttribute()
     {
         return $this->refacciones->sum('importe');
