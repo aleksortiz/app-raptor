@@ -164,6 +164,30 @@ class Entrada extends BaseModel
         return $this->refacciones->sum('utilidad');
     }
 
+    public function getTotalSueldosAttribute()
+    {
+        return $this->pagos_personal->sum('pago');
+    }
+
+    public function getTotalDestajosAttribute()
+    {
+        return $this->ordenes_trabajo_pagos->sum('monto');
+    }
+
+    public function getTotalUtilidadGlobalAttribute()
+    {
+        //SERVICIOS
+        //UTILIDAD REFACCIONES
+        //-MATERIALES
+        //-SUELDOS
+        //-DESTAJOS
+        $utilidad = $this->total_costos + $this->total_utilidad_refacciones;
+        $utilidad -= $this->total_materiales;
+        $utilidad -= $this->total_sueldos;
+        $utilidad -= $this->total_destajos;
+        return $utilidad;
+    }
+
     public function getFechaEntregaFormatAttribute()
     {
         return Carbon::parse($this->fecha_entrega)->format('M/d/y h:i A');
@@ -246,5 +270,10 @@ class Entrada extends BaseModel
     public function ordenes_trabajo()
     {
         return $this->hasMany(OrdenTrabajo::class);
+    }
+
+    public function ordenes_trabajo_pagos()
+    {
+        return $this->hasManyThrough(OrdenTrabajoPago::class, OrdenTrabajo::class);
     }
 }
