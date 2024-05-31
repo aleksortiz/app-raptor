@@ -242,4 +242,9 @@ class Entrada extends BaseModel
     {
         $this->attributes['numero_factura'] = strtoupper($value);
     }
+
+    public function ordenes_trabajo()
+    {
+        return $this->hasMany(OrdenTrabajo::class);
+    }
 }

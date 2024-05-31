@@ -8,12 +8,14 @@ use App\Models\Entrada;
 use App\Models\EntradaMaterial;
 use App\Models\Foto;
 use App\Models\Material;
+use App\Models\OrdenTrabajo;
+use App\Models\OrdenTrabajoPago;
 use App\Models\Refaccion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-use Intervention\Image\Facades\Image as InterventionImage;
+// use Intervention\Image\Facades\Image as InterventionImage;
 use Livewire\WithFileUploads;
 
 class VerEntrada extends Component
@@ -33,12 +35,17 @@ class VerEntrada extends Component
     public $location_url = 'https://raptorv2.s3.amazonaws.com';
     public $storage_path = 'entradas/fotos';
 
+    public $selectedWorkOrder = null;
+    public $pagoDestajo = null;
+
     protected $listeners = [
         'destroyCosto',
         'destroyRefaccion',
         'removePhoto',
         'setMaterial',
         'destroyMaterial',
+        'reload',
+        'removeOrdenPago',
     ];
 
     protected $queryString = ['activeTab'];
@@ -63,7 +70,13 @@ class VerEntrada extends Component
 
         'costo.concepto' => 'string|required|max:255',
         'costo.costo' => 'numeric|required|min:0',
+
+        'pagoDestajo' => 'numeric|required|min:0',
     ];
+
+    public function reload(){
+        $this->entrada->refresh();
+    }
 
     public function mount(Entrada $entrada)
     {
@@ -347,5 +360,38 @@ class VerEntrada extends Component
     {
         $this->refaccion = Refaccion::findOrFail($id);
         $this->emit('showModal', '#mdlCreateRefaccion');
+    }
+
+    public function mdlCreateWorkOrder(){
+        $this->emit('showModal', '#mdlCreateWorkOrder');
+    }
+
+    public function mdlRegistrarPagoDestajo($id){
+        $this->selectedWorkOrder = OrdenTrabajo::findOrFail($id);
+        $this->emit('showModal', '#mdlRegistrarPagoDestajo');
+    }
+
+    public function registrarPagoDestajo(){
+        $pagoMax = $this->selectedWorkOrder->pendiente;
+        $this->validate([
+            'pagoDestajo' => "numeric|required|min:0|lte:{$pagoMax}",
+        ]);
+        OrdenTrabajoPago::create([
+            'orden_trabajo_id' => $this->selectedWorkOrder->id,
+            'monto' => $this->pagoDestajo,
+        ]);
+        $this->pagoDestajo = null;
+        $this->entrada->load('ordenes_trabajo');
+        $this->emit('ok', 'Se ha registrado pago de destajo');
+        $this->emit('closeModal', '#mdlRegistrarPagoDestajo');
+    }
+
+    public function removeOrdenPago($id){
+        $pago = OrdenTrabajoPago::findOrFail($id);
+        if($pago->delete()){
+            $this->selectedWorkOrder->load('pagos');
+            $this->entrada->load('ordenes_trabajo');
+            $this->emit('ok', 'Se ha eliminado pago de destajo');
+        }
     }
 }
