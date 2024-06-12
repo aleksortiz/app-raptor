@@ -16,13 +16,21 @@ class GastoFijo extends Model
 
     static function registerLog($date, $concept, $amount)
     {
+        if(!$amount){
+            GastoFijoLog::where('fecha', $date)
+                ->where('concepto', $concept)
+                ->delete();
+            return;
+        }
+
         GastoFijoLog::updateOrCreate(
             [
                 'fecha' => $date,
                 'concepto' => $concept
             ],
             [
-                'monto' => $amount
+                'monto' => $amount,
+                'fecha' => $date,
             ]
         );
     }

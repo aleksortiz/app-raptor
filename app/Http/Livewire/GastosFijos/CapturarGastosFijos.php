@@ -94,7 +94,7 @@ class CapturarGastosFijos extends Component
             'bills.*.monto' => 'required|numeric|gte:0',
         ]);
         $start = Entrada::getDateRange($this->year, $this->week, $this->week);
-        $start = Carbon::parse($start[0]);
+        $start = Carbon::parse($start[0])->format('Y-m-d');
         foreach ($this->bills as $index => $bill) {
             $concepto = $bill['concepto'];
             $monto = $bill['monto'];
@@ -120,7 +120,14 @@ class CapturarGastosFijos extends Component
         $start = Entrada::getDateRange($this->year, $this->week, $this->week);
         $start = Carbon::parse($start[0]);
 
-        GastoFijo::registerLog($start, $concepto, floatval($this->gastoMonto));
+        if($this->gastoMonto){
+            GastoFijo::registerLog($start, $concepto, floatval($this->gastoMonto));
+        }
+        else{
+            GastoFijo::where('created_at', '=', $start)
+            ->where('concepto', '=', $concepto)->delete();
+        }
+        
         if($this->recurrente){
             GastoFijo::create([
                 'concepto' => $concepto,

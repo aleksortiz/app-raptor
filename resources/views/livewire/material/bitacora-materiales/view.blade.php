@@ -108,7 +108,14 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $row->fecha_creacion }}</td>
-                        <td><a target="_blank" href="/servicios/{{$row->entrada_id}}?activeTab=6" class="btn btn-xs btn-warning p-2"><i class="fa fa-car mr-1"></i> {{ $row->entrada->folio_short }}</a></td>
+                        <td>
+                            @if ($row->entrada)
+                                <a target="_blank" href="/servicios/{{$row->entrada_id}}?activeTab=6" class="btn btn-xs btn-primary p-2"><i class="fa fa-car mr-1"></i> {{ $row->entrada->folio_short }}</a>    
+                            @else
+                                <button class="btn btn-xs btn-warning p-2"><i class="fa fa-car mr-1"></i> TALLER</button>
+                            @endif
+                            
+                        </td>
                         <td>{{ $row->numero_parte ? $row->numero_parte : "N/A" }}</td>
                         <td>{{ $row->material }}</td>
                         <td>{{ $row->unidad_medida }}</td>

@@ -66,7 +66,7 @@ class DiagramaNomina extends Component
         $total = 0;
         $uniqueIds = [];
         foreach($pagos as $pago){
-            if(in_array($pago->entrada->id, $uniqueIds)){
+            if(!$pago->entrada || in_array($pago->entrada?->id, $uniqueIds)){
                 continue;
             }
             $total += $pago->entrada->total_materiales($startDate, $endDate);
@@ -87,7 +87,7 @@ class DiagramaNomina extends Component
         $uniqueIds = [];
         $materialesIds = [];
         foreach($pagos as $pago){
-            if(in_array($pago->entrada->id, $uniqueIds)){
+            if(!$pago->entrada || in_array($pago->entrada?->id, $uniqueIds)){
                 continue;
             }
             $materiales = $pago->entrada->materiales()->whereBetween('created_at', [$startDate, $endDate])->get();
@@ -96,11 +96,11 @@ class DiagramaNomina extends Component
                 if(in_array($material->id, $materialesIds)){
                     continue;
                 }
-                $allMateriales[] = $material;  // Add to the final collection
-                $materialesIds[] = $material->id;  // Track added material IDs
+                $allMateriales[] = $material;
+                $materialesIds[] = $material->id;
             }
             
-            $uniqueIds[] = $pago->entrada->id;  // Track processed entrada IDs
+            $uniqueIds[] = $pago->entrada->id;
         }
     
         return $allMateriales;

@@ -29,9 +29,11 @@
             
             
             @canany(['administrar-materiales'])
-            <button class="btn btn-xs btn-success m-2" wire:click="mdlCreate"><i class="fas fa-plus"></i> Agregar
+            <button class="btn btn-xs btn-primary ml-2 mb-2" wire:click="mdlCreate"><i class="fas fa-plus"></i> Agregar
               {{ $this->model_name }}</button>
             @endcanany
+
+            <button class="btn btn-xs btn-success mb-2" wire:click="exportToExcel"><i class="fas fa-file-excel"></i> Exportar a Excel</button>
 
             <table class="table table-hover">
                 <thead>

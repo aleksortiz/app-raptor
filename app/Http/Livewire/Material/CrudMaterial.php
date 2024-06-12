@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Material;
 
+use App\Http\Controllers\ReportController;
 use App\Http\Livewire\shared\LivewireBaseCrudController;
 use App\Models\Entrada;
 use App\Http\Traits\EntradaMaterialTrait;
@@ -24,6 +25,9 @@ class CrudMaterial extends LivewireBaseCrudController
     public $selectedMaterial;
     public $folioSearch;
     public $gotoFolio;
+
+    public $isTaller = false;
+    public $cantidadTaller;
 
     public function updatingSearchValueProveedor()
     {
@@ -70,16 +74,47 @@ class CrudMaterial extends LivewireBaseCrudController
         $this->precioMaterial = new PrecioMaterial();
     }
 
+    public function getData(){
+        return $this->model::orderBy('id', 'ASC')
+        ->where('active', 1)
+        ->where(function ($query) {
+            $query->where('numero_parte', 'LIKE', "%{$this->keyWord}%")
+            ->orWhere('descripcion', 'LIKE', "%{$this->keyWord}%");
+        });
+    }
+
+    public function exportToExcel()
+    {
+        $data = $this->getData()->get();
+
+        $headers = [
+            'Numero de Parte',
+            'Categoria',
+            'Descripcion',
+            'Unidad de Medida',
+            'Precio',
+            'Existencia',
+        ];
+
+        $arrayData = $data->map(function ($item) {
+            return [
+                $item->numero_parte,
+                $item->categoria,
+                $item->descripcion,
+                $item->unidad_medida,
+                $item->precio,
+                $item->existencia,
+            ];
+        });
+        $reportDate = date('Y-m-d');
+        $fileName = "materiales_{$reportDate}_.csv";
+        return ReportController::downloadCSV($fileName, $headers, $arrayData);
+    }
+
     public function render()
     {
         $keyWord = '%' . $this->keyWord . '%';
-        $data = $this->model::orderBy('id', 'ASC')
-            ->where('active', 1)
-            ->where(function ($query) use ($keyWord) {
-                $query->where('numero_parte', 'LIKE', $keyWord)
-                    ->orWhere('descripcion', 'LIKE', $keyWord);
-            })
-            ->paginate(50);
+        $data = $this->getData()->paginate(50);
         $proveedores = $this->getProveedores();
 
         return view('livewire.material.crud-material.view', compact('data', 'proveedores'));
@@ -167,6 +202,7 @@ class CrudMaterial extends LivewireBaseCrudController
 
     public function mdlAsignarMaterial($id)
     {
+        $this->cantidadTaller = null;
         $this->selectedMaterial = Material::findOrFail($id);
 
         // $this->folios = Entrada::all();
@@ -179,9 +215,15 @@ class CrudMaterial extends LivewireBaseCrudController
 
     public function asignarMaterial($index)
     {
-        $entrada_id = $this->folios[$index]['id'];
-        $cantidad = $this->folios[$index]['cantidad'];
-        $material_id = $this->selectedMaterial->id;
+        if($index==null){
+            $entrada_id = null;
+            $cantidad = $this->cantidadTaller;
+            $material_id = $this->selectedMaterial->id;
+        }else{
+            $entrada_id = $this->folios[$index]['id'];
+            $cantidad = $this->folios[$index]['cantidad'];
+            $material_id = $this->selectedMaterial->id;
+        }
 
         if (!$cantidad) {
             $this->emit('info', 'Ingrese cantidad válida');
@@ -194,6 +236,8 @@ class CrudMaterial extends LivewireBaseCrudController
         }
 
         $this->setMaterial($entrada_id, $material_id, $cantidad);
+        $this->isTaller = false;
+        $this->cantidadTaller = null;
         $this->emit('closeModal', '#mdlAsignarMaterial');
         $this->emit('ok', "Se han asignado material: <br> {$this->selectedMaterial->descripcion} - Cant: {$cantidad}");
     }
