@@ -6,6 +6,7 @@
 <center>
     <img width="60%" src="{{ asset('images/logo.png') }}">
     {{-- <h1>{{env('APP_FULL_NAME')}}</h1> --}}
+    <h1>Autoservicio Raptor</h1>
     <h2>{{env('BUSSINESS_DESCRIPTION')}}</h2>
     {{-- <br>
     <br>
