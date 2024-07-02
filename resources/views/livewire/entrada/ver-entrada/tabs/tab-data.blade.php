@@ -59,7 +59,7 @@
 
             </div>
             <div class="col-9">
-                <div class="row">
+                {{-- <div class="row">
 
                     @if($entrada->refacciones->count() > 0)
                         @if ($entrada->fecha_pago_refacciones)
@@ -112,7 +112,9 @@
                 <br>
 
                 <h4>Areas de Trabajo</h4>
-                @include('livewire.entrada.ver-entrada.partials.car-layout')
+                @include('livewire.entrada.ver-entrada.partials.car-layout') --}}
+
+                <h1>INVENTARIO: ***Pendiente***</h1>
 
 
 

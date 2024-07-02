@@ -116,13 +116,12 @@
                             <th><button wire:click="addCosto" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i>
                                     Agregar Servicio</button></th>
                             <th>Concepto</th>
-                            <th>Venta</th>
+                            <th>($) Venta</th>
                             <th>Estatus Pago</th>
                             <th>Editar</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         @if ($this->costo && $this->costo->id == 0)
                             <tr>
                                 <td><button wire:click="saveCosto" class="btn btn-xs btn-success"><i

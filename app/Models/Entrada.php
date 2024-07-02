@@ -153,6 +153,16 @@ class Entrada extends BaseModel
         return $this->costos->sum('costo');
     }
 
+    public function getTotalCostosPagadosAttribute()
+    {
+        return $this->costos->whereNotNull('pagado')->sum('costo');
+    }
+
+    public function getTotalCostosPendientesAttribute()
+    {
+        return $this->costos->whereNull('pagado')->sum('costo');
+    }
+
     public function getTotalAttribute()
     {
         return $this->total_costos;
@@ -232,32 +242,23 @@ class Entrada extends BaseModel
 
     public function getEstatusEntradaAttribute()
     {
-        $data = "";
-        if($this->refacciones()->count() > 0){
-            if ($this->fecha_pago_refacciones) {
-                $tooltip = "Refacciones Pagadas: ". $this->fecha_pago_refacciones_format;
-                $data .= '<span style="cursor: pointer;" wire:click="editFechaPagoRefacciones(' . $this->id . ')" data-toggle="tooltip" data-placement="right" title="'.$tooltip.'" class="py-1 badge badge-success">Ref. Pagadas</span>';
-            }
-            else {
-                $data .= '<span style="cursor: pointer;" wire:click="" onclick="confirm(\'Pagar refacciones: '.$this->vehiculo.'\', \'pagarRefacciones\', '. $this->id .')" class="py-1 badge badge-warning">Ref. Pendientes</span>';
-            }
+        $count = collect($this->costos)->count();
+        if($count <= 0){
+            return 'N/A';
         }
         
-        if ($this->fecha_entrega) {
-            $tooltip = "Vehiculo Entregado: ". $this->fecha_entrega_format;
-            $data .= ' <span style="cursor: pointer;" wire:click="editFechaEntrega(' . $this->id . ')" data-toggle="tooltip" data-placement="right" title="'.$tooltip.'" class="py-1 badge badge-success">Veh. Entregado</span>';
+        $data = "";
+        $pending = collect($this->costos)->some(function($costo){
+            return $costo->pagado == null;
+        });
+
+        if($pending){
+            $data = '<button wire:click="mdlPagoServicios('.$this->id.')" class="py-1 btn btn-xs btn-warning"><i class="fa fa-clock"></i> Pendiente</button>';
         }
         else{
-            $data .= ' <span style="cursor: pointer;" wire:click="" onclick="confirm(\'Entregar vehículo: '.$this->vehiculo.'\', \'entregarVehiculo\', '. $this->id .')" class="py-1 badge badge-warning">Veh. Pendiente</span>';
+            $data = '<button wire:click="mdlPagoServicios('.$this->id.')" class="py-1 btn btn-xs btn-success"><i class="fa fa-check"></i> Pagado</button>';
         }
 
-        if ($this->fecha_pago) {
-            $tooltip = "Entrada Pagada: ". $this->fecha_pago_format;
-            $data .= ' <span style="cursor: pointer;" wire:click="editFechaPago(' . $this->id . ')" data-toggle="tooltip" data-placement="right" title="'.$tooltip.'" class="py-1 badge badge-success">Pagado</span>';
-        }
-        else{
-            $data .= ' <span style="cursor: pointer;" wire:click="" onclick="confirm(\'Pagar Entrada: '.$this->vehiculo.'\', \'pagarEntrada\', '. $this->id .')" class="py-1 badge badge-warning">Pago Pendiente</span>';
-        }
         return $data;
     }
 

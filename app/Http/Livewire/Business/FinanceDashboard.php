@@ -66,16 +66,24 @@ class FinanceDashboard extends Component
 
     public function getTotalPagosRealizadosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
-        $entradasMO = Entrada::whereBetween('created_at', $dates)->where('fecha_pago', '!=', null)->get();
-        $entradasRef = Entrada::whereBetween('created_at', $dates)->where('fecha_pago_refacciones', '!=', null)->get();
+        $entradas = Entrada::whereBetween('created_at', $dates)->get();
+        $totalPagado = 0;
+        foreach($entradas as $entrada){
+            $totalPagado += $entrada->total_costos_pagados;
+        }
+        return $totalPagado;
 
-        $pagosMO = collect($entradasMO)->sum('total_costos');
-        $pagosRef = collect($entradasRef)->sum('total_refacciones');
-        return $pagosMO + $pagosRef;
     }
 
     public function getTotalPagosPendientesProperty(){
-        return $this->total_vehiculos_registrados - $this->total_pagos_realizados;
+        // return $this->total_vehiculos_registrados - $this->total_pagos_realizados;
+        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $entradas = Entrada::whereBetween('created_at', $dates)->get();
+        $totalPendiente = 0;
+        foreach($entradas as $entrada){
+            $totalPendiente += $entrada->total_costos_pendientes;
+        }
+        return $totalPendiente;
     }
 
     public function getTotalUtilidadRealProperty(){

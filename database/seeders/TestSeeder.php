@@ -18,6 +18,7 @@ class TestSeeder extends Seeder
         $this->call(ProveedorSeeder::class);
         $this->call(MaterialSeeder::class);
         $this->call(PersonalSeeder::class);
+        $this->call(EntradasSeeder::class);
 
         Cliente::factory(80)->create();
     }

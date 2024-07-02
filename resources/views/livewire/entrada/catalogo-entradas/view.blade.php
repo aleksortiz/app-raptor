@@ -84,7 +84,7 @@
                         <th>Orden</th>
                         <th>Vehículo</th>
                         <th>Monto</th>
-                        <th>Estatus</th>
+                        <th>Estatus Pago</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -109,5 +109,5 @@
     {{ $entradas->links() }}
 
     @include('livewire.entrada.ver-entrada.modals.mdl-edit-date')
-
+    @include('livewire.entrada.catalogo-entradas.modal-pago-servicios')
 </div>
