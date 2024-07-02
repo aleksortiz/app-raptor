@@ -1,6 +1,47 @@
 <div class="card m-0" style="min-height: 65vh;">
     <div class="card-body p-0">
+        
+        
+        <div class="row ml-2 mt-3">
+            <div class="col-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-money-bill-wave"></i></span>
+                    
+                    <div class="info-box-content">
+                        <span class="info-box-text"><b>Total Costo:</b></span>
+                        <span class="info-box-number">@money($this->entrada->total_costo_refacciones)</span>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-wrench"></i></span>
+                    
+                    <div class="info-box-content">
+                        <span class="info-box-text"><b>Total Venta Refacciones:</b></span>
+                        <span class="info-box-number">@money($this->entrada->total_refacciones)</span>
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="col-3">
+                <div class="info-box">
+                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+                    
+                    <div class="info-box-content">
+                        <span class="info-box-text"><b>Utilidad:</b></span>
+                        <span class="info-box-number">@money($this->entrada->total_utilidad_refacciones)</span>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        
         <button wire:click="showMdlRefacciones" class="m-2 btn btn-xs btn-success"><i class="fa fa-plus"></i> Agregar Refacción</button>
+
         <div class="row">
             <div class="col">
                 <table class="table table-hover">

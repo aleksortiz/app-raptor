@@ -13,6 +13,11 @@ Route::middleware(['auth'])->prefix('proveedores')->group(function ()
     })->name('proveedores');
 
     Route::middleware(['permission:administrar-proveedores|ver-proveedores'])
+    ->get('/pagos', function(){
+        return view('livewire.proveedor.catalogo-pagos-proveedor.index');
+    });
+
+    Route::middleware(['permission:administrar-proveedores|ver-proveedores'])
     ->get('/{proveedor}/', function(Proveedor $proveedor){       
         return view('livewire.proveedor.edit-proveedor.index', compact('proveedor'));
     });

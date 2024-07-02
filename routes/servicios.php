@@ -37,6 +37,10 @@ Route::middleware(['auth'])->group(function ()
         return view('livewire.entrada.editar-entrada.index', compact('entrada'));
     });
 
+    Route::get('/servicios/{entrada}/inventario', function(Entrada $entrada){
+        return view('livewire.entrada.capturar-entrada-inventario.index', compact('entrada'));
+    });
+
     Route::get('/servicios/{entrada}/subir-fotos', function(Entrada $entrada){
         return view('livewire.entrada.subir-fotos.index', compact('entrada'));
     });

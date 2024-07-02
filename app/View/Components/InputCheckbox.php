@@ -9,7 +9,7 @@ class InputCheckbox extends Component
     public $model;
     public $value;
 
-    public function __construct($model, $value = 'true')
+    public function __construct($model, $value = 1)
     {
         $this->model = $model;
         $this->value = $value;

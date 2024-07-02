@@ -10,6 +10,7 @@ use App\Models\Foto;
 use App\Models\Material;
 use App\Models\OrdenTrabajo;
 use App\Models\OrdenTrabajoPago;
+use App\Models\PedidoConcepto;
 use App\Models\Refaccion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +23,7 @@ class VerEntrada extends Component
 {
     use PhotoTrait, WithFileUploads;
 
-    public $activeTab = 1;
+    public $activeTab = 2;
     public Entrada $entrada;
     public $refaccion;
     
@@ -37,6 +38,14 @@ class VerEntrada extends Component
 
     public $selectedWorkOrder = null;
     public $pagoDestajo = null;
+
+    public $lastUrl;
+
+    public $materialManual = [
+        'descripcion' => null,
+        'cantidad' => null,
+        'precio' => null,
+    ];
 
     protected $listeners = [
         'destroyCosto',
@@ -72,6 +81,10 @@ class VerEntrada extends Component
         'costo.costo' => 'numeric|required|min:0',
 
         'pagoDestajo' => 'numeric|required|min:0',
+
+        'materialManual.descripcion' => 'string|required|max:255',
+        'materialManual.cantidad' => 'numeric|required|min:0',
+        'materialManual.precio' => 'numeric|required|min:0',
     ];
 
     public function reload(){
@@ -80,7 +93,9 @@ class VerEntrada extends Component
 
     public function mount(Entrada $entrada)
     {
+        $this->lastUrl = url()->previous();
         $this->entrada = $entrada;
+
     }
 
     public function render()
@@ -128,6 +143,33 @@ class VerEntrada extends Component
         }
     }
 
+    public function createMaterialManual(){
+        $this->validate([
+            'materialManual.descripcion' => 'string|required|max:255',
+            'materialManual.cantidad' => 'numeric|required|min:0',
+            'materialManual.precio' => 'numeric|required|min:0',
+        ]);
+
+        EntradaMaterial::create([
+            'entrada_id' => $this->entrada->id,
+            'material_id' => null,
+            'cantidad' => $this->materialManual['cantidad'],
+            'numero_parte' => "MANUAL",
+            'material' => $this->materialManual['descripcion'],
+            'unidad_medida' => 'pz',
+            'precio' => $this->materialManual['precio'],
+        ]);
+
+        $this->entrada->load('materiales');
+        $this->materialManual = [
+            'descripcion' => null,
+            'cantidad' => null,
+            'precio' => null,
+        ];
+        $this->emit('ok', 'Se ha registrado material');
+        $this->emit('closeModal', '#mdlMaterialManual');
+    }
+
     public function destroyCosto($id)
     {
         $elem = Costo::findOrFail($id);
@@ -153,6 +195,12 @@ class VerEntrada extends Component
             $this->emit('ok', "Se ha eliminado material");
             Material::where('id', $elem->material_id)->increment('existencia', $elem->cantidad);
             $this->entrada->load('materiales');
+
+            if($elem->pedido_concepto_id){
+                $pedidoConcepto = PedidoConcepto::findOrFail($elem->pedido_concepto_id);
+                $pedidoConcepto->cantidad_recibida -= $elem->cantidad;
+                $pedidoConcepto->save();
+            }
         }
     }
 
@@ -245,6 +293,13 @@ class VerEntrada extends Component
         // $this->resetValidation();
         // $this->refaccion = new Refaccion();
         $this->emit('showModal', '#mdlCatalogoMateriales');
+    }
+
+    public function showMdlMaterialManual()
+    {
+        // $this->resetValidation();
+        // $this->refaccion = new Refaccion();
+        $this->emit('showModal', '#mdlMaterialManual');
     }
 
     public function setMaterial($id, $cantidad)
@@ -393,5 +448,9 @@ class VerEntrada extends Component
             $this->entrada->load('ordenes_trabajo');
             $this->emit('ok', 'Se ha eliminado pago de destajo');
         }
+    }
+
+    public function back(){
+        return redirect()->to($this->lastUrl);
     }
 }

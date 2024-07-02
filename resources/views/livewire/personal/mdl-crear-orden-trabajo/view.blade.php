@@ -116,7 +116,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nombre }}</td>
-                                    <td>@money($item->sueldo)</td>
+                                    <td>DESTAJO</td>
                                     <td>{{ $item->domicilio ? $item->domicilio : 'N/A' }}</td>
                                     <td><button wire:click="selectPersonal({{ $item->id }})"
                                             class="btn btn-xs btn-secondary"><i class="fa fa-check"></i> Seleccionar</button></td>
@@ -128,8 +128,7 @@
                 </div>
 
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-secondary" data-toggle="modal"
-                        data-target="#mdlCatalogoMateriales"><i class="fas fa-window-close"></i> Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cerrar</button>
 
                     {{-- @if ($createMode)
                         <button type="button" class="btn btn-success" wire:click="createMaterial"><i

@@ -20,6 +20,7 @@ class EntradaMaterial extends BaseModel
         'unidad_medida',
         'precio',
         'cantidad',
+        'pedido_concepto_id',
     ];
 
     public function entrada(){

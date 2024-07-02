@@ -51,7 +51,7 @@ class CatalogoEntradas extends Component
         $this->keyWord = trim($this->keyWord);
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
 
-        $entradas = Entrada::OrderBy('id','desc')
+        $entradas = Entrada::OrderBy('id','asc')
         ->whereBetween('created_at', [$start, $end])
         ->where(function ($q){
             $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")

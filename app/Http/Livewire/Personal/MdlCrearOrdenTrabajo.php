@@ -37,7 +37,10 @@ class MdlCrearOrdenTrabajo extends Component
     public function render()
     {
         $keyWord = '%' . $this->keyWord . '%';
-        $catalogo_personal = Personal::orderBy('nombre', 'ASC')->orWhere('nombre', 'LIKE', $keyWord)->paginate(100);
+        $catalogo_personal = Personal::orderBy('nombre', 'ASC')
+        ->where('activo', true)
+        ->where('destajo', true)
+        ->where('nombre', 'LIKE', $keyWord)->paginate(100);
         return view('livewire.personal.mdl-crear-orden-trabajo.view', compact('catalogo_personal'));
     }
 

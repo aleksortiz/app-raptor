@@ -7,7 +7,9 @@ use App\Models\EntradaMaterial;
 use App\Models\FaltaPersonal;
 use App\Models\PagoPersonal;
 use App\Models\Personal;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class DiagramaNomina extends Component
@@ -47,10 +49,32 @@ class DiagramaNomina extends Component
 
     public function getTotalNominaProperty()
     {
+        $total = $this->getTotalNominaOperativaProperty() + $this->getTotalNominaAdministrativaProperty();
+        return $total;
+    }
+
+    public function getTotalNominaOperativaProperty()
+    {
         $total = 0;
         foreach($this->getRenderData()['personal'] as $personal){
-            // $total += $personal->getPagos
             foreach($this->dates as $date){
+                if($personal->administrativo){
+                    continue;
+                }
+                $total += $personal->getPagos($date)->sum('pago');
+            }
+        }
+        return $total;
+    }
+
+    public function getTotalNominaAdministrativaProperty()
+    {
+        $total = 0;
+        foreach($this->getRenderData()['personal'] as $personal){
+            foreach($this->dates as $date){
+                if(!$personal->administrativo){
+                    continue;
+                }
                 $total += $personal->getPagos($date)->sum('pago');
             }
         }
@@ -138,8 +162,18 @@ class DiagramaNomina extends Component
 
     public function getRenderData()
     {
+        $personal = Personal::orderBy('administrativo')
+        ->orderBy('nombre')
+        ->where('activo', true)
+        ->where('destajo', false);
+
+        $user = User::findOrFail(Auth::id());
+        if(!$user->hasPermissionTo('admin-personal-administrativo')){
+            $personal = $personal->where('administrativo', false);
+        }
+
         return [
-            'personal' => Personal::where('activo', true)->get(),
+            'personal' => $personal->get(),
         ];
     }
 
@@ -150,6 +184,30 @@ class DiagramaNomina extends Component
 
         // $this->emit('ok', "Se ha agregado el pago para el personal {$this->selected_personal} en la fecha {$this->selected_date}");
         $this->emit('showModal','#mdlEntradas');
+    }
+
+    public function addAsistencia($personal_id, $date)
+    {
+        $personal = Personal::findOrFail($personal_id);
+
+        PagoPersonal::create([
+            'fecha' => $date,
+            'personal_id' => $personal->id,
+            'pago' => $personal->sueldo_diario,
+            'porcentaje' => 100,
+        ]);
+        // $this->emit('ok', "Se ha marcado asistencia a personal {$personal->nombre}");
+    }
+
+    public function removeAsistencia($personal_id, $date)
+    {
+        $pago = PagoPersonal::where('personal_id', $personal_id)
+        ->where('fecha', $date)
+        ->first();
+        if($pago){
+            $pago->delete();
+            // $this->emit('ok', "Se ha eliminado asistencia a personal {$pago->personal->nombre}");
+        }
     }
 
     public function searchEntradas()
@@ -245,6 +303,8 @@ class DiagramaNomina extends Component
         $this->searchFolio = true;
         $this->searchFolioOver = false;
     }
+
+    
 
 
 }

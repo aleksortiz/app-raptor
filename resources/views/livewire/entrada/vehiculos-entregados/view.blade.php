@@ -12,8 +12,6 @@
         <div class="card-body p-0">
 
 
-
-
             <div class="row p-3">
 
                 <div class="col-1">
@@ -110,28 +108,30 @@
 
             <table class="table table-hover">
                 <thead>
+
                     <tr>
                         <th>#</th>
                         <th>Folio</th>
-                        <th>Origen</th>
                         <th>Cliente</th>
-                        <th>Orden</th>
                         <th>Vehículo</th>
                         <th>Monto</th>
+                        <th>Utilidad</th>
                         <th>Fecha de Entrega</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($entradas as $row)
-                    <tr>
+                    @php
+                        $color = $row->porcentaje_utilidad_global < 30 ? 'text-danger' : '';
+                    @endphp
+                    <tr class="{{$color}}">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $row->folio_short }}</td>
-                        <td>{{ $row->origen }}</td>
                         <td>{{ $row->cliente->nombre }}</td>
-                        <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
                         <td>{{ $row->vehiculo }}</td>
                         <td>@money($row->total)</td>
+                        <td>@money($row->total_utilidad_global) (@float($row->porcentaje_utilidad_global)%)</td>
                         <td>{{ $row->fecha_entrega_format }}</td>
                         <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> Más detalles</a></td>
                     </tr>

@@ -259,11 +259,25 @@ return [
             'icon' => 'fas fa-fw fa-home',
             'route' => 'home'
         ],
+        // [
+        //     'text' => 'Evaluaciones',
+        //     'icon' => 'fas fa-calendar-check',
+        //     'url' => '/evaluaciones'
+        // ],
         [
-            'text' => 'Evaluaciones',
-            'icon' => 'fas fa-calendar-check',
-            'url' => '/evaluaciones'
+            'text' => 'Negocio',
+            'icon' => 'fas fa-fw fa-building',
+            'can' => ['reporte-finanzas'],
+            'submenu' => [
+                [
+                    'text' => 'Reporte Finanzas',
+
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url' => '/reporte-finanzas',
+                ]
+            ]
         ],
+
         [
             'text' => 'Servicios',
             'icon' => 'fas fa-fw fa-car',
@@ -308,6 +322,40 @@ return [
             // ]
         ],
         [
+            'text' => 'Materiales',
+            'icon' => 'fas fa-fw fa-cubes',
+            'can' => ['administrar-materiales', 'ver-materiales'],
+            'submenu' => [
+                [
+                    'text'   => 'Almacen de Materiales',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/materiales',
+                ],
+                [
+                    'text'   => 'Pedidos de Materiales',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/materiales/pedidos',
+                ],
+                [
+                    'text'   => 'Bitacora de Materiales',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/materiales/bitacora',
+                ],
+                [
+                    'text'   => 'Proveedores',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/proveedores',
+                    'can' => ['administrar-proveedores', 'ver-proveedores'],
+                ],
+                [
+                    'text'   => 'Pagos a Proveedoress',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/proveedores/pagos',
+                    'can' => ['administrar-proveedores', 'ver-proveedores'],
+                ],
+            ]
+        ],
+        [
             'text' => 'Personal',
             'icon' => 'fas fa-fw fa-user-tie',
             'submenu' => [
@@ -343,35 +391,6 @@ return [
                     'url'    => '/aseguradoras',
                 ],
             ]
-        ],
-        [
-            'text' => 'Materiales',
-            // 'route' => 'materiales',
-            'icon' => 'fas fa-fw fa-cubes',
-            'can' => ['administrar-materiales','ver-materiales'],
-            'submenu' => [
-                [
-                    'text'   => 'Ver Materiales',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/materiales',
-                ],
-                [
-                    'text'   => 'Pedidos de Materiales',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/materiales/pedidos',
-                ],
-                [
-                    'text'   => 'Bitacora de Materiales',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/materiales/bitacora',
-                ],
-            ]
-        ],
-        [
-            'text' => 'Proveedores',
-            'route' => 'proveedores',
-            'icon' => 'fas fa-fw fa-truck',
-            'can' => ['administrar-proveedores', 'ver-proveedores'],
         ],
         [
             'text' => 'Usuarios',

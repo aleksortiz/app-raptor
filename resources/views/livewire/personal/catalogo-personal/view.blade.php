@@ -33,17 +33,34 @@
                         <th>Domicilio</th>
                         <th>Contacto Emergencia</th>
                         <th>Editar</th>
+                        <th>Mostrar / Ocultar</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($data as $row)
-                    <tr>
+                    @php
+                        $color = $row->activo ? '' : 'text-danger';
+                    @endphp
+                    <tr class="{{$color}}">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $row->nombre }}</td>
-                        <td>@money($row->sueldo)</td>
+                        <td>
+                            @if ($row->destajo)
+                                DESTAJO
+                            @else
+                                @money($row->sueldo)
+                            @endif
+                        </td>
                         <td>{{ $row->domicilio ? $row->domicilio : "N/A" }}</td>
                         <td>{{ $row->contacto_emergencia ? $row->contacto_emergencia : "N/A" }}</td>
                         <td><button wire:click="mdlEdit({{ $row->id }})" class="btn btn-xs btn-primary"><i class="fa fa-user-tie"></i> Editar</button></td>
+                        <td>
+                            @if ($row->activo)
+                                <button wire:click="toggleActive({{ $row->id }})" class="btn btn-xs btn-info"><i class="fa fa-eye"></i> Ocultar</button>
+                            @else
+                                <button wire:click="toggleActive({{ $row->id }})" class="btn btn-xs btn-warning"><i class="fa fa-eye-slash"></i> Mostrar</button>    
+                            @endif
+                        </td>                      
                     </tr>
                 @endforeach
                 </tbody>

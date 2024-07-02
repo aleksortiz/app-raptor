@@ -77,7 +77,9 @@
                     <div class="row">
                         <div class="col-md-6">
                             <h4>{{$this->selected_personal?->nombre}}</h4>
-                            <h5>Sueldo Diario <b>@money($this->selected_personal?->sueldo_diario)</b></h5>
+                            @can('reporte-finanzas')
+                                <h5>Sueldo Diario <b>@money($this->selected_personal?->sueldo_diario)</b></h5>
+                            @endcan
                             <h5>Porcentaje asignado: <b>{{$this->selected_personal?->getPorcentaje($this->selected_date)}} %</b></h5>
                         </div>
 

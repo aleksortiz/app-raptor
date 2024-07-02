@@ -43,7 +43,7 @@
                         </div>
                         <div class="form-group col-3">
                             <label>Existencia</label>
-                            <input wire:model.defer="model.existencia"  type="text" class="form-control" style="text-align: center" onkeypress="return event.charCode >= 46 && event.charCode <= 57"/>
+                            <input wire:model.defer="model.existencia" disabled  type="text" class="form-control" style="text-align: center" onkeypress="return event.charCode >= 46 && event.charCode <= 57"/>
                             @error('model.existencia') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>

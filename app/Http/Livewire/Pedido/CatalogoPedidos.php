@@ -38,7 +38,7 @@ class CatalogoPedidos extends LivewireBaseCrudController
     public function render()
     {
         $keyWord = '%'.$this->keyWord .'%';
-        $data = $this->model::orderBy('id', 'ASC')
+        $data = $this->model::orderBy('id', 'DESC')
         ->whereBetween('created_at', [$this->startDate, ($this->endDate . ' 23:59:59')])
         ->paginate(100);
         return view('livewire.pedido.catalogo-pedidos.view', compact('data'));

@@ -16,6 +16,7 @@ class PedidoConceptoTemp extends Model
         'descripcion',
         'cantidad',
         'precio',
+        'entrada_id'
     ];
 
     public function material(){

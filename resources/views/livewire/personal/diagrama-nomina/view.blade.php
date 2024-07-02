@@ -37,28 +37,44 @@
 
                 <div class="col-3">
                     <div class="info-box">
-                        <span class="info-box-icon bg-primary elevation-1"><i
+                        <span class="info-box-icon bg-warning elevation-1"><i
                                 class="fas fa-hand-holding-usd"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text"><b>Total Nomina: </b></span>
-                            <span class="info-box-number">@money($this->totalNomina)</span>
+                            <span class="info-box-text"><b>Nomina Operativa: </b></span>
+                            <span class="info-box-number">@money($this->totalNominaOperativa)</span>
                         </div>
 
                     </div>
                 </div>
 
-                <div class="col-3">
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cubes"></i></span>
+                @can('admin-personal-administrativo')
+                    <div class="col-3">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-info elevation-1"><i
+                                    class="fas fa-hand-holding-usd"></i></span>
 
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Total Materiales: </b></span>
-                            <span class="info-box-number">@money($this->totalMateriales)</span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Nomina Administrativa: </b></span>
+                                <span class="info-box-number">@money($this->totalNominaAdministrativa)</span>
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
+
+                    <div class="col-3">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary elevation-1"><i
+                                    class="fas fa-hand-holding-usd"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Total Nomina: </b></span>
+                                <span class="info-box-number">@money($this->totalNomina)</span>
+                            </div>
+
+                        </div>
+                    </div>
+                @endcan
 
             </div>
 
@@ -67,6 +83,10 @@
                     <tr>
                         <th>#</th>
                         <th>Personal</th>
+                        @can('admin-personal-administrativo')
+                            <th>Sueldo Sem.</th>
+                            <th>Sueldo Acum.</th>
+                        @endcan
                         <th>{{ $days[0] }}<br>{{ $dates[0] }}</th>
                         <th>{{ $days[1] }}<br>{{ $dates[1] }}</th>
                         <th>{{ $days[2] }}<br>{{ $dates[2] }}</th>
@@ -80,180 +100,254 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->nombre }}</td>
-                            <td>
-                                @if (collect($row->getFalta($dates[0]))->count() == 0)
+                            @can('admin-personal-administrativo')
+                                <td>@money($row->sueldo)</td>
+                                <td>
+                                    @money($row->sueldo_acumulado($this->week, $this->year))
+                                    @if ($row->percent_acumulado($this->week, $this->year) > 0)
+                                        @php
+                                            $color =
+                                                $row->percent_acumulado($this->week, $this->year) > 100
+                                                    ? 'text-danger'
+                                                    : '';
+                                        @endphp
+                                        <small class="{{ $color }}">
+                                            (@qty($row->percent_acumulado($this->week, $this->year)) %)
+                                        </small>
+                                    @endif
+                                </td>
+                            @endcan
+                            @if ($row->administrativo)
+                                <td>
                                     @if ($row->getPorcentaje($dates[0]) >= 100)
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[0] }}')"
-                                            class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="removeAsistencia({{ $row->id }}, '{{ $dates[0] }}')" class="badge badge-success"><i class="fa fa-check"></i></button>
                                     @else
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[0] }}')"
-                                            class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="addAsistencia({{ $row->id }}, '{{ $dates[0] }}')" class="badge badge-secondary"><i class="fa fa-square"></i></button>
                                     @endif
-
-                                    @php
-                                        $pagosPorEntrada = collect($row->getPagos($dates[0]))->groupBy('entrada_id');
-                                    @endphp
-                                    @foreach ($pagosPorEntrada as $entrada_id => $pagos)
-                                        @php
-                                            $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
-                                            $pagoEntrada = $pagos->first();
-                                        @endphp
-                                        <a target="_blank" href="/servicios/{{ $entrada_id }}"
-                                            class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
-                                    @endforeach
-                                @else
-                                    <span style="cursor: pointer"
-                                        onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[0] }}')"
-                                        class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if (collect($row->getFalta($dates[1]))->count() == 0)
+                                </td>
+                                <td>
                                     @if ($row->getPorcentaje($dates[1]) >= 100)
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[1] }}')"
-                                            class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="removeAsistencia({{ $row->id }}, '{{ $dates[1] }}')" class="badge badge-success"><i class="fa fa-check"></i></button>
                                     @else
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[1] }}')"
-                                            class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="addAsistencia({{ $row->id }}, '{{ $dates[1] }}')" class="badge badge-secondary"><i class="fa fa-square"></i></button>
                                     @endif
-
-                                    @php
-                                        $pagosPorEntrada = collect($row->getPagos($dates[1]))->groupBy('entrada_id');
-                                    @endphp
-                                    @foreach ($pagosPorEntrada as $entrada_id => $pagos)
-                                        @php
-                                            $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
-                                            $pagoEntrada = $pagos->first();
-                                        @endphp
-                                        <a target="_blank" href="/servicios/{{ $entrada_id }}"
-                                            class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
-                                    @endforeach
-                                @else
-                                    <span style="cursor: pointer"
-                                        onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[1] }}')"
-                                        class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if (collect($row->getFalta($dates[2]))->count() == 0)
+                                </td>
+                                <td>
                                     @if ($row->getPorcentaje($dates[2]) >= 100)
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[2] }}')"
-                                            class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="removeAsistencia({{ $row->id }}, '{{ $dates[2] }}')" class="badge badge-success"><i class="fa fa-check"></i></button>
                                     @else
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[2] }}')"
-                                            class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="addAsistencia({{ $row->id }}, '{{ $dates[2] }}')" class="badge badge-secondary"><i class="fa fa-square"></i></button>
                                     @endif
-
-                                    @php
-                                        $pagosPorEntrada = collect($row->getPagos($dates[2]))->groupBy('entrada_id');
-                                    @endphp
-                                    @foreach ($pagosPorEntrada as $entrada_id => $pagos)
-                                        @php
-                                            $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
-                                            $pagoEntrada = $pagos->first();
-                                        @endphp
-                                        <a target="_blank" href="/servicios/{{ $entrada_id }}"
-                                            class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
-                                    @endforeach
-                                @else
-                                    <span style="cursor: pointer"
-                                        onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[2] }}')"
-                                        class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if (collect($row->getFalta($dates[3]))->count() == 0)
+                                </td>
+                                <td>
                                     @if ($row->getPorcentaje($dates[3]) >= 100)
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[3] }}')"
-                                            class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="removeAsistencia({{ $row->id }}, '{{ $dates[3] }}')" class="badge badge-success"><i class="fa fa-check"></i></button>
                                     @else
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[3] }}')"
-                                            class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="addAsistencia({{ $row->id }}, '{{ $dates[3] }}')" class="badge badge-secondary"><i class="fa fa-square"></i></button>
                                     @endif
-
-                                    @php
-                                        $pagosPorEntrada = collect($row->getPagos($dates[3]))->groupBy('entrada_id');
-                                    @endphp
-                                    @foreach ($pagosPorEntrada as $entrada_id => $pagos)
-                                        @php
-                                            $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
-                                            $pagoEntrada = $pagos->first();
-                                        @endphp
-                                        <a target="_blank" href="/servicios/{{ $entrada_id }}"
-                                            class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
-                                    @endforeach
-                                @else
-                                    <span style="cursor: pointer"
-                                        onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[3] }}')"
-                                        class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if (collect($row->getFalta($dates[4]))->count() == 0)
+                                </td>
+                                <td>
                                     @if ($row->getPorcentaje($dates[4]) >= 100)
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[4] }}')"
-                                            class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="removeAsistencia({{ $row->id }}, '{{ $dates[4] }}')" class="badge badge-success"><i class="fa fa-check"></i></button>
                                     @else
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[4] }}')"
-                                            class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="addAsistencia({{ $row->id }}, '{{ $dates[4] }}')" class="badge badge-secondary"><i class="fa fa-square"></i></button>
                                     @endif
-
-                                    @php
-                                        $pagosPorEntrada = collect($row->getPagos($dates[4]))->groupBy('entrada_id');
-                                    @endphp
-                                    @foreach ($pagosPorEntrada as $entrada_id => $pagos)
-                                        @php
-                                            $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
-                                            $pagoEntrada = $pagos->first();
-                                        @endphp
-                                        <a target="_blank" href="/servicios/{{ $entrada_id }}"
-                                            class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
-                                    @endforeach
-                                @else
-                                    <span style="cursor: pointer"
-                                        onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[4] }}')"
-                                        class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if (collect($row->getFalta($dates[5]))->count() == 0)
+                                </td>
+                                <td>
                                     @if ($row->getPorcentaje($dates[5]) >= 100)
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[5] }}')"
-                                            class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="removeAsistencia({{ $row->id }}, '{{ $dates[5] }}')" class="badge badge-success"><i class="fa fa-check"></i></button>
                                     @else
-                                        <span style="cursor: pointer;"
-                                            wire:click="addPay({{ $row->id }}, '{{ $dates[5] }}')"
-                                            class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        <button wire:loading.attr="disabled" style="cursor: pointer;" wire:click="addAsistencia({{ $row->id }}, '{{ $dates[5] }}')" class="badge badge-secondary"><i class="fa fa-square"></i></button>
                                     @endif
+                                </td>
+                            @else
+                                <td>
+                                    @if (collect($row->getFalta($dates[0]))->count() == 0)
+                                        @if ($row->getPorcentaje($dates[0]) >= 100)
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[0] }}')"
+                                                class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        @else
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[0] }}')"
+                                                class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        @endif
 
-                                    @php
-                                        $pagosPorEntrada = collect($row->getPagos($dates[5]))->groupBy('entrada_id');
-                                    @endphp
-                                    @foreach ($pagosPorEntrada as $entrada_id => $pagos)
                                         @php
-                                            $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
-                                            $pagoEntrada = $pagos->first();
+                                            $pagosPorEntrada = collect($row->getPagos($dates[0]))->groupBy(
+                                                'entrada_id',
+                                            );
                                         @endphp
-                                        <a target="_blank" href="/servicios/{{ $entrada_id }}"
-                                            class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
-                                    @endforeach
-                                @else
-                                    <span style="cursor: pointer"
-                                        onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[5] }}')"
-                                        class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
-                                @endif
-                            </td>
+                                        @foreach ($pagosPorEntrada as $entrada_id => $pagos)
+                                            @php
+                                                $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
+                                                $pagoEntrada = $pagos->first();
+                                            @endphp
+                                            <a target="_blank" href="/servicios/{{ $entrada_id }}"
+                                                class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
+                                        @endforeach
+                                    @else
+                                        <span style="cursor: pointer"
+                                            onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[0] }}')"
+                                            class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (collect($row->getFalta($dates[1]))->count() == 0)
+                                        @if ($row->getPorcentaje($dates[1]) >= 100)
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[1] }}')"
+                                                class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        @else
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[1] }}')"
+                                                class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        @endif
+
+                                        @php
+                                            $pagosPorEntrada = collect($row->getPagos($dates[1]))->groupBy(
+                                                'entrada_id',
+                                            );
+                                        @endphp
+                                        @foreach ($pagosPorEntrada as $entrada_id => $pagos)
+                                            @php
+                                                $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
+                                                $pagoEntrada = $pagos->first();
+                                            @endphp
+                                            <a target="_blank" href="/servicios/{{ $entrada_id }}"
+                                                class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
+                                        @endforeach
+                                    @else
+                                        <span style="cursor: pointer"
+                                            onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[1] }}')"
+                                            class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (collect($row->getFalta($dates[2]))->count() == 0)
+                                        @if ($row->getPorcentaje($dates[2]) >= 100)
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[2] }}')"
+                                                class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        @else
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[2] }}')"
+                                                class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        @endif
+
+                                        @php
+                                            $pagosPorEntrada = collect($row->getPagos($dates[2]))->groupBy(
+                                                'entrada_id',
+                                            );
+                                        @endphp
+                                        @foreach ($pagosPorEntrada as $entrada_id => $pagos)
+                                            @php
+                                                $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
+                                                $pagoEntrada = $pagos->first();
+                                            @endphp
+                                            <a target="_blank" href="/servicios/{{ $entrada_id }}"
+                                                class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
+                                        @endforeach
+                                    @else
+                                        <span style="cursor: pointer"
+                                            onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[2] }}')"
+                                            class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (collect($row->getFalta($dates[3]))->count() == 0)
+                                        @if ($row->getPorcentaje($dates[3]) >= 100)
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[3] }}')"
+                                                class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        @else
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[3] }}')"
+                                                class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        @endif
+
+                                        @php
+                                            $pagosPorEntrada = collect($row->getPagos($dates[3]))->groupBy(
+                                                'entrada_id',
+                                            );
+                                        @endphp
+                                        @foreach ($pagosPorEntrada as $entrada_id => $pagos)
+                                            @php
+                                                $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
+                                                $pagoEntrada = $pagos->first();
+                                            @endphp
+                                            <a target="_blank" href="/servicios/{{ $entrada_id }}"
+                                                class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
+                                        @endforeach
+                                    @else
+                                        <span style="cursor: pointer"
+                                            onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[3] }}')"
+                                            class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (collect($row->getFalta($dates[4]))->count() == 0)
+                                        @if ($row->getPorcentaje($dates[4]) >= 100)
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[4] }}')"
+                                                class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        @else
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[4] }}')"
+                                                class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        @endif
+
+                                        @php
+                                            $pagosPorEntrada = collect($row->getPagos($dates[4]))->groupBy(
+                                                'entrada_id',
+                                            );
+                                        @endphp
+                                        @foreach ($pagosPorEntrada as $entrada_id => $pagos)
+                                            @php
+                                                $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
+                                                $pagoEntrada = $pagos->first();
+                                            @endphp
+                                            <a target="_blank" href="/servicios/{{ $entrada_id }}"
+                                                class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
+                                        @endforeach
+                                    @else
+                                        <span style="cursor: pointer"
+                                            onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[4] }}')"
+                                            class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (collect($row->getFalta($dates[5]))->count() == 0)
+                                        @if ($row->getPorcentaje($dates[5]) >= 100)
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[5] }}')"
+                                                class="badge badge-success"><i class="fa fa-check"></i></span>
+                                        @else
+                                            <span style="cursor: pointer;"
+                                                wire:click="addPay({{ $row->id }}, '{{ $dates[5] }}')"
+                                                class="badge badge-secondary"><i class="fa fa-plus"></i></span>
+                                        @endif
+
+                                        @php
+                                            $pagosPorEntrada = collect($row->getPagos($dates[5]))->groupBy(
+                                                'entrada_id',
+                                            );
+                                        @endphp
+                                        @foreach ($pagosPorEntrada as $entrada_id => $pagos)
+                                            @php
+                                                $color = $pagos->contains('porcentaje', 0) ? 'warning' : 'primary';
+                                                $pagoEntrada = $pagos->first();
+                                            @endphp
+                                            <a target="_blank" href="/servicios/{{ $entrada_id }}"
+                                                class="badge badge-{{ $color }}">{{ $pagoEntrada->folio }}</a>
+                                        @endforeach
+                                    @else
+                                        <span style="cursor: pointer"
+                                            onclick="confirm('¿Desea eliminar falta?', 'quitarFalta', '{{ $row->id }}#{{ $dates[5] }}')"
+                                            class="badge badge-danger"><i class="fa fa-times"></i> Falta</span>
+                                    @endif
+                                </td>
+                            @endif
                         </tr>
                     @endforeach
                 </tbody>

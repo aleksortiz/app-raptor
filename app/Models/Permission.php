@@ -29,6 +29,9 @@ class Permission extends SpatiePermission
         'ver-presupuestos' => 'Puede ver el catalogo de presupuestos y visualizar PDF',
         'ver-proveedores' => 'Puede ver proveedores pero no crearlos o editarlos',
         'ver-proyectos' => 'Puede ver el catalogo de proyectos',
+        'enviar-pedidos' => 'Puede enviar pedidos a proveedores por correo',
+        'reporte-finanzas' => 'Puede ver reportes de finanzas',
+        'admin-personal-administrativo' => 'Puede ver, crear y editar personal administrativo',
     ];
 
     public static function boot()

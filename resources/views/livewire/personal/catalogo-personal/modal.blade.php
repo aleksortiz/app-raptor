@@ -8,18 +8,33 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <div>
                     <div class="row">
-                        <div class="form-group col-8">
+                        <div class="form-group col-6">
                             <label>Nombre</label>
                             <input wire:model.defer="model.nombre" type="text" class="form-control" required />
                             @error('model.nombre') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
-                        <div class="form-group col-4">
-                            <label>Sueldo</label>
-                            <input wire:model.defer="model.sueldo" onkeypress="return event.charCode >= 46 && event.charCode <= 57" type="text" class="form-control" required />
-                            @error('model.sueldo') <span class="error text-danger">{{ $message }}</span> @enderror
+                        <div class="form-group col-1">
+                            <label class="" for="iptDestajo">Destajo</label>
+                            <x-input-checkbox value=1 model="model.destajo" />
+                            @error('model.destajo') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
+
+                        @if(!$this->model->destajo)
+                            @can('admin-personal-administrativo')
+                                <div class="form-group col-2">
+                                    <label class="" for="iptAdministrativo">Administrativo</label>
+                                    <x-input-checkbox value=1 model="model.administrativo" />
+                                    @error('model.administrativo') <span class="error text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            @endcan
+                            <div class="form-group col-2">
+                                <label>Sueldo</label>
+                                <input wire:model.defer="model.sueldo" onkeypress="return event.charCode >= 46 && event.charCode <= 57" type="text" class="form-control" required />
+                                @error('model.sueldo') <span class="error text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        @endif
                     </div>
 
                     <div class="row">
@@ -50,7 +65,7 @@
                             @error('model.notas') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" data-dismiss="modal" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>

@@ -19,6 +19,7 @@ class PedidoConcepto extends Model
         'cantidad',
         'cantidad_recibida',
         'precio',
+        'entrada_id',
     ];
 
     public function pedido(){
@@ -44,17 +45,34 @@ class PedidoConcepto extends Model
 
     public function recibirProducto($cantidad, $precio){
 
-        $material = $this->material;
-        $material->existencia += $cantidad;
-
         PedidoConcepto::where('id', $this->id)->update([
             'precio' => $precio,
-        ]);
+        ]);        
 
-        if($material->save()){
-            
-            $this->cantidad_recibida += $cantidad;
-            $this->save();
+        $this->cantidad_recibida += $cantidad;
+        $this->save();
+
+        $material = $this->material;
+        $entrada_id = $this->entrada_id;
+
+        if($material){
+            $material->existencia += $cantidad;
+            $material->precio = $precio;
+            $material->save();
         }
+
+        if($entrada_id){
+            EntradaMaterial::create([
+                'entrada_id' => $entrada_id,
+                'material_id' => $this->material_id,
+                'numero_parte' => $this->codigo,
+                'material' => $this->descripcion,
+                'unidad_medida' => 'N/A',
+                'cantidad' => $cantidad,
+                'precio' => $precio,
+                'pedido_concepto_id' => $this->id,
+            ]);
+        }
+
     }
 }

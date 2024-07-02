@@ -16,11 +16,11 @@ class CreatePedidoConceptosTable extends Migration
         Schema::create('pedido_conceptos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('pedido_id')->constrained('pedidos');
-            $table->foreignId('material_id')->constrained('materiales');
+            $table->foreignId('material_id')->nullable()->constrained('materiales');
             $table->string('codigo');
             $table->string('descripcion');
-            $table->integer('cantidad');
-            $table->integer('cantidad_recibida');
+            $table->decimal('cantidad', 10, 2);
+            $table->decimal('cantidad_recibida', 10, 2);
             $table->decimal('precio', 10, 2);
             $table->timestamps();
         });

@@ -34,7 +34,9 @@
                   <td>@money($row->total)</td>
                   <td>{{ $row->estatus_recibido }}</td>
                   <td>
-                      <button wire:click="mdlEnviarCorreo({{$row->id}})" class="btn btn-xs btn-warning"><i class="fa fa-envelope"></i> Enviar Pedido</button>
+                      @can('enviar-pedidos')
+                        <button wire:click="mdlEnviarCorreo({{$row->id}})" class="btn btn-xs btn-warning"><i class="fa fa-envelope"></i> Enviar Pedido</button>
+                      @endcan
                       <a href='/materiales/pedido_pdf/{{$row->id}}' target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-file-alt"></i> Ver Pedido</a>
                       <button wire:click="$emit('initMdlRecibirPedido',{{$row}})" class="btn btn-xs btn-success"><i class="fa fa-truck"></i> Recibir Pedido</button>
                   </td>

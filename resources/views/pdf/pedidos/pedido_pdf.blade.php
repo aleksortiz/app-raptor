@@ -115,7 +115,7 @@
   @php
       $ob = new Luecano\NumeroALetras\NumeroALetras();
       $ob->apocope = true;
-      $ImporteLetra = $ob->toInvoice(floatval(69), 2, 'MXN');
+      $ImporteLetra = $ob->toInvoice(floatval($pedido->total), 2, 'MXN');
       
   @endphp
   <p style="font-size: 10px; margin-top: 0px;">IMPORTE CON LETRA: {{$ImporteLetra}}</p>

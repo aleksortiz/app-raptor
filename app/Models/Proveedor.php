@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\shared\CancelableModel;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Proveedor extends CancelableModel
@@ -61,6 +62,19 @@ class Proveedor extends CancelableModel
       $dir = 'SIN DIRECCIÓN';
     }
     return $dir;
+  }
+
+  public function getSumPagos($week, $year){
+    if(!$week){
+      $week = Carbon::now()->weekOfYear;
+    }
+    if(!$year){
+      $year = Carbon::now()->year;
+    }
+    $dates = Entrada::getDateRange($year, $week, $week);
+    return PagoProveedor::where('proveedor_id', $this->id)
+    ->whereBetween('created_at', $dates)
+    ->sum('monto');
   }
 
 }

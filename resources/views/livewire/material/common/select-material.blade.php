@@ -13,8 +13,8 @@
 
                     @if ($this->createMode)
                         <div>
-                            <button wire:click="$set('createMode', false)" class="btn btn-secondary btn-xs mb-3"><i
-                                    class="fa fa-arrow-left"></i> Regresar</button>
+                            {{-- <button wire:click="$set('createMode', false)" class="btn btn-secondary btn-xs mb-3"><i
+                                    class="fa fa-arrow-left"></i> Regresar</button> --}}
                             <div class="row">
                                 <div class="form-group col-4">
                                     <label>Número de Parte</label>
@@ -90,8 +90,8 @@
                                     placeholder="Busqueda">
                             </div>
 
-                            <button wire:click="$set('createMode', true)" class="btn btn-primary btn-xs"><i
-                                    class="fa fa-plus"></i> Nuevo Material</button>
+                            {{-- <button wire:click="$set('createMode', true)" class="btn btn-primary btn-xs"><i
+                                    class="fa fa-plus"></i> Nuevo Material</button> --}}
                             <table class="mt-2 table">
                                 <thead>
                                     <tr>

@@ -22,6 +22,7 @@ class CreatePersonalTable extends Migration
             $table->string('contacto_emergencia')->nullable();
             $table->string('notas')->nullable();
             $table->boolean('activo')->default(true);
+            $table->boolean('destajo')->default(false);
             $table->timestamps();
         });
     }

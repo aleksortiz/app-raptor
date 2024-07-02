@@ -23,7 +23,13 @@
                 <tbody>
                   @foreach ($pedido->conceptos ?? [] as $item)
                     <tr>
-                      <td>{{ $item->codigo }}</td>
+                      <td>
+                        @if ($item->entrada_id)
+                            <a class="btn btn-xs btn-primary" href="/servicios/{{$item->entrada_id}}" target="_blank"><i class="fa fa-car"></i> {{ $item->codigo }}</a>
+                        @else
+                          {{ $item->codigo }}
+                        @endif
+                      </td>
                       <td>{{ $item->descripcion }}</td>
                       <td>
                         @if ($item->cantidad == $item->cantidad_recibida)

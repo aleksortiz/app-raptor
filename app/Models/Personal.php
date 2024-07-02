@@ -19,6 +19,13 @@ class Personal extends Model
         'contacto_emergencia',
         'notas',
         'activo',
+        'destajo',
+    ];
+
+    protected $attributes = [
+        'activo' => true,
+        'destajo' => false,
+        'administrativo' => false,
     ];
 
     public function getPagos($date)
@@ -43,6 +50,25 @@ class Personal extends Model
     public function getSueldoDiarioAttribute()
     {
         return $this->sueldo / 6;
+    }
+
+    public function sueldo_acumulado($week, $year)
+    {
+        $dates = Entrada::getDateRange($year, $week, $week);
+        $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('personal_id', $this->id)->sum('pago');
+        return $pagos;
+    }
+
+    public function percent_acumulado($week, $year)
+    {
+        $dates = Entrada::getDateRange($year, $week, $week);
+        $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('personal_id', $this->id)->sum('pago');
+        $sueldo = $this->sueldo;
+        if ($sueldo == 0) {
+            return 0;
+        }
+        $porcentaje = ($pagos / $sueldo) * 100;
+        return number_format($porcentaje, 0);
     }
 
 }

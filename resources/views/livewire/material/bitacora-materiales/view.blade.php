@@ -48,6 +48,17 @@
                     </div>
                 </div>
 
+                <div class="col-1">
+                    <div class="form-group">
+                        <label for="iptDesglosar">Desglosar</label>
+                        {{-- <input wire:model="desglosar" type="checkbox"  id="iptDesglosar"> --}}
+                        <label class="content-input">
+                            <input wire:model="desglosar" type="checkbox" />
+                            <i></i>
+                        </label>
+                    </div>
+                </div>
+
 
             </div>
 
@@ -96,10 +107,10 @@
                         <th>#</th>
                         <th>Fecha</th>
                         <th>Folio</th>
-                        <th>Número de Parte</th>
                         <th>Material</th>
                         <th>Unidad de Medida</th>
                         <th>Cantidad</th>
+                        <th>Precio</th>
                         <th>Importe</th>
                     </tr>
                 </thead>
@@ -114,12 +125,11 @@
                             @else
                                 <button class="btn btn-xs btn-warning p-2"><i class="fa fa-car mr-1"></i> TALLER</button>
                             @endif
-                            
                         </td>
-                        <td>{{ $row->numero_parte ? $row->numero_parte : "N/A" }}</td>
                         <td>{{ $row->material }}</td>
                         <td>{{ $row->unidad_medida }}</td>
                         <td>{{ $row->cantidad }}</td>
+                        <td>@money($row->precio)</td>
                         <td>@money($row->importe)</td>
                     </tr>
                     @endforeach

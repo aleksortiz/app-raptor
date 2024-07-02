@@ -31,7 +31,11 @@ class MdlEnviarPedidoCorreo extends Component
     }
 
     public function send(){
-        PedidoController::enviarCorreo($this->pedido, $this->inputMailBody, $this->inputMails);
+        $res = PedidoController::enviarCorreo($this->pedido, $this->inputMailBody, $this->inputMails);
+        if($res){
+            $estatus = $this->pedido->estatus == 'CREADO' ? 'ENVIADO' : $this->pedido->estatus;
+            Pedido::where('id', $this->pedido->id)->update(['estatus' => $estatus]);
+        }
         $this->emit('ok','Se ha enviado pedido');
         $this->emit('closeModal', "#{$this->mdlName}");
 

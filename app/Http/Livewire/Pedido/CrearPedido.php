@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Pedido;
 
 use App\Http\Controllers\PedidoController;
 use App\Http\Traits\EmailValidateTrait;
+use App\Models\Entrada;
 use App\Models\Material;
 use App\Models\Pedido;
 use App\Models\PedidoConcepto;
@@ -19,9 +20,17 @@ class CrearPedido extends Component
 
     public $pedido_t;
     public $selectedConcepto;
+    public $selectedEntrada = null;
     public $sendEmail = false;
     public $inputEmails;
     public $inputMessage;
+
+    public $materialManual = [
+        'descripcion' => null,
+        'cantidad' => null,
+        'precio' => null,
+        'entrada_folio' => null,
+    ];
 
     protected $listeners = [
         'setProveedor' => 'setProveedor',
@@ -34,6 +43,11 @@ class CrearPedido extends Component
     protected $rules = [
         'pedido_t.conceptos.*.precio' => 'numeric|required',
         'pedido_t.comentarios' => 'string|nullable|max:255',
+
+        'materialManual.descripcion' => 'string|required|max:255',
+        'materialManual.cantidad' => 'numeric|required|min:0',
+        'materialManual.precio' => 'numeric|required|min:0',
+        'materialManual.entrada_folio' => 'string|required|min:5',
     ];
 
     public function updated($name, $value){
@@ -90,9 +104,57 @@ class CrearPedido extends Component
         $this->emit('showModal', '#mdlCatalogoMateriales');
     }
 
+    public function showMdlMaterialManual()
+    {
+        $this->emit('showModal', '#mdlMaterialManual');
+    }
+
+    public function createMaterialManual(){
+        $this->validate([
+            'materialManual.descripcion' => 'string|required|max:255',
+            'materialManual.cantidad' => 'numeric|required|min:0',
+            'materialManual.precio' => 'numeric|required|min:0',
+            'materialManual.entrada_folio' => 'string|required|min:5',
+        ]);
+
+        if(!$this->selectedEntrada){
+            $this->emit('info', 'No se ha seleccionado entrada');
+            return;
+        }
+
+        $this->addMaterialManual(
+            $this->materialManual['entrada_folio'], 
+            $this->materialManual['descripcion'], 
+            $this->materialManual['precio'], 
+            $this->materialManual['cantidad'],
+            $this->selectedEntrada->id,
+        );
+        $this->materialManual = [
+            'descripcion' => null,
+            'cantidad' => null,
+            'precio' => null,
+            'entrada_folio' => null,
+        ];
+        $this->selectedEntrada = null;
+        $this->emit('closeModal', '#mdlMaterialManual');
+    }
+
+
+    public function addMaterialManual($codigo, $descripcion, $precio, $qty, $entrada_id){
+        PedidoConceptoTemp::create([
+            'pedido_temp_id' => $this->pedido_t->id,
+            'material_id' => null,
+            'codigo' => $codigo,
+            'descripcion' => $descripcion,
+            'cantidad' => $qty,
+            'precio' => $precio,
+            'entrada_id' => $entrada_id,
+        ]);
+        $this->pedido_t->load('conceptos');
+    }
+
     public function setMaterial($id, $qty){
         $material = Material::findOrFail($id);
-        $this->emit('console', $material->toArray());
         PedidoConceptoTemp::create([
             'pedido_temp_id' => $this->pedido_t->id,
             'material_id' => $material->id,
@@ -176,6 +238,7 @@ class CrearPedido extends Component
                     'cantidad' => $item->cantidad,
                     'cantidad_recibida' => 0,
                     'precio' => $item->precio,
+                    'entrada_id' => $item->entrada_id,
                 ]);
             }
         }
@@ -205,5 +268,21 @@ class CrearPedido extends Component
             $this->emit('ok', 'Se ha eliminado Producto: ' . strtoupper($ob->descripcion));
         }
         $this->pedido_t->load('conceptos');
+    }
+
+    public function validateEntrada(){
+        $this->selectedEntrada = null;
+
+        $this->validate([
+            'materialManual.entrada_folio' => 'string|required|min:5',
+        ]);
+        $this->selectedEntrada = Entrada::orderBy('id', 'desc')
+        ->where('folio', 'LIKE', $this->materialManual['entrada_folio'] . '%')->first();
+
+        if(!$this->selectedEntrada){
+            $this->emit('info', 'No se encontró entrada con folio: ' . $this->materialManual['entrada_folio']);
+        }
+
+        
     }
 }

@@ -8,7 +8,8 @@
                     <label class="pl-3">{{ $entrada->vehiculo }}</label>
                 </div>
                 <ul class="nav nav-pills ml-auto p-2">
-                    <li class="nav-item"><a href="/servicios" class="nav-link" style="cursor: pointer;"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a></li>
+                    {{-- <li class="nav-item"><a href="/servicios" class="nav-link" style="cursor: pointer;"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a></li> --}}
+                    <li class="nav-item"><a class="nav-link" style="cursor: pointer;" wire:click="back"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 1 ? 'active' : '' }}" wire:click="$set('activeTab',1)" href="#"><i class="fas fa-car"></i> Info Gral.</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 2 ? 'active' : '' }}" wire:click="$set('activeTab',2)" href="#"><i class="fas fa-dollar-sign"></i> Servicios</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 3 ? 'active' : '' }}" wire:click="$set('activeTab',3)" href="#"><i class="fas fa-camera"></i> Fotos</a></li>
@@ -61,6 +62,7 @@
     </div>
 
     @include('livewire.entrada.ver-entrada.modals.mdl-refacciones')
+    @include('livewire.entrada.ver-entrada.modals.mdl-material-manual')
     @include('livewire.entrada.ver-entrada.modals.mdl-edit-date')
     @include('livewire.entrada.ver-entrada.modals.mdl-registrar-pago-destajo')
     @livewire('material.common.select-material')

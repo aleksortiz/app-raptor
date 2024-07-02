@@ -5,6 +5,7 @@
       <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
         {{-- <button wire:click="$emit('showModal','#mdlSelectProducto')" class="btn btn-sm btn-primary"><i class="fas fa-barcode"></i> Productos</button> --}}
         <button wire:click="showMdlMateriales" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Agregar Material</button>
+        <button wire:click="showMdlMaterialManual" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i> Registro Manual</button>
       </button>
     </div>
   </div>

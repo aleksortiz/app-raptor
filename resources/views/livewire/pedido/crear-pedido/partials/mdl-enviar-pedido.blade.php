@@ -12,20 +12,22 @@
             <h5><b>Productos:</b> @qty($this->pedido_t->total_productos)</h5>
             <h5><b>Importe:</b> @money($this->pedido_t->total)</h5>
             <br>
-            <div class="form-group">
-                <label>Enviar pedido por correo:</label>
-                <x-input-checkbox model="sendEmail"/>
-                @if ($this->sendEmail)
-                  <div class="form-group">
-                    <label>Correo:</label>
-                    <input type="text" class="form-control form-control-sm" wire:model.lazy="inputEmails" style="text-transform: lowercase"/>
-                  </div>
-                  <div class="form-group">
-                    <label>Mensaje:</label>
-                    <textarea class="form-control form-control-sm" rows="5" wire:model.lazy="inputMessage"></textarea>
-                  </div>
-                @endif
-            </div>
+            @can('enviar-pedidos')              
+              <div class="form-group">
+                  <label>Enviar pedido por correo:</label>
+                  <x-input-checkbox model="sendEmail"/>
+                  @if ($this->sendEmail)
+                    <div class="form-group">
+                      <label>Correo:</label>
+                      <input type="text" class="form-control form-control-sm" wire:model.lazy="inputEmails" style="text-transform: lowercase"/>
+                    </div>
+                    <div class="form-group">
+                      <label>Mensaje:</label>
+                      <textarea class="form-control form-control-sm" rows="5" wire:model.lazy="inputMessage"></textarea>
+                    </div>
+                  @endif
+              </div>
+            @endcan
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cerrar</button>

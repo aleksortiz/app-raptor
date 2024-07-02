@@ -31,7 +31,8 @@
   @endif
 
   <livewire:proveedor.common.mdl-select-proveedor emitAction="setProveedor" />
-  <livewire:material.common.select-material validStock={{false}} /> 
+  <livewire:material.common.select-material validStock={{false}} />
+  @include('livewire.pedido.crear-pedido.partials.mdl-material-manual')
 
   {{-- <livewire:producto.common.mdl-select-producto emitAction="addProducto" priceField='costo' checkStock={{false}} /> --}}
   {{-- <livewire:producto.common.mdl-select-qty emitAction="changeQty" /> --}}

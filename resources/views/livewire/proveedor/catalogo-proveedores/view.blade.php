@@ -19,7 +19,7 @@
                     {{ $this->model_name }}</button>    
             @endcan
             
-            <table class="table table-striped projects">
+            <table class="table table-hover">
 
                 <thead>
                     <tr>

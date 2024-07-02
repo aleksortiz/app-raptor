@@ -19,6 +19,8 @@ class BitacoraMateriales extends Component
     public $maxYear;
     public $totalMateriales;
 
+    public $desglosar = false;
+
     public function updated(){
         $this->resetPage();
     }

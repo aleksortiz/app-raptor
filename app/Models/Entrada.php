@@ -155,9 +155,9 @@ class Entrada extends BaseModel
 
     public function getTotalAttribute()
     {
-        return $this->total_costos
+        return $this->total_costos;
             // + $this->total_materiales
-            + $this->total_refacciones;
+            // + $this->total_refacciones;
     }
 
     public function getTotalCostoRefaccionesAttribute()
@@ -187,11 +187,19 @@ class Entrada extends BaseModel
         //-MATERIALES
         //-SUELDOS
         //-DESTAJOS
-        $utilidad = $this->total_costos + $this->total_utilidad_refacciones;
+        // $utilidad = $this->total_costos + $this->total_utilidad_refacciones;
+        $utilidad = $this->total_costos;
+        $utilidad -= $this->total_costo_refacciones;
         $utilidad -= $this->total_materiales;
         $utilidad -= $this->total_sueldos;
         $utilidad -= $this->total_destajos;
         return $utilidad;
+    }
+    public function getPorcentajeUtilidadGlobalAttribute(){
+        if ($this->total > 0) {
+            return ($this->total_utilidad_global / $this->total) * 100;
+        }
+        return 0;
     }
 
     public function getFechaEntregaFormatAttribute()

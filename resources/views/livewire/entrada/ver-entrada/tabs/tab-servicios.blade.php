@@ -97,7 +97,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text"><b>Utilidad Global</b></span>
-                        <span class="info-box-number">@money($this->entrada->total_utilidad_global)</span>
+                        <span class="info-box-number">@money($this->entrada->total_utilidad_global) (@float($this->entrada->porcentaje_utilidad_global)%)</span>
                     </div>
 
                 </div>

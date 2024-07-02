@@ -56,7 +56,8 @@ class RouteServiceProvider extends ServiceProvider
                 'materiales.php',
                 'catalogos.php',
                 'servicios.php',
-                'evaluaciones.php'
+                'evaluaciones.php',
+                'business.php',
             ];
 
             foreach ($rutas as $ruta) {

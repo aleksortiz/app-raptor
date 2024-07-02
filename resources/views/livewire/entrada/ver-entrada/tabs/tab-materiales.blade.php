@@ -1,6 +1,7 @@
 <div class="card m-0" style="min-height: 65vh;">
     <div class="card-body p-0">
         <button wire:click="showMdlMateriales" class="m-2 btn btn-xs btn-success"><i class="fa fa-plus"></i> Agregar Material</button>
+        {{-- <button wire:click="showMdlMaterialManual" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i> Registro Manual</button> --}}
         <div class="row">
             <div class="col">
                 <table class="table table-hover">
