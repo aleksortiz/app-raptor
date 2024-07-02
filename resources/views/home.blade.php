@@ -7,7 +7,6 @@
     <img width="60%" src="{{ asset('images/logo.png') }}">
     {{-- <h1>{{env('APP_FULL_NAME')}}</h1> --}}
     <h2>{{env('BUSSINESS_DESCRIPTION')}}</h2>
-    <h3>Que tranza, {{ Auth::user()->name }}!</h3>
     {{-- <br>
     <br>
     <h3><a href="/aos/tickets-soporte">Solicitud de soporte para errores y/o modificaciones</a></h3> --}}
