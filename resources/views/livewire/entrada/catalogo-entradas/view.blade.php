@@ -85,6 +85,7 @@
                         <th>Vehículo</th>
                         <th>Monto</th>
                         <th>Estatus Pago</th>
+                        <th>Estatus Entrega</th>
                         <th>Opciones</th>
                     </tr>
                 </thead>
@@ -98,6 +99,7 @@
                         <td>{{ $row->vehiculo }}</td>
                         <td>@money($row->total)</td>
                         <td>{!! $row->estatus_entrada !!}</td>
+                        <td>{!! $row->entrega_button !!}</td>
                         <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> Más detalles</a></td>
                     </tr>
                     @endforeach

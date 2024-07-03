@@ -59,6 +59,23 @@
 
             </div>
             <div class="col-9">
+                @if ($entrada->fecha_entrega)
+                    <div class="col-3">
+                        <label for="">Fecha de Entrega</label>
+                        <h6 style="cursor: pointer;" wire:click="editFechaEntrega">
+                            {{ $entrada->fecha_entrega_format }}</h6>
+                    </div>
+                @else
+                    <div class="col-3">
+                        <button class="btn btn-secondary btn-sm" wire:click="entregarVehiculo"><i
+                                class="fas fa-car"></i> Entregar Vehículo</button>
+                    </div>
+                @endif
+
+                <br><br><br>
+                <h1>*INVENTARIO: Seccion Pendiente*</h1>
+
+
                 {{-- <div class="row">
 
                     @if($entrada->refacciones->count() > 0)
@@ -114,7 +131,7 @@
                 <h4>Areas de Trabajo</h4>
                 @include('livewire.entrada.ver-entrada.partials.car-layout') --}}
 
-                <h1>INVENTARIO: ***Pendiente***</h1>
+                {{-- <h1>INVENTARIO: ***Pendiente***</h1> --}}
 
 
 

@@ -240,6 +240,17 @@ class Entrada extends BaseModel
         return $data;
     }
 
+    public function getEntregaButtonAttribute()
+    {
+        if ($this->fecha_entrega) {
+            $tooltip = "Vehiculo Entregado: ". $this->fecha_entrega_format;
+            return ' <button style="cursor: pointer;" wire:click="editFechaEntrega(' . $this->id . ')" data-toggle="tooltip" data-placement="right" title="'.$tooltip.'" class="py-1 btn btn-xs btn-success"><i class="fa fa-check"></i> Veh. Entregado</button>';
+        }
+        else{
+            return ' <button style="cursor: pointer;" wire:click="" onclick="confirm(\'Entregar vehículo: '.$this->vehiculo.'\', \'entregarVehiculo\', '. $this->id .')" class="py-1 btn btn-xs btn-warning"><i class="fa fa-car"></i> Veh. Pendiente</button>';
+        }
+    }
+
     public function getEstatusEntradaAttribute()
     {
         $count = collect($this->costos)->count();
