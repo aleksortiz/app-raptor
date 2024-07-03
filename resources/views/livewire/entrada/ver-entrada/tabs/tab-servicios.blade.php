@@ -81,7 +81,7 @@
 
             <div class="col-sm-3">
                 <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-car"></i></span>
+                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-money-bill-wave"></i></span>
 
                     <div class="info-box-content">
                         <span class="info-box-text"><b>Total Pagado</b></span>
