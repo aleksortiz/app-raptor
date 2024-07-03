@@ -10,7 +10,7 @@
         
                     <div class="info-box-content">
                       <span class="info-box-text"><b>Total Materiales:</b></span>
-                      <span class="info-box-number">@money($this->entrada->materiales->sum('importe'))</span>
+                      <span class="info-box-number">@money($this->entrada->total_materiales)</span>
                     </div>
         
                 </div>
