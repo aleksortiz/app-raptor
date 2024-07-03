@@ -71,7 +71,9 @@ class CatalogoEntradas extends Component
             ->orWhereHas('cliente', function($fab){
                 $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
             })
-            ->orWhere('folio', 'LIKE', "{$this->keyWord}%");
+            ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
+            ->orWhere('serie', 'LIKE', "{$this->keyWord}%")
+            ->orWhere('orden', 'LIKE', "{$this->keyWord}%");
         });
 
         if($this->origen){
