@@ -16,6 +16,7 @@ class Costo extends Model
         'concepto',
         'costo',
         'pagado',
+        'no_factura',
     ];
 
     public function getFechaPagoFormatAttribute()

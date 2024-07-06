@@ -34,6 +34,8 @@ class CatalogoEntradas extends Component
     protected $rules = [
         'selectedCosto.concepto' => 'string|required|max:255',
         'selectedCosto.costo' => 'numeric|required|min:0',
+        'selectedCosto.no_factura' => 'string|nullable|max:255',
+        'selectedCosto.pagado' => 'date',
     ];
 
     protected $listeners = [
@@ -104,6 +106,8 @@ class CatalogoEntradas extends Component
         $this->validate([
             'selectedCosto.concepto' => 'string|required|max:255',
             'selectedCosto.costo' => 'numeric|required|min:0',
+            'selectedCosto.no_factura' => 'string|nullable|max:255',
+            'selectedCosto.pagado' => 'date',
         ]);
 
         // $this->costo->model_id = $this->selectedEntrada->id;
