@@ -72,13 +72,26 @@
                     </div>
                 @endif
 
+                @if ($entrada->fecha_pago)
+                    <div class="col-3">
+                        <label for="">Fecha de Pago</label>
+                        <h6 style="cursor: pointer;" wire:click="editFechaPago">{{ $entrada->fecha_pago_format }}
+                        </h6>
+                    </div>
+                @else
+                    <div class="col-3">
+                        <button class="btn btn-secondary btn-sm" wire:click="pagarEntrada"><i
+                                class="fas fa-hand-holding-usd"></i> Pagar Entrada</button>
+                    </div>
+                @endif
+
                 <br><br><br>
                 <h1>*INVENTARIO: Seccion Pendiente*</h1>
 
 
                 {{-- <div class="row">
 
-                    @if($entrada->refacciones->count() > 0)
+                    @if ($entrada->refacciones->count() > 0)
                         @if ($entrada->fecha_pago_refacciones)
                             <div class="col-3">
                                 <label for="">Fecha de pago refacciones</label>
