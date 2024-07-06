@@ -59,31 +59,33 @@
 
             </div>
             <div class="col-9">
-                @if ($entrada->fecha_entrega)
-                    <div class="col-3">
-                        <label for="">Fecha de Entrega</label>
-                        <h6 style="cursor: pointer;" wire:click="editFechaEntrega">
-                            {{ $entrada->fecha_entrega_format }}</h6>
-                    </div>
-                @else
-                    <div class="col-3">
-                        <button class="btn btn-secondary btn-sm" wire:click="entregarVehiculo"><i
-                                class="fas fa-car"></i> Entregar Vehículo</button>
-                    </div>
-                @endif
-
-                @if ($entrada->fecha_pago)
-                    <div class="col-3">
-                        <label for="">Fecha de Pago</label>
-                        <h6 style="cursor: pointer;" wire:click="editFechaPago">{{ $entrada->fecha_pago_format }}
-                        </h6>
-                    </div>
-                @else
-                    <div class="col-3">
-                        <button class="btn btn-secondary btn-sm" wire:click="pagarEntrada"><i
-                                class="fas fa-hand-holding-usd"></i> Pagar Entrada</button>
-                    </div>
-                @endif
+                <div class="row">
+                    @if ($entrada->fecha_entrega)
+                        <div class="col-3">
+                            <label for="">Fecha de Entrega</label>
+                            <h6 style="cursor: pointer;" wire:click="editFechaEntrega">
+                                {{ $entrada->fecha_entrega_format }}</h6>
+                        </div>
+                    @else
+                        <div class="col-3">
+                            <button class="btn btn-secondary btn-sm" wire:click="entregarVehiculo"><i
+                                    class="fas fa-car"></i> Entregar Vehículo</button>
+                        </div>
+                    @endif
+    
+                    @if ($entrada->fecha_pago)
+                        <div class="col-3">
+                            <label for="">Fecha de Pago</label>
+                            <h6 style="cursor: pointer;" wire:click="editFechaPago">{{ $entrada->fecha_pago_format }}
+                            </h6>
+                        </div>
+                    @else
+                        <div class="col-3">
+                            <button class="btn btn-secondary btn-sm" wire:click="pagarEntrada"><i
+                                    class="fas fa-hand-holding-usd"></i> Pagar Entrada</button>
+                        </div>
+                    @endif
+                </div>
 
                 <br><br><br>
                 <h1>*INVENTARIO: Seccion Pendiente*</h1>
