@@ -107,7 +107,7 @@ class CatalogoEntradas extends Component
             'selectedCosto.concepto' => 'string|required|max:255',
             'selectedCosto.costo' => 'numeric|required|min:0',
             'selectedCosto.no_factura' => 'string|nullable|max:255',
-            'selectedCosto.pagado' => 'date',
+            'selectedCosto.pagado' => 'date|nullable',
         ]);
 
         // $this->costo->model_id = $this->selectedEntrada->id;
