@@ -93,7 +93,7 @@
                     @foreach ($entradas as $row)
                     <tr>
                         <td>{{ $row->folio_short }}</td>
-                        <td><button class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
+                        <td>{{ $row->origen }}</td>
                         <td>{{ $row->cliente->nombre }}</td>
                         <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
                         <td>{{ $row->vehiculo }}</td>
