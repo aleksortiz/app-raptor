@@ -302,4 +302,45 @@ class Entrada extends BaseModel
     {
         return $this->hasManyThrough(OrdenTrabajoPago::class, OrdenTrabajo::class);
     }
+
+    public function getOrigenShortAttribute()
+    {
+        if($this->origen == 'AGENCIA'){
+            return 'AG';
+        }
+        if ($this->origen == 'ASEGURADORA') {
+            return 'AS';
+        }
+        if ($this->origen == 'PARTICULAR') {
+            return 'P';
+        }
+        if ($this->origen == 'GARANTIA'){
+            return 'G';
+        }
+        if ($this->origen == 'INTERNO'){
+            return 'I';
+        }
+
+        return 'N/A';
+    }
+
+    public function getOrigenColorAttribute()
+    {
+        if ($this->origen == 'ASEGURADORA') {
+            return 'primary';
+        }
+        if ($this->origen == 'PARTICULAR') {
+            return 'default';
+        }
+        if ($this->origen == 'AGENCIA') {
+            return 'success';
+        }
+        if ($this->origen == 'GARANTIA') {
+            return 'warning';
+        }
+        if ($this->origen == 'INTERNO') {
+            return 'info';
+        }
+        return 'info';
+    }
 }
