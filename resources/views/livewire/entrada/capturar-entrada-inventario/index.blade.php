@@ -1,15 +1,13 @@
 @extends('layouts.public')
 
 @section('css')
+    <link rel="stylesheet" href="{{ asset('vendor/ion-range-slider/css/ion.rangeSlider.min.css') }}">
     <style>
         .layer {
-            display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            /* height: 100vh; */
-            margin: 0;
-            font-family: Arial, sans-serif;
+            /* margin: 10px; */
+            /* height: 70vh; */
         }
 
         h1 {
@@ -18,6 +16,8 @@
 
         canvas {
             border: 1px solid #000;
+            /* width: 100%; */
+            /* height: 60vh; */
         }
     </style>
 @endsection
@@ -28,13 +28,37 @@
 @endsection
 
 @section('js')
+    <script src="{{ asset('vendor/ion-range-slider/ion.rangeSlider.min.js') }}"></script>
     <script>
+        $("#range_gas").ionRangeSlider({
+            skin: "round",
+            postfix : ' %',
+            prettify_enabled: true,
+            min: 0,
+            max: 100,
+            from: 0,
+            onStart: function(data) {
+                // fired then range slider is ready
+            },
+            onChange: function(data) {
+                window.livewire.emit('setGas', data.from);
+            },
+            onFinish: function(data) {
+                // fired on pointer release
+            },
+            onUpdate: function(data) {
+                // fired on changing slider with Update method
+            }
+        });
+
+
         const canvas = document.getElementById('drawingCanvas');
         const ctx = canvas.getContext('2d');
 
         // Ajusta el tamaño del canvas
-        canvas.width = window.innerWidth * 0.8;
-        canvas.height = window.innerHeight * 0.8;
+        canvas.width = window.innerWidth * 0.5;
+        canvas.height = window.innerHeight * 0.5;
+        // canvas.width = '50px';
 
         // Variables para el dibujo
         let drawing = false;
@@ -63,7 +87,7 @@
             if (!drawing) return;
 
             e.preventDefault(); // Previene el comportamiento predeterminado
-            ctx.lineWidth = 3;
+            ctx.lineWidth = 1;
             ctx.lineCap = 'round';
             ctx.strokeStyle = 'black';
 

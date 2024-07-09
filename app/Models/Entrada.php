@@ -36,6 +36,7 @@ class Entrada extends BaseModel
         'aseguradora_id' => 6,
         'origen' => 'ASEGURADORA',
         'servicio_interno' => false,
+        'gasolina' => 0,
     ];
 
     public static function boot()
@@ -286,6 +287,11 @@ class Entrada extends BaseModel
     public function setOrdenAttribute($value)
     {
         $this->attributes['orden'] = strtoupper($value);
+    }
+
+    public function setPlacasAttribute($value)
+    {
+        $this->attributes['placas'] = trim(strtoupper($value));
     }
 
     public function setNumeroFacturaAttribute($value)

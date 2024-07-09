@@ -16,6 +16,19 @@ class CapturarEntradaInventario extends Component
 {
     public Entrada $entrada;
 
+    protected $rules = [
+        'entrada.inventario' => 'required|string',
+        'entrada.color' => 'required|string',
+        'entrada.placas' => 'required|string',
+        'entrada.year' => 'required|numeric|digits:4',
+        'entrada.kilometraje' => 'required|numeric',
+        'entrada.gasolina' => 'required|numeric|min:1|max:100',
+    ];
+
+    protected $listeners = [
+        'setGas',
+    ];
+
     public function mount(Entrada $entrada){
         $this->entrada = $entrada;
     }
@@ -24,12 +37,22 @@ class CapturarEntradaInventario extends Component
         return view('livewire.entrada.capturar-entrada-inventario.view', $this->getRenderData());
     }
 
+    public function setGas($gasolina){
+        $this->entrada->gasolina = $gasolina;
+    }
+
     public function getRenderData(){
         return [
             // 'sucursales' => Sucursal::allActive(),
             // 'aseguradoras' => Aseguradora::OrderBy('nombre')->get(),
             // 'fabricantes' => Fabricante::OrderBy('nombre')->get(),
         ];
+    }
+
+    public function aceptar(){
+        $this->validate();
+        $this->entrada->save();
+        $this->emit('ok', 'Inventario guardado correctamente');
     }
 
 }
