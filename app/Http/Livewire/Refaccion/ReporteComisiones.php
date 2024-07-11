@@ -5,13 +5,18 @@ namespace App\Http\Livewire\Refaccion;
 use App\Models\Refaccion;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ReporteComisiones extends Component
 {
+    use WithPagination;
+    
     public $weekStart;
     public $weekEnd;
     public $maxYear;
     public $year;
+
+    protected $paginationTheme = 'bootstrap';
 
     protected $query = ['weekStart', 'weekEnd', 'year'];
 
