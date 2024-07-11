@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\Cliente;
+namespace App\Http\Livewire\Flotilla;
 
-use App\Http\Livewire\shared\LivewireBaseCrudController;
+use App\Http\Livewire\Classes\LivewireBaseCrudController;
 use App\Models\Cliente;
 
-class CatalogoClientes extends LivewireBaseCrudController
+class CatalogoClientesFlotillas extends LivewireBaseCrudController
 {
     protected $model_name = "Cliente";
     protected $model_name_plural = "Clientes";
@@ -35,8 +35,12 @@ class CatalogoClientes extends LivewireBaseCrudController
         ->orWhere('rfc', 'LIKE', $keyWord)
         ->orWhere('razon_social', 'LIKE', $keyWord)
         ->paginate(50);
-        return view('livewire.cliente.catalogo-clientes.view', compact('data'));
+        return view('livewire.flotilla.catalogo-clientes-flotillas.view', compact('data'));
     }
-
     
+    public function verFlotilla($id){
+        $cliente = Cliente::findOrFail($id);
+        $cliente->createIdentifier();
+        return redirect()->to('/servicio-flotillas/'.$cliente->identificador);
+    }
 }

@@ -33,6 +33,10 @@ class Refaccion extends BaseModel
         });
     }
 
+    public function model(){
+        return $this->morphTo();
+    }
+
     public function getCostoTotalAttribute(){
         return $this->costo * $this->cantidad;
     }

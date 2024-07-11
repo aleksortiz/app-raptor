@@ -372,6 +372,28 @@ return [
             ]
         ],
         [
+            'text' => 'Refacciones',
+            'icon' => 'fas fa-fw fa-wrench',
+            'submenu' => [
+                [
+                    'text' => 'Reporte de Comisiones',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'url'  => '/refacciones/reporte-comisiones',
+                ],
+            ]
+        ],
+        [
+            'text' => 'Servicio a flotillas',
+            'icon' => 'fas fa-fw fa-taxi',
+            'submenu' => [
+                [
+                    'text' => 'Flotillas',
+                    'icon' => 'fas fa-fw fa-chevron-right',
+                    'url'  => '/servicio-flotillas',
+                ],
+            ]
+        ],
+        [
             'text' => 'Catalogos',
             'icon' => 'fas fa-fw fa-book',
             'submenu' => [

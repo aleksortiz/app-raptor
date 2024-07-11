@@ -87,4 +87,15 @@ class Cliente extends CancelableModel
     }
     return $name;
   }
+
+  public function flotillas(){
+    return $this->hasMany(Flotilla::class, 'cliente_id');
+  }
+
+  public function createIdentifier(){
+    $this->identificador = uniqid() . $this->id;
+    $this->save();
+  }
+
+
 }
