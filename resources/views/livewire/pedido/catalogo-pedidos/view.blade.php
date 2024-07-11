@@ -76,6 +76,7 @@
                         <th>ID</th>
                         <th>Fecha</th>
                         <th>Usuario</th>
+                        <th>Proveedor</th>
                         <th>Importe</th>
                         <th>Estatus</th>
                         <th>Opciones</th>
@@ -87,6 +88,7 @@
                             <td>{{ $row->id_paddy }}</td>
                             <td>{{ $row->fecha_format }}</td>
                             <td>{{ $row->user->name }}</td>
+                            <td>{{ $row->proveedor->nombre }}</td>
                             <td>@money($row->total)</td>
                             <td>{{ $row->estatus_recibido }}</td>
                             <td>
