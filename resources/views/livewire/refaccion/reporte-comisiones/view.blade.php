@@ -75,6 +75,7 @@
                             <td>@float($row->costo_total)</td>
                             <td>@float($row->importe)</td>
                             <td>@float($row->utilidad)</td>
+                            <td>@float($row->comision)</td>
                         </tr>
                     @endforeach
                 </tbody>
