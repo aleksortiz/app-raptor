@@ -47,7 +47,7 @@ class BitacoraMateriales extends Component
         ->whereBetween('created_at', [$start, $end]);
 
         if($this->desglosar){
-            $materiales->groupBy('material_id');
+            $materiales->groupBy('material');
 
         }
 
