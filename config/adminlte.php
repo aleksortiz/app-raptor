@@ -374,6 +374,7 @@ return [
         [
             'text' => 'Refacciones',
             'icon' => 'fas fa-fw fa-wrench',
+            'can' => ['reporte-comisiones'],
             'submenu' => [
                 [
                     'text' => 'Reporte de Comisiones',
