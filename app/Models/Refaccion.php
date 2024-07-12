@@ -52,4 +52,8 @@ class Refaccion extends BaseModel
     public function setNumeroParteAttribute($value){
         $this->attributes['numero_parte'] = strtoupper($value);
     }
+
+    public function getComisionAttribute(){
+        return $this->utilidad * 0.1;
+    }
 }

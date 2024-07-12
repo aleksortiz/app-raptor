@@ -62,8 +62,6 @@
             </div>
 
 
-
-
             <div class="ml-3">
                 <a href="/materiales/crear-pedido" target="_blank" class="btn btn-xs btn-primary"><i
                         class="fa fa-plus"></i> Crear Pedido</a>

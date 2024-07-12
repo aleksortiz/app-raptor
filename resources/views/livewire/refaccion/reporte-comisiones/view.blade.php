@@ -56,8 +56,10 @@
                         <th>Vehículo</th>
                         <th>No. Parte</th>
                         <th>Descripción</th>
-                        <th>Cantidad</th>
-                        <th>Importe</th>
+                        <th>Costo</th>
+                        <th>Venta</th>
+                        <th>Utilidad</th>
+                        <th>Comisión</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -70,8 +72,9 @@
                             <td>{{ $row->model->vehiculo }}</td>
                             <td>{{ $row->numero_parte }}</td>
                             <td>{{ $row->descripcion }}</td>
-                            <td>@float($row->cantidad)</td>
+                            <td>@float($row->costo_total)</td>
                             <td>@float($row->importe)</td>
+                            <td>@float($row->utilidad)</td>
                         </tr>
                     @endforeach
                 </tbody>
