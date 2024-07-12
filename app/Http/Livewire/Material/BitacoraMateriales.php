@@ -44,6 +44,13 @@ class BitacoraMateriales extends Component
         $materiales = EntradaMaterial::orderBy('created_at', 'desc')
         ->whereBetween('created_at', [$start, $end]);
 
+        if($this->desglosar){
+            // $materiales = $materiales->whereHas('material', function($query){
+            //     $query->where('desglosar', true);
+            // });
+            $materiales->groupBy('material_id');
+        }
+
         $this->totalMateriales = collect($materiales->get())->sum('importe');
 
         return [
