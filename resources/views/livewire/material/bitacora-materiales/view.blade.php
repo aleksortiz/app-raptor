@@ -127,7 +127,7 @@
                                     <button class="btn btn-xs btn-warning p-2"><i class="fa fa-car mr-1"></i> TALLER</button>
                                 @endif
                             @else
-                                <a target="_blank" href="/servicios/{{$row->entrada_id}}?activeTab=6" class="btn btn-xs btn-primary p-2"><i class="fa fa-car mr-1"></i> {{ $row->c_entradas }}</a>
+                                <a target="_blank" class="btn btn-xs btn-info p-2"><i class="fa fa-car mr-1"></i> {{ $row->c_entradas }}</a>
                             @endif
 
 
@@ -145,6 +145,6 @@
 
         </div>
     </div>
-    {{-- {{ $materiales->links() }} --}}
+    {{ $materiales->links() }}
 
 </div>

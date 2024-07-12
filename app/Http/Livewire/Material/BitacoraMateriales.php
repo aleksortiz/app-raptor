@@ -42,7 +42,7 @@ class BitacoraMateriales extends Component
     private function getRenderData(){
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         
-        $materiales = EntradaMaterial::select(DB::raw('id, material_id, entrada_id, material, count(entrada_id) as c_entradas, precio, sum(cantidad) as cantidadSum, sum(precio * cantidad) as importeSum'))
+        $materiales = EntradaMaterial::select(DB::raw('id, material_id, entrada_id, material, unidad_medida, count(entrada_id) as c_entradas, precio, sum(cantidad) as cantidadSum, sum(precio * cantidad) as importeSum'))
         ->whereBetween('created_at', [$start, $end]);
     
         if($this->desglosar){
