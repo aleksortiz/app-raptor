@@ -56,6 +56,11 @@
                             <input wire:model.defer="model.telefono" type="text" class="form-control" />
                             @error('model.telefono') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
+                        <div class="form-group col-4">
+                            <label>Fecha de Ingreso</label>
+                            <input wire:model.defer="model.fecha_ingreso" type="date" class="form-control" />
+                            @error('model.fecha_ingreso') <span class="error text-danger">{{ $message }}</span> @enderror
+                        </div>
                     </div>
 
                     <div class="row">
@@ -64,6 +69,7 @@
                             <textarea class="form-control" wire:model.defer="model.notas"></textarea>
                             @error('model.notas') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
+                        
                     </div>
                 </div>
             </div>

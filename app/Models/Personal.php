@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,7 @@ class Personal extends Model
         'notas',
         'activo',
         'destajo',
+        'fecha_ingreso',
     ];
 
     protected $attributes = [
@@ -69,6 +71,13 @@ class Personal extends Model
         }
         $porcentaje = ($pagos / $sueldo) * 100;
         return number_format($porcentaje, 0);
+    }
+
+    public function getFechaIngresoFormatAttribute(){
+        if($this->fecha_ingreso == null){
+            return 'PENDIENTE';
+        }
+        return Carbon::parse($this->fecha_ingreso)->format('M-d-Y');
     }
 
 }

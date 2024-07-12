@@ -19,6 +19,7 @@ class CatalogoPersonal extends LivewireBaseCrudController
         'model.notas' => 'string|nullable|max:255',
         'model.destajo' => 'boolean|required',
         'model.administrativo' => 'boolean|required',
+        'model.fecha_ingreso' => 'date|nullable',
     ];
 
     public function resetInput(){

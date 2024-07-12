@@ -29,9 +29,10 @@
                     <tr>
                         <th>#</th>
                         <th>Personal</th>
+                        <th>Fecha Ingreso</th>
                         <th>Sueldo</th>
                         <th>Domicilio</th>
-                        <th>Contacto Emergencia</th>
+                        {{-- <th>Contacto Emergencia</th> --}}
                         <th>Editar</th>
                         <th>Mostrar / Ocultar</th>
                     </tr>
@@ -44,6 +45,7 @@
                     <tr class="{{$color}}">
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $row->nombre }}</td>
+                        <td>{{ $row->fecha_ingreso_format }}</td>
                         <td>
                             @if ($row->destajo)
                                 DESTAJO
@@ -52,7 +54,7 @@
                             @endif
                         </td>
                         <td>{{ $row->domicilio ? $row->domicilio : "N/A" }}</td>
-                        <td>{{ $row->contacto_emergencia ? $row->contacto_emergencia : "N/A" }}</td>
+                        {{-- <td>{{ $row->contacto_emergencia ? $row->contacto_emergencia : "N/A" }}</td> --}}
                         <td><button wire:click="mdlEdit({{ $row->id }})" class="btn btn-xs btn-primary"><i class="fa fa-user-tie"></i> Editar</button></td>
                         <td>
                             @if ($row->activo)
