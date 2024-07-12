@@ -32,6 +32,7 @@ class Permission extends SpatiePermission
         'enviar-pedidos' => 'Puede enviar pedidos a proveedores por correo',
         'reporte-finanzas' => 'Puede ver reportes de finanzas',
         'admin-personal-administrativo' => 'Puede ver, crear y editar personal administrativo',
+        'reporte-comisiones' => 'Puede ver reportes de comisiones',
     ];
 
     public static function boot()
