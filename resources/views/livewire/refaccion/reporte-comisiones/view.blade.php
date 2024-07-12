@@ -54,7 +54,6 @@
                         <th>#</th>
                         <th>Entrada</th>
                         <th>Vehículo</th>
-                        <th>No. Parte</th>
                         <th>Descripción</th>
                         <th>Costo</th>
                         <th>Venta</th>
@@ -70,12 +69,11 @@
                                 <a class="btn btn-xs btn-primary" href="/servicios/{{$row->model_id}}"><i class="fa fa-car"></i> {{ $row->model->folio_short }}</a>
                             </td>
                             <td>{{ $row->model->vehiculo }}</td>
-                            <td>{{ $row->numero_parte }}</td>
                             <td>{{ $row->descripcion }}</td>
-                            <td>@float($row->costo_total)</td>
-                            <td>@float($row->importe)</td>
-                            <td>@float($row->utilidad)</td>
-                            <td>@float($row->comision)</td>
+                            <td>@money($row->costo_total)</td>
+                            <td>@money($row->importe)</td>
+                            <td>@money($row->utilidad)</td>
+                            <td>@money($row->comision)</td>
                         </tr>
                     @endforeach
                 </tbody>

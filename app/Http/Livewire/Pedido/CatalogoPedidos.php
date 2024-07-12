@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Pedido;
 
-use App\Http\Controllers\PedidoController;
 use App\Http\Livewire\Classes\LivewireBaseCrudController;
 use App\Models\Entrada;
 use App\Models\Pedido;

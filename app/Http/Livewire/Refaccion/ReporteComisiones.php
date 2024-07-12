@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Refaccion;
 
+use App\Models\Entrada;
 use App\Models\Refaccion;
 use Carbon\Carbon;
 use Livewire\Component;
@@ -35,8 +36,11 @@ class ReporteComisiones extends Component
 
     public function getRenderData()
     {
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $refacciones = Refaccion::orderBy('id', 'DESC')->whereBetween('created_at', $dates);
+
         return [
-            'data' => Refaccion::paginate(50),
+            'data' => $refacciones->paginate(50),
         ];
     }
 }
