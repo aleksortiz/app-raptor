@@ -135,9 +135,9 @@
                         </td>
                         <td>{{ $row->material }}</td>
                         <td>{{ $row->unidad_medida }}</td>
-                        <td>{{ $row->cantidad }}</td>
+                        <td>@float($row->cantidadSum)</td>
                         <td>@money($row->precio)</td>
-                        <td>@money($row->importe)</td>
+                        <td>@money($row->importeSum)</td>
                     </tr>
                     @endforeach
                 </tbody>

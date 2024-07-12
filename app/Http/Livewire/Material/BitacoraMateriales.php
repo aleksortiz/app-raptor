@@ -43,7 +43,7 @@ class BitacoraMateriales extends Component
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         
         $materiales = EntradaMaterial::orderBy('created_at', 'desc')
-        ->select(DB::raw('id, material_id, entrada_id, material, count(entrada_id) as c_entradas, sum(cantidad) as cantidad, sum(precio * cantidad) as importe'))
+        ->select(DB::raw('id, material_id, entrada_id, material, count(entrada_id) as c_entradas, precio, sum(cantidad) as cantidadSum, sum(precio * cantidad) as importeSum'))
         ->whereBetween('created_at', [$start, $end]);
     
         if($this->desglosar){
