@@ -38,7 +38,7 @@ class ReporteComisiones extends Component
     {
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $refacciones = Refaccion::orderBy('id', 'DESC')->whereBetween('created_at', $dates)
-        ->whereHas('entrada', function ($query) {
+        ->whereHas('model', function ($query) {
             $query->where('origen', 'ASEGURADORA')
             ->orWhere('origen', 'PARTICULAR');
         });
