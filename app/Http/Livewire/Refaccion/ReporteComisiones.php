@@ -37,7 +37,11 @@ class ReporteComisiones extends Component
     public function getRenderData()
     {
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $refacciones = Refaccion::orderBy('id', 'DESC')->whereBetween('created_at', $dates);
+        $refacciones = Refaccion::orderBy('id', 'DESC')->whereBetween('created_at', $dates)
+        ->whereHas('entrada', function ($query) {
+            $query->where('origen', 'ASEGURADORA')
+            ->orWhere('origen', 'PARTICULAR');
+        });
 
         return [
             'refacciones' => $refacciones->paginate(50),
