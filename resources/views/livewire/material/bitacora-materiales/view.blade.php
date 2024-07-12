@@ -106,7 +106,7 @@
                     <tr>
                         <th>#</th>
                         <th>Fecha</th>
-                        <th>Folio</th>
+                        <th>{{$this->desglosar ? "Folio" : "Entradas"}}</th>
                         <th>Material</th>
                         <th>Unidad de Medida</th>
                         <th>Cantidad</th>
@@ -120,11 +120,18 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $row->fecha_creacion }}</td>
                         <td>
-                            @if ($row->entrada)
-                                <a target="_blank" href="/servicios/{{$row->entrada_id}}?activeTab=6" class="btn btn-xs btn-primary p-2"><i class="fa fa-car mr-1"></i> {{ $row->entrada->folio_short }}</a>    
+                            @if($this->desglosar)
+                                @if ($row->entrada)
+                                    <a target="_blank" href="/servicios/{{$row->entrada_id}}?activeTab=6" class="btn btn-xs btn-primary p-2"><i class="fa fa-car mr-1"></i> {{ $row->entrada->folio_short }}</a>
+                                @else
+                                    <button class="btn btn-xs btn-warning p-2"><i class="fa fa-car mr-1"></i> TALLER</button>
+                                @endif
                             @else
-                                <button class="btn btn-xs btn-warning p-2"><i class="fa fa-car mr-1"></i> TALLER</button>
+                                <a target="_blank" href="/servicios/{{$row->entrada_id}}?activeTab=6" class="btn btn-xs btn-primary p-2"><i class="fa fa-car mr-1"></i> {{ $row->c_entradas }}</a>
                             @endif
+
+
+
                         </td>
                         <td>{{ $row->material }}</td>
                         <td>{{ $row->unidad_medida }}</td>
@@ -138,6 +145,6 @@
 
         </div>
     </div>
-    {{ $materiales->links() }}
+    {{-- {{ $materiales->links() }} --}}
 
 </div>

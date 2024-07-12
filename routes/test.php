@@ -4,8 +4,10 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PedidoController;
 use App\Models\aoscore\SupportTicket;
 use App\Models\Entrada;
+use App\Models\EntradaMaterial;
 use App\Models\Pedido;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
@@ -28,4 +30,23 @@ Route::get('/week/{week}', function($week){
     $year = Carbon::now()->year;
     $dates = Entrada::getDateRange($year, $week, $week);
     return $dates;
+});
+
+Route::get('xxx', function(){
+    [$start, $end] = Entrada::getDateRange(2024, 1, 50);
+                
+    $materiales = EntradaMaterial::orderBy('created_at', 'desc')
+    ->select(DB::raw('material_id, entrada_id, material, sum(cantidad) as cantidad, sum(precio * cantidad) as importe'))
+    ->whereBetween('created_at', [$start, $end]);
+
+    if(true){
+        $materiales->groupBy('material');
+
+    }
+
+    return $materiales->paginate(50);
+
+    // return [
+    //     'materiales' => $materiales->paginate(50),
+    // ];
 });
