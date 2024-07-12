@@ -48,6 +48,57 @@
                 </div>
             </div>
 
+            <div class="row">
+
+                <div class="col-sm-3">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-dollar-sign"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Costo</b></span>
+                            <span class="info-box-number">@money($refacciones->sum('costo_total'))</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="col-sm-3">
+                    <div class="info-box" style="cursor: pointer;">
+                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-dollar-sign"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Venta</b></span>
+                            <span class="info-box-number">@money($refacciones->sum('importe'))</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="col-sm-3">
+                    <div class="info-box" style="cursor: pointer;">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Utilidad</b></span>
+                            <span class="info-box-number">@money($refacciones->sum('utilidad'))</span>
+                        </div>
+    
+                    </div>
+                </div>
+    
+                <div class="col-sm-3">
+                    <div class="info-box" style="cursor: pointer;">
+                        <span class="info-box-icon bg-red elevation-1"><i class="fas fa-dollar-sign"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Comisión</b></span>
+                            <span class="info-box-number">@money($refacciones->sum('comision'))</span>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -62,7 +113,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($data ?? [] as $row)
+                    @foreach ($refacciones ?? [] as $row)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>
@@ -83,6 +134,6 @@
 
         <!-- /.card-body -->
     </div>
-    {{ $data->links() }}
+    {{ $refacciones->links() }}
 
 </div>

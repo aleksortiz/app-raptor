@@ -40,7 +40,7 @@ class ReporteComisiones extends Component
         $refacciones = Refaccion::orderBy('id', 'DESC')->whereBetween('created_at', $dates);
 
         return [
-            'data' => $refacciones->paginate(50),
+            'refacciones' => $refacciones->paginate(50),
         ];
     }
 }
