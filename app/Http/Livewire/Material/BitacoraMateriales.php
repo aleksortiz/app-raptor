@@ -51,7 +51,7 @@ class BitacoraMateriales extends Component
 
         }
 
-        $this->totalMateriales = collect($materiales->get())->sum('importe');
+        // $this->totalMateriales = collect($materiales->get())->sum('importe');
 
         return [
             'materiales' => $materiales->paginate(50),
