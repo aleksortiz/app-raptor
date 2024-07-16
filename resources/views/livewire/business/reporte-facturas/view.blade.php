@@ -113,7 +113,7 @@
                             @if ($item->pagado == null)
                                 <button wire:click="mdlPagoServicios({{ $item->model->id }})" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> PENDIENTE</button>
                             @else
-                                <div wire:click="mdlPagoServicios({{ $item->model->id }})">
+                                <div style="cursor: pointer;" wire:click="mdlPagoServicios({{ $item->model->id }})">
                                     <i style="color: green;" class="fa fa-check"></i> Pagado:
                                     {{ $item->fecha_pago_format }}
                                 </div>
