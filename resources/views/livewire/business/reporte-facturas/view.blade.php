@@ -48,7 +48,7 @@
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
     
                         <div class="info-box-content">
-                            <span class="info-box-text"><b>Pagado esta Semana</b></span>
+                            <span class="info-box-text"><b>Pagado (Fecha Seleccionada)</b></span>
                             <span class="info-box-number">@money($pagado)</span>
                         </div>
     
@@ -70,8 +70,6 @@
 
 
             </div>
-
-
 
             <table class="table">
                 <thead>
