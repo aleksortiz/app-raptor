@@ -96,7 +96,7 @@
                             @endif
                         </td>
                         <td>
-                            <button class="btn btn-xs btn-{{$item->model?->origen_color}}">{$item->model?->origen_short ?? ''}}</button>
+                            <button class="btn btn-xs btn-{{$item->model?->origen_color}}">{{$item->model?->origen_short ?? ''}}</button>
                         </td>
                         <td>{{ $item->model?->vehiculo ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
