@@ -102,7 +102,14 @@
                         <td>{{ $item->model?->vehiculo ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
                         <td>@money($item->costo)</td>
-                        <td>{{ $item->fecha_pago == null ? 'PENDIENTE' : $item->fecha_pago_format }}</td>
+                        <td>
+                            @if ($item->fecha_pago == null)
+                                <button wire:click="pagar({{ $item->id }})" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> PENDIENTE</button>
+                            @else
+                                <i style="color: green;" class="fa fa-check"></i> Pagado:
+                                {{ $item->fecha_pago_format }}
+                            @endif
+                        </td>
                         <td>{{ $item->no_factura ?? "N/A" }}</td>
                     </tr>
                     @endforeach
