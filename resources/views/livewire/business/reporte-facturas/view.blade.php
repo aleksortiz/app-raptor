@@ -76,7 +76,7 @@
                     <tr>
                         <th>Fecha Creación</th>
                         <th>Folio</th>
-                        <th>Vehículo</th>
+                        <th>Orden</th>
                         <th>Concepto</th>
                         <th>Venta</th>
                         <th>Pagado</th>
@@ -95,7 +95,7 @@
                                 N/A
                             @endif
                         </td>
-                        <td>{{ $item->model?->vehiculo ?? 'N/A' }}</td>
+                        <td>{{ $item->model?->orden ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
                         <td>@money($item->costo)</td>
                         <td>
