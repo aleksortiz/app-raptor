@@ -13,12 +13,14 @@ class ReporteFacturas extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
+    public $keyWord;
+
     public $weekStart;
     public $weekEnd;
     public $year;
     public $maxYear;
 
-    protected $queryString = ['weekStart', 'weekEnd', 'year'];
+    protected $queryString = ['weekStart', 'weekEnd', 'year', 'keyWord'];
 
     public function mount(){
         $today = Carbon::today();
@@ -36,8 +38,15 @@ class ReporteFacturas extends Component
     public function getRenderData(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $costos = Costo::orderBy('pagado', 'asc');
-        $costos->whereBetween('pagado', $dates);
-        $costos->orWhere('pagado', null);
+
+        if($this->keyWord){
+            $costos->whereHas('model', function($query){
+                $query->where('orden', 'like', '%'.$this->keyWord.'%');
+            });
+        }else{
+            $costos->whereBetween('pagado', $dates);
+            $costos->orWhere('pagado', null);
+        }
 
         $pagado = Costo::whereBetween('pagado', $dates)->get()->sum('costo');
         $pendiente = Costo::where('pagado', null)->get()->sum('costo');

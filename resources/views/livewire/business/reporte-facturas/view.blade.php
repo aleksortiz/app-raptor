@@ -42,6 +42,13 @@
                     </div>
                 </div>
 
+                <div class="col-2">
+                    <div class="form-group">
+                        <label for="keyWord">Orden</label>
+                        <input wire:model.lazy="keyWord" type="text" class="form-control" id="keyWord">
+                    </div>
+                </div>
+
 
                 <div class="col-sm-3">
                     <div class="info-box">
