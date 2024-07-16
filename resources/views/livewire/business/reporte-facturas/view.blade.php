@@ -13,6 +13,7 @@
                         <th>Concepto</th>
                         <th>Venta</th>
                         <th>Pagado</th>
+                        <th>Factura</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -25,6 +26,7 @@
                         <td>{{ $item->concepto }}</td>
                         <td>@money($item->costo)</td>
                         <td>{{ $item->fecha_pago_format }}</td>
+                        <td>{{ $item->factura ?? "PENDIENTE" }}</td>
                     </tr>
                     @endforeach
                 </tbody>
