@@ -267,17 +267,20 @@ return [
         [
             'text' => 'Negocio',
             'icon' => 'fas fa-fw fa-building',
-            'can' => ['reporte-finanzas'],
             'submenu' => [
                 [
                     'text' => 'Reporte Finanzas',
-
+                    'can' => ['reporte-finanzas'],
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url' => '/reporte-finanzas',
+                ],
+                [
+                    'text' => 'Reporte de Facturas',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url' => '/reporte-facturas',
                 ]
             ]
         ],
-
         [
             'text' => 'Servicios',
             'icon' => 'fas fa-fw fa-car',

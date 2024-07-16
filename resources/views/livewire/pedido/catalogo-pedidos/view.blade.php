@@ -84,7 +84,7 @@
                     @foreach ($data as $row)
                         <tr>
                             <td>{{ $row->id_paddy }}</td>
-                            <td>{{ $row->fecha_format }}</td>
+                            <td>{{ $row->fecha_creacion }}</td>
                             <td>{{ $row->user->name }}</td>
                             <td>{{ $row->proveedor->nombre }}</td>
                             <td>@money($row->total)</td>

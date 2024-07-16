@@ -42,7 +42,6 @@ class CatalogoPedidos extends LivewireBaseCrudController
     public function render()
     {
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $this->emit('console', $dates); //TODO remove
         $keyWord = '%'.$this->keyWord .'%';
         $data = $this->model::orderBy('id', 'DESC')
         ->whereBetween('created_at', $dates)

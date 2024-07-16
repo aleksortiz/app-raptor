@@ -46,6 +46,7 @@
         <div>
           <h2 style="margin: 0px;">Pedido #{{$pedido->id_paddy}}</h2>
           <p style="margin-top: 5px;">
+            <b>Fecha:</b> {{ $pedido->fecha_creacion }}<br>
             <b>Proveedor:</b> {{$pedido->proveedor->nombre}}<br>
             @if ($pedido->proveedor->telefono)
               <b>Telefono:</b> {{$pedido->proveedor->telefono}}<br>
