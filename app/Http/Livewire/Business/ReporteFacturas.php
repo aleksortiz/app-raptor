@@ -4,27 +4,27 @@ namespace App\Http\Livewire\Business;
 
 use App\Models\Costo;
 use App\Models\Entrada;
-use App\Models\EntradaMaterial;
-use App\Models\GastoFijoLog;
-use App\Models\OrdenTrabajoPago;
-use App\Models\PagoPersonal;
-use App\Models\Pedido;
 use Carbon\Carbon;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ReporteFacturas extends Component
 {
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
-    public $week;
+    public $weekStart;
+    public $weekEnd;
     public $year;
     public $maxYear;
 
-    protected $queryString = ['week', 'year'];
+    protected $queryString = ['weekStart', 'weekEnd', 'year'];
 
     public function mount(){
         $today = Carbon::today();
         $this->maxYear = $today->year;
-        $this->week = $this->week ? $this->week : $today->weekOfYear;
+        $this->weekStart = $this->weekStart ? $this->weekStart : $today->weekOfYear;
+        $this->weekEnd = $this->weekEnd ? $this->weekEnd : $today->weekOfYear;
         $this->year = $this->year ? $this->year : $this->maxYear;
     }
 
@@ -34,10 +34,18 @@ class ReporteFacturas extends Component
     }
 
     public function getRenderData(){
-        $costos = Costo::all();
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $costos = Costo::orderBy('pagado', 'asc');
+        $costos->whereBetween('pagado', $dates);
+        $costos->orWhere('pagado', null);
+
+        $pagado = $costos->where('pagado', '!=', null)->get()->sum('total');
+        $pendiente = $costos->where('pagado', null)->get()->sum('total');
 
         return [
-            'servicios' => $costos
+            'servicios' => $costos->paginate(50),
+            'pagado' => $pagado,
+            'pendiente' => $pendiente,
         ];
     }
 }
