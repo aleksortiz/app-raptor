@@ -102,7 +102,7 @@
                         <td>{{ $item->model?->vehiculo ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
                         <td>@money($item->costo)</td>
-                        <td>{{ $item->fecha_pago_format == 'N/A' ? 'PENDIENTE' : $item->fecha_pago_format }}</td>
+                        <td>{{ $item->fecha_pago == null ? 'PENDIENTE' : $item->fecha_pago_format }}</td>
                         <td>{{ $item->no_factura ?? "N/A" }}</td>
                     </tr>
                     @endforeach
