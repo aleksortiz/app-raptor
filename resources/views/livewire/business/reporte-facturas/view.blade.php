@@ -84,6 +84,7 @@
                         <th>Venta</th>
                         <th>Pagado</th>
                         <th>Factura</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -111,6 +112,7 @@
                             @endif
                         </td>
                         <td>{{ $item->no_factura ?? "N/A" }}</td>
+                        <td>{{$item->pagado}}</td>
                     </tr>
                     @endforeach
                 </tbody>
