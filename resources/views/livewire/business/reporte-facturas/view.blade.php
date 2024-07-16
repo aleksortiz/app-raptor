@@ -76,7 +76,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>#</th>
                         <th>Fecha Creación</th>
                         <th>Folio</th>
                         <th>Vehículo</th>
@@ -90,7 +89,6 @@
                     {{-- Loop through the invoices --}}
                     @foreach ($servicios as $item)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->fecha_creacion }}</td>
                         <td>
                             @if ($item->model)
