@@ -39,8 +39,10 @@ class ReporteFacturas extends Component
         // $costos->whereBetween('pagado', $dates);
         // $costos->where('pagado', null);
 
-        $pagado = $costos->where('pagado', '!=', null)->get()->sum('costo');
-        $pendiente = $costos->where('pagado', null)->get()->sum('costo');
+        // $pagado = $costos->where('pagado', '!=', null)->get()->sum('costo');
+        // $pendiente = $costos->where('pagado', null)->get()->sum('costo');
+        $pagado = 9;
+        $pendiente = 9;
 
         return [
             'servicios' => $costos->paginate(50),
