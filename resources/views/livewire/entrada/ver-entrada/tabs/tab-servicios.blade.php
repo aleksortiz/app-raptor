@@ -116,8 +116,8 @@
                             <th><button wire:click="addCosto" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i>
                                     Agregar Servicio</button></th>
                             <th>Concepto</th>
-                            <th>($) Venta</th>
                             <th>Estatus Pago</th>
+                            <th>($) Venta</th>
                             <th>Editar</th>
                         </tr>
                     </thead>
@@ -140,7 +140,7 @@
                                         <span class="error text-danger">{{ $message }}<span>
                                             @enderror
                                 </td>
-                                {{-- <td><button class="btn btn-danger btn-xs"><i class="fa fa-times"></i> Eliminar Pago</button></td> --}}
+
 
                                 <td>N/A</td>
                                 <td><button wire:click="removeCosto" class="btn btn-danger btn-xs"><i

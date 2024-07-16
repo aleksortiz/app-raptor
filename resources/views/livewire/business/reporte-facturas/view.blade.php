@@ -74,8 +74,8 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Fecha Creación</th>
                         <th>Folio</th>
+                        <th>Vehículo</th>
                         <th>Concepto</th>
                         <th>Orden</th>
                         <th>Venta</th>
@@ -87,14 +87,14 @@
                     {{-- Loop through the invoices --}}
                     @foreach ($servicios as $item)
                     <tr>
-                        <td>{{ $item->fecha_creacion }}</td>
                         <td>
                             @if ($item->model)
-                                <a href="/servicios/{{$item->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{ $item->model?->folio_short }}</a>
+                                <a href="/servicios/{{$item->model->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{ $item->model?->folio_short }}</a>
                             @else
                                 N/A
                             @endif
                         </td>
+                        <td>{{ $item->model?->vehiculo ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
                         <td>{{ $item->model?->orden ?? 'N/A' }}</td>
                         <td>@money($item->costo)</td>
