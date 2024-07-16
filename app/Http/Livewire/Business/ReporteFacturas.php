@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Business;
 use App\Models\Costo;
 use App\Models\Entrada;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,6 +15,9 @@ class ReporteFacturas extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $keyWord;
+
+    public $selectedCosto;
+    public $selectedEntrada;
 
     public $weekStart;
     public $weekEnd;
@@ -56,5 +60,58 @@ class ReporteFacturas extends Component
             'pagado' => $pagado,
             'pendiente' => $pendiente,
         ];
+    }
+
+    public function mdlPagoServicios($id){
+        $this->selectedEntrada = Entrada::findOrfail($id);
+        $this->selectedCosto = null;
+        $this->resetValidation();
+        $this->emit('showModal', '#mdlPagoServicios');
+    }
+
+    public function editCosto($id)
+    {
+        $this->selectedCosto = Costo::findOrFail($id);
+    }
+
+    public function saveCosto()
+    {
+        $this->validate([
+            'selectedCosto.concepto' => 'string|required|max:255',
+            'selectedCosto.costo' => 'numeric|required|min:0',
+            'selectedCosto.no_factura' => 'string|nullable|max:255',
+            'selectedCosto.pagado' => 'date|nullable',
+        ]);
+
+        // $this->costo->model_id = $this->selectedEntrada->id;
+        // $this->costo->model_type = Entrada::class;
+        if ($this->selectedCosto->save()) {
+            $this->selectedEntrada->load('costos');
+            $this->selectedCosto = null;
+        }
+    }
+
+    public function removeCosto(){
+        $this->selectedCosto = null;
+    }
+
+    public function pagarServicio($costo_id)
+    {
+        $costo = Costo::findOrFail($costo_id);
+        $costo->update([
+            'pagado' => DB::raw('now()'),
+        ]);
+        $this->selectedEntrada->load('costos');
+        $this->emit('ok', 'Se ha pagado servicio: ' . $costo->concepto);
+    }
+
+    public function eliminarPagoServicio($id){
+        $costo = Costo::findOrFail($id);
+        $costo->update([
+            'pagado' => null,
+        ]);
+        $this->selectedEntrada->load('costos');
+        $this->removeCosto();
+        $this->emit('ok', 'Se ha eliminado pago de servicio: ' . $costo->concepto);
     }
 }

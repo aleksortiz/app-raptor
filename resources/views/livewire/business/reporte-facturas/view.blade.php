@@ -109,14 +109,7 @@
                         <td>{{ $item->concepto }}</td>
                         <td>{{ $item->model?->orden ?? 'N/A' }}</td>
                         <td>@money($item->costo)</td>
-                        <td>
-                            @if ($item->pagado == null)
-                                <button wire:click="pagar({{ $item->id }})" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> PENDIENTE</button>
-                            @else
-                                <i style="color: green;" class="fa fa-check"></i> Pagado:
-                                {{ $item->fecha_pago_format }}
-                            @endif
-                        </td>
+                        <td>{!! $item->model?->estatus_entrada !!}</td>
                         <td>{{ $item->no_factura ?? "N/A" }}</td>
                     </tr>
                     @endforeach
@@ -130,4 +123,6 @@
 
         </div>
     </div>
+
+    @include('livewire.entrada.catalogo-entradas.modal-pago-servicios')
 </div>
