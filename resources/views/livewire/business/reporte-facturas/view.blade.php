@@ -26,7 +26,7 @@
                         <td>{{ $item->concepto }}</td>
                         <td>@money($item->costo)</td>
                         <td>{{ $item->fecha_pago_format }}</td>
-                        <td>{{ $item->factura ?? "PENDIENTE" }}</td>
+                        <td>{{ $item->no_factura ?? "PENDIENTE" }}</td>
                     </tr>
                     @endforeach
                 </tbody>
