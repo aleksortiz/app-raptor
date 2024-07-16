@@ -48,7 +48,7 @@
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
     
                         <div class="info-box-content">
-                            <span class="info-box-text"><b>Pagado (Fecha Seleccionada)</b></span>
+                            <span class="info-box-text"><b>Pagado (Fecha)</b></span>
                             <span class="info-box-number">@money($pagado)</span>
                         </div>
     
@@ -60,7 +60,7 @@
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clock"></i></span>
     
                         <div class="info-box-content">
-                            <span class="info-box-text"><b>Pendiente</b></span>
+                            <span class="info-box-text"><b>Pendiente (Totalidad)</b></span>
                             <span class="info-box-number">@money($pendiente)</span>
                         </div>
     
@@ -76,8 +76,8 @@
                     <tr>
                         <th>Fecha Creación</th>
                         <th>Folio</th>
-                        <th>Orden</th>
                         <th>Concepto</th>
+                        <th>Orden</th>
                         <th>Venta</th>
                         <th>Pagado</th>
                         <th>Factura</th>
@@ -95,8 +95,8 @@
                                 N/A
                             @endif
                         </td>
-                        <td>{{ $item->model?->orden ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
+                        <td>{{ $item->model?->orden ?? 'N/A' }}</td>
                         <td>@money($item->costo)</td>
                         <td>
                             @if ($item->pagado == null)
