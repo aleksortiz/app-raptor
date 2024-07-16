@@ -36,11 +36,11 @@ class ReporteFacturas extends Component
     public function getRenderData(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $costos = Costo::orderBy('pagado', 'asc');
-        $costos->whereBetween('pagado', $dates);
-        $costos->orWhere('pagado', null);
+        // $costos->whereBetween('pagado', $dates);
+        // $costos->orWhere('pagado', null);
 
-        $pagado = $costos->where('pagado', '!=', null)->get()->sum('total');
-        $pendiente = $costos->where('pagado', null)->get()->sum('total');
+        $pagado = $costos->where('pagado', '!=', null)->get()->sum('costo');
+        $pendiente = $costos->where('pagado', null)->get()->sum('costo');
 
         return [
             'servicios' => $costos->paginate(50),
