@@ -75,6 +75,7 @@
                 <thead>
                     <tr>
                         <th>Folio</th>
+                        <th>Origen</th>
                         <th>Vehículo</th>
                         <th>Concepto</th>
                         <th>Orden</th>
@@ -93,6 +94,9 @@
                             @else
                                 N/A
                             @endif
+                        </td>
+                        <td>
+                            <button class="btn btn-xs btn-{{$item->model?->origen_color}}"><i class="fa fa-eye"></i> {{$item->model?->origen_short ?? ''}}</button>
                         </td>
                         <td>{{ $item->model?->vehiculo ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
