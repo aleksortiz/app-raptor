@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\shared\BaseModel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Costo extends Model
+class Costo extends BaseModel
 {
     use HasFactory;
 
@@ -18,6 +19,11 @@ class Costo extends Model
         'pagado',
         'no_factura',
     ];
+
+    public function model()
+    {
+        return $this->morphTo();
+    }
 
     public function getFechaPagoFormatAttribute()
     {
