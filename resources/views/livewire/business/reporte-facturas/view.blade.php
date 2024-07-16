@@ -21,7 +21,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $item->fecha_creacion }}</td>
-                        <td>{{ $item->model->folio_short }}</td>
+                        <td>{{ $item->model?->folio_short ?? 'N/A' }}</td>
                         <td>@money($item->costo)</td>
                         <td>{{ $item->pagado ?? "PENDIENTE" }}</td>
                         <td>{{ $item->no_factura ?? "PENDIENTE" }}</td>
