@@ -84,7 +84,6 @@
                         <th>Venta</th>
                         <th>Pagado</th>
                         <th>Factura</th>
-                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,7 +103,7 @@
                         <td>{{ $item->concepto }}</td>
                         <td>@money($item->costo)</td>
                         <td>
-                            @if ($item->fecha_pago == null)
+                            @if ($item->pagado == null)
                                 <button wire:click="pagar({{ $item->id }})" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> PENDIENTE</button>
                             @else
                                 <i style="color: green;" class="fa fa-check"></i> Pagado:
@@ -112,7 +111,6 @@
                             @endif
                         </td>
                         <td>{{ $item->no_factura ?? "N/A" }}</td>
-                        <td>{{$item->pagado}}</td>
                     </tr>
                     @endforeach
                 </tbody>
