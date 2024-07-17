@@ -44,7 +44,7 @@
 
                 <div class="col-2">
                     <div class="form-group">
-                        <label for="keyWord">Orden</label>
+                        <label for="keyWord">Orden / Folio</label>
                         <input wire:model.lazy="keyWord" type="text" class="form-control" id="keyWord">
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="col-sm-1">
-                    <button class="btn btn-xs btn-success mb-2" wire:click="exportToExcel"><i class="fas fa-file-excel"></i> Exportar a Excel</button>
+                    <button class="btn btn-xs btn-success mb-2" wire:click="exportToExcel"><i class="fas fa-file-excel"></i> E. Excel</button>
                 </div>
 
 
