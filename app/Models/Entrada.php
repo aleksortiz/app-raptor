@@ -349,4 +349,11 @@ class Entrada extends BaseModel
         }
         return 'info';
     }
+
+    public function getCheckPartsAttribute()
+    {
+        return $this->refacciones->some(function ($refaccion) {
+            return $refaccion->costo == 0;
+        });
+    }
 }
