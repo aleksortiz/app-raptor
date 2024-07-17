@@ -302,6 +302,7 @@ return [
                 ],
                 [
                     'text' => 'Gastos Fijos',
+                    'can' => ['gastos-fijos'],
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/gastos-fijos',
                 ]

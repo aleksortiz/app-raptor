@@ -33,6 +33,7 @@ class Permission extends SpatiePermission
         'reporte-finanzas' => 'Puede ver reportes de finanzas',
         'admin-personal-administrativo' => 'Puede ver, crear y editar personal administrativo',
         'reporte-comisiones' => 'Puede ver reportes de comisiones',
+        'gastos-fijos' => 'Puede ver y crear gastos fijos',
     ];
 
     public static function boot()
