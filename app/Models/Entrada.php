@@ -333,19 +333,19 @@ class Entrada extends BaseModel
     public function getOrigenColorAttribute()
     {
         if ($this->origen == 'ASEGURADORA') {
-            return 'primary';
+            return 'success';
         }
         if ($this->origen == 'PARTICULAR') {
-            return 'default';
+            return 'secondary';
         }
         if ($this->origen == 'AGENCIA') {
-            return 'success';
+            return 'primary';
         }
         if ($this->origen == 'GARANTIA') {
             return 'warning';
         }
         if ($this->origen == 'INTERNO') {
-            return 'info';
+            return 'default';
         }
         return 'info';
     }
