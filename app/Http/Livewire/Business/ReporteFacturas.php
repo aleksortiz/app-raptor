@@ -26,6 +26,13 @@ class ReporteFacturas extends Component
 
     protected $queryString = ['weekStart', 'weekEnd', 'year', 'keyWord'];
 
+    protected $rules = [
+        'selectedCosto.concepto' => 'string|required|max:255',
+        'selectedCosto.costo' => 'numeric|required|min:0',
+        'selectedCosto.no_factura' => 'string|nullable|max:255',
+        'selectedCosto.pagado' => 'date',
+    ];
+
     public function mount(){
         $today = Carbon::today();
         $this->maxYear = $today->year;

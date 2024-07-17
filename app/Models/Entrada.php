@@ -318,13 +318,13 @@ class Entrada extends BaseModel
             return 'AS';
         }
         if ($this->origen == 'PARTICULAR') {
-            return 'P';
+            return 'PT';
         }
         if ($this->origen == 'GARANTIA'){
-            return 'G';
+            return 'GT';
         }
         if ($this->origen == 'INTERNO'){
-            return 'I';
+            return 'IT';
         }
 
         return 'N/A';

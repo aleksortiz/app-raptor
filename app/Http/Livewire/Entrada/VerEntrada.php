@@ -79,6 +79,8 @@ class VerEntrada extends Component
 
         'costo.concepto' => 'string|required|max:255',
         'costo.costo' => 'numeric|required|min:0',
+        'costo.no_factura' => 'string|nullable|max:255',
+        'costo.pagado' => 'date|nullable',
 
         'pagoDestajo' => 'numeric|required|min:0',
 
