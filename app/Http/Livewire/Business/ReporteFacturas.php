@@ -33,6 +33,10 @@ class ReporteFacturas extends Component
         'selectedCosto.pagado' => 'date',
     ];
 
+    public function updatedKeyWord(){
+        $this->resetPage();
+    }
+
     public function mount(){
         $today = Carbon::today();
         $this->maxYear = $today->year;
