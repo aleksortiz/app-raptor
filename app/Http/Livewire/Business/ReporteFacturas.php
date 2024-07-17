@@ -57,7 +57,8 @@ class ReporteFacturas extends Component
         if($this->keyWord){
             $costos->whereHas('model', function($query){
                 $query->where(DB::raw('REPLACE(orden, " ", "")'), 'LIKE', $this->keyWord.'%');
-                $query->orWhere('folio', 'like', $this->keyWord.'%');
+                $query->orWhere('orden', 'LIKE', "{$this->keyWord}%");
+                $query->orWhere('folio', 'LIKE', $this->keyWord.'%');
             });
         }else{
             $costos->whereBetween('pagado', $dates);
