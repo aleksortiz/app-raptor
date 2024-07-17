@@ -56,7 +56,7 @@ class ReporteFacturas extends Component
         $costos = Costo::orderBy('model_id', 'asc');
         if($this->keyWord){
             $costos->whereHas('model', function($query){
-                $query->where(DB::raw('REPLACE(orden, " ", ""'), 'LIKE', $this->keyWord.'%');
+                $query->where(DB::raw('REPLACE(orden, " ", "")'), 'LIKE', $this->keyWord.'%');
                 $query->orWhere('folio', 'like', $this->keyWord.'%');
             });
         }else{
