@@ -94,7 +94,7 @@
                     <tr>
                         <td>
                             @if ($row->check_parts)
-                                <button data-toggle="tooltip" data-placement="top" title="Revisar Refacciones" class="btn btn-xs btn-danger"><i class="fa fa-wrench"></i></button>
+                                <a href="/servicios/{{$row->id}}?activeTab=5" data-toggle="tooltip" data-placement="top" title="Revisar Refacciones" class="btn btn-xs btn-danger"><i class="fa fa-wrench"></i></a>
                             @endif
                         </td>
                         <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
