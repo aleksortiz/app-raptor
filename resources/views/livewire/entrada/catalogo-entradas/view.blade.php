@@ -78,8 +78,8 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Folio</th>
                         <th></th>
+                        <th>Folio</th>
                         <th>Origen</th>
                         <th>Cliente</th>
                         <th>Orden</th>
@@ -92,12 +92,12 @@
                 <tbody>
                     @foreach ($entradas as $row)
                     <tr>
-                        <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
                         <td>
                             @if ($row->check_parts)
-                                <button data-toggle="tooltip" data-placement="top" title="Revisar Refacciones" class="btn btn-xs btn-danger"><i class="fa fa-wrench"></i>R</button>
+                                <button data-toggle="tooltip" data-placement="top" title="Revisar Refacciones" class="btn btn-xs btn-danger"><i class="fa fa-wrench"></i></button>
                             @endif
                         </td>
+                        <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
                         <td><button data-toggle="tooltip" data-placement="top" title="{{$this->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                         <td>{{ $row->cliente->nombre }}</td>
                         <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
