@@ -53,7 +53,8 @@ class ReporteFacturas extends Component
 
     public function getData(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $costos = Costo::orderBy('model_id', 'asc');
+        $costos = Costo::orderBy('pagado', 'asc');
+        $costos->orderBy('model_id', 'asc');
         if($this->keyWord){
             $costos->whereHas('model', function($query){
                 $query->where(DB::raw('REPLACE(orden, " ", "")'), 'LIKE', $this->keyWord.'%');
