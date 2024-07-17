@@ -74,6 +74,10 @@
                     </div>
                 </div>
 
+                <div class="col-sm-1">
+                    <button class="btn btn-xs btn-success mb-2" wire:click="exportToExcel"><i class="fas fa-file-excel"></i> Exportar a Excel</button>
+                </div>
+
 
 
             </div>

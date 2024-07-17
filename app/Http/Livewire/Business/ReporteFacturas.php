@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Business;
 
+use App\Http\Controllers\ReportController;
 use App\Models\Costo;
 use App\Models\Entrada;
 use Carbon\Carbon;
@@ -124,5 +125,35 @@ class ReporteFacturas extends Component
         $this->selectedEntrada->load('costos');
         $this->removeCosto();
         $this->emit('ok', 'Se ha eliminado pago de servicio: ' . $costo->concepto);
+    }
+
+    public function exportToExcel()
+    {
+        $data = $this->getData()->get();
+
+        $headers = [
+            'Folio',
+            'Origen',
+            'Vehículo',
+            'Concepto',
+            'Orden',
+            'Venta',
+            'Factura'
+        ];
+
+        $arrayData = $data->map(function ($item) {
+            return [
+                $item->model?->folio_short ?? '',
+                $item->model?->origen_short ?? '',
+                $item->model?->vehiculo ?? '',
+                $item->concepto,
+                $item->model?->orden ?? '',
+                $item->costo,
+                $item->no_factura,
+            ];
+        });
+        $reportDate = date('Y-m-d');
+        $fileName = "reporte_facturacion_{$reportDate}_.csv";
+        return ReportController::downloadCSV($fileName, $headers, $arrayData);
     }
 }
