@@ -75,7 +75,7 @@ class CatalogoEntradas extends Component
             })
             ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
             ->orWhere('serie', 'LIKE', "{$this->keyWord}%")
-            ->orWhere('orden', 'LIKE', "{$this->keyWord}%");
+            ->orWhere(DB::raw('REPLACE(orden, " ", "")'), 'LIKE', trim($this->keyWord).'%');
         });
 
         if($this->origen){
