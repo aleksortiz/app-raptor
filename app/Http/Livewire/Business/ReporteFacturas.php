@@ -51,7 +51,7 @@ class ReporteFacturas extends Component
         return view('livewire.business.reporte-facturas.view', $this->getRenderData());
     }
 
-    public function getRenderData(){
+    public function getData(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $costos = Costo::orderBy('pagado', 'asc');
 
@@ -63,6 +63,14 @@ class ReporteFacturas extends Component
             $costos->whereBetween('pagado', $dates);
             $costos->orWhere('pagado', null);
         }
+
+        return $costos;
+    }
+
+    public function getRenderData(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $costos = $this->getData();
+
 
         $pagado = Costo::whereBetween('pagado', $dates)->get()->sum('costo');
         $pendiente = Costo::where('pagado', null)->get()->sum('costo');
