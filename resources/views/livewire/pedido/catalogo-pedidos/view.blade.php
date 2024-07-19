@@ -11,124 +11,133 @@
         </div>
         <div class="card-body p-0">
 
-            {{$dataSum}}
-
-            <div class="row pl-3 pt-3">
-
-                <div class="col-1">
-                    <div class="form-group">
-                        <label for="keyWord">Año</label>
-                        <select wire:model.lazy="year" class="form-control" id="year">
-                            @foreach (range(2021, $this->maxYear) as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
+            <div wire:loading>
+                <center>
+                    <div style="background: white" class="flex-column justify-content-center align-items-center">
+                        <img src="{{ asset('images/logo.png') }}" height="10%">
+                        <h1><i class="fa fa-spin fa-spinner"></i> Cargando...</h1>
                     </div>
-                </div>
-
-                <div class="col-1">
-                    <div class="form-group">
-                        <label for="keyWord">Semana</label>
-                        <select wire:model.lazy="weekStart" class="form-control" id="weekStart">
-                            @foreach (range(1, 52) as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="col-1">
-                    <div class="form-group">
-                        <label for="keyWord">a la</label>
-                        <select wire:model.lazy="weekEnd" class="form-control" id="weekEnd">
-                            @foreach (range(1, 52) as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-
-                <div class="col-2">
-                    <div class="mt-4">
-                        <a href="/materiales/crear-pedido" target="_blank" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Crear Pedido</a>
-                    </div>
-                </div>
-
+                </center>
             </div>
 
+            <div wire:loading.remove>
 
+                <div class="row pl-3 pt-3">
 
-
-            <div class="row">
-
-                <div class="col-sm-3">
-                    <div class="info-box" wire:click="selectProvider(null)" style="cursor: pointer;">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-truck"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Total Pedidos</b></span>
-                            <span class="info-box-number">@money($totalProveedores)</span>
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label for="keyWord">Año</label>
+                            <select wire:model.lazy="year" class="form-control" id="year">
+                                @foreach (range(2021, $this->maxYear) as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endforeach
+                            </select>
                         </div>
-    
                     </div>
+    
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label for="keyWord">Semana</label>
+                            <select wire:model.lazy="weekStart" class="form-control" id="weekStart">
+                                @foreach (range(1, 52) as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+    
+    
+                    <div class="col-1">
+                        <div class="form-group">
+                            <label for="keyWord">a la</label>
+                            <select wire:model.lazy="weekEnd" class="form-control" id="weekEnd">
+                                @foreach (range(1, 52) as $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+    
+    
+                    <div class="col-2">
+                        <div class="mt-4">
+                            <a href="/materiales/crear-pedido" target="_blank" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Crear Pedido</a>
+                        </div>
+                    </div>
+    
                 </div>
-
-                @foreach ($proveedores as $item)
+    
+                <div class="row">
+    
                     <div class="col-sm-3">
-                        <div class="info-box" wire:click="selectProvider({{$item->id}})" style="cursor: pointer;">
-                            <span class="info-box-icon @if($item->id == $this->providerId) bg-primary @else bg-default @endif elevation-1"><i
-                                    class="fas fa-truck"></i></span>
-
+                        <div class="info-box" wire:click="selectProvider(null)" style="cursor: pointer;">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-truck"></i></span>
+        
                             <div class="info-box-content">
-                                <span class="info-box-text"><b>{{$item->nombre}}</b></span>
-                                <span class="info-box-number">@money($this->totalProvider($item->id))</span>
+                                <span class="info-box-text"><b>Total Pedidos</b></span>
+                                <span class="info-box-number">@money($totalProveedores)</span>
                             </div>
-
+        
                         </div>
                     </div>
-                @endforeach
-
-
+    
+                    @foreach ($proveedores as $item)
+                        <div class="col-sm-3">
+                            <div class="info-box" wire:click="selectProvider({{$item->id}})" style="cursor: pointer;">
+                                <span class="info-box-icon @if($item->id == $this->providerId) bg-primary @else bg-default @endif elevation-1"><i
+                                        class="fas fa-truck"></i></span>
+    
+                                <div class="info-box-content">
+                                    <span class="info-box-text"><b>{{$item->nombre}}</b></span>
+                                    <span class="info-box-number">@money($this->totalProvider($item->id))</span>
+                                </div>
+    
+                            </div>
+                        </div>
+                    @endforeach
+    
+    
+                </div>
+    
+                <table class="mt-3 table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Usuario</th>
+                            <th>Proveedor</th>
+                            <th>Importe</th>
+                            <th>Estatus</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $row)
+                            <tr>
+                                <td>{{ $row->id_paddy }}</td>
+                                <td>{{ $row->fecha_creacion }}</td>
+                                <td>{{ $row->user->name }}</td>
+                                <td>{{ $row->proveedor->nombre }}</td>
+                                <td>@money($row->total)</td>
+                                <td>{{ $row->estatus_recibido }}</td>
+                                <td>
+                                    <div>
+                                        <button type="button" class="btn btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
+                                        <div class="dropdown-menu" role="menu">
+                                          <a class="dropdown-item" style="cursor: pointer;" wire:click="mdlEnviarCorreo({{ $row->id }})"><i class="fas fa-envelope"></i> Enviar Pedido</a>
+                                          <a class="dropdown-item" href='/materiales/pedido_pdf/{{ $row->id }}' target="_blank"><i class="fas fa-file-alt"></i> Ver Pedido</a>
+                                          <a class="dropdown-item" style="cursor: pointer;" wire:click="$emit('initMdlRecibirPedido',{{ $row }})"><i class="fas fa-truck"></i> Recibir Pedido</a>
+                                        </div>
+                                      </div>
+                                </td>
+                            <tr>
+                        @endforeach
+                    </tbody>
+                </table>
+        
             </div>
 
 
-            <table class="mt-3 table table-hover">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha</th>
-                        <th>Usuario</th>
-                        <th>Proveedor</th>
-                        <th>Importe</th>
-                        <th>Estatus</th>
-                        <th>Opciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($data as $row)
-                        <tr>
-                            <td>{{ $row->id_paddy }}</td>
-                            <td>{{ $row->fecha_creacion }}</td>
-                            <td>{{ $row->user->name }}</td>
-                            <td>{{ $row->proveedor->nombre }}</td>
-                            <td>@money($row->total)</td>
-                            <td>{{ $row->estatus_recibido }}</td>
-                            <td>
-                                <div>
-                                    <button type="button" class="btn btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
-                                    <div class="dropdown-menu" role="menu">
-                                      <a class="dropdown-item" style="cursor: pointer;" wire:click="mdlEnviarCorreo({{ $row->id }})"><i class="fas fa-envelope"></i> Enviar Pedido</a>
-                                      <a class="dropdown-item" href='/materiales/pedido_pdf/{{ $row->id }}' target="_blank"><i class="fas fa-file-alt"></i> Ver Pedido</a>
-                                      <a class="dropdown-item" style="cursor: pointer;" wire:click="$emit('initMdlRecibirPedido',{{ $row }})"><i class="fas fa-truck"></i> Recibir Pedido</a>
-                                    </div>
-                                  </div>
-                            </td>
-                        <tr>
-                    @endforeach
-                </tbody>
-            </table>
 
         </div>
     </div>
