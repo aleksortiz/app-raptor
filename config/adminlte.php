@@ -278,6 +278,16 @@ return [
                     'text' => 'Reporte de Facturas',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url' => '/reporte-facturas',
+                ],
+                [
+                    'text' => 'Depósitos',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url' => '/ingresos',
+                ],
+                [
+                    'text' => 'Gastos Generales',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url' => '/egresos',
                 ]
             ]
         ],

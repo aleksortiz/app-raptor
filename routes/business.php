@@ -14,5 +14,13 @@ Route::middleware(['auth'])->group(function(){
         return view('livewire.business.reporte-facturas.index');
     });
 
+    Route::get('ingresos', function(){
+        return view('livewire.business.capturar-ingresos.index');
+    });
+
+    Route::get('egresos', function(){
+        return view('livewire.business.capturar-egresos.index');
+    });
+
 });
 
