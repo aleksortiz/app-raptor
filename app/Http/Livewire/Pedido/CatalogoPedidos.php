@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Pedido;
 use App\Http\Livewire\Classes\LivewireBaseCrudController;
 use App\Models\Entrada;
 use App\Models\Pedido;
+use App\Models\PedidoConcepto;
 use App\Models\Proveedor;
 use Carbon\Carbon;
 
@@ -56,10 +57,14 @@ class CatalogoPedidos extends LivewireBaseCrudController
         if($this->providerId){
             $data = $data->where('proveedor_id', $this->providerId);
         }
-        $data = $data->paginate(50);
+        
+        $totalProveedores = PedidoConcepto::whereHas('pedido', function($q) use($dates) {
+            $q->whereBetween('created_at', $dates);
+        })->selectRaw('SUM(precio * cantidad) as total')->value('total');
 
         return [
-            'data' => $data,
+            'data' => $data->paginate(50),
+            'totalProveedores' => $totalProveedores,
             'proveedores' => Proveedor::all(),
         ];
     }

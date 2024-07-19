@@ -67,7 +67,7 @@
     
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Total Pedidos</b></span>
-                            <span class="info-box-number">@money($data->sum('total'))</span>
+                            <span class="info-box-number">@money($totalProveedores)</span>
                         </div>
     
                     </div>
