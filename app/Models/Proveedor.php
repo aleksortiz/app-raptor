@@ -77,7 +77,7 @@ class Proveedor extends CancelableModel
     return PedidoConcepto::whereHas('pedido', function($q) use($dates){
       $q->where('proveedor_id', $this->id)
       ->whereBetween('created_at', $dates);
-    })->get()->sum('precio * cantidad');
+    })->get()->sum('precio');
   }
 
 }
