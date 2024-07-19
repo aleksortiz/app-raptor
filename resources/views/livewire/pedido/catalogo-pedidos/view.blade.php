@@ -76,7 +76,7 @@
                 @foreach ($proveedores as $item)
                     <div class="col-sm-3">
                         <div class="info-box" wire:click="selectProvider({{$item->id}})" style="cursor: pointer;">
-                            <span class="info-box-icon bg-info elevation-1"><i
+                            <span class="info-box-icon @if($item->id == $this->providerId) bg-primary @else bg-default @endif elevation-1"><i
                                     class="fas fa-truck"></i></span>
 
                             <div class="info-box-content">
