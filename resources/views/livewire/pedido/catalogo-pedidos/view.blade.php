@@ -11,18 +11,17 @@
         </div>
         <div class="card-body p-0">
 
-            <div wire:loading>
-                <div class="row">
-                    <div class="col">
-                        <center>
+            <div class="row">
+                <div class="col pt-5">
+                    <center>
+                        <div wire:loading>
                             <div style="background: white">
-                                <img src="{{ asset('images/logo.png') }}" height="100px;">
+                                <img src="{{ asset('images/logo.png') }}" height="150px;">
                                 <h1><i class="fa fa-spin fa-spinner"></i> Cargando...</h1>
                             </div>
-                        </center>
-                    </div>
+                        </div>
+                    </center>
                 </div>
- 
             </div>
 
             <div wire:loading.remove>
