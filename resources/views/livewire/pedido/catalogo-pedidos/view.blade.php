@@ -12,10 +12,10 @@
         <div class="card-body p-0">
 
             <div class="row">
-                <div class="col pt-5">
+                <div class="col">
                     <center>
                         <div wire:loading>
-                            <div style="background: white">
+                            <div class="pt-5" style="background: white">
                                 <img src="{{ asset('images/logo.png') }}" height="150px;">
                                 <h1><i class="fa fa-spin fa-spinner"></i> Cargando...</h1>
                             </div>
