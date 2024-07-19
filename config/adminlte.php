@@ -288,6 +288,12 @@ return [
                     'text' => 'Gastos Generales',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url' => '/egresos',
+                ],
+                [
+                    'text' => 'Gastos Fijos',
+                    'can' => ['gastos-fijos'],
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/gastos-fijos',
                 ]
             ]
         ],
@@ -309,12 +315,6 @@ return [
                     'text' => 'Vehiculos Entregados',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/vehiculos-entregados',
-                ],
-                [
-                    'text' => 'Gastos Fijos',
-                    'can' => ['gastos-fijos'],
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/gastos-fijos',
                 ]
             ]
         ],
@@ -361,12 +361,12 @@ return [
                     'url'    => '/proveedores',
                     'can' => ['administrar-proveedores', 'ver-proveedores'],
                 ],
-                [
-                    'text'   => 'Pagos a Proveedoress',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/proveedores/pagos',
-                    'can' => ['administrar-proveedores', 'ver-proveedores'],
-                ],
+                // [
+                //     'text'   => 'Pagos a Proveedoress',
+                //     'icon'   => 'fas fa-fw fa-chevron-right',
+                //     'url'    => '/proveedores/pagos',
+                //     'can' => ['administrar-proveedores', 'ver-proveedores'],
+                // ],
             ]
         ],
         [

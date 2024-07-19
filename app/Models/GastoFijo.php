@@ -14,6 +14,14 @@ class GastoFijo extends Model
         'concepto',
     ];
 
+    static function getLastAmount($concepto)
+    {
+        $last = GastoFijoLog::where('concepto', $concepto)
+        ->orderBy('fecha', 'desc')
+        ->first();
+        return $last ? $last->monto : 0;
+    }
+
     static function registerLog($date, $concept, $amount)
     {
         if(!$amount){

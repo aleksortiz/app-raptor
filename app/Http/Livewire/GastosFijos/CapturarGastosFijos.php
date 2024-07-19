@@ -71,24 +71,23 @@ class CapturarGastosFijos extends Component
             ];
         }
 
-        // $gastos = $gastos->sort();
-
         return [
             'gastos' => $gastos,
+            'no_logs' => $logs->count() == 0,
         ];
     }
 
-    // public function setGastoFijo($concepto, $index)
-    // {
-    //     $this->validate([
-    //         'bills.' . $index . '.monto' => 'required|numeric|gte:0',
-    //     ]);
-    //     $start = Entrada::getDateRange($this->year, $this->week, $this->week);
-    //     $start = Carbon::parse($start[0]);
-    //     $monto = $this->bills[$index]['monto'];
-    //     GastoFijo::registerLog($start, $concepto, floatval($monto));
-    // }
+    public function copyLogs(){
+        $start = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $start = Carbon::parse($start[0])->format('Y-m-d');
 
+        foreach ($this->bills as $index => $bill) {
+            $concepto = $bill['concepto'];
+            $monto = GastoFijo::getLastAmount($concepto);
+            GastoFijo::registerLog($start, $concepto, floatval($monto));
+        }
+    }
+    
     public function saveGastos($notify = true){
         $this->validate([
             'bills.*.monto' => 'required|numeric|gte:0',

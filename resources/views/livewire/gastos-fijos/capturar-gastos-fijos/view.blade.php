@@ -54,6 +54,9 @@
                 <div class="col ml-4 mb-3">
                     <button wire:click="saveGastos" class="btn btn-success btn-xs"><i class="fa fa-save"></i> Guardar Gastos</button>
                     <button wire:click="mdlGasto" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Agregar Gasto</button>
+                    @if ($no_logs)
+                        <button wire:click="copyLogs" class="btn btn-warning btn-xs"><i class="fa fa-copy"></i> Copiar gastos</button>
+                    @endif
                 </div>
             </div>
 
