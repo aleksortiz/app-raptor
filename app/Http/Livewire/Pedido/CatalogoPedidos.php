@@ -66,9 +66,9 @@ class CatalogoPedidos extends LivewireBaseCrudController
 
         $dataSum = PedidoConcepto::whereHas('pedido', function($q) use($dates) {
             $q->whereBetween('created_at', $dates);
-        })->selectRaw('pedido.proveedor_id, SUM(precio * cantidad) as total')
+        })->selectRaw('pedidos.proveedor_id, SUM(precio * cantidad) as total')
           ->join('pedidos', 'pedido_conceptos.pedido_id', '=', 'pedidos.id')
-          ->groupBy('pedido.proveedor_id')
+          ->groupBy('pedidos.proveedor_id')
           ->get();
 
         return [
