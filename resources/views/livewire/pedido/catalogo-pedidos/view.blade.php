@@ -12,12 +12,17 @@
         <div class="card-body p-0">
 
             <div wire:loading>
-                <center>
-                    <div style="background: white" class="flex-column justify-content-center align-items-center">
-                        <img src="{{ asset('images/logo.png') }}" height="10%">
-                        <h1><i class="fa fa-spin fa-spinner"></i> Cargando...</h1>
+                <div class="row">
+                    <div class="col">
+                        <center>
+                            <div style="background: white">
+                                <img src="{{ asset('images/logo.png') }}" height="100px;">
+                                <h1><i class="fa fa-spin fa-spinner"></i> Cargando...</h1>
+                            </div>
+                        </center>
                     </div>
-                </center>
+                </div>
+ 
             </div>
 
             <div wire:loading.remove>
