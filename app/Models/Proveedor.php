@@ -73,8 +73,8 @@ class Proveedor extends CancelableModel
     }
 
     $dates = Entrada::getDateRange($year, $week, $week);
-    
-    PedidoConcepto::whereHas('pedido', function($q) use($dates){
+
+    return PedidoConcepto::whereHas('pedido', function($q) use($dates){
       $q->where('proveedor_id', $this->id)
       ->whereBetween('created_at', $dates);
     })->get()->sum('precio * cantidad');
