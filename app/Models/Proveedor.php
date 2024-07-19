@@ -71,14 +71,13 @@ class Proveedor extends CancelableModel
     if(!$year){
       $year = Carbon::now()->year;
     }
+
     $dates = Entrada::getDateRange($year, $week, $week);
-
-    $data = Pedido::where('proveedor_id', $this->id)
-    ->whereBetween('created_at', $dates)->get();
-
-    $total = collect($data)->sum('total');
-
-    return $total;
+    
+    PedidoConcepto::whereHas('pedido', function($q) use($dates){
+      $q->where('proveedor_id', $this->id)
+      ->whereBetween('created_at', $dates);
+    })->get()->sum('precio * cantidad');
   }
 
 }
