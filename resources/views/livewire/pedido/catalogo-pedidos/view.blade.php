@@ -83,7 +83,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text"><b>{{$item->nombre}}</b></span>
-                                <span class="info-box-number">@money($item->getSumPagos($this->weekStart, $this->year))</span>
+                                <span class="info-box-number">@money($this->totalProvider($item->id))</span>
                             </div>
 
                         </div>

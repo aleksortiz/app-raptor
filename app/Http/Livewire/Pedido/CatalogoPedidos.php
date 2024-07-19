@@ -20,6 +20,7 @@ class CatalogoPedidos extends LivewireBaseCrudController
     public $weekEnd;
 
     public $providerId;
+    public $dataSum;
 
     protected $queryString = ['year', 'weekStart', 'weekEnd'];
 
@@ -50,6 +51,11 @@ class CatalogoPedidos extends LivewireBaseCrudController
         return view('livewire.pedido.catalogo-pedidos.view', $this->getRenderData());
     }
 
+    public function totalProvider($id){
+        $prov = $this->dataSum->where('proveedor_id', $id)->first();
+        return $prov?->total ?? 0;
+    }
+
     public function getRenderData(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $keyWord = '%'.$this->keyWord .'%';
@@ -64,7 +70,7 @@ class CatalogoPedidos extends LivewireBaseCrudController
             $q->whereBetween('created_at', $dates);
         })->selectRaw('SUM(precio * cantidad) as total')->value('total');
 
-        $dataSum = PedidoConcepto::whereHas('pedido', function($q) use($dates) {
+        $this->dataSum = PedidoConcepto::whereHas('pedido', function($q) use($dates) {
             $q->whereBetween('created_at', $dates);
         })->selectRaw('pedidos.proveedor_id, SUM(precio * cantidad) as total')
           ->join('pedidos', 'pedido_conceptos.pedido_id', '=', 'pedidos.id')
@@ -75,7 +81,7 @@ class CatalogoPedidos extends LivewireBaseCrudController
             'data' => $data->paginate(50),
             'totalProveedores' => $totalProveedores,
             'proveedores' => Proveedor::all(),
-            'dataSum' => $dataSum,
+            // 'dataSum' => $dataSum,
         ];
     }
 
