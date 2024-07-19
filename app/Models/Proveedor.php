@@ -76,9 +76,10 @@ class Proveedor extends CancelableModel
     // ->whereBetween('created_at', $dates)
     // ->sum('monto');
 
-    $total = Pedido::where('proveedor_id', $this->id)
-    ->whereBetween('created_at', $dates)
-    ->sum('total');
+    $data = Pedido::where('proveedor_id', $this->id)
+    ->whereBetween('created_at', $dates)->get();
+
+    $total = collect($data)->sum('total');
 
     return $total;
   }
