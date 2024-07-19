@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Pedido;
 use App\Http\Livewire\Classes\LivewireBaseCrudController;
 use App\Models\Entrada;
 use App\Models\Pedido;
+use App\Models\Proveedor;
 use Carbon\Carbon;
 
 class CatalogoPedidos extends LivewireBaseCrudController
@@ -16,6 +17,8 @@ class CatalogoPedidos extends LivewireBaseCrudController
     public $year;
     public $weekStart;
     public $weekEnd;
+
+    public $providerId;
 
     protected $listeners = [
         'updateCatalogoPedidos',
@@ -41,12 +44,24 @@ class CatalogoPedidos extends LivewireBaseCrudController
 
     public function render()
     {
+        return view('livewire.pedido.catalogo-pedidos.view', $this->getRenderData());
+    }
+
+    public function getRenderData(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $keyWord = '%'.$this->keyWord .'%';
         $data = $this->model::orderBy('id', 'DESC')
-        ->whereBetween('created_at', $dates)
-        ->paginate(100);
-        return view('livewire.pedido.catalogo-pedidos.view', compact('data'));
+        ->whereBetween('created_at', $dates);
+
+        if($this->providerId){
+            $data = $data->where('proveedor_id', $this->providerId);
+        }
+        $data = $data->paginate(50);
+
+        return [
+            'data' => $data,
+            'proveedores' => Proveedor::all(),
+        ];
     }
 
     public function mdlEnviarCorreo($id){
@@ -55,5 +70,9 @@ class CatalogoPedidos extends LivewireBaseCrudController
         $mailBody = "Se ha generado pedido para: {$this->model->proveedor->nombre}";
         $mailBody .= "\n\nMas información en el documento adjunto";
         $this->emit('initMdlEnviarPedidoCorreo', $this->model, $mail, $mailBody);
+    }
+
+    public function selectProvider($id){
+        $this->providerId = $id;
     }
 }

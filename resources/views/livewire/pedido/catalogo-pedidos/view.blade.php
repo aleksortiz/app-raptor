@@ -47,24 +47,48 @@
                     </div>
                 </div>
 
-                <div class="col-sm-3">
-                  <div class="info-box" style="cursor: pointer;">
-                      <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
-  
-                      <div class="info-box-content">
-                          <span class="info-box-text"><b>Total Pedidos</b></span>
-                          <span class="info-box-number">@money($data->sum('total'))</span>
-                      </div>
-  
-                  </div>
+
+                <div class="col-2">
+                    <div class="mt-4">
+                        <a href="/materiales/crear-pedido" target="_blank" class="btn btn-xs btn-success"><i class="fa fa-plus"></i> Crear Pedido</a>
+                    </div>
                 </div>
 
             </div>
 
 
-            <div class="ml-3">
-                <a href="/materiales/crear-pedido" target="_blank" class="btn btn-xs btn-primary"><i
-                        class="fa fa-plus"></i> Crear Pedido</a>
+
+
+            <div class="row">
+
+                <div class="col-sm-3">
+                    <div class="info-box" wire:click="selectProvider(null)" style="cursor: pointer;">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-truck"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Total Pedidos</b></span>
+                            <span class="info-box-number">@money($data->sum('total'))</span>
+                        </div>
+    
+                    </div>
+                </div>
+
+                @foreach ($proveedores as $item)
+                    <div class="col-sm-3">
+                        <div class="info-box" wire:click="selectProvider({{$item->id}})" style="cursor: pointer;">
+                            <span class="info-box-icon bg-info elevation-1"><i
+                                    class="fas fa-truck"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>{{$item->nombre}}</b></span>
+                                <span class="info-box-number">@money($item->getSumPagos($this->weekStart, $this->year))</span>
+                            </div>
+
+                        </div>
+                    </div>
+                @endforeach
+
+
             </div>
 
 
