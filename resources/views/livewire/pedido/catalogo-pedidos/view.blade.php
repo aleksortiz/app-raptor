@@ -11,6 +11,8 @@
         </div>
         <div class="card-body p-0">
 
+            {{$dataSum}}
+
             <div class="row pl-3 pt-3">
 
                 <div class="col-1">
