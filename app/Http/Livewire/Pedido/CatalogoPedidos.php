@@ -8,6 +8,7 @@ use App\Models\Pedido;
 use App\Models\PedidoConcepto;
 use App\Models\Proveedor;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CatalogoPedidos extends LivewireBaseCrudController
 {
@@ -22,11 +23,17 @@ class CatalogoPedidos extends LivewireBaseCrudController
     public $providerId;
     public $dataSum;
 
+    public $selectedPedido;
+
     protected $queryString = ['year', 'weekStart', 'weekEnd'];
 
     protected $listeners = [
         'updateCatalogoPedidos',
         'send' => 'sendMail',
+    ];
+
+    protected $rules = [
+        'selectedPedido.pagado' => 'required|date',
     ];
     
     public function mount(){
@@ -95,5 +102,36 @@ class CatalogoPedidos extends LivewireBaseCrudController
 
     public function selectProvider($id){
         $this->providerId = $id;
+    }
+
+    public function mdlPago($id){
+        $this->resetValidation();
+        $this->selectedPedido = Pedido::findOrFail($id);
+        if($this->selectedPedido?->pagado){
+            $this->emit('showModal', '#mdlFechaPago');
+        }
+        else{
+            Pedido::where('id', $id)->update(['pagado' => Db::raw('now()')]);
+            $this->emit('ok', 'Pago registrado');
+        }
+    }
+
+    public function removeDate(){
+        $id = $this->selectedPedido->id;
+        Pedido::where('id', $id)->update(['pagado' => null]);
+        $this->emit('ok', 'Pago eliminado');
+        $this->emit('closeModal', '#mdlFechaPago');
+    }
+
+    public function saveDate()
+    {
+        $this->validate([
+            'selectedPedido.pagado' => 'date|required',
+        ]);
+
+        $id = $this->selectedPedido->id;
+        Pedido::where('id', $id)->update(['pagado' => $this->selectedPedido->pagado]);
+        $this->emit('ok', 'Pago actualizado');
+        $this->emit('closeModal', '#mdlFechaPago');
     }
 }

@@ -112,6 +112,7 @@
                             <th>Proveedor</th>
                             <th>Importe</th>
                             <th>Estatus</th>
+                            <th>Est. Pago</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -124,15 +125,18 @@
                                 <td>{{ $row->proveedor->nombre }}</td>
                                 <td>@money($row->total)</td>
                                 <td>{{ $row->estatus_recibido }}</td>
+                                <td>{!! $row->estatus_pago_button !!}</td>
                                 <td>
                                     <div>
-                                        <button type="button" class="btn btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
+                                        <button type="button" class="btn btn-xs btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
                                         <div class="dropdown-menu" role="menu">
-                                          <a class="dropdown-item" style="cursor: pointer;" wire:click="mdlEnviarCorreo({{ $row->id }})"><i class="fas fa-envelope"></i> Enviar Pedido</a>
-                                          <a class="dropdown-item" href='/materiales/pedido_pdf/{{ $row->id }}' target="_blank"><i class="fas fa-file-alt"></i> Ver Pedido</a>
-                                          <a class="dropdown-item" style="cursor: pointer;" wire:click="$emit('initMdlRecibirPedido',{{ $row }})"><i class="fas fa-truck"></i> Recibir Pedido</a>
+                                            <a class="dropdown-item"><b>Pedido: #{{$row->id_paddy}}</b></a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" style="cursor: pointer;" wire:click="mdlEnviarCorreo({{ $row->id }})"><i class="fas fa-envelope"></i> Enviar Pedido</a>
+                                            <a class="dropdown-item" href='/materiales/pedido_pdf/{{ $row->id }}' target="_blank"><i class="fas fa-file-alt"></i> Ver Pedido</a>
+                                            <a class="dropdown-item" style="cursor: pointer;" wire:click="$emit('initMdlRecibirPedido',{{ $row }})"><i class="fas fa-truck"></i> Recibir Pedido</a>
                                         </div>
-                                      </div>
+                                    </div>
                                 </td>
                             <tr>
                         @endforeach
@@ -148,4 +152,6 @@
 
         </div>
     </div>
+
+    @include('livewire.pedido.catalogo-pedidos.modal-edit-date')
 </div>

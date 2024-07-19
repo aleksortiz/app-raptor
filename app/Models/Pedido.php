@@ -94,5 +94,32 @@ class Pedido extends CancelableModel
         return $this->subtotal + $this->iva;
     }
 
+    public function getEstatusPagoAttribute(){
+        if($this->pagado){
+            return 'PAGADO';
+        }
+        else{
+            return 'PENDIENTE';
+        }
+    }
+
+    public function getEstatusPagoColorAttribute(){
+        if($this->pagado){
+            return 'success';
+        }
+        else{
+            return 'warning';
+        }
+    }
+
+    public function getEstatusPagoButtonAttribute(){
+        if($this->pagado){
+            return '<button wire:click="mdlPago('.$this->id.')" class="py-1 btn btn-xs btn-success"><i class="fa fa-check"></i> Pagado</button>';
+        }
+        else {
+            return '<button wire:click="mdlPago('.$this->id.')" class="py-1 btn btn-xs btn-warning"><i class="fa fa-clock"></i> Pendiente</button>';
+        }
+    }
+
 
 }
