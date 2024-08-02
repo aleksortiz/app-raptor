@@ -31,6 +31,10 @@ class FlotillaUnidad extends Model
         return $this->hasMany(ServicioFlotilla::class, 'flotilla_unidad_id')->orderBy('fecha_servicio', 'desc');
     }
 
+    public function flotilla(){
+        return $this->belongsTo(Flotilla::class, 'flotilla_id');
+    }
+
     public function getVehiculoAttribute(){
         return $this->fabricante . ' ' . $this->modelo . ' ' . $this->year;
     }
