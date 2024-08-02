@@ -13,7 +13,7 @@ class AlterServicioFlotillasTable extends Migration
      */
     public function up()
     {
-        Schema::table('flotilla_unidades', function (Blueprint $table) {
+        Schema::table('servicio_flotillas', function (Blueprint $table) {
             $table->string('ubicacion');
             $table->string('estatus_servicio')->default('PENDIENTE');
             $table->dateTime('fecha_concluido')->nullable();
