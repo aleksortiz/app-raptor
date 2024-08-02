@@ -16,7 +16,7 @@
     @enderror
 
     <div class="row">
-        @foreach ($this->model->fotos as $item)
+        @foreach ($this->model?->fotos ?? [] as $item)
             <div class="col-md-2 col-sm-6 m-2">
                 <center>
                 <a href="{{$location_url}}/{{$item->url}}" data-toggle="lightbox" data-title="{{$item->fecha_creacion}}" data-gallery="gallery">

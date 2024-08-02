@@ -17,17 +17,17 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Cant.</th>
+                            <th>Vehiculos</th>
                             <th>Selecc.</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($flotillas as $row)
-                        <tr>
+                        <tr style="cursor: pointer;" wire:click="selectFlotilla({{ $row->id }})">
                             <td>{{ $row->nombre }}</td>
                             <td>{{ $row->unidades->count() }}</td>
                             <td>
-                                <button class="btn btn-primary btn-xs" wire:click="selectFlotilla({{ $row->id }})"><i class="fa fa-car"></i> Selecc.</button>
+                                <button class="btn btn-primary btn-xs"><i class="fa fa-car"></i> Selecc.</button>
                             </td>
                         </tr>
                         @endforeach
@@ -66,14 +66,14 @@
                         </thead>
                         <tbody>
                             @foreach ($this->selectedFlotilla?->unidades ?? [] as $row)
-                            <tr>
+                            <tr style="cursor: pointer;" wire:click="selectUnidad({{ $row->id }})">
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $row->vehiculo }}</td>
                                 <td>{{ $row->placas ? $row->placas : "N/A" }}</td>
                                 <td>{{ $row->estado }}</td>
                                 <td>@qty($row->kilometraje)</td>
                                 <td>
-                                    <button class="btn btn-info btn-xs" wire:click="selectUnidad({{ $row->id }})"><i class="fa fa-car"></i> Servicios</button>
+                                    <button class="btn btn-info btn-xs"><i class="fa fa-car"></i> Servicios</button>
                                 </td>
                                 {{-- <td>
                                     <button class="btn btn-warning btn-xs" wire:click="mdlEditarUnidad({{ $row->id }})"><i class="fa fa-edit"></i></button>

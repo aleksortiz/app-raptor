@@ -6,7 +6,10 @@
         @include('livewire.flotilla.catalogo-flotillas.partials.card-flotilla')
     @endif
 
-    @include('livewire.flotilla.catalogo-flotillas.modal-flotilla')
-    @include('livewire.flotilla.catalogo-flotillas.modal-unidad')
+    @include('livewire.flotilla.catalogo-flotillas.modals.modal-flotilla')
+    @include('livewire.flotilla.catalogo-flotillas.modals.modal-unidad')
+    @include('livewire.flotilla.catalogo-flotillas.modals.modal-servicio')
+    @include('livewire.flotilla.catalogo-flotillas.modals.modal-update-servicio')
+    @include('livewire.flotilla.catalogo-flotillas.modals.modal-fotos-servicio')
 
 </div>

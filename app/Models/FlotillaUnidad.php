@@ -28,7 +28,7 @@ class FlotillaUnidad extends Model
     ];
 
     public function servicios(){
-        return $this->hasMany(ServicioFlotilla::class, 'flotilla_unidad_id');
+        return $this->hasMany(ServicioFlotilla::class, 'flotilla_unidad_id')->orderBy('fecha_servicio', 'desc');
     }
 
     public function getVehiculoAttribute(){

@@ -21,6 +21,11 @@ class CreateServicioFlotillasTable extends Migration
             $table->dateTime('fecha_servicio');
             $table->decimal('costo', 10, 2);
             $table->integer('kilometraje')->nullable();
+            $table->string('ubicacion');
+            $table->string('estatus_servicio')->default('PENDIENTE');
+            $table->dateTime('fecha_concluido')->nullable();
+            $table->string('tecnico_asignado')->nullable();
+            $table->text('observaciones')->nullable();
             $table->timestamps();
         });
     }

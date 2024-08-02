@@ -2,15 +2,20 @@
 
 namespace App\Http\Livewire\Flotilla;
 
+use App\Http\Livewire\Flotilla\traits\FotosServicioTrait;
+use App\Http\Livewire\Flotilla\traits\UpdateServicioTrait;
 use App\Models\Cliente;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Flotilla;
 use App\Models\FlotillaUnidad;
+use App\Models\ServicioFlotilla;
+use Carbon\Carbon;
 
 class CatalogoFlotillas extends Component
 {
-    use WithPagination;
+    use WithPagination, UpdateServicioTrait, FotosServicioTrait;
+
     protected $paginationTheme = 'bootstrap';
 
     public $selectedFlotilla = null;
@@ -26,6 +31,13 @@ class CatalogoFlotillas extends Component
     public $serieUnidad;
     public $placasUnidad;
     public $kilometrajeUnidad;
+
+    public $tipoServicio;
+    public $descripcionServicio;
+    public $costoServicio;
+    public $fechaServicio;
+    public $ubicacionServicio;
+
 
     public function mount($identificador){
         $this->cliente = Cliente::where('identificador', $identificador)->first();
@@ -59,10 +71,6 @@ class CatalogoFlotillas extends Component
         $this->emit('showModal', '#mdlCrearFlotilla');
     }
 
-    public function mdlCrearUnidad(){
-        $this->emit('showModal', '#mdlCrearUnidad');
-    }
-
     public function createFlotilla(){
         $this->validate([
             'nombreFlotilla' => 'string|required',
@@ -72,7 +80,7 @@ class CatalogoFlotillas extends Component
         $this->selectedFlotilla = Flotilla::create([
             'nombre' => $this->nombreFlotilla,
             'notas' => $this->notasFlotilla,
-            'cliente_id' => 1,
+            'cliente_id' => $this->cliente->id,
         ]);
 
         $this->nombreFlotilla = null;
@@ -80,6 +88,10 @@ class CatalogoFlotillas extends Component
 
         $this->emit('closeModal', '#mdlCrearFlotilla');
         $this->emit('ok', 'Se ha creado flotilla');
+    }
+    
+    public function mdlCrearUnidad(){
+        $this->emit('showModal', '#mdlCrearUnidad');
     }
 
     public function createFlotillaUnidad(){
@@ -115,7 +127,50 @@ class CatalogoFlotillas extends Component
         $this->emit('ok', 'Se ha creado unidad');
     }
 
+    public function mdlCrearServicio(){
+        $this->TEST(); //TODO quitar
+        $this->emit('showModal', '#mdlCrearServicio');
+    }
+
+    public function createFlotillaServicio(){
+        $this->validate([
+            'tipoServicio' => 'string|required',
+            'descripcionServicio' => 'string|required',
+            'costoServicio' => 'numeric|min:0|required',
+            'fechaServicio' => 'date|required',
+            'ubicacionServicio' => 'string|required',
+        ]);
+
+        ServicioFlotilla::create([
+            'flotilla_unidad_id' => $this->selectedUnidad->id,
+            'tipo_servicio' => $this->tipoServicio,
+            'descripcion' => $this->descripcionServicio,
+            'fecha_servicio' => $this->fechaServicio,
+            'costo' => $this->costoServicio,
+            'ubicacion' => $this->ubicacionServicio,
+        ]);
+
+        $this->tipoServicio = null;
+        $this->descripcionServicio = null;
+        $this->costoServicio = null;
+        $this->fechaServicio = null;
+        $this->ubicacionServicio = null;
+
+        $this->selectedUnidad->load('servicios');
+
+        $this->emit('closeModal', '#mdlCrearServicio');
+        $this->emit('ok', 'Se ha registrado servicio');
+    }
+
     public function back(){
         $this->selectedUnidad = null;
+    }
+
+    public function TEST(){
+        $this->tipoServicio = "Cambio de aceite";
+        $this->descripcionServicio = "5 Litros de aceite QUAKER 50w-40";
+        $this->costoServicio = 500;
+        $this->fechaServicio = Carbon::now();
+        $this->ubicacionServicio = "Lopez Mateos y Ejercito Nacional, frente a edificio azul";
     }
 }
