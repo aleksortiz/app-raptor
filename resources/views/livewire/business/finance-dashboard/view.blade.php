@@ -58,8 +58,8 @@
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-car"></i></span>
     
                         <div class="info-box-content">
-                            <span class="info-box-text"><b>Vehículos Entregados:</b></span>
-                            <span class="text-lg info-box-number">@qty($this->cantVehiculosEntregados)</span>
+                            <span class="info-box-text"><b>Vehículos Entregados: @qty($this->cantVehiculosEntregados)</b></span>
+                            <span class="text-lg info-box-number">@money($this->totalVehiculosEntregados)</span>
                         </div>
     
                     </div>

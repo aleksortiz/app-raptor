@@ -39,13 +39,18 @@ class FinanceDashboard extends Component
 
     public function getTotalVehiculosRegistradosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $entradas = Entrada::whereBetween('created_at', $dates)->get();
-        return collect($entradas)->sum('total');
+        return Entrada::whereBetween('created_at', $dates)->count();
     }
 
     public function getCantVehiculosEntregadosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         return Entrada::whereBetween('fecha_entrega', $dates)->count();
+    }
+
+    public function getTotalVehiculosEntregadosProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        return collect($entradas)->sum('total');
     }
 
     public function getTotalMaterialesProperty(){
