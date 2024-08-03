@@ -65,16 +65,6 @@
                     </div>
     
                     <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cubes"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Materiales asignados: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalMateriales)</span>
-                        </div>
-    
-                    </div>
-    
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill"></i></span>
     
                         <div class="info-box-content">
@@ -100,6 +90,16 @@
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Pedidos a Proveedor: </b></span>
                             <span class="text-lg info-box-number">@money($this->totalPedidos)</span>
+                        </div>
+    
+                    </div>
+
+                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cubes"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Materiales asignados: </b></span>
+                            <span class="text-lg info-box-number">@money($this->totalMateriales)</span>
                         </div>
     
                     </div>
