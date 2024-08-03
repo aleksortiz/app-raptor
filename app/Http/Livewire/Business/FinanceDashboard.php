@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Business;
 
+use App\Models\Costo;
 use App\Models\Entrada;
 use App\Models\EntradaMaterial;
 use App\Models\GastoFijoLog;
@@ -68,13 +69,13 @@ class FinanceDashboard extends Component
 
     public function getTotalPagosRealizadosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $entradas = Entrada::whereBetween('created_at', $dates)->get();
-        $totalPagado = 0;
-        foreach($entradas as $entrada){
-            $totalPagado += $entrada->total_costos_pagados;
-        }
-        return $totalPagado;
-
+        // $entradas = Entrada::whereBetween('created_at', $dates)->get();
+        // $totalPagado = 0;
+        // foreach($entradas as $entrada){
+        //     $totalPagado += $entrada->total_costos_pagados;
+        // }
+        // return $totalPagado;
+        return Costo::whereBetween('pagado', $dates)->sum('costo');
     }
 
     public function getTotalPagosPendientesProperty(){
