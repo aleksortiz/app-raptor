@@ -67,6 +67,16 @@ class FinanceDashboard extends Component
         return $gastos;
     }
 
+    public function getTotalPagadoProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $entradas = Entrada::whereBetween('created_at', $dates)->get();
+        $totalPagado = 0;
+        foreach($entradas as $entrada){
+            $totalPagado += $entrada->total_costos_pagados;
+        }
+        return $totalPagado;
+    }
+
     public function getTotalPagosRealizadosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         // $entradas = Entrada::whereBetween('created_at', $dates)->get();
@@ -108,6 +118,17 @@ class FinanceDashboard extends Component
         $pedidos = Pedido::whereBetween('created_at', $dates)
         ->where('canceled_at', null)->get();
         return collect($pedidos)->sum('total');
+    }
+
+    public function getTotalPagosProveedoresProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $pedidos = Pedido::whereBetween('created_at', $dates)
+        ->where('canceled_at', null)->get();
+        return collect($pedidos)->sum('total');
+    }
+
+    public function getTotalGastosProperty(){
+        return $this->total_sueldos + $this->total_gastos_fijos + $this->totalPagosProveedores;
     }
 
     public function render()
