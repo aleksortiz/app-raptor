@@ -122,7 +122,7 @@ class FinanceDashboard extends Component
 
     public function getTotalPagosProveedoresProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $pedidos = Pedido::whereBetween('created_at', $dates)
+        $pedidos = Pedido::whereBetween('pagado', $dates)
         ->where('canceled_at', null)->get();
         return collect($pedidos)->sum('total');
     }
