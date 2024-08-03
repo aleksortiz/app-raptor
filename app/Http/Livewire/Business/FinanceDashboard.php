@@ -101,9 +101,7 @@ class FinanceDashboard extends Component
 
     public function getTotalUtilidadRealProperty(){
         return $this->total_pagos_realizados 
-        - $this->total_sueldos 
-        - $this->total_gastos_fijos 
-        - $this->total_pedidos;
+        - $this->total_gastos;
     }
 
     public function getTotalUtilidadVirtualProperty(){
