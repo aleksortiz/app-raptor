@@ -59,6 +59,7 @@
     
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Vehículos Entregados: @qty($this->cantVehiculosEntregados)</b></span>
+
                             <span class="text-lg info-box-number">@money($this->totalVehiculosEntregados)</span>
                         </div>
     
