@@ -135,6 +135,9 @@
                                             <a class="dropdown-item" style="cursor: pointer;" wire:click="mdlEnviarCorreo({{ $row->id }})"><i class="fas fa-envelope"></i> Enviar Pedido</a>
                                             <a class="dropdown-item" href='/materiales/pedido_pdf/{{ $row->id }}' target="_blank"><i class="fas fa-file-alt"></i> Ver Pedido</a>
                                             <a class="dropdown-item" style="cursor: pointer;" wire:click="$emit('initMdlRecibirPedido',{{ $row }})"><i class="fas fa-truck"></i> Recibir Pedido</a>
+                                            @role('gerente')
+                                                <a class="dropdown-item" style="cursor: pointer;" wire:click="mdlProviders({{$row->id}})"><i class="fa fa-exchange-alt"></i> Cambiar Proveedor</a>
+                                            @endrole
                                         </div>
                                     </div>
                                 </td>
@@ -154,4 +157,5 @@
     </div>
 
     @include('livewire.pedido.catalogo-pedidos.modal-edit-date')
+    @include('livewire.pedido.catalogo-pedidos.modal-change-provider')
 </div>

@@ -20,6 +20,7 @@ class CatalogoPedidos extends LivewireBaseCrudController
     public $weekStart;
     public $weekEnd;
 
+    public $providerIdCombo;
     public $providerId;
     public $dataSum;
 
@@ -133,5 +134,20 @@ class CatalogoPedidos extends LivewireBaseCrudController
         Pedido::where('id', $id)->update(['pagado' => $this->selectedPedido->pagado]);
         $this->emit('ok', 'Pago actualizado');
         $this->emit('closeModal', '#mdlFechaPago');
+    }
+
+    public function mdlProviders($id){
+        $this->selectedPedido = Pedido::findOrFail($id);
+        $this->emit('showModal', '#mdlProviders');
+    }
+
+    public function setProvider(){
+        $this->validate([
+            'providerIdCombo' => 'numeric|min:1',
+        ]);
+        
+        Pedido::where('id', $this->selectedPedido->id)->update(['proveedor_id' => $this->providerIdCombo]);
+        $this->emit('ok', 'Proveedor actualizado');
+        $this->emit('closeModal', '#mdlProviders');
     }
 }
