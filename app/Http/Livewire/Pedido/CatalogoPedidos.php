@@ -138,6 +138,7 @@ class CatalogoPedidos extends LivewireBaseCrudController
 
     public function mdlProviders($id){
         $this->selectedPedido = Pedido::findOrFail($id);
+        $this->providerIdCombo = $this->selectedPedido->proveedor_id;
         $this->emit('showModal', '#mdlProviders');
     }
 

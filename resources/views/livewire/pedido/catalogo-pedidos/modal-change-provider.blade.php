@@ -16,6 +16,7 @@
                             <option value="{{ $provider->id }}">{{ $provider->nombre }}</option>
                         @endforeach
                     </select>
+                    @error('providerIdCombo') <span class="error text-danger">{{ $message }}</span> @enderror
                 </div>
                 
             </div>
