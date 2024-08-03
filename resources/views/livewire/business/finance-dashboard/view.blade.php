@@ -27,7 +27,19 @@
                 <div class="col-1">
                     <div class="form-group">
                         <label for="keyWord">Semana</label>
-                        <select wire:model="week" class="form-control" id="week">
+                        <select wire:model.lazy="weekStart" class="form-control" id="weekStart">
+                            @foreach (range(1, 52) as $item)
+                                <option value="{{ $item }}">{{ $item }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                
+                <div class="col-1">
+                    <div class="form-group">
+                        <label for="keyWord">a la</label>
+                        <select wire:model.lazy="weekEnd" class="form-control" id="weekEnd">
                             @foreach (range(1, 52) as $item)
                                 <option value="{{ $item }}">{{ $item }}</option>
                             @endforeach

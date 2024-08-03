@@ -14,58 +14,60 @@ use Livewire\Component;
 class FinanceDashboard extends Component
 {
 
-    public $week;
+    public $weekStart;
+    public $weekEnd;
     public $year;
     public $maxYear;
 
-    protected $queryString = ['week', 'year'];
+    protected $queryString = ['weekStart','weekEnd', 'year'];
 
     public $activeSection = null;
 
     public function mount(){
         $today = Carbon::today();
         $this->maxYear = $today->year;
-        $this->week = $this->week ? $this->week : $today->weekOfYear;
+        $this->weekStart = $this->weekStart ? $this->weekStart : $today->weekOfYear;
+        $this->weekEnd = $this->weekEnd ? $this->weekEnd : $today->weekOfYear;
         $this->year = $this->year ? $this->year : $this->maxYear;
     }
 
     public function getCantVehiculosRegistradosProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         return Entrada::whereBetween('created_at', $dates)->count();
     }
 
     public function getTotalVehiculosRegistradosProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $entradas = Entrada::whereBetween('created_at', $dates)->get();
         return collect($entradas)->sum('total');
     }
 
     public function getCantVehiculosEntregadosProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         return Entrada::whereBetween('fecha_entrega', $dates)->count();
     }
 
     public function getTotalMaterialesProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $entradas = EntradaMaterial::whereBetween('created_at', $dates)->get();
         return collect($entradas)->sum('importe');
     }
 
     public function getTotalSueldosProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $pagos = PagoPersonal::whereBetween('fecha', $dates)->sum('pago');
         $destajos = OrdenTrabajoPago::whereBetween('created_at', $dates)->sum('monto');
         return $pagos + $destajos;
     }
 
     public function getTotalGastosFijosProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $gastos = GastoFijoLog::whereBetween('fecha', $dates)->sum('monto');
         return $gastos;
     }
 
     public function getTotalPagosRealizadosProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $entradas = Entrada::whereBetween('created_at', $dates)->get();
         $totalPagado = 0;
         foreach($entradas as $entrada){
@@ -77,7 +79,7 @@ class FinanceDashboard extends Component
 
     public function getTotalPagosPendientesProperty(){
         // return $this->total_vehiculos_registrados - $this->total_pagos_realizados;
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $entradas = Entrada::whereBetween('created_at', $dates)->get();
         $totalPendiente = 0;
         foreach($entradas as $entrada){
@@ -101,7 +103,7 @@ class FinanceDashboard extends Component
     }
 
     public function getTotalPedidosProperty(){
-        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $pedidos = Pedido::whereBetween('created_at', $dates)
         ->where('canceled_at', null)->get();
         return collect($pedidos)->sum('total');
