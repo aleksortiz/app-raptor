@@ -44,6 +44,8 @@ class BitacoraMateriales extends Component
         
         $materiales = EntradaMaterial::select(DB::raw('id, material_id, entrada_id, material, unidad_medida, count(entrada_id) as c_entradas, precio, sum(cantidad) as cantidadSum, sum(precio * cantidad) as importeSum'))
         ->whereBetween('created_at', [$start, $end]);
+
+        $this->totalMateriales = EntradaMaterial::whereBetween('created_at', [$start, $end])->get()->sum('importe');
     
         if($this->desglosar){
             $materiales->orderBy('created_at', 'desc');
