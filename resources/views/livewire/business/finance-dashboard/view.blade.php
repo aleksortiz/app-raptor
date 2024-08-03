@@ -120,7 +120,7 @@
     
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Sueldos: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalSueldos)</span>
+                            <span class="text-lg info-box-number">@money($this->totalNomina)</span>
                         </div>
     
                     </div>

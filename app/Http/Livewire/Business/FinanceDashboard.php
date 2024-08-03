@@ -60,7 +60,7 @@ class FinanceDashboard extends Component
         return collect($entradas)->sum('importe');
     }
 
-    public function getTotalSueldosProperty(){
+    public function getTotalNominaProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $pagos = PagoPersonal::whereBetween('fecha', $dates)->sum('pago');
         return $pagos;
@@ -70,6 +70,11 @@ class FinanceDashboard extends Component
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $destajos = OrdenTrabajoPago::whereBetween('created_at', $dates)->sum('monto');
         return $destajos;
+    }
+
+
+    public function getTotalSueldosProperty(){
+        return $this->total_nomina + $this->total_destajos;
     }
 
     public function getTotalGastosFijosProperty(){
