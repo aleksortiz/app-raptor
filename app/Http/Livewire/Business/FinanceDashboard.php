@@ -63,8 +63,13 @@ class FinanceDashboard extends Component
     public function getTotalSueldosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $pagos = PagoPersonal::whereBetween('fecha', $dates)->sum('pago');
+        return $pagos;
+    }
+
+    public function getTotalDestajosProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $destajos = OrdenTrabajoPago::whereBetween('created_at', $dates)->sum('monto');
-        return $pagos + $destajos;
+        return $destajos;
     }
 
     public function getTotalGastosFijosProperty(){

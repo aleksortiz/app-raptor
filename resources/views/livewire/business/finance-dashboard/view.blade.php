@@ -124,6 +124,16 @@
                         </div>
     
                     </div>
+
+                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Destajos: </b></span>
+                            <span class="text-lg info-box-number">@money($this->totalDestajos)</span>
+                        </div>
+    
+                    </div>
     
                     <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
