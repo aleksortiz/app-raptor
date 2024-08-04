@@ -192,7 +192,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Utilidad Bruta: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalUtilidadBruta)</span>
+                            <span class="text-lg info-box-number">@money($this->utilidadBruta)</span>
                         </div>
 
                     </div>
@@ -202,7 +202,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Utilidad Neta: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalUtilidadNeta)</span>
+                            <span class="text-lg info-box-number">@money($this->utilidadNeta)</span>
                         </div>
 
                     </div>
