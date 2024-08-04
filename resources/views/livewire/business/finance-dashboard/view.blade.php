@@ -177,12 +177,32 @@
                     </div>
 
                     <h3>Totales:</h3>
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                    {{-- <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Utilidad Real: </b></span>
                             <span class="text-lg info-box-number">@money($this->totalUtilidadReal)</span>
+                        </div>
+
+                    </div> --}}
+
+                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Utilidad Bruta: </b></span>
+                            <span class="text-lg info-box-number">@money($this->totalUtilidadBruta)</span>
+                        </div>
+
+                    </div>
+
+                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Utilidad Neta: </b></span>
+                            <span class="text-lg info-box-number">@money($this->totalUtilidadNeta)</span>
                         </div>
 
                     </div>
