@@ -145,6 +145,16 @@ class FinanceDashboard extends Component
         return $this->total_sueldos + $this->total_gastos_fijos + $this->totalPagosProveedores;
     }
 
+    public function getUtilidadBrutaProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        return collect($entradas)->sum('total_utilidad_global');
+    }
+
+    public function getUtilidadNetaProperty(){
+        return $this->utilidad_bruta - $this->total_nomina - $this->total_gastos_fijos;
+    }
+
     public function render()
     {
         return view('livewire.business.finance-dashboard.view');
