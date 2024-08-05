@@ -148,6 +148,16 @@
                         </div>
     
                     </div>
+
+                    <div class="info-box" style="cursor: pointer;">
+                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
+    
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Sueldos Taller: </b></span>
+                            <span class="text-lg info-box-number">@money($this->totalSueldosTaller)</span>
+                        </div>
+    
+                    </div>
     
                     <a style="color: inherit" href="/materiales/pedidos?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
                         <div class="info-box" style="cursor: pointer;">
@@ -168,6 +178,18 @@
                             <div class="info-box-content">
                                 <span class="info-box-text"><b>Gastos Fijos: </b></span>
                                 <span class="text-lg info-box-number">@money($this->totalGastosFijos)</span>
+                            </div>
+        
+                        </div>
+                    </a>
+
+                    <a style="color: inherit" href="/gastos-fijos?year={{$this->year}}&week={{$this->weekStart}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-money-check-alt"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Gastos Generales: </b></span>
+                                <span class="text-lg info-box-number">@money($this->totalGastosGenerales)</span>
                             </div>
         
                         </div>

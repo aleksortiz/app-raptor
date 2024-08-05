@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Business;
 
 use App\Models\Costo;
+use App\Models\Egreso;
 use App\Models\Entrada;
 use App\Models\EntradaMaterial;
 use App\Models\GastoFijoLog;
@@ -160,7 +161,19 @@ class FinanceDashboard extends Component
     }
 
     public function getUtilidadNetaProperty(){
-        return $this->utilidad_bruta - $this->total_nomina_administrativa - $this->total_gastos_fijos;
+        return $this->utilidad_bruta - $this->total_sueldos_taller - $this->total_gastos_fijos - $this->total_gastos_generales;
+    }
+
+    public function getTotalGastosGeneralesProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $gastos = Egreso::whereBetween('created_at', $dates)->sum('monto');
+        return $gastos;
+    }
+
+    public function getTotalSueldosTallerProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('entrada_id', null)->sum('pago');
+        return $pagos;
     }
 
     public function render()
