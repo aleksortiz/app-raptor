@@ -66,6 +66,14 @@ class FinanceDashboard extends Component
         return $pagos;
     }
 
+    public function getTotalNominaAdministrativaProperty(){
+        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $pagos = PagoPersonal::whereBetween('fecha', $dates)->whereHas('personal', function($q){
+            $q->where('administrativo', true);
+        })->sum('pago');
+        return $pagos;
+    }
+
     public function getTotalDestajosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $destajos = OrdenTrabajoPago::whereBetween('created_at', $dates)->sum('monto');
@@ -152,7 +160,7 @@ class FinanceDashboard extends Component
     }
 
     public function getUtilidadNetaProperty(){
-        return $this->utilidad_bruta - $this->total_nomina - $this->total_gastos_fijos;
+        return $this->utilidad_bruta - $this->total_nomina_administrativa - $this->total_gastos_fijos;
     }
 
     public function render()
