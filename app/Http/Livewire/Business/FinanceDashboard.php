@@ -176,6 +176,15 @@ class FinanceDashboard extends Component
         return $pagos;
     }
 
+    public function getPorcUtilidadNetaProperty(){
+        try{
+            return $this->utilidad_neta / $this->total_vehiculos_entregados;
+        }
+        catch(\Exception $e){
+            return 0;
+        }
+    }
+
     public function render()
     {
         return view('livewire.business.finance-dashboard.view');

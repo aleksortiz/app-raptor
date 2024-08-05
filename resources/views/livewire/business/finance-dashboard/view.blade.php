@@ -132,7 +132,7 @@
                             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
         
                             <div class="info-box-content">
-                                <span class="info-box-text"><b>Sueldos: </b></span>
+                                <span class="info-box-text"><b>Sueldos Operativos: </b></span>
                                 <span class="text-lg info-box-number">@money($this->totalNomina)</span>
                             </div>
         
@@ -243,7 +243,7 @@
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text"><b>Utilidad Neta: </b></span>
+                            <span class="info-box-text"><b>Utilidad Neta: @qty($this->porcUtilidadNeta) %</b></span>
                             <span class="text-lg info-box-number">@money($this->utilidadNeta)</span>
                         </div>
 
