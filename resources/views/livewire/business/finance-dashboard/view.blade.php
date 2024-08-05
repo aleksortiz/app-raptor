@@ -122,7 +122,7 @@
         </div>
     
         <div class="col">
-            <div style="height: 85vh;" class="card">
+            <div style="min-height: 100vh;" class="card">
                 <div class="card-header">
                     <h3 class="card-title"><b>Gastos: @money($this->totalGastos)</b></h3>
                 </div>
