@@ -44,66 +44,78 @@
                     <h3 class="card-title"><b>Informativo dela semana {{$this->weekStart}} a la {{$this->weekEnd}}</b></h3>
                 </div>
                 <div class="card-body">
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-car"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Vehículos Registrados: @qty($this->cantVehiculosRegistrados)</b></span>
-                            <span class="text-lg info-box-number">@money($this->totalVehiculosRegistrados)</span>
+                    <a style="color: inherit" href="/servicios?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-car"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Vehículos Registrados: @qty($this->cantVehiculosRegistrados)</b></span>
+                                <span class="text-lg info-box-number">@money($this->totalVehiculosRegistrados)</span>
+                            </div>
+        
                         </div>
-    
-                    </div>
-    
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-car"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Vehículos Entregados: @qty($this->cantVehiculosEntregados)</b></span>
+                    </a>
 
-                            <span class="text-lg info-box-number">@money($this->totalVehiculosEntregados)</span>
+                    <a style="color: inherit" href="/vehiculos-entregados?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-car"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Vehículos Entregados: @qty($this->cantVehiculosEntregados)</b></span>
+    
+                                <span class="text-lg info-box-number">@money($this->totalVehiculosEntregados)</span>
+                            </div>
                         </div>
+                    </a>
     
-                    </div>
-    
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Pagado:</b></span>
-                            <span class="text-lg info-box-number">@money($this->totalPagado)</span>
-                        </div>
-    
-                    </div>
-    
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-money-bill"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Pendiente: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalPagosPendientes)</span>
-                        </div>
-    
-                    </div>
-    
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Pedidos a Proveedor: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalPedidos)</span>
-                        </div>
-    
-                    </div>
 
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cubes"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Materiales asignados: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalMateriales)</span>
+                    <a style="color: inherit" href="/reporte-facturas?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Pagado:</b></span>
+                                <span class="text-lg info-box-number">@money($this->totalPagado)</span>
+                            </div>
+        
                         </div>
+                    </a>
     
-                    </div>
+                    <a style="color: inherit" href="/reporte-facturas?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-money-bill"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Pendiente: </b></span>
+                                <span class="text-lg info-box-number">@money($this->totalPagosPendientes)</span>
+                            </div>
+        
+                        </div>
+                    </a>
+    
+                    <a style="color: inherit" href="/materiales/pedidos?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Pedidos a Proveedor: </b></span>
+                                <span class="text-lg info-box-number">@money($this->totalPedidos)</span>
+                            </div>
+        
+                        </div>
+                    </a>
+
+                    <a style="color: inherit" href="/materiales/bitacora?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cubes"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Materiales asignados: </b></span>
+                                <span class="text-lg info-box-number">@money($this->totalMateriales)</span>
+                            </div>
+        
+                        </div>
+                    </a>
     
                 </div>
             </div>
@@ -115,17 +127,19 @@
                     <h3 class="card-title"><b>Gastos: @money($this->totalGastos)</b></h3>
                 </div>
                 <div class="card-body">
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Sueldos: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalNomina)</span>
+                    <a style="color: inherit" href="/personal/diagrama-nomina?year={{$this->year}}&week={{$this->weekStart}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Sueldos: </b></span>
+                                <span class="text-lg info-box-number">@money($this->totalNomina)</span>
+                            </div>
+        
                         </div>
-    
-                    </div>
+                    </a>
 
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                    <div class="info-box" style="cursor: pointer;">
                         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
     
                         <div class="info-box-content">
@@ -135,25 +149,29 @@
     
                     </div>
     
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Pagos a Proveedor: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalPagosProveedores)</span>
+                    <a style="color: inherit" href="/materiales/pedidos?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Pagos a Proveedor: </b></span>
+                                <span class="text-lg info-box-number">@money($this->totalPagosProveedores)</span>
+                            </div>
+        
                         </div>
+                    </a>
     
-                    </div>
-    
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-money-check-alt"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Gastos Fijos: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalGastosFijos)</span>
+                    <a style="color: inherit" href="/gastos-fijos?year={{$this->year}}&week={{$this->weekStart}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-money-check-alt"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Gastos Fijos: </b></span>
+                                <span class="text-lg info-box-number">@money($this->totalGastosFijos)</span>
+                            </div>
+        
                         </div>
-    
-                    </div>
+                    </a>
     
                 </div>
             </div>
@@ -166,18 +184,20 @@
                 </div>
                 <div class="card-body">
     
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill"></i></span>
-    
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Pagos Realizados:</b></span>
-                            <span class="text-lg info-box-number">@money($this->totalPagosRealizados)</span>
+                    <a style="color: inherit" href="/reporte-facturas?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                        <div class="info-box" style="cursor: pointer;">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill"></i></span>
+        
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Pagos Realizados:</b></span>
+                                <span class="text-lg info-box-number">@money($this->totalPagosRealizados)</span>
+                            </div>
+        
                         </div>
-    
-                    </div>
+                    </a>
 
                     <h3>Totales:</h3>
-                    {{-- <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                    {{-- <div class="info-box" style="cursor: pointer;">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                         <div class="info-box-content">
@@ -187,7 +207,7 @@
 
                     </div> --}}
 
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                    <div class="info-box" style="cursor: pointer;">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                         <div class="info-box-content">
@@ -197,7 +217,7 @@
 
                     </div>
 
-                    <div class="info-box" wire:click="mdlMaterialesDetalle" style="cursor: pointer;">
+                    <div class="info-box" style="cursor: pointer;">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                         <div class="info-box-content">

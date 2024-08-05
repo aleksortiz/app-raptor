@@ -22,6 +22,8 @@ class BitacoraMateriales extends Component
 
     public $desglosar = false;
 
+    protected $queryString = ['year', 'weekStart', 'weekEnd'];
+
     public function updated(){
         $this->resetPage();
     }
