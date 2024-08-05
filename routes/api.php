@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\ServicioFlotillaController;
+use App\Models\Entrada;
+use App\Models\GastoFijoLog;
+use App\Models\PagoPersonal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +30,24 @@ Route::get('/{cliente}/flotillas', [ServicioFlotillaController::class, 'getFloti
 Route::post('/flotillas', [ServicioFlotillaController::class, 'createFlotilla']);
 Route::post('/flotillas-unidad', [ServicioFlotillaController::class, 'createFlotillaUnidad']);
 Route::post('/flotillas-servicio', [ServicioFlotillaController::class, 'createFlotillaServicio']);
+
+
+Route::get('/utilidad-neta/{week}', function(Request $request){
+    $year = Carbon::now()->year;
+    $week = $request->week;
+    $dates = Entrada::getDateRange($year, $week, $week);
+    $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+    $utilidad_bruta = collect($entradas)->sum('total_utilidad_global');
+
+    $pagos = PagoPersonal::whereBetween('fecha', $dates)->whereHas('personal', function($q){
+        $q->where('administrativo', true);
+    })->sum('pago');
+
+    $gastos = GastoFijoLog::whereBetween('fecha', $dates)->sum('monto');
+
+    return $utilidad_bruta - $pagos - $gastos;
+
+
+    
+});
 
