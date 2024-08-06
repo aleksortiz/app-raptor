@@ -267,6 +267,7 @@ return [
         [
             'text' => 'Negocio',
             'icon' => 'fas fa-fw fa-building',
+            'can' => ['reporte-finanzas', 'reporte-facturas', 'reporte-depositos', 'gastos-generales', 'gastos-fijos'],
             'submenu' => [
                 [
                     'text' => 'Reporte Finanzas',
