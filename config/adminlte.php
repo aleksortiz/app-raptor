@@ -314,12 +314,13 @@ return [
                     'text' => 'Catalogo de Entradas',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/servicios',
-                    'can' => ['catalogo-entradas'],
+                    'can' => ['administrar-entradas'],
                 ],
                 [
                     'text' => 'Vehiculos Entregados',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/vehiculos-entregados',
+                    'can' => ['vehiculos-entregados'],
                 ]
             ]
         ],
@@ -327,18 +328,7 @@ return [
             'text' => 'Clientes',
             'icon' => 'fas fa-fw fa-users',
             'url'    => '/clientes',
-            // 'submenu' => [
-            //     [
-            //         'text' => 'Crear Cliente',
-            //         'icon'   => 'fas fa-fw fa-chevron-right',
-            //         'url'    => '#',
-            //     ],
-            //     [
-            //         'text' => 'Catalogo de Clientes',
-            //         'icon'   => 'fas fa-fw fa-chevron-right',
-            //         'url'    => '/clientes',
-            //     ]
-            // ]
+            'can' => ['administrar-clientes'],
         ],
         [
             'text' => 'Materiales',
@@ -377,16 +367,19 @@ return [
         [
             'text' => 'Personal',
             'icon' => 'fas fa-fw fa-user-tie',
+            // 'can' => ['administrar-personal', 'diagrama-nomina'],
             'submenu' => [
                 [
                     'text' => 'Catalogo de Personal',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal',
+                    'can' => ['administrar-personal'],
                 ],
                 [
                     'text' => 'Diagrama Nomina',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/diagrama-nomina',
+                    'can' => ['diagrama-nomina'],
                 ],
             ]
         ],
@@ -405,6 +398,7 @@ return [
         [
             'text' => 'Servicio a flotillas',
             'icon' => 'fas fa-fw fa-taxi',
+            'can' => ['servicio-flotillas'],
             'submenu' => [
                 [
                     'text' => 'Flotillas',
@@ -416,6 +410,7 @@ return [
         [
             'text' => 'Catalogos',
             'icon' => 'fas fa-fw fa-book',
+            'can' => ['administrar-catalogos'],
             'submenu' => [
                 [
                     'text'   => 'Fabricantes',

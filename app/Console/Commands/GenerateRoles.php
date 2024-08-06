@@ -41,15 +41,15 @@ class GenerateRoles extends Command
     public function handle()
     {
         Permission::create(['name' => 'administrar-entradas']);
-        // Permission::create(['name' => 'reporte-facturas']);
-        // Permission::create(['name' => 'reporte-depositos']);
-        // Permission::create(['name' => 'gastos-generales']);
-        // Permission::create(['name' => 'registrar-entrada']);
-        // Permission::create(['name' => 'vehiculos-entregados']);
-        // Permission::create(['name' => 'administrar-personal']);
-        // Permission::create(['name' => 'diagrama-nomina']);
-        // Permission::create(['name' => 'servicio-flotillas']);
-        // Permission::create(['name' => 'administrar-catalogos']);
+        Permission::create(['name' => 'reporte-facturas']);
+        Permission::create(['name' => 'reporte-depositos']);
+        Permission::create(['name' => 'gastos-generales']);
+        Permission::create(['name' => 'registrar-entrada']);
+        Permission::create(['name' => 'vehiculos-entregados']);
+        Permission::create(['name' => 'administrar-personal']);
+        Permission::create(['name' => 'diagrama-nomina']);
+        Permission::create(['name' => 'servicio-flotillas']);
+        Permission::create(['name' => 'administrar-catalogos']);
         $this->info("Se han generado permisos");
     }
 }
