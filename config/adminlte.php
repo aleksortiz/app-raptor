@@ -278,16 +278,19 @@ return [
                     'text' => 'Reporte de Facturas',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url' => '/reporte-facturas',
+                    'can' => ['reporte-facturas'],
                 ],
                 [
                     'text' => 'Depósitos',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url' => '/ingresos',
+                    'can' => ['reporte-depositos'],
                 ],
                 [
                     'text' => 'Gastos Generales',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url' => '/egresos',
+                    'can' => ['gastos-generales'],
                 ],
                 [
                     'text' => 'Gastos Fijos',
@@ -305,11 +308,13 @@ return [
                     'text' => 'Registrar Entrada',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/crear-entrada',
+                    'can' => ['registrar-entrada'],
                 ],
                 [
                     'text' => 'Catalogo de Entradas',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/servicios',
+                    'can' => ['catalogo-entradas'],
                 ],
                 [
                     'text' => 'Vehiculos Entregados',
