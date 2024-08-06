@@ -243,7 +243,7 @@
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                         <div class="info-box-content">
-                            <span class="info-box-text"><b>Utilidad Neta: @qty($this->porcUtilidadNeta)%</b></span>
+                            <span class="info-box-text"><b>Utilidad Neta: (@qty($this->porcUtilidadNeta)% de @money($this->totalVehiculosEntregados))</b></span>
                             <span class="text-lg info-box-number">@money($this->utilidadNeta)</span>
                         </div>
 
