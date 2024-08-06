@@ -34,6 +34,19 @@ class Permission extends SpatiePermission
         'admin-personal-administrativo' => 'Puede ver, crear y editar personal administrativo',
         'reporte-comisiones' => 'Puede ver reportes de comisiones',
         'gastos-fijos' => 'Puede ver y crear gastos fijos',
+        'reporte-facturas' => 'Puede ver reportes de facturas',
+        'registrar-entrada' => 'Puede registrar entradas',
+        'administrar-entradas' => 'Puede ver, crear y editar entradas',
+        'reporte-depositos' => 'Puede ver reportes de depositos',
+        'gastos-generales' => 'Puede ver y crear gastos generales',
+        'registrar-entrada' => 'Puede registrar entradas',
+        'vehiculos-entregados' => 'Puede ver vehiculos entregados',
+        'administrar-personal' => 'Puede ver, crear y editar personal',
+        'diagrama-nomina' => 'Puede ver diagrama de nomina',
+        'servicio-flotillas' => 'Puede ver servicio de flotillas',
+        'administrar-catalogos' => 'Puede ver, crear y editar catalogos',
+
+
     ];
 
     public static function boot()
