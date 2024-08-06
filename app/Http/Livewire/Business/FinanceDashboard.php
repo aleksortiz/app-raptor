@@ -177,8 +177,12 @@ class FinanceDashboard extends Component
     }
 
     public function getPorcUtilidadNetaProperty(){
+        if($this->total_vehiculos_entregados <= 0){
+            return 0;
+        }
+
         try{
-            return $this->utilidad_neta / $this->total_vehiculos_entregados;
+            return ($this->utilidad_neta / $this->total_vehiculos_entregados) * 100;
         }
         catch(\Exception $e){
             return 0;
