@@ -243,4 +243,8 @@ class FinanceDashboard extends Component
         return $utilidadBruta - $sueldosTaller - $gastosFijos - $gastosGenerales;
     }
 
+    public function getQtySemanasProperty(){
+        return $this->weekEnd - $this->weekStart + 1;
+    }
+
 }
