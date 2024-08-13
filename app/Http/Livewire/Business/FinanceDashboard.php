@@ -205,8 +205,8 @@ class FinanceDashboard extends Component
         $utilidad_bruta = [];
         for($i = $this->weekStart; $i <= $this->weekEnd; $i++){
             $weeks[] = "Semana $i";
-            $utilidad_bruta[] = number_format($this->utilidadBrutaByWeek($i), 2);
-            $utilidad_neta[] = number_format($this->utilidadNetaByWeek($i), 2);
+            $utilidad_bruta[] = round($this->utilidadBrutaByWeek($i), 2);
+            $utilidad_neta[] = round($this->utilidadNetaByWeek($i), 2);
         }
         $this->emit('loadGraphLive', $weeks, $utilidad_neta, $utilidad_bruta);
     }
