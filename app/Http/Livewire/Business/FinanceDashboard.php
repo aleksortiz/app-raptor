@@ -21,6 +21,8 @@ class FinanceDashboard extends Component
     public $year;
     public $maxYear;
 
+    public $viewGraph = false;
+
     protected $queryString = ['weekStart','weekEnd', 'year'];
 
     public $activeSection = null;
@@ -191,6 +193,29 @@ class FinanceDashboard extends Component
 
     public function render()
     {
+        if($this->viewGraph){
+            $this->clickGraph();
+        }
         return view('livewire.business.finance-dashboard.view');
+    }
+
+    public function clickGraph(){
+        $weeks = [];
+        $utilidad_neta = [];
+        $utilidad_bruta = [];
+        $start = $this->weekStart;
+        $end = $this->weekEnd;
+        for($i = $start; $i <= $end; $i++){
+            $weeks[] = "Semana $i";
+            $this->weekStart = $i;
+            $this->weekEnd = $i;
+            $utilidad_neta[] = $this->utilidad_neta;
+            $utilidad_bruta[] = $this->utilidad_bruta;
+        }
+        $this->weekStart = $start;
+        $this->weekEnd = $end;
+        $this->viewGraph = true;
+        $this->emit('loadGraphLive', $weeks, $utilidad_neta, $utilidad_bruta);
+
     }
 }

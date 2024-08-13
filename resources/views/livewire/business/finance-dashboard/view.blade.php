@@ -36,12 +36,41 @@
             </div>
         </div>
 
+        <div class="col-1">
+            <div class="form-group">
+                <label>Ver Gráfica</label>
+                <label class="content-input">
+                    <input wire:model="viewGraph" type="checkbox" />
+                    <i></i>
+                </label>
+            </div>
+        </div>
+
     </div>
+
+    @if ($this->viewGraph)
+        
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Gráfica</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart">
+                            <canvas id="chartdiv" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+
     <div class="row">
         <div class="col">
             <div style="min-height: 100vh;" class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><b>Informativo dela semana {{$this->weekStart}} a la {{$this->weekEnd}}</b></h3>
+                    <h3 class="card-title"><b>Informativo de la semana {{$this->weekStart}} a la {{$this->weekEnd}}</b></h3>
                 </div>
                 <div class="card-body">
                     <a style="color: inherit" href="/servicios?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
@@ -209,26 +238,14 @@
                     <a style="color: inherit" href="/reporte-facturas?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
                         <div class="info-box" style="cursor: pointer;">
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-money-bill"></i></span>
-        
                             <div class="info-box-content">
                                 <span class="info-box-text"><b>Pagos Realizados:</b></span>
                                 <span class="text-lg info-box-number">@money($this->totalPagosRealizados)</span>
                             </div>
-        
                         </div>
                     </a>
 
                     <h3>Totales:</h3>
-                    {{-- <div class="info-box" style="cursor: pointer;">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Utilidad Real: </b></span>
-                            <span class="text-lg info-box-number">@money($this->totalUtilidadReal)</span>
-                        </div>
-
-                    </div> --}}
-
                     <div class="info-box" style="cursor: pointer;">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
@@ -241,7 +258,6 @@
 
                     <div class="info-box" style="cursor: pointer;">
                         <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
-
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Utilidad Neta: (@qty($this->porcUtilidadNeta)% de @money($this->totalVehiculosEntregados))</b></span>
                             <span class="text-lg info-box-number">@money($this->utilidadNeta)</span>
