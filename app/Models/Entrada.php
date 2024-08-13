@@ -356,4 +356,9 @@ class Entrada extends BaseModel
             return $refaccion->costo == 0;
         });
     }
+
+    public function getHasPartsAttribute()
+    {
+        return $this->refacciones->count() > 0;
+    }
 }

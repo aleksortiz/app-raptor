@@ -93,7 +93,9 @@
                     @foreach ($entradas as $row)
                     <tr>
                         <td>
-                            @if ($row->check_parts)
+                            @if($row->has_parts)
+                                <a href="/servicios/{{$row->id}}?activeTab=5" data-toggle="tooltip" data-placement="top" title="Tiene Refacciones" class="btn btn-xs btn-secondary"><i class="fa fa-wrench"></i></a>
+                            @elseif ($row->check_parts)
                                 <a href="/servicios/{{$row->id}}?activeTab=5" data-toggle="tooltip" data-placement="top" title="Revisar Refacciones" class="btn btn-xs btn-danger"><i class="fa fa-wrench"></i></a>
                             @endif
                         </td>
