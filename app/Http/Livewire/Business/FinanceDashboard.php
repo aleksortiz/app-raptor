@@ -23,7 +23,7 @@ class FinanceDashboard extends Component
 
     public $viewGraph = false;
 
-    protected $queryString = ['weekStart','weekEnd', 'year'];
+    protected $queryString = ['weekStart','weekEnd', 'year', 'viewGraph'];
 
     public $activeSection = null;
 
