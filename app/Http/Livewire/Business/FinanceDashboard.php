@@ -203,19 +203,44 @@ class FinanceDashboard extends Component
         $weeks = [];
         $utilidad_neta = [];
         $utilidad_bruta = [];
-        $start = $this->weekStart;
-        $end = $this->weekEnd;
-        for($i = $start; $i <= $end; $i++){
+        for($i = $this->weekStart; $i <= $this->weekEnd; $i++){
             $weeks[] = "Semana $i";
-            $this->weekStart = $i;
-            $this->weekEnd = $i;
-            $utilidad_neta[] = $this->utilidad_neta;
-            $utilidad_bruta[] = $this->utilidad_bruta;
+            $utilidad_bruta[] = $this->utilidadBrutaByWeek($i);
+            $utilidad_neta[] = $this->utilidadNetaByWeek($i);
         }
-        $this->weekStart = $start;
-        $this->weekEnd = $end;
-        $this->viewGraph = true;
         $this->emit('loadGraphLive', $weeks, $utilidad_neta, $utilidad_bruta);
-
     }
+
+    public function utilidadBrutaByWeek($week){
+        $dates = Entrada::getDateRange($this->year, $week, $week);
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        return collect($entradas)->sum('total_utilidad_global');
+    }
+
+    public function sueldosTallerByWeek($week){
+        $dates = Entrada::getDateRange($this->year, $week, $week);
+        $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('entrada_id', null)->sum('pago');
+        return $pagos;
+    }
+
+    public function gastosFijosByWeek($week){
+        $dates = Entrada::getDateRange($this->year, $week, $week);
+        $gastos = GastoFijoLog::whereBetween('fecha', $dates)->sum('monto');
+        return $gastos;
+    }
+
+    public function gastosGeneralesByWeek($week){
+        $dates = Entrada::getDateRange($this->year, $week, $week);
+        $gastos = Egreso::whereBetween('created_at', $dates)->sum('monto');
+        return $gastos;
+    }
+
+    public function utilidadNetaByWeek($week){
+        $utilidadBruta = $this->utilidadBrutaByWeek($week);
+        $sueldosTaller = $this->sueldosTallerByWeek($week);
+        $gastosFijos = $this->gastosFijosByWeek($week);
+        $gastosGenerales = $this->gastosGeneralesByWeek($week);
+        return $utilidadBruta - $sueldosTaller - $gastosFijos - $gastosGenerales;
+    }
+
 }
