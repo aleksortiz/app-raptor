@@ -109,7 +109,17 @@
 
         <div class="row">
             <div class="col">
-                <h5><b>Servicios: </b> @money($this->entrada->total_costos)</h5>
+                <div class="d-flex justify-content-start">
+
+                    <h5><b>Servicios: </b> @money($this->entrada->total_costos)</h5>
+                    <label for="iptVentaRefacciones" class="ml-5 mr-2">Venta de Refacciones:</label>
+                    <div>
+                        <label class="content-input">
+                            <input id="iptVentaRefacciones" wire:model="entrada.venta_refacciones" type="checkbox" />
+                            <i></i>
+                        </label>
+                    </div>
+                </div>
                 <table class="table table-hover projects">
                     <thead>
                         <tr>

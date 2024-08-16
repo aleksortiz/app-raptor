@@ -51,7 +51,9 @@
                             <th>Fecha</th>
                             <th>Número de Parte</th>
                             <th>Descripción</th>
-                            <th>Costo</th>
+                            @if ($this->entrada->venta_refacciones)
+                                <th>Costo</th>
+                            @endif
                             <th>Cantidad</th>
                             <th>Precio</th>
                             <th>Importe</th>
@@ -65,7 +67,9 @@
                             <td>{{$item->fecha_creacion}}</td>
                             <td>{{$item->numero_parte}}</td>
                             <td>{{$item->descripcion}}</td>
-                            <td>@money($item->costo)</td>
+                            @if ($this->entrada->venta_refacciones)
+                                <td>@money($item->costo)</td>
+                            @endif
                             <td>{{$item->cantidad}}</td>
                             <td>@money($item->precio)</td>
                             <td>@money($item->importe)</td>

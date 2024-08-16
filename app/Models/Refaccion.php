@@ -38,7 +38,10 @@ class Refaccion extends BaseModel
     }
 
     public function getCostoTotalAttribute(){
-        return $this->costo * $this->cantidad;
+        if($this->model->venta_refacciones){
+            return $this->costo * $this->cantidad;
+        }
+        return $this->importe;
     }
 
     public function getUtilidadAttribute(){

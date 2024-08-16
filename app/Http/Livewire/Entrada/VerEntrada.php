@@ -82,6 +82,8 @@ class VerEntrada extends Component
         'costo.no_factura' => 'string|nullable|max:255',
         'costo.pagado' => 'date|nullable',
 
+        'entrada.venta_refacciones' => 'boolean|required',
+
         'pagoDestajo' => 'numeric|required|min:0',
 
         'materialManual.descripcion' => 'string|required|max:255',
@@ -127,6 +129,10 @@ class VerEntrada extends Component
 
     public function createRefaccion()
     {
+        if (!$this->entrada->venta_refacciones) {
+            $this->refaccion->costo = $this->refaccion->precio;
+        }
+
         $this->validate([
             'refaccion.descripcion' => 'string|required|max:255',
             'refaccion.numero_parte' => 'string|nullable|max:255',
@@ -143,6 +149,13 @@ class VerEntrada extends Component
             $this->entrada->load('refacciones');
             $this->refaccion = null;
         }
+    }
+
+    public function updatedEntradaVentaRefacciones(){
+        $this->entrada->update([
+            'venta_refacciones' => $this->entrada->venta_refacciones ? 1 : 0,
+        ]);
+        $this->entrada->refresh();
     }
 
     public function createMaterialManual(){
