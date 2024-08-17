@@ -26,6 +26,8 @@
                         pointRadius          : false,
                         pointColor          : '#3b8bba',
                         pointStrokeColor    : 'rgba(60,141,188,1)',
+                        pointBorderColor:'#007bff',
+                        pointBackgroundColor:'#007bff',
                         pointHighlightFill  : '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
                         data                : data1
@@ -37,6 +39,8 @@
                         pointRadius         : false,
                         pointColor          : 'rgba(210, 214, 222, 1)',
                         pointStrokeColor    : '#c1c7d1',
+                        pointBorderColor:'#007bff',
+                        pointBackgroundColor:'#007bff',
                         pointHighlightFill  : '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
                         data                : data2
