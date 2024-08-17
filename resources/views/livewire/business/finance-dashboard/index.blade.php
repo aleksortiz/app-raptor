@@ -20,6 +20,7 @@
                 labels  : labels,
                 datasets: [
                     {
+                        type                : 'line',
                         label               : 'Utilidad Neta',
                         backgroundColor:'tansparent',
                         borderColor:'#ced4da',
@@ -29,6 +30,7 @@
                         data                : data1
                     },
                     {
+                        type                : 'line',
                         label               : 'Utilidad Bruta',
                         backgroundColor:'transparent',
                         borderColor:'#007bff',
