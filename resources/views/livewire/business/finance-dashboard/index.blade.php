@@ -67,7 +67,7 @@
             }
 
             chart = new Chart(stackedBarChartCanvas, {
-                type: 'bar',
+                type: 'line',
                 data: stackedBarChartData,
                 options: stackedBarChartOptions
             })
