@@ -22,7 +22,7 @@
                     {
                         label               : 'Utilidad Neta',
                         backgroundColor     : 'transparent',
-                        borderColor         : 'rgba(60,141,188,0.8)',
+                        borderColor         : 'green',
                         pointRadius          : false,
                         pointColor          : '#3b8bba',
                         pointStrokeColor    : 'rgba(60,141,188,1)',
