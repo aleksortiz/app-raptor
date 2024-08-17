@@ -20,23 +20,25 @@
                 labels  : labels,
                 datasets: [
                     {
-                        type                : 'line',
                         label               : 'Utilidad Neta',
-                        backgroundColor:'tansparent',
-                        borderColor:'#ced4da',
-                        pointBorderColor:'#ced4da',
-                        pointBackgroundColor:'#ced4da',
-                        fill:false
+                        backgroundColor     : 'transparent',
+                        borderColor         : 'rgba(60,141,188,0.8)',
+                        pointRadius          : false,
+                        pointColor          : '#3b8bba',
+                        pointStrokeColor    : 'rgba(60,141,188,1)',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
                         data                : data1
                     },
                     {
-                        type                : 'line',
                         label               : 'Utilidad Bruta',
-                        backgroundColor:'transparent',
-                        borderColor:'#007bff',
-                        pointBorderColor:'#007bff',
-                        pointBackgroundColor:'#007bff',
-                        fill:false
+                        backgroundColor     : 'red',
+                        borderColor         : 'rgba(210, 214, 222, 1)',
+                        pointRadius         : false,
+                        pointColor          : 'rgba(210, 214, 222, 1)',
+                        pointStrokeColor    : '#c1c7d1',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(220,220,220,1)',
                         data                : data2
                     },
                 ]
