@@ -150,7 +150,7 @@
                 </div>
             </div>
 
-            <div class="row justify-content-center">
+            {{-- <div class="row justify-content-center">
                 <div class="col-1 d-flex justify-content-end">
                     <label>No Factura</label>
                 </div>
@@ -160,7 +160,7 @@
                         <span class="error text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            </div>
+            </div> --}}
 
 
 

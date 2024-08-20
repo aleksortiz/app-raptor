@@ -25,6 +25,11 @@ class Costo extends BaseModel
         return $this->morphTo();
     }
 
+    public function setNoFacturaAttribute($value)
+    {
+        $this->attributes['no_factura'] = strtoupper($value);
+    }
+
     public function getFechaPagoFormatAttribute()
     {
         if ($this->pagado) {

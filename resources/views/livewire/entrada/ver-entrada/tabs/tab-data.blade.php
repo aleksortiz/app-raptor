@@ -59,7 +59,7 @@
 
             </div>
             <div class="col-9">
-                <div class="row">
+                {{-- <div class="row">
                     @if ($entrada->fecha_entrega)
                         <div class="col-3">
                             <label for="">Fecha de Entrega</label>
@@ -85,7 +85,7 @@
                                     class="fas fa-hand-holding-usd"></i> Pagar Entrada</button>
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
                 <br><br><br>
                 <h1>*INVENTARIO: Seccion Pendiente*</h1>
