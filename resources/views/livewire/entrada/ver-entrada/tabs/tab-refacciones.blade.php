@@ -51,11 +51,11 @@
                             <th>Fecha</th>
                             <th>Número de Parte</th>
                             <th>Descripción</th>
-                            @if ($this->entrada->venta_refacciones)
-                                <th>Costo</th>
-                            @endif
+                            <th>Costo</th>
                             <th>Cantidad</th>
-                            <th>Precio</th>
+                            @if ($this->entrada->venta_refacciones)
+                                <th>Precio</th>
+                            @endif
                             <th>Importe</th>
                             <th>Opciones</th>
                         </tr>
@@ -66,12 +66,12 @@
                             <td><button class="btn btn-xs btn-danger" onclick="destroy({{$item->id}},'refacción','destroyRefaccion')"><i class="fa fa-trash-alt"></i></button></td>
                             <td>{{$item->fecha_creacion}}</td>
                             <td>{{$item->numero_parte}}</td>
-                            <td>{{$item->descripcion}}</td>
-                            @if ($this->entrada->venta_refacciones)
-                                <td>@money($item->costo)</td>
-                            @endif
+                            <td>{{$item->descripcion}}</td>                        
+                            <td>@money($item->costo)</td>
                             <td>{{$item->cantidad}}</td>
-                            <td>@money($item->precio)</td>
+                            @if ($this->entrada->venta_refacciones)
+                                <td>@money($item->precio)</td>
+                            @endif
                             <td>@money($item->importe)</td>
                             <td><button class="btn btn-xs btn-warning" wire:click="mdlEditarRefaccion({{ $item->id }})"><i class="fa fa-edit"></i> Editar</button></td>
 

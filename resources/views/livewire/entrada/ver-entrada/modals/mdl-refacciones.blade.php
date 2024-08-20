@@ -31,8 +31,7 @@
                             <span class="error text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
-                    @if ($this->entrada?->venta_refacciones)                        
+                      
                         <div class="form-group col-6">
                             <label>Costo</label>
                             <input style="text-align: right;" wire:model.defer="refaccion.costo" type="text" class="form-control" />
@@ -40,14 +39,16 @@
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                    @endif
-                    <div class="form-group col-6">
-                        <label>Precio</label>
-                        <input style="text-align: right;" wire:model.defer="refaccion.precio" type="text" class="form-control" />
-                        @error('refaccion.precio')
-                            <span class="error text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
+
+                        @if ($this->entrada?->venta_refacciones)
+                            <div class="form-group col-6">
+                                <label>Precio</label>
+                                <input style="text-align: right;" wire:model.defer="refaccion.precio" type="text" class="form-control" />
+                                @error('refaccion.precio')
+                                    <span class="error text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @endif
 
                 </div>
             </div>
