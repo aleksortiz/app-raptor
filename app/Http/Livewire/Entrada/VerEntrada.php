@@ -130,7 +130,7 @@ class VerEntrada extends Component
     public function createRefaccion()
     {
         if (!$this->entrada->venta_refacciones) {
-            $this->refaccion->costo = $this->refaccion->precio;
+            $this->refaccion->precio = $this->refaccion->costo;
         }
 
         $this->validate([
