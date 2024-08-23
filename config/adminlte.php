@@ -385,6 +385,12 @@ return [
             ]
         ],
         [
+            'text' => 'Venta de Vehículos',
+            'icon' => 'fas fa-fw fa-car',
+            'url'    => '/vsc/venta-vehiculos',
+            'can' => ['venta-vehiculos'],
+        ],
+        [
             'text' => 'Refacciones',
             'icon' => 'fas fa-fw fa-wrench',
             'can' => ['reporte-comisiones'],
