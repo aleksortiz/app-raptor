@@ -45,7 +45,7 @@ class Permission extends SpatiePermission
         'diagrama-nomina' => 'Puede ver diagrama de nomina',
         'servicio-flotillas' => 'Puede ver servicio de flotillas',
         'administrar-catalogos' => 'Puede ver, crear y editar catalogos',
-
+        'venta-vehiculos' => 'Modulo de venta de vehiculos',
 
     ];
 
