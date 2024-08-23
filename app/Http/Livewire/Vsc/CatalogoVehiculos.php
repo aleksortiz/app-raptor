@@ -40,6 +40,7 @@ class CatalogoVehiculos extends Component
     }
 
     public function mdl($id){
+        $this->resetValidation();
         if($id != 0){
             $this->model = Vehicle::findOrFail($id);
         }
