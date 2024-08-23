@@ -14,7 +14,7 @@
     
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Valor de Inventario</b></span>
-                            <span class="info-box-number">@money(0)</span>
+                            <span class="info-box-number">@money($vehiculos->sum('purchase_price'))</span>
                         </div>
     
                     </div>
@@ -26,7 +26,7 @@
     
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Ventas</b></span>
-                            <span class="info-box-number">@money(0)</span>
+                            <span class="info-box-number">@money($vehiculos->sum('sale_price'))</span>
                         </div>
     
                     </div>
@@ -38,7 +38,7 @@
     
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Utilidad</b></span>
-                            <span class="info-box-number">@money(0)</span>
+                            <span class="info-box-number">@money($vehiculos->sum('sale_price') - $vehiculos->sum('purchase_price'))</span>
                         </div>
     
                     </div>
