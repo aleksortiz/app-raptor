@@ -22,7 +22,8 @@ class VehiculosEntregados extends Component
 
     public function getPorcentajeUtilidadProperty()
     {
-        return $this->totalCostos > 0 ? ($this->totalUtilidad / $this->totalCostos) * 100 : 0;
+        $porc = $this->totalCostos > 0 ? ($this->totalUtilidad / $this->totalCostos) * 100 : 0;
+        return number_format($porc, 2);
     }
 
     protected $queryString = ['keyWord', 'year', 'weekStart', 'weekEnd'];
