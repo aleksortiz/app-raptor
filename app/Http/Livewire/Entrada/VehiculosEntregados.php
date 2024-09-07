@@ -18,6 +18,7 @@ class VehiculosEntregados extends Component
     public $totalRefacciones;
     public $totalMateriales;
     public $totalCostos;
+    public $totalUtilidad;
 
     protected $queryString = ['keyWord', 'year', 'weekStart', 'weekEnd'];
 
@@ -61,6 +62,7 @@ class VehiculosEntregados extends Component
         $this->totalRefacciones = collect($entradas->get())->sum('total_refacciones');
         $this->totalMateriales = collect($entradas->get())->sum('total_materiales');
         $this->totalCostos = collect($entradas->get())->sum('total');
+        $this->totalUtilidad = collect($entradas->get())->sum('total_utilidad_global');
 
         return [
             'entradas' => $entradas->paginate(50),

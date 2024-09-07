@@ -68,7 +68,7 @@
             </div>
 
             <div class="row p-2">
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-3 col-sm-12">
                   <div class="info-box">
                     <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-wrench"></i></span>
     
@@ -80,9 +80,9 @@
                   </div>
                 </div>
 
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-3 col-sm-12">
                     <div class="info-box">
-                      <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-cubes"></i></span>
+                      <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cubes"></i></span>
       
                       <div class="info-box-content">
                         <span class="info-box-text"><b>Materiales</b></span>
@@ -92,13 +92,25 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 col-sm-12">
+                <div class="col-md-3 col-sm-12">
                     <div class="info-box">
-                      <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+                      <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-dollar-sign"></i></span>
       
                       <div class="info-box-content">
                         <span class="info-box-text"><b>Total Entradas</b></span>
                         <span class="info-box-number">@money($this->totalCostos)</span>
+                      </div>
+
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-12">
+                    <div class="info-box">
+                      <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+      
+                      <div class="info-box-content">
+                        <span class="info-box-text"><b>Utilidad</b></span>
+                        <span class="info-box-number">@money($this->totalUtilidad)</span>
                       </div>
 
                     </div>
