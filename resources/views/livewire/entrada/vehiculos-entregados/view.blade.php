@@ -140,7 +140,7 @@
                     @endphp
                     <tr class="{{$color}}">
                         <td>{{ $loop->iteration }}</td>
-                        <td><button data-toggle="tooltip" data-placement="top" title="{{$this->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
+                        <td><button data-toggle="tooltip" data-placement="top" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                         <td>{{ $row->folio_short }}</td>
                         <td>{{ $row->cliente->nombre }}</td>
                         <td>{{ $row->vehiculo }}</td>
