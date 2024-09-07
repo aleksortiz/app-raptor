@@ -109,7 +109,7 @@
                       <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
       
                       <div class="info-box-content">
-                        <span class="info-box-text"><b>Utilidad</b></span>
+                        <span class="info-box-text"><b>Utilidad ({{$this->porcentaje_utilidad}}%)</b></span>
                         <span class="info-box-number">@money($this->totalUtilidad)</span>
                       </div>
 
@@ -140,7 +140,7 @@
                     @endphp
                     <tr class="{{$color}}">
                         <td>{{ $loop->iteration }}</td>
-                        <td><button data-toggle="tooltip" data-placement="top" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
+                        <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                         <td>{{ $row->folio_short }}</td>
                         <td>{{ $row->cliente->nombre }}</td>
                         <td>{{ $row->vehiculo }}</td>

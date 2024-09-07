@@ -100,7 +100,7 @@
                             @endif
                         </td>
                         <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
-                        <td><button data-toggle="tooltip" data-placement="top" title="{{$this->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
+                        <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                         <td>{{ $row->cliente->nombre }}</td>
                         <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
                         <td>{{ $row->vehiculo }}</td>
