@@ -29,6 +29,9 @@ class Entrada extends BaseModel
         'fecha_concluido',
         'fecha_entrega',
         'fecha_pago_refacciones',
+        'rfc',
+        'razon_social',
+        'domicilio_fiscal',
     ];
 
     protected $attributes = [
@@ -297,6 +300,21 @@ class Entrada extends BaseModel
     public function setNumeroFacturaAttribute($value)
     {
         $this->attributes['numero_factura'] = strtoupper($value);
+    }
+
+    public function setRfcAttribute($value)
+    {
+        $this->attributes['rfc'] = strtoupper($value);
+    }
+
+    public function setRazonSocialAttribute($value)
+    {
+        $this->attributes['razon_social'] = strtoupper($value);
+    }
+
+    public function setDomicilioFiscalAttribute($value)
+    {
+        $this->attributes['domicilio_fiscal'] = strtoupper($value);
     }
 
     public function ordenes_trabajo()

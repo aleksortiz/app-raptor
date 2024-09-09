@@ -38,6 +38,9 @@ class CrearEntrada extends Component
         'entrada.notas' => 'string|nullable|max:255',
         'entrada.serie' => 'string|nullable|max:255',
         'entrada.orden' => 'string|nullable|max:255',
+        'entrada.rfc' => 'string|nullable|max:255',
+        'entrada.razon_social' => 'string|nullable|max:255',
+        'entrada.domicilio_fiscal' => 'string|nullable|max:255',
         'entrada.numero_factura' => 'string|nullable|max:255',
 
         // 'costos' => 'array|required',
@@ -73,6 +76,9 @@ class CrearEntrada extends Component
     public function setCliente($id){
         $this->cliente = $id > 0 ? Cliente::findOrFail($id) : null;
         $this->entrada->cliente_id = $this->cliente->id ?? 0;
+        $this->entrada->rfc = $this->cliente->rfc ?? null;
+        $this->entrada->razon_social = $this->cliente->razon_social ?? null;
+        $this->entrada->domicilio_fiscal = $this->cliente->codigo_postal ?? null;
     }
 
     public function create(){

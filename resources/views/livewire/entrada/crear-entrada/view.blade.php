@@ -13,7 +13,7 @@
 
 
             <div class="row justify-content-center">
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Sucursal</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
@@ -30,7 +30,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Origen</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
@@ -50,7 +50,7 @@
 
             <div class="row justify-content-center">
 
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Aseguradora</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
@@ -67,7 +67,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Fabricante</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
@@ -84,7 +84,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Linea</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
@@ -97,7 +97,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Notas</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
@@ -106,7 +106,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-1">
+                <div class="col-2">
 
                     <div style="float: right;">
                         <button wire:click="$emit('initMdlSelectCliente')" class="btn btn-xs btn-secondary"><i
@@ -126,7 +126,7 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Serie</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
@@ -139,13 +139,52 @@
             </div>
 
             <div class="row justify-content-center">
-                <div class="col-1 d-flex justify-content-end">
+                <div class="col-2 d-flex justify-content-end">
                     <label>Orden</label>
                 </div>
                 <div class="col-md-5 col-12 m-1">
                     <input wire:model.defer="entrada.orden" type="text" class="form-control"
                         style="text-transform: uppercase" />
                     @error('entrada.orden')
+                        <span class="error text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-2 d-flex justify-content-end">
+                    <label>Razón Social</label>
+                </div>
+                <div class="col-md-5 col-12 m-1">
+                    <input wire:model.defer="entrada.razon_social" type="text" class="form-control"
+                        style="text-transform: uppercase" />
+                    @error('entrada.razon_social')
+                        <span class="error text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-2 d-flex justify-content-end">
+                    <label>RFC</label>
+                </div>
+                <div class="col-md-5 col-12 m-1">
+                    <input wire:model.defer="entrada.rfc" type="text" class="form-control"
+                        style="text-transform: uppercase" />
+                    @error('entrada.rfc')
+                        <span class="error text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-2 d-flex justify-content-end">
+                    <label>Domicilio Fiscal</label>
+                </div>
+                <div class="col-md-5 col-12 m-1">
+                    <input wire:model.defer="entrada.domicilio_fiscal" type="text" class="form-control"
+                        style="text-transform: uppercase" />
+                    @error('entrada.domicilio_fiscal')
                         <span class="error text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -165,7 +204,7 @@
             </div> --}}
 
             <div class="row justify-content-center">
-                <div class="col-6">
+                <div class="col-7">
                     <h2>Servicios</h2>
                     <table class="table table-hover">
                         <thead>
@@ -203,9 +242,7 @@
 
 
             <div class="row justify-content-center">
-
-
-                <div class="col-6">
+                <div class="col-7">
                     <h2>Refacciones</h2>
                     <table class="table table-hover">
                         <thead>

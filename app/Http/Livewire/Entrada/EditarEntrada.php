@@ -31,6 +31,9 @@ class EditarEntrada extends Component
         'entrada.orden' => 'string|nullable',
         'entrada.numero_factura' => 'string|nullable',
         'entrada.notas' => 'string|nullable',
+        'entrada.razon_social' => 'string|max:255|nullable',
+        'entrada.rfc' => 'string|max:255|nullable',
+        'entrada.domicilio_fiscal' => 'string|max:255|nullable',
     ];
 
     public function mount(Entrada $entrada){

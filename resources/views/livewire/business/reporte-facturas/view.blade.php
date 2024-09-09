@@ -88,6 +88,10 @@
                         <th>Folio</th>
                         <th>Origen</th>
                         <th>Vehículo</th>
+                        <th>Cliente</th>
+                        <th>Razon Social</th>
+                        <th>RFC</th>
+                        <th>Dom. Fiscal</th>
                         <th>Concepto</th>
                         <th>Orden</th>
                         <th>Venta</th>
@@ -110,6 +114,10 @@
                             <button class="btn btn-xs btn-{{$item->model?->origen_color}}">{{$item->model?->origen_short ?? ''}}</button>
                         </td>
                         <td>{{ $item->model?->vehiculo ?? 'N/A' }}</td>
+                        <td>{{ $item->model?->cliente->nombre ?? 'N/A' }}</td>
+                        <td>{{ $item->model?->razon_social ?? 'N/A' }}</td>
+                        <td>{{ $item->model?->rfc ?? 'N/A' }}</td>
+                        <td>{{ $item->model?->domicilio_fiscal ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
                         <td>{{ $item->model?->orden ?? 'N/A' }}</td>
                         <td>@money($item->costo)</td>
