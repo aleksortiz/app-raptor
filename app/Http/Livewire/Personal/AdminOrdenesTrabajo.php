@@ -55,7 +55,7 @@ class AdminOrdenesTrabajo extends Component
         $data = OrdenTrabajo::whereBetween('created_at', [$start, $end])
         ->withSum('pagos as total_pagado', 'monto')
         ->select('personal_id', 'personal.nombre', DB::raw('SUM(monto) as total_monto'))
-        ->leftJoin('personal', 'personal.id', 'personal_id')
+        ->leftJoin('personal', 'personal.id', '=', 'personal_id')
         ->groupBy('personal_id')->get();
 
 
