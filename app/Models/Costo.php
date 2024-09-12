@@ -63,6 +63,9 @@ class Costo extends BaseModel
     }
 
     public function getPorcentajeAsignadoAttribute(){
+        if($this->costo == 0){
+            return 0;
+        }
         $p = $this->asignado / $this->costo * 100;
         return number_format($p, 2);
     }
