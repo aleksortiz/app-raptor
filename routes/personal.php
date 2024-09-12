@@ -13,4 +13,8 @@ Route::middleware(['auth'])->prefix('personal')->group(function ()
         return view('livewire.personal.diagrama-nomina.index');
     });
 
+    Route::get('/ordenes-trabajo', function(){
+        return view('livewire.personal.admin-ordenes-trabajo.index');
+    });
+
 });

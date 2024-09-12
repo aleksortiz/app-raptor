@@ -382,6 +382,12 @@ return [
                     'url'    => '/personal/diagrama-nomina',
                     'can' => ['diagrama-nomina'],
                 ],
+                [
+                    'text' => 'Ordenes de Trabajo',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/personal/ordenes-trabajo',
+                    // 'can' => ['xxxxxxx'],
+                ],
             ]
         ],
         [

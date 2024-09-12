@@ -37,4 +37,28 @@ class Costo extends BaseModel
         }
         return "N/A";
     }
+    
+    public function getFolioAttribute(){
+        return $this->model->folio_short;
+    }
+
+    public function getOrigenAttribute(){
+        return $this->model->origen;
+    }
+
+    public function getVehiculoAttribute(){
+        return $this->model->vehiculo;
+    }
+
+    public function getPresupuestoMoAttribute(){
+        return $this->costo * ($this->porcentaje_mo / 100);
+    }   
+
+    public function getPorcentajeMoAttribute(){
+        return $this->origen == 'ASEGURADORA' ? 25 : 20;
+    }
+
+    public function getAsignadoAttribute(){ 
+        return $this->model->ordenes_trabajo->sum('monto');
+    }
 }
