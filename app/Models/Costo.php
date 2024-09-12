@@ -37,7 +37,7 @@ class Costo extends BaseModel
         }
         return "N/A";
     }
-    
+
     public function getFolioAttribute(){
         return $this->model->folio_short;
     }
@@ -60,5 +60,22 @@ class Costo extends BaseModel
 
     public function getAsignadoAttribute(){ 
         return $this->model->ordenes_trabajo->sum('monto');
+    }
+
+    public function getPorcentajeAsignadoAttribute(){
+        $p = $this->asignado / $this->costo * 100;
+        return number_format($p, 2);
+    }
+
+    public function getIsOverBudgetAttribute(){
+        return $this->porcentaje_asignado > $this->porcentaje_mo;
+    }
+
+    public function getOrigenColorAttribute(){
+        return $this->model->origen_color;
+    }
+
+    public function getOrigenShortAttribute(){
+        return $this->model->origen_short;
     }
 }

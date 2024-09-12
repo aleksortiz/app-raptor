@@ -16,31 +16,27 @@ class OrdenTrabajo extends BaseModel
         'entrada_id',
         'personal_id',
         'monto',
-        'notas'
+        'notas',
+        'porcentaje',
     ];
 
-    public function entrada()
-    {
+    public function entrada(){
         return $this->belongsTo(Entrada::class);
     }
 
-    public function personal()
-    {
+    public function personal(){
         return $this->belongsTo(Personal::class);
     }
 
-    public function pagos()
-    {
+    public function pagos(){
         return $this->hasMany(OrdenTrabajoPago::class);
     }
 
-    public function getPagadoAttribute()
-    {
+    public function getPagadoAttribute(){
         return $this->pagos->sum('monto');
     }
 
-    public function getPendienteAttribute()
-    {
+    public function getPendienteAttribute(){
         return $this->monto - $this->pagado;
     }
     

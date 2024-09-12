@@ -244,6 +244,12 @@ return [
             'topnav' => true,
         ],
         [
+            'text' => 'Ordenes de Trabajo',
+            'icon' => 'fas fa-fw fa-file-alt',
+            'url' => '/personal/ordenes-trabajo',
+            'topnav' => true,
+        ],
+        [
             'type'         => 'darkmode-widget',
             'topnav_right' => true,
         ],
