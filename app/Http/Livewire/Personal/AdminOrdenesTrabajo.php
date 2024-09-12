@@ -23,7 +23,6 @@ class AdminOrdenesTrabajo extends Component
 
     public $selected_costo;
 
-
     public $keyWord;
     public $year;
     public $maxYear;
@@ -31,7 +30,9 @@ class AdminOrdenesTrabajo extends Component
     public $weekEnd;
     public $origen;
 
-    protected $queryString = ['keyWord', 'year', 'weekStart', 'weekEnd'];
+    public $reportePersonal = false;
+
+    protected $queryString = ['keyWord', 'year', 'weekStart', 'weekEnd', 'reportePersonal'];
 
     public function mount(){
         $this->weekStart = $this->weekStart ? $this->weekStart : Carbon::today()->weekOfYear;
@@ -48,30 +49,30 @@ class AdminOrdenesTrabajo extends Component
         $this->monto = $this->selected_costo->presupuesto_mo * ($this->porcentaje / 100);
     }
 
+    public function getRenderDataPersonal(){
+        [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+
+        $data = OrdenTrabajo::whereBetween('created_at', [$start, $end])
+        ->withSum('pagos as total_pagado', 'monto')
+        ->select('personal_id', DB::raw('SUM(monto) as total_monto'))
+        
+        ->groupBy('personal_id');
+
+
+        return [
+            'data' => $data,
+            'personal' => [],
+        ];
+    }
+
     public function getRenderData(){
+
+        if($this->reportePersonal){
+            return $this->getRenderDataPersonal();
+        }
 
         $this->keyWord = trim($this->keyWord);
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-
-        // $entradas = Entrada::OrderBy('id','asc')
-        // ->whereBetween('created_at', [$start, $end])
-        // ->where(function ($q){
-        //     $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
-        //     ->orWhereHas('fabricante', function($fab){
-        //         $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
-        //     })
-        //     ->orWhereHas('cliente', function($fab){
-        //         $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
-        //     })
-        //     ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
-        //     ->orWhere('serie', 'LIKE', "{$this->keyWord}%")
-        //     ->orWhere('orden', 'LIKE', "{$this->keyWord}%")
-        //     ->orWhere(DB::raw('REPLACE(orden, " ", "")'), 'LIKE', trim($this->keyWord).'%');
-        // });
-
-        // if($this->origen){
-        //     $entradas = $entradas->where('origen', $this->origen);
-        // }
 
         $costos = Costo::where('concepto', 'MANO DE OBRA')
         ->whereHas('model', function($entrada) use($start, $end) {
