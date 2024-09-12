@@ -103,7 +103,9 @@
                                 <td>@money($row->total_monto)</td>
                                 <td>@money($row->total_pagado)</td>
                                 <td>@money($row->total_monto - $row->total_pagado)</td>
-                                <td></td>
+                                <td>
+                                    <button class="btn btn-xs btn-primary" wire:click="detalleDestajos({{ $row->personal->id }})"><i class="fas fa-eye"></i> Más Detalle</button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

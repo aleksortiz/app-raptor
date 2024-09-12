@@ -136,4 +136,9 @@ class AdminOrdenesTrabajo extends Component
         $this->emit('closeModal', '#mdl');
         $this->emit('ok', 'Orden de trabajo creada');
     }
+
+    public function detalleDestajos($personal_id){
+        // $this->personal_id = $personal_id;
+        // $this->reportePersonal = true;
+    }
 }
