@@ -99,7 +99,7 @@
                     <tbody>
                         @foreach ($data as $row)
                             <tr>
-                                <td>{{ $row->nombre }}</td>
+                                <td>{{ $row->personal->nombre }}</td>
                                 <td>@money($row->total_monto)</td>
                                 <td>@money($row->total_pagado)</td>
                                 <td>@money($row->total_monto - $row->total_pagado)</td>
