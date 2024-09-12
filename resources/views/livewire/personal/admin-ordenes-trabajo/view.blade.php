@@ -91,7 +91,7 @@
                             <td><a href="/servicios/{{$row->model_id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio}}</a></td>
                             <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                             <td>{{ $row->vehiculo }}</td>
-                            <td>@money($row->presupuesto_mo) ({{$row->porcentaje_mo}}%)</td>
+                            <td>{{$row->porcentaje_mo}}% -> @money($row->presupuesto_mo)</td>
                             <td @if($row->is_over_budget) class="text-danger" @endif>@money($row->asignado) ({{$row->porcentaje_asignado}}%)</td>
                             <td>
                                 <button class="btn btn-xs btn-primary" wire:click="mdlCreate({{ $row->id }})"><i class="fas fa-plus"></i> Orden de Trabajo</button>
