@@ -87,13 +87,16 @@ class CrearEntrada extends Component
         if($this->entrada->save()){
 
             foreach ($this->costos as $costo) {
+                $concepto = trim(strtoupper($costo['concepto']));
+                $isManoDeObra = in_array($concepto, ['MANO DE OBRA', 'MO', 'MANO OBRA']);
+                $tipo = $costo['concepto'] == $isManoDeObra ? 'MANO DE OBRA' : 'SERVICIO';
                 Costo::create([
                     'model_id' => $this->entrada->id,
                     'model_type' => Entrada::class,
-                    'concepto' => $costo['concepto'],
+                    'concepto' => trim($costo['concepto']),
                     'venta' => $costo['costo'],
                     'costo' => 0,
-                    'tipo' => 'SERVICIO',
+                    'tipo' => $tipo,
                 ]);
             }
 
