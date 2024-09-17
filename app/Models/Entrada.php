@@ -179,6 +179,11 @@ class Entrada extends BaseModel
         return $this->refacciones->sum('costo_total');
     }
 
+    public function getTotalCostoCostosAttribute()
+    {
+        return $this->costos->sum('costo');
+    }
+
     public function getTotalUtilidadRefaccionesAttribute()
     {
         return $this->refacciones->sum('utilidad');
@@ -203,9 +208,10 @@ class Entrada extends BaseModel
         //-DESTAJOS
         // $utilidad = $this->total_costos + $this->total_utilidad_refacciones;
         $utilidad = $this->total_costos;
-        $utilidad -= $this->total_costo_refacciones;
-        $utilidad -= $this->total_materiales;
-        $utilidad -= $this->total_sueldos;
+        // $utilidad -= $this->total_costo_refacciones;
+        $utilidad -= $this->total_costo_costos;
+        // $utilidad -= $this->total_materiales;
+        // $utilidad -= $this->total_sueldos;
         $utilidad -= $this->total_destajos;
         return $utilidad;
     }
