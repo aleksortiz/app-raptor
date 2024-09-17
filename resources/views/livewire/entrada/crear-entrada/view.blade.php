@@ -203,7 +203,7 @@
                 </div>
             </div> --}}
 
-            {{-- <div class="row justify-content-center">
+            {<div class="row justify-content-center">
                 <div class="col-7">
                     <h2>Servicios</h2>
                     <table class="table table-hover">
@@ -241,7 +241,7 @@
             </div>
 
 
-            <div class="row justify-content-center">
+            {{-- <div class="row justify-content-center">
                 <div class="col-7">
                     <h2>Refacciones</h2>
                     <table class="table table-hover">

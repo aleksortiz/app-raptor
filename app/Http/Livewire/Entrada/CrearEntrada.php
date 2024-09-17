@@ -91,21 +91,23 @@ class CrearEntrada extends Component
                     'model_id' => $this->entrada->id,
                     'model_type' => Entrada::class,
                     'concepto' => $costo['concepto'],
-                    'costo' => $costo['costo'],
+                    'venta' => $costo['costo'],
+                    'costo' => 0,
+                    'tipo' => 'SERVICIO',
                 ]);
             }
 
-            foreach ($this->refacciones as $refaccion) {
-                Refaccion::create([
-                    'entrada_id' => $this->entrada->id,
-                    'usuario_id' => $this->entrada->user_id,
-                    'model_id' => $this->entrada->id,
-                    'model_type' => Entrada::class,
-                    'refaccion' => $refaccion['refaccion'],
-                    'cantidad' => $refaccion['cantidad'],
-                    'precio' => $refaccion['precio'],
-                ]);
-            }
+            // foreach ($this->refacciones as $refaccion) {
+            //     Refaccion::create([
+            //         'entrada_id' => $this->entrada->id,
+            //         'usuario_id' => $this->entrada->user_id,
+            //         'model_id' => $this->entrada->id,
+            //         'model_type' => Entrada::class,
+            //         'refaccion' => $refaccion['refaccion'],
+            //         'cantidad' => $refaccion['cantidad'],
+            //         'precio' => $refaccion['precio'],
+            //     ]);
+            // }
 
 
             $this->emit('ok', 'Se ha creado entrada');
