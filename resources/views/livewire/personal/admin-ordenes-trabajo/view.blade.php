@@ -111,6 +111,9 @@
                     </tbody>
                 </table>
 
+                @include('livewire.personal.admin-ordenes-trabajo.modal-personal-detalles')
+
+
             @else
                 <table class="table table-hover">
                     <thead>

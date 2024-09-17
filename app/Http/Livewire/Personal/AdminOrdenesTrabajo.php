@@ -22,6 +22,7 @@ class AdminOrdenesTrabajo extends Component
     public $notas;
 
     public $selected_costo;
+    public $detallesPersonal;
 
     public $keyWord;
     public $year;
@@ -144,7 +145,13 @@ class AdminOrdenesTrabajo extends Component
     }
 
     public function detalleDestajos($personal_id){
-        // $this->personal_id = $personal_id;
-        // $this->reportePersonal = true;
+      $this->detallesPersonal = $this->getPersonalDetalles($personal_id);
+      $this->emit('showModal', '#mdlPersonalDetalles');
+    }
+
+    public function getPersonalDetalles($personal_id){
+      [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+      $data = OrdenTrabajo::whereBetween('created_at', [$start, $end])->where('personal_id', $personal_id);
+      return $data->get();
     }
 }
