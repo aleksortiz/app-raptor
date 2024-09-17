@@ -55,7 +55,7 @@ class CrearEntrada extends Component
     public function mount(){
         $this->entrada = new Entrada();
     }
-    
+
     public function resetInput(){
         $this->entrada = new Entrada();
         $this->setCliente(0);
@@ -112,7 +112,7 @@ class CrearEntrada extends Component
             $id = $this->entrada->id;
             $this->resetInput();
             // return redirect()->to("/servicios/{$id}/subir-fotos?redirectMode=true");
-            return redirect()->to("/servicios/{$id}?activeTab=3");
+            return redirect()->to("/servicios/{$id}?activeTab=2");
         }
     }
 
