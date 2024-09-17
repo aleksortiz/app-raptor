@@ -11,13 +11,13 @@
               <table class="table table-hover">
                 <thead>
                   <tr>
-                    <td>#</td>
-                    <td>Fecha</td>
-                    <td>Folio</td>
-                    <td>Concepto</td>
-                    <td>Monto</td>
-                    <td>Pagado</td>
-                    <td>Pendiente</td>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Folio</th>
+                    <th>Concepto</th>
+                    <th>Monto</th>
+                    <th>Pagado</th>
+                    <th>Pendiente</th>
                   </tr>
                 </thead>
                 <tbody>
