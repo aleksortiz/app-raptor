@@ -112,120 +112,14 @@
                 <div class="d-flex justify-content-start">
 
                     <h5><b>Servicios: </b> @money($this->entrada->total_costos)</h5>
-                    <label for="iptVentaRefacciones" class="ml-5 mr-2">Venta de Refacciones:</label>
+                    {{-- <label for="iptVentaRefacciones" class="ml-5 mr-2">Venta de Refacciones:</label>
                     <div>
                         <label class="content-input">
                             <input id="iptVentaRefacciones" wire:model="entrada.venta_refacciones" type="checkbox" />
                             <i></i>
                         </label>
-                    </div>
+                    </div> --}}
                 </div>
-                {{-- <table class="table table-hover projects">
-                    <thead>
-                        <tr>
-                            <th><button wire:click="addCosto" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i>
-                                    Agregar Servicio</button></th>
-                            <th>Concepto</th>
-                            <th>($) Venta</th>
-                            <th>Estatus Pago</th>
-                            <th>Editar</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if ($this->costo && $this->costo->id == 0)
-                            <tr>
-                                <td>
-                                    <button wire:click="saveCosto" class="btn btn-xs btn-success"><i class="fa fa-save"></i></button>
-                                </td>
-                                <td>
-                                    <input wire:model="costo.concepto" type="text" class="form-control form-control-sm" />
-                                    @error('costo.concepto') <span class="error text-danger">{{ $message }}<span>@enderror
-                                </td>
-                                <td>
-                                    <input wire:model="costo.costo" type="text" class="form-control form-control-sm" style="text-align: right" />
-                                    @error('costo.costo')
-                                        <span class="error text-danger">{{ $message }}<span>
-                                    @enderror
-                                </td>
-
-
-                                <td>N/A</td>
-                                <td><button wire:click="removeCosto" class="btn btn-danger btn-xs"><i
-                                            class="fa fa-times"></i> Cancelar</button></td>
-                            </tr>
-                        @endif
-
-                        @foreach ($entrada->costos as $item)
-                            @php
-                                $editMode = $this->costo && $this->costo->id == $item->id;
-                            @endphp
-                            <tr>
-                                <td>
-                                    @if ($editMode)
-                                        <button wire:click="saveCosto" class="btn btn-xs btn-success"><i
-                                                class="fa fa-save"></i></button>
-                                    @else
-                                        <button wire:click=""
-                                            onclick="destroy({{ $item->id }},'Costo', 'destroyCosto')"
-                                            class="btn btn-xs btn-danger"><i class="fa fa-trash-alt"></i></button>
-                                </td>
-                        @endif
-
-                        <td>
-                            @if ($editMode)
-                                <input wire:model="costo.concepto" type="text"
-                                    class="form-control form-control-sm" />
-                                @error('costo.concepto')
-                                    <span class="error text-danger">{{ $message }}<span>
-                                        @enderror
-                                    @else
-                                        {{ $item->concepto }}
-                            @endif
-                        </td>
-                        <td>
-                            @if ($editMode)
-                                <input wire:model="costo.costo" type="text" class="form-control form-control-sm" />
-                                @error('costo.costo')
-                                    <span class="error text-danger">{{ $message }}<span>
-                                        @enderror
-                                    @else
-                                        @money($item->costo)
-                            @endif
-                        </td>
-                        <td>
-                            @if ($item->pagado)
-                                @if ($editMode)
-                                    <button wire:click="eliminarPagoServicio({{ $item->id }})"
-                                        class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Eliminar Pago</button>
-                                @else
-                                    <i style="color: green;" class="fa fa-check"></i> Pagado:
-                                    {{ $item->fecha_pago_format }}
-                                @endif
-                            @else
-                                @if ($editMode)
-                                    N/A
-                                @else
-                                    <button wire:click="pagarServicio({{ $item->id }})"
-                                        class="btn btn-xs btn-secondary"><i class="fa fa-clock"></i> Pago
-                                        Pendiente</button>
-                                @endif
-                            @endif
-                        </td>
-                        <td>
-                            @if ($editMode)
-                                <button wire:click="removeCosto" class="btn btn-danger btn-xs"><i
-                                        class="fa fa-times"></i> Cancelar</button>
-                            @else
-                                <button wire:click="editCosto({{ $item->id }})" class="btn btn-xs btn-warning"><i
-                                        class="fa fa-edit"></i> Editar</button>
-                            @endif
-                        </td>
-                        </tr>
-                        @endforeach
-
-                    </tbody>
-                </table> --}}
-
 
                 <table class="table table-hover projects">
                     <thead>
@@ -233,6 +127,8 @@
                             <th><button wire:click="addCosto" class="btn btn-xs btn-success"><i class="fa fa-plus"></i>
                                 Agregar Servicio</button></th>
                             <th>Concepto</th>
+                            <th>Tipo</th>
+                            <th>Costo</th>
                             <th>($) Venta</th>
                             <th>Estatus Pago</th>
                             <th>No. Factura</th>
@@ -240,34 +136,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if ($this->costo && $this->costo->id == 0)
-                            <tr>
-                                <td>
-                                    <button wire:click="saveCosto" class="btn btn-xs btn-success"><i class="fa fa-save"></i></button>
-                                </td>
-                                <td>
-                                    <input wire:model="costo.concepto" type="text" class="form-control form-control-sm" />
-                                    @error('costo.concepto') <span class="error text-danger">{{ $message }}<span>@enderror
-                                </td>
-                                <td>
-                                    <input wire:model="costo.costo" type="text" class="form-control form-control-sm" style="text-align: right" />
-                                    @error('costo.costo')
-                                        <span class="error text-danger">{{ $message }}<span>
-                                    @enderror
-                                </td>
-
-
-                                <td>N/A</td>
-                                <td>
-                                    <input style="text-transform: uppercase" wire:model="costo.no_factura" type="text" class="form-control form-control-sm" style="text-align: center" />
-                                    @error('costo.no_factura')
-                                        <span class="error text-danger">{{ $message }}<span>
-                                    @enderror
-                                </td>
-                                <td><button wire:click="removeCosto" class="btn btn-danger btn-xs"><i
-                                            class="fa fa-times"></i> Cancelar</button></td>
-                            </tr>
-                        @endif
                         @foreach ($entrada->costos as $item)
                             @php
                                 $editMode = $this->costo && $this->costo->id == $item->id;
@@ -286,23 +154,54 @@
                                     @if ($editMode)
                                         <input wire:model="costo.concepto" type="text"
                                             class="form-control form-control-sm" />
-                                        @error('selectedCosto.concepto')
+                                        @error('costo.concepto')
                                             <span class="error text-danger">{{ $message }}<span>
                                                 @enderror
                                             @else
                                                 {{ $item->concepto }}
                                     @endif
                                 </td>
+
                                 <td>
                                     @if ($editMode)
-                                        <input wire:model="costo.costo" type="text"
+                                        <select wire:model="costo.tipo" class="form-control form-control-sm">
+                                            <option value="SERVICIO">SERVICIO GENERICO</option>
+                                            <option value="MANO DE OBRA">MANO DE OBRA</option>
+                                            <option value="REFACCION">REFACCION</option>
+                                            <option value="PARTE">PARTE</option>
+                                            <option value="OTRO TALLER">OTRO TALLER</option>
+                                        </select>
+                                        @error('costo.tipo')<span class="error text-danger">{{ $message }}<span>@enderror
+                                    @else
+                                        {{ $item->tipo }}
+                                    @endif
+                                </td>
+
+                                <td>
+                                  @if (($this->costo && ($this->costo->tipo != 'SERVICIO' && $this->costo->tipo != 'MANO DE OBRA')) || (!$this->costo && ($item->tipo != 'SERVICIO' && $item->tipo != 'MANO DE OBRA')))
+                                    @if ($editMode)
+                                      <input wire:model="costo.costo" type="text" class="form-control form-control-sm" />
+                                      @error('costo.costo')<span class="error text-danger">{{ $message }}<span>@enderror
+                                    @else
+                                      @money($item->costo)
+                                    @endif
+                                  @else
+                                    N/A
+                                  @endif
+
+                                </td>
+
+
+                                <td>
+                                    @if ($editMode)
+                                        <input wire:model="costo.venta" type="text"
                                             class="form-control form-control-sm"
                                             onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
-                                        @error('selectedCosto.costo')
+                                        @error('costo.venta')
                                             <span class="error text-danger">{{ $message }}<span>
                                                 @enderror
                                             @else
-                                                @money($item->costo)
+                                                @money($item->venta)
                                     @endif
                                 </td>
                                 <td>
@@ -313,7 +212,7 @@
                                             <div class="col">
                                                 <input style="display: inline-block;" wire:model="costo.pagado" type="datetime-local"
                                                 class="form-control form-control-sm" />
-                                                @error('selectedCosto.pagado')
+                                                @error('costo.pagado')
                                                     <span class="error text-danger">{{ $message }}<span>
                                                 @enderror
                                             </div>
@@ -322,8 +221,8 @@
                                             </div>
                                         </div>
 
-                                        
-                                            
+
+
                                         @else
                                             <i style="color: green;" class="fa fa-check"></i> Pagado:
                                             {{ $item->fecha_pago_format }}
@@ -342,7 +241,7 @@
                                     @if ($editMode)
                                         <input style="text-transform: uppercase;" wire:model="costo.no_factura" type="text"
                                             class="form-control form-control-sm" />
-                                        @error('selectedCosto.no_factura')
+                                        @error('costo.no_factura')
                                             <span class="error text-danger">{{ $message }}<span>
                                         @enderror
                                     @else
@@ -364,7 +263,7 @@
                     </tbody>
                 </table>
 
-                
+
             </div>
         </div>
 

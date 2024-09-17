@@ -31,30 +31,15 @@
                     <hr>
                 @endif
 
-                <div style="cursor: pointer" wire:click="$set('activeTab', 2)" class="d-flex justify-content-between">
-                    <h5><b>Servicios: </b></h5>
-                    <h5> @money($entrada->total_costos)</h5>
-                </div>
-                <hr>
+                @if ($entrada->razon_social)
+                    <h5><b>Razón Social:</b><br> {{ $entrada->razon_social }}</h5>
+                    <hr>
+                @endif
 
-                <div style="cursor: pointer" wire:click="$set('activeTab', 5)" class="d-flex justify-content-between">
-                    <h5><b>Refacciones: </b></h5>
-                    <h5> @money($entrada->total_refacciones)</h5>
-                </div>
-                <hr>
-
-                <div class="d-flex justify-content-between">
-                    <h5><b>TOTAL: </b></h5>
-                    <h5> @money($entrada->total)</h5>
-                </div>
-                <hr>
-
-                <div style="cursor: pointer" wire:click="$set('activeTab', 6)" class="d-flex justify-content-between">
-                    <h5><b>Materiales: </b></h5>
-                    <h5> @money($entrada->total_materiales)</h5>
-                </div>
-                <hr>
-
+                @if ($entrada->rfc)
+                    <h5><b>RFC:</b><br> {{ $entrada->rfc }}</h5>
+                    <hr>
+                @endif
 
 
             </div>
@@ -72,7 +57,7 @@
                                     class="fas fa-car"></i> Entregar Vehículo</button>
                         </div>
                     @endif
-    
+
                     @if ($entrada->fecha_pago)
                         <div class="col-3">
                             <label for="">Fecha de Pago</label>

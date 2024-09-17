@@ -16,8 +16,15 @@ class Costo extends BaseModel
         'model_type',
         'concepto',
         'costo',
+        'venta',
         'pagado',
         'no_factura',
+        'tipo',
+    ];
+
+    protected $attributes = [
+        'costo' => '0',
+        'venta' => '0',
     ];
 
     public function model()
@@ -51,22 +58,22 @@ class Costo extends BaseModel
     }
 
     public function getPresupuestoMoAttribute(){
-        return $this->costo * ($this->porcentaje_mo / 100);
-    }   
+        return $this->venta * ($this->porcentaje_mo / 100);
+    }
 
     public function getPorcentajeMoAttribute(){
         return $this->origen == 'ASEGURADORA' ? 25 : 20;
     }
 
-    public function getAsignadoAttribute(){ 
+    public function getAsignadoAttribute(){
         return $this->model->ordenes_trabajo->sum('monto');
     }
 
     public function getPorcentajeAsignadoAttribute(){
-        if($this->costo == 0){
+        if($this->venta == 0){
             return 0;
         }
-        $p = $this->asignado / $this->costo * 100;
+        $p = $this->asignado / $this->venta * 100;
         return number_format($p, 2);
     }
 
@@ -80,5 +87,9 @@ class Costo extends BaseModel
 
     public function getOrigenShortAttribute(){
         return $this->model->origen_short;
+    }
+
+    public function refacciones(){
+        return $this->morphMany(Refaccion::class, 'model');
     }
 }

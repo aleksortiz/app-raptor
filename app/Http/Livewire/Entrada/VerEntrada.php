@@ -26,7 +26,7 @@ class VerEntrada extends Component
     public $activeTab = 2;
     public Entrada $entrada;
     public $refaccion;
-    
+
     public $tipo_fecha;
     public $fecha;
 
@@ -60,7 +60,7 @@ class VerEntrada extends Component
     protected $queryString = ['activeTab'];
 
     public function updatedEntradaPagoRefacciones(){
-        
+
         $this->entrada->update([
             'pago_refacciones' => $this->entrada->pago_refacciones ? 1 : 0,
         ]);
@@ -68,6 +68,22 @@ class VerEntrada extends Component
         if($this->entrada->pago_refacciones){
             $this->emit('ok', 'Refacciones pagadas');
         }
+    }
+
+    public function getPorcentajeMoProperty(){
+        return $this->entrada->origen == 'PARTICULAR' ? 20 : 25;
+    }
+
+    public function getPresupuestoDestajosProperty(){
+      try {
+        $costo = $this->costo?->venta;
+        $costo = $costo ? $costo : 0;
+        $porcentaje = $this->porcentaje_mo;
+        return $costo * ($porcentaje / 100);
+      } catch (\Throwable $th) {
+        return 0;
+      }
+
     }
 
     protected $rules = [
@@ -79,7 +95,9 @@ class VerEntrada extends Component
 
         'costo.concepto' => 'string|required|max:255',
         'costo.costo' => 'numeric|required|min:0',
+        'costo.venta' => 'numeric|required|min:0',
         'costo.no_factura' => 'string|nullable|max:255',
+        'costo.tipo' => 'string|nullable|max:255',
         'costo.pagado' => 'date|nullable',
 
         'entrada.venta_refacciones' => 'boolean|required',
@@ -129,24 +147,21 @@ class VerEntrada extends Component
 
     public function createRefaccion()
     {
-        if (!$this->entrada->venta_refacciones) {
-            $this->refaccion->precio = $this->refaccion->costo;
-        }
+        // if (!$this->entrada->venta_refacciones) {
+        //     $this->refaccion->precio = $this->refaccion->costo;
+        // }
 
         $this->validate([
-            'refaccion.descripcion' => 'string|required|max:255',
-            'refaccion.numero_parte' => 'string|nullable|max:255',
-            'refaccion.cantidad' => 'numeric|required|min:0',
-            'refaccion.costo' => 'numeric|required|min:0',
-            'refaccion.precio' => 'numeric|required|min:0',
+          'refaccion.numero_parte' => 'string|nullable|max:255',
         ]);
-        $this->refaccion->model_id = $this->entrada->id;
-        $this->refaccion->model_type = Entrada::class;
-        $this->refaccion->usuario_id = Auth::user()->id;
+        // $this->refaccion->model_id = $this->entrada->id;
+        // $this->refaccion->model_type = Entrada::class;
+        // $this->refaccion->usuario_id = Auth::user()->id;
         if ($this->refaccion->save()) {
-            $this->emit('ok', "Se ha registrado refacción: {$this->refaccion->descripcion}");
+            $this->emit('ok', "Se ha guardado refacción: {$this->refaccion->descripcion}");
             $this->emit('closeModal', '#mdlCreateRefaccion');
             $this->entrada->load('refacciones');
+            $this->entrada->load('costos');
             $this->refaccion = null;
         }
     }
@@ -188,6 +203,9 @@ class VerEntrada extends Component
     public function destroyCosto($id)
     {
         $elem = Costo::findOrFail($id);
+        $elem->refacciones->each(function($refaccion){
+            $refaccion->delete();
+        });
         if ($elem->delete()) {
             $this->emit('ok', "Se ha eliminado costo");
             $this->entrada->load('costos');
@@ -225,7 +243,10 @@ class VerEntrada extends Component
         $this->costo = new Costo();
         $count = $this->entrada->costos->count();
         $count++;
-        $this->costo->concepto = "Venta {$count}";
+        $this->costo->concepto = null;
+
+        $this->resetValidation();
+        $this->emit('showModal', '#mdlCreateCosto');
     }
 
     public function removeCosto()
@@ -243,14 +264,55 @@ class VerEntrada extends Component
         $this->validate([
             'costo.concepto' => 'string|required|max:255',
             'costo.costo' => 'numeric|required|min:0',
+            'costo.venta' => 'numeric|required|min:0',
+            'costo.tipo' => 'string|required',
         ]);
+
+        if($this->costo->tipo == 'SERVICIO' || $this->costo->tipo == 'MANO DE OBRA'){
+            $this->costo->costo = 0;
+        }
+
+
 
         $this->costo->model_id = $this->entrada->id;
         $this->costo->model_type = Entrada::class;
         if ($this->costo->save()) {
-            $this->entrada->load('costos');
-            $this->costo = null;
+
+          if($this->costo->tipo == 'REFACCION'){
+            if($this->costo->refacciones->count() == 0){
+              Refaccion::create([
+                'model_id' => $this->costo->id,
+                'model_type' => Costo::class,
+                'descripcion' => $this->costo->concepto,
+                'cantidad' => 1,
+                'costo' => $this->costo->costo,
+                'precio' => $this->costo->venta,
+                'usuario_id' => Auth::user()->id,
+              ]);
+            }
+            else{
+              $this->costo->refacciones->each(function($refaccion){
+                $refaccion->update([
+                  'descripcion' => $this->costo->concepto,
+                  'costo' => $this->costo->costo,
+                  'precio' => $this->costo->venta,
+                ]);
+              });
+            }
+          }
+          else{
+            $this->costo->refacciones->each(function($refaccion){
+              $refaccion->delete();
+            });
+          }
+
+
+
+          $this->entrada->load('costos');
+          $this->costo = null;
         }
+        $this->emit('ok', 'Se ha guardado costo');
+        $this->emit('closeModal', '#mdlCreateCosto');
     }
 
     public function updatedImage()

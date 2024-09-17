@@ -154,17 +154,17 @@ class Entrada extends BaseModel
 
     public function getTotalCostosAttribute()
     {
-        return $this->costos->sum('costo');
+        return $this->costos->sum('venta');
     }
 
     public function getTotalCostosPagadosAttribute()
     {
-        return $this->costos->whereNotNull('pagado')->sum('costo');
+        return $this->costos->whereNotNull('pagado')->sum('venta');
     }
 
     public function getTotalCostosPendientesAttribute()
     {
-        return $this->costos->whereNull('pagado')->sum('costo');
+        return $this->costos->whereNull('pagado')->sum('venta');
     }
 
     public function getTotalAttribute()
@@ -261,7 +261,7 @@ class Entrada extends BaseModel
         if($count <= 0){
             return 'N/A';
         }
-        
+
         $data = "";
         $pending = collect($this->costos)->some(function($costo){
             return $costo->pagado == null;

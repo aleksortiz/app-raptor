@@ -62,6 +62,7 @@
     </div>
 
     @include('livewire.entrada.ver-entrada.modals.mdl-refacciones')
+    @include('livewire.entrada.ver-entrada.modals.mdl-create-costo')
     @include('livewire.entrada.ver-entrada.modals.mdl-material-manual')
     @include('livewire.entrada.ver-entrada.modals.mdl-edit-date')
     @include('livewire.entrada.ver-entrada.modals.mdl-registrar-pago-destajo')
