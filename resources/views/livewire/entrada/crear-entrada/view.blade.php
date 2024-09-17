@@ -300,7 +300,7 @@
                 <button wire:click="create" class="btn btn-success"><i class="fa fa-check"></i> Registrar Entrada</button>
 
                 <div class="mt-4 form-group">
-                  <label for="createMode">Crear Varias Entradas</label>
+                  <label for="createMode">Crear varias entradas</label>
                   <input id="createMode" type="checkbox" wire:model="createMode">
                 </div>
             </center>
