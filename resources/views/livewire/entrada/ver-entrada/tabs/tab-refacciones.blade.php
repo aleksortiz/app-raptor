@@ -47,7 +47,7 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            {{-- <th></th> --}}
+                            <th></th>
                             <th>Fecha</th>
                             <th>Número de Parte</th>
                             <th>Descripción</th>
@@ -63,7 +63,7 @@
                     <tbody>
                         @foreach ($this->entrada->refacciones as $item)
                         <tr>
-                            {{-- <td><button class="btn btn-xs btn-danger" onclick="destroy({{$item->id}},'refacción','destroyRefaccion')"><i class="fa fa-trash-alt"></i></button></td> --}}
+                            <td><button class="btn btn-xs btn-danger" onclick="destroy({{$item->id}},'refacción','destroyRefaccion')"><i class="fa fa-trash-alt"></i></button></td>
                             <td>{{$item->fecha_creacion}}</td>
                             <td>{{$item->numero_parte}}</td>
                             <td>{{$item->descripcion}}</td>
@@ -83,6 +83,7 @@
 
                           <tr>
                               {{-- <td><button class="btn btn-xs btn-danger" onclick="destroy({{$item->id}},'refacción','destroyRefaccion')"><i class="fa fa-trash-alt"></i></button></td> --}}
+                              <td></td>
                               <td>{{$item->fecha_creacion}}</td>
                               <td>{{$item->numero_parte}}</td>
                               <td>{{$item->descripcion}}</td>
