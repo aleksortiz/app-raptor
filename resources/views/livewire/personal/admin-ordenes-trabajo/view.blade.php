@@ -44,7 +44,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col-1">
                     <div class="form-group">
                         <label for="keyWord">a la</label>
@@ -56,7 +56,7 @@
                     </div>
                 </div>
 
-                @if (!$this->reportePersonal)                    
+                @if (!$this->reportePersonal)
                     <div class="col">
                         <div class="form-group">
                             <label for="keyWord">Buscar</label>
@@ -64,7 +64,7 @@
                         </div>
                     </div>
 
-                    
+
                     <div class="col-2">
                         <div class="form-group">
                             <label for="keyWord">Origen</label>
@@ -110,14 +110,15 @@
                         @endforeach
                     </tbody>
                 </table>
-                
-            @else                
+
+            @else
                 <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Folio</th>
                             <th>Origen</th>
                             <th>Vehículo</th>
+                            <th>Concepto</th>
                             <th>Presupuesto M.O.</th>
                             <th>Asignado</th>
                             <th>Opciones</th>
@@ -129,6 +130,7 @@
                                 <td><a href="/servicios/{{$row->model_id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio}}</a></td>
                                 <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                                 <td>{{ $row->vehiculo }}</td>
+                                <td>{{ $row->concepto }}</td>
                                 <td>{{$row->porcentaje_mo}}% -> @money($row->presupuesto_mo)</td>
                                 <td @if($row->is_over_budget) class="text-danger" @endif>@money($row->asignado) ({{$row->porcentaje_asignado}}%)</td>
                                 <td>
