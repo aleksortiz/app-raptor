@@ -73,7 +73,7 @@ class AdminOrdenesTrabajo extends Component
         $this->keyWord = trim($this->keyWord);
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
 
-        $costos = Costo::where('concepto', 'MANO DE OBRA')
+        $costos = Costo::where('tipo', 'MANO DE OBRA')
         ->whereHas('model', function($entrada) use($start, $end) {
             $entrada->whereBetween('created_at', [$start, $end]);
         })
