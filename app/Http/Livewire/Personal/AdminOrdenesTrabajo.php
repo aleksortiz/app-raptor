@@ -46,7 +46,13 @@ class AdminOrdenesTrabajo extends Component
     }
 
     public function updatedPorcentaje(){
-        $this->monto = $this->selected_costo->presupuesto_mo * ($this->porcentaje / 100);
+      $this->porcentaje = trim($this->porcentaje) ? $this->porcentaje : 0;
+      $this->monto = $this->selected_costo->presupuesto_mo * ($this->porcentaje / 100);
+    }
+
+    public function updatedMonto(){
+      $this->monto = trim($this->monto) ? $this->monto : 0;
+      $this->porcentaje = number_format($this->monto / $this->selected_costo->presupuesto_mo * 100);
     }
 
     public function getRenderDataPersonal(){

@@ -62,7 +62,7 @@ class Costo extends BaseModel
     }
 
     public function getPorcentajeMoAttribute(){
-        return $this->origen == 'ASEGURADORA' ? 25 : 20;
+        return 30;
     }
 
     public function getAsignadoAttribute(){

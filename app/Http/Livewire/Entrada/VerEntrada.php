@@ -71,7 +71,7 @@ class VerEntrada extends Component
     }
 
     public function getPorcentajeMoProperty(){
-        return $this->entrada->origen == 'PARTICULAR' ? 20 : 25;
+        return $this->entrada->origen == 'PARTICULAR' ? 30 : 30;
     }
 
     public function getPresupuestoDestajosProperty(){
