@@ -297,9 +297,15 @@
         </div>
         <div class="card-footer">
             <center>
-                <button wire:click="create" class="btn btn-success"><i class="fa fa-check"></i> Registrar
-                    Entrada</button>
+                <button wire:click="create" class="btn btn-success"><i class="fa fa-check"></i> Registrar Entrada</button>
+
+                <div class="mt-4 form-group">
+                  <label for="createMode">Crear Varias Entradas</label>
+                  <input id="createMode" type="checkbox" wire:model="createMode">
+                </div>
             </center>
+
+
         </div>
     </div>
 </div>

@@ -18,7 +18,9 @@ class CrearEntrada extends Component
     public $redirectMode;
     public Entrada $entrada;
 
-    public $costos = [['concepto' => 'Carroceria', 'costo' => 0]];
+    public $createMode = false;
+
+    public $costos = [['concepto' => 'MANO DE OBRA', 'costo' => 0]];
     public $refacciones = [];
 
 
@@ -58,6 +60,7 @@ class CrearEntrada extends Component
 
     public function resetInput(){
         $this->entrada = new Entrada();
+        $this->costos = [['concepto' => 'MANO DE OBRA', 'costo' => 0]];
         $this->setCliente(0);
     }
 
@@ -116,8 +119,11 @@ class CrearEntrada extends Component
             $this->emit('ok', 'Se ha creado entrada');
             $id = $this->entrada->id;
             $this->resetInput();
-            // return redirect()->to("/servicios/{$id}/subir-fotos?redirectMode=true");
-            return redirect()->to("/servicios/{$id}?activeTab=2");
+            $this->resetValidation();
+
+            if(!$this->createMode){
+              return redirect()->to("/servicios/{$id}?activeTab=2");
+            }
         }
     }
 
