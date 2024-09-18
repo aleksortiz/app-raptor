@@ -165,10 +165,8 @@
                                 <td>
                                     @if ($editMode)
                                         <select wire:model="costo.tipo" class="form-control form-control-sm">
-                                            <option value="SERVICIO">SERVICIO GENERICO</option>
                                             <option value="MANO DE OBRA">MANO DE OBRA</option>
                                             <option value="REFACCION">REFACCION</option>
-                                            <option value="PARTE">PARTE</option>
                                             <option value="OTRO TALLER">OTRO TALLER</option>
                                         </select>
                                         @error('costo.tipo')<span class="error text-danger">{{ $message }}<span>@enderror
