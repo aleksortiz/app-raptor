@@ -1,11 +1,12 @@
 <?php
 
+use App\Http\Controllers\PdfController;
 use App\Models\Entrada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth'])->group(function () 
+Route::middleware(['auth'])->group(function ()
 {
     Route::get('/servicios', function(){
         return view('livewire.entrada.catalogo-entradas.index');
@@ -60,6 +61,9 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/gastos-fijos', function(){
         return view('livewire.gastos-fijos.capturar-gastos-fijos.index');
     });
+
+    Route::get('/servicios/{entrada}/pdf', [PdfController::class, 'entrada_pdf']);
+
 
 
 

@@ -15,6 +15,7 @@
                       <label>Tipo</label>
                       <select wire:model="costo.tipo" class="form-control">
                           <option value="">--Seleccione--</option>
+                          <option value="SERVICIO">SERVICIO</option>
                           <option value="MANO DE OBRA">MANO DE OBRA</option>
                           <option value="REFACCION">REFACCION</option>
                           <option value="OTRO TALLER">OTRO TALLER</option>

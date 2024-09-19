@@ -109,9 +109,10 @@
 
         <div class="row">
             <div class="col">
-                <div class="d-flex justify-content-start">
+                <div class="d-flex justify-content-between">
 
                     <h5><b>Servicios: </b> @money($this->entrada->total_costos)</h5>
+                    <a href="/servicios/{{$this->entrada->id}}/pdf" target="_blank" class="btn btn-xs btn-secondary mb-2"><i class="fa fa-file-pdf"></i> Generar PDF</a>
                     {{-- <label for="iptVentaRefacciones" class="ml-5 mr-2">Venta de Refacciones:</label>
                     <div>
                         <label class="content-input">
@@ -165,6 +166,7 @@
                                 <td>
                                     @if ($editMode)
                                         <select wire:model="costo.tipo" class="form-control form-control-sm">
+                                            <option value="SERVICIO">SERVICIO</option>
                                             <option value="MANO DE OBRA">MANO DE OBRA</option>
                                             <option value="REFACCION">REFACCION</option>
                                             <option value="OTRO TALLER">OTRO TALLER</option>
