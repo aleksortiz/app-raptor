@@ -22,6 +22,9 @@
     p {
       font-size: 14px;
     }
+    td:empty {
+      border-bottom: 1px solid black;
+    }
 </style>
 
 </head>
@@ -68,12 +71,11 @@
 
   <br/>
 
-  <table style="border: 2px solid; border-color: {{$color}};" width="100%">
+  <table style="border-spacing: 15px; border-collapse: separate; border: 2px solid; border-color: {{$color}};" width="100%">
     <thead style="background-color: {{$color}};">
       <tr>
         <th>DESCRIPCIÓN</th>
         <th>PRECIO</th>
-        {{-- <th>IMPORTE</th> --}}
       </tr>
     </thead>
     <tbody>
@@ -81,9 +83,15 @@
         <tr>
             <td>{{$item->concepto}}</td>
             <td align="right">@money($item->venta)</td>
-            {{-- <td align="right">@money($item->venta)</td> --}}
         </tr>
       @endforeach
+
+      @for ($i = 0; $i < 5; $i++)
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+      @endfor
     </tbody>
 
     <br>

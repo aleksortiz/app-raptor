@@ -17,7 +17,7 @@ class PdfController extends Controller
     public static function entrada_pdf(Entrada $entrada){
       $pdf = PDF::loadView('pdf.entradas.entrada_pdf', compact('entrada'));
       $pdf->setPaper('A4');
-      // return $pdf->stream('Entrada_' . $entrada->folio_short . '.pdf');
-      return $pdf->download('Entrada_' . $entrada->folio_short . '.pdf');
+      return $pdf->stream('Entrada_' . $entrada->folio_short . '.pdf');
+      // return $pdf->download('Entrada_' . $entrada->folio_short . '.pdf');
   }
 }
