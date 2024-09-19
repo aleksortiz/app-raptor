@@ -48,15 +48,12 @@
           <p style="margin-top: 5px;">
             <b>Fecha:</b> {{ $entrada->fecha_creacion }}<br>
             <b>Vehículo:</b> {{$entrada->vehiculo}}<br>
+            @if ($entrada->cliente->orden)
+              <b>Orden:</b> {{$entrada->cliente->orden}}<br>
+            @endif
             <b>Cliente:</b> {{$entrada->cliente->nombre}}<br>
             @if ($entrada->cliente->telefono)
               <b>Telefono:</b> {{$entrada->cliente->telefono}}<br>
-            @endif
-            @if ($entrada->cliente->direccion)
-              <b>Dirección:</b> {{$entrada->cliente->direccion}}<br>
-            @endif
-            @if ($entrada->cliente->correo)
-              <b>Correo:</b> {{$entrada->cliente->correo}}
             @endif
           </p>
         </div>
