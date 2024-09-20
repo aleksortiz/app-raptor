@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\shared\BaseModel;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class EntradaMaterial extends BaseModel
@@ -21,6 +20,7 @@ class EntradaMaterial extends BaseModel
         'precio',
         'cantidad',
         'pedido_concepto_id',
+        'vale_id',
     ];
 
     public function entrada(){

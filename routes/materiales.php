@@ -4,7 +4,7 @@ use App\Http\Controllers\PdfController;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth'])->prefix('materiales')->group(function () 
+Route::middleware(['auth'])->prefix('materiales')->group(function ()
 {
     Route::middleware('permission:administrar-materiales|ver-materiales')
     ->get('/', function(){
@@ -27,6 +27,17 @@ Route::middleware(['auth'])->prefix('materiales')->group(function ()
     });
 
     Route::get('/pedido_pdf/{pedido}', [PdfController::class, 'pedido_pdf']);
-    
-    // Route::get('/{id}/', [App\Http\Controllers\HomeController::class, 'index'])->name('clientes.edit');
+
+    Route::middleware('permission:administrar-materiales|ver-materiales')
+    ->get('/vales', function(){
+        return view('livewire.material.catalogo-vales.index');
+    });
+
+    Route::middleware('permission:administrar-materiales|ver-materiales')
+    ->get('/vales/crear-vale', function(){
+        return view('livewire.material.crear-vale-material.index');
+    });
+
+    Route::middleware('permission:administrar-materiales|ver-materiales')
+    ->get('/vales/{vale}/pdf', [PdfController::class, 'vale_material_pdf']);
 });

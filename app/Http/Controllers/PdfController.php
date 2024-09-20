@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Entrada;
 use App\Models\Pedido;
+use App\Models\ValeMaterial;
 use Barryvdh\DomPDF\Facade as PDF;
 
 class PdfController extends Controller
@@ -19,5 +20,11 @@ class PdfController extends Controller
       $pdf->setPaper('A4');
       return $pdf->stream('Entrada_' . $entrada->folio_short . '.pdf');
       // return $pdf->download('Entrada_' . $entrada->folio_short . '.pdf');
-  }
+    }
+
+    public static function vale_material_pdf(ValeMaterial $vale){
+        $pdf = PDF::loadView('pdf.materiales.vale_materiales_pdf', compact('vale'));
+        $pdf->setPaper('A4');
+        return $pdf->stream('Vale_' . $vale->id_paddy . '.pdf');
+    }
 }

@@ -4,12 +4,13 @@ namespace App\Http\Livewire\Material;
 
 use App\Models\Entrada;
 use App\Models\EntradaMaterial;
+use App\Models\ValeMaterial;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class BitacoraMateriales extends Component
+class CatalogoVales extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
@@ -18,9 +19,6 @@ class BitacoraMateriales extends Component
     public $weekEnd;
     public $year;
     public $maxYear;
-    public $totalMateriales;
-
-    public $desglosar = false;
 
     protected $queryString = ['year', 'weekStart', 'weekEnd'];
 
@@ -38,27 +36,16 @@ class BitacoraMateriales extends Component
 
     public function render()
     {
-        return view('livewire.material.bitacora-materiales.view', $this->getRenderData());
+        return view('livewire.material.catalogo-vales.view', $this->getRenderData());
     }
 
     private function getRenderData(){
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-
-        $materiales = EntradaMaterial::select(DB::raw('id, material_id, entrada_id, material, unidad_medida, count(entrada_id) as c_entradas, precio, sum(cantidad) as cantidadSum, sum(precio * cantidad) as importeSum'))
+        $vales = ValeMaterial::orderBy('id', 'desc')
         ->whereBetween('created_at', [$start, $end]);
 
-        $this->totalMateriales = EntradaMaterial::whereBetween('created_at', [$start, $end])->get()->sum('importe');
-
-        if($this->desglosar){
-            $materiales->orderBy('created_at', 'desc');
-            $materiales->groupBy('id');
-        }else{
-            $materiales->orderBy('importeSum', 'desc');
-            $materiales->groupBy('material_id');
-        }
-
         return [
-            'materiales' => $materiales->paginate(50),
+            'vales' => $vales->paginate(50),
         ];
     }
 }

@@ -250,6 +250,12 @@ return [
             'topnav' => true,
         ],
         [
+          'text' => 'Vales de Materiales',
+          'icon' => 'fas fa-fw fa-ticket-alt',
+          'url' => '/materiales/vales',
+          'topnav' => true,
+        ],
+        [
             'type'         => 'darkmode-widget',
             'topnav_right' => true,
         ],
@@ -346,6 +352,11 @@ return [
                     'text'   => 'Almacen de Materiales',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/materiales',
+                ],
+                [
+                  'text'   => 'Vale de Materiales',
+                  'icon'   => 'fas fa-fw fa-chevron-right',
+                  'url'    => '/materiales/vales',
                 ],
                 [
                     'text'   => 'Pedidos de Materiales',
