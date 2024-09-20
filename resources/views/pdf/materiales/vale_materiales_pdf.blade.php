@@ -66,7 +66,7 @@
     <thead style="background-color: {{$color}};">
       <tr>
         <th>CANT</th>
-        <th>NÚMERO DE PARTE</th>
+        <th>NUMERO DE PARTE</th>
         <th>DESCRIPCIÓN</th>
       </tr>
     </thead>
