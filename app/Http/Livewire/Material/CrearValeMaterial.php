@@ -26,7 +26,7 @@ class CrearValeMaterial extends Component
     public $listadoMaterial = [];
 
     protected $rules = [
-      'listadoMaterial.*.cantidad' => 'required|numeric|min:1',
+      'listadoMaterial.*.cantidad' => 'required|numeric|min:0.1',
       'listadoMaterial.*.entrada_id' => 'required|numeric|min:1',
     ];
 
