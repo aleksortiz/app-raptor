@@ -210,8 +210,8 @@ class Entrada extends BaseModel
         $utilidad = $this->total_costos;
         // $utilidad -= $this->total_costo_refacciones;
         $utilidad -= $this->total_costo_costos;
-        // $utilidad -= $this->total_materiales;
-        // $utilidad -= $this->total_sueldos;
+        $utilidad -= $this->total_materiales;
+        $utilidad -= $this->total_sueldos;
         $utilidad -= $this->total_destajos;
         return $utilidad;
     }
