@@ -77,6 +77,11 @@ class Entrada extends BaseModel
         return $this->morphMany(Refaccion::class, 'model');
     }
 
+    public function refacciones_costo()
+    {
+        return $this->morphMany(Costo::class, 'model')->where('tipo', 'REFACCION');
+    }
+
     public function materiales()
     {
         return $this->hasMany(EntradaMaterial::class, 'entrada_id');
@@ -149,7 +154,9 @@ class Entrada extends BaseModel
 
     public function getTotalRefaccionesAttribute()
     {
-        return $this->refacciones->sum('importe');
+        $total1 = $this->refacciones->sum('importe');
+        $total2 = $this->refacciones_costo->sum('venta');
+        return $total1 + $total2;
     }
 
     public function getTotalCostosAttribute()

@@ -20,7 +20,7 @@
                     <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-wrench"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text"><b>Venta Refacciones</b></span>
+                        <span class="info-box-text"><b>Total Refacciones</b></span>
                         <span class="info-box-number">@money($this->entrada->total_refacciones)</span>
                     </div>
 
