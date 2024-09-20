@@ -46,10 +46,7 @@ class Refaccion extends BaseModel
     }
 
     public function getImporteAttribute(){
-        if($this->model->venta_refacciones){
-            return $this->precio * $this->cantidad;
-        }
-        return $this->costo_total;
+      return $this->precio * $this->cantidad;
     }
 
     public function setNumeroParteAttribute($value){

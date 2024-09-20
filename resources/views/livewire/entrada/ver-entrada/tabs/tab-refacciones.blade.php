@@ -52,10 +52,7 @@
                             <th>Número de Parte</th>
                             <th>Descripción</th>
                             <th>Costo</th>
-                            {{-- <th>Cantidad</th> --}}
-                            @if ($this->entrada->venta_refacciones)
-                                <th>Precio</th>
-                            @endif
+                            <th>Precio</th>
                             <th>Importe</th>
                             <th>Opciones</th>
                         </tr>
@@ -68,10 +65,7 @@
                             <td>{{$item->numero_parte}}</td>
                             <td>{{$item->descripcion}}</td>
                             <td>@money($item->costo)</td>
-                            {{-- <td>{{$item->cantidad}}</td> --}}
-                            @if ($this->entrada->venta_refacciones)
-                                <td>@money($item->precio)</td>
-                            @endif
+                            <td>@money($item->precio)</td>
                             <td>@money($item->importe)</td>
                             <td><button class="btn btn-xs btn-warning" wire:click="mdlEditarRefaccion({{ $item->id }})"><i class="fa fa-edit"></i> Editar</button></td>
 
@@ -89,9 +83,7 @@
                               <td>{{$item->descripcion}}</td>
                               <td>@money($item->costo)</td>
                               {{-- <td>{{$item->cantidad}}</td> --}}
-                              @if ($this->entrada->venta_refacciones)
-                                  <td>@money($item->precio)</td>
-                              @endif
+                              <td>@money($item->precio)</td>
                               <td>@money($item->importe)</td>
                               <td><button class="btn btn-xs btn-warning" wire:click="mdlEditarRefaccion({{ $item->id }})"><i class="fa fa-edit"></i> Editar</button></td>
 
