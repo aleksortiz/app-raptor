@@ -183,7 +183,9 @@ class Entrada extends BaseModel
 
     public function getTotalCostoRefaccionesAttribute()
     {
-        return $this->refacciones->sum('costo_total');
+        $ref1 = $this->refacciones_costo->sum('costo');
+        $ref2 = $this->refacciones->sum('costo_total');
+        return $ref1 + $ref2;
     }
 
     public function getTotalCostoCostosAttribute()
