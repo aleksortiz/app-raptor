@@ -92,4 +92,8 @@ class Costo extends BaseModel
     public function refacciones(){
         return $this->morphMany(Refaccion::class, 'model');
     }
+
+    public function getUtilidadAttribute(){
+        return $this->venta - $this->costo;
+    }
 }

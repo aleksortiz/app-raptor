@@ -195,7 +195,8 @@ class Entrada extends BaseModel
 
     public function getTotalUtilidadRefaccionesAttribute()
     {
-        return $this->refacciones->sum('utilidad');
+        $utilidad1 = $this->refacciones->sum('utilidad');
+        $utilidad2 = $this->refacciones_costo->sum('utilidad');
     }
 
     public function getTotalSueldosAttribute()
