@@ -279,7 +279,7 @@
 
     <div class="row">
         <div class="col">
-          <div style="height: 85vh;" class="card">
+          <div class="card">
             <div class="card-header">
                 <h3 class="card-title"><b>Resultados</b></h3>
             </div>
@@ -297,42 +297,48 @@
 
                 {{-- <h3>Totales:</h3> --}}
                 <div class="row">
-                  <div class="col-3">
+                  <div class="col-4">
                     <div class="info-box" style="cursor: pointer;">
                       <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                       <div class="info-box-content">
-                          <span class="info-box-text"><b>Utilidad Bruta: </b></span>
+                          <span class="info-box-text"><b>Utilidad antes de gastos: </b></span>
                           <span class="text-lg info-box-number">@money($this->utilidadBruta)</span>
                       </div>
 
                     </div>
                   </div>
 
-                  <div class="col-3">
-
-                  </div>
-                </div>
-
-
-                <div class="info-box" style="cursor: pointer;">
-                    <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Utilidad antes de Gastos: (@qty($this->porcUtilidadNeta)% de @money($this->totalVehiculosEntregados))</b></span>
-                        <span class="text-lg info-box-number">@money($this->utilidadNeta)</span>
-                    </div>
-                </div>
-
-                @if ($this->qty_semanas > 1)
+                  <div class="col-4">
                     <div class="info-box" style="cursor: pointer;">
-                        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
-                        <div class="info-box-content">
-                            <span class="info-box-text"><b>Utilidad Neta Promedio en @qty($this->qty_semanas) Semanas</b></span>
-                            <span class="text-lg info-box-number">@money($this->utilidadNeta / $this->qty_semanas)</span>
-                        </div>
+                      <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+                      <div class="info-box-content">
+                          <span class="info-box-text"><b>Utilidad Neta: (@qty($this->porcUtilidadNeta)% de @money($this->totalVehiculosEntregados))</b></span>
+                          <span class="text-lg info-box-number">@money($this->utilidadNeta)</span>
+                      </div>
                     </div>
+                  </div>
 
-                @endif
+                  <div class="col-4">
+                    @if ($this->qty_semanas > 1)
+                      <div class="info-box" style="cursor: pointer;">
+                          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
+                          <div class="info-box-content">
+                              <span class="info-box-text"><b>Utilidad Neta Promedio en @qty($this->qty_semanas) Semanas</b></span>
+                              <span class="text-lg info-box-number">@money($this->utilidadNeta / $this->qty_semanas)</span>
+                          </div>
+                      </div>
+
+                    @endif
+                  </div>
+
+
+                </div>
+
+
+
+
+
 
             </div>
           </div>
