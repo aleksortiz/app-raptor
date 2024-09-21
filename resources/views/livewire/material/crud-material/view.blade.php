@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="card-body p-0">
-            
+
             <div class="row m-2">
                 <div class="col-9">
                     <div class="form-group">
@@ -26,8 +26,8 @@
                 </div>
             </div>
 
-            
-            
+
+
             @canany(['administrar-materiales'])
             <button class="btn btn-xs btn-primary ml-2 mb-2" wire:click="mdlCreate"><i class="fas fa-plus"></i> Agregar
               {{ $this->model_name }}</button>
@@ -45,8 +45,8 @@
                         <th>Unidad de Medida</th>
                         <th>Precio</th>
                         <th>Existencia</th>
-                        <th>Asignar</th>
                         @canany(['administrar-materiales'])
+                        <th>Asignar</th>
                         <th>Opciones</th>
                         @endcanany
                     </tr>
@@ -61,17 +61,18 @@
                             <td>{{ $row->unidad_medida }}</td>
                             <td>@money($row->precio)</td>
                             <td>{{ $row->existencia }}</td>
-                            <td>
-                                <button class="btn btn-xs btn-primary" wire:click="mdlAsignarMaterial({{ $row->id }})"><i class="fa fa-car"></i> Asignar a folio</button>
-                            </td>
 
                             @canany(['administrar-materiales'])
-                                <td>
-                                    <button class="btn btn-xs btn-warning" wire:click="mdlEdit({{ $row->id }})"><i
-                                            class="fa fa-edit"></i> Editar</button>
-                                    {{-- <button class="btn btn-xs btn-danger" wire:click="mdlDelete({{ $row->id }})"><i
-                                            class="fas fa-trash"></i> Eliminar</button> --}}
-                                </td>
+                              <td>
+                                  <button class="btn btn-xs btn-primary" wire:click="mdlAsignarMaterial({{ $row->id }})"><i class="fa fa-car"></i> Asignar a folio</button>
+                              </td>
+
+                              <td>
+                                  <button class="btn btn-xs btn-warning" wire:click="mdlEdit({{ $row->id }})"><i
+                                          class="fa fa-edit"></i> Editar</button>
+                                  {{-- <button class="btn btn-xs btn-danger" wire:click="mdlDelete({{ $row->id }})"><i
+                                          class="fas fa-trash"></i> Eliminar</button> --}}
+                              </td>
                             @endcanany
 
                     @endforeach
