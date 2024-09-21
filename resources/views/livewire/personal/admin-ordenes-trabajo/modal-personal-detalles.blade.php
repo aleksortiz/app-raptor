@@ -25,7 +25,7 @@
                   <tr>
                     <td>{{$loop->iteration}}</td>
                     <td>{{$item->entrada->fecha_format}}</td>
-                    <td><a href="/servicios/{{$item->entrada_id}}" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$item->entrada->folio_short}}</a></td>
+                    <td><a href="/servicios/{{$item->entrada_id}}?activeTab=8" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$item->entrada->folio_short}}</a></td>
                     <td>{{$item->notas}}</td>
                     <td>@money($item->monto)</td>
                     <td>@money($item->pagado)</td>
