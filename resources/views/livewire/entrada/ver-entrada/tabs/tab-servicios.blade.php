@@ -21,7 +21,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text"><b>Total Refacciones</b></span>
-                        <span class="info-box-number">@money($this->entrada->total_refacciones)</span>
+                        <span class="info-box-number">@money($this->entrada->refacciones_costo)</span>
                     </div>
 
                 </div>
@@ -96,7 +96,7 @@
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text"><b>Utilidad Global</b></span>
+                        <span class="info-box-text"><b>Utilidad</b></span>
                         <span class="info-box-number">@money($this->entrada->total_utilidad_global) (@float($this->entrada->porcentaje_utilidad_global)%)</span>
                     </div>
 
@@ -113,13 +113,6 @@
 
                     <h5><b>Servicios: </b> @money($this->entrada->total_costos)</h5>
                     <a href="/servicios/{{$this->entrada->id}}/pdf" target="_blank" class="btn btn-xs btn-secondary mb-2"><i class="fa fa-file-pdf"></i> Generar PDF</a>
-                    {{-- <label for="iptVentaRefacciones" class="ml-5 mr-2">Venta de Refacciones:</label>
-                    <div>
-                        <label class="content-input">
-                            <input id="iptVentaRefacciones" wire:model="entrada.venta_refacciones" type="checkbox" />
-                            <i></i>
-                        </label>
-                    </div> --}}
                 </div>
 
                 <table class="table table-hover projects">

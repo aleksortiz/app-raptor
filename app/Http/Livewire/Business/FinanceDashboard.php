@@ -7,6 +7,7 @@ use App\Models\Egreso;
 use App\Models\Entrada;
 use App\Models\EntradaMaterial;
 use App\Models\GastoFijoLog;
+use App\Models\OrdenTrabajo;
 use App\Models\OrdenTrabajoPago;
 use App\Models\PagoPersonal;
 use App\Models\Pedido;
@@ -79,7 +80,8 @@ class FinanceDashboard extends Component
 
     public function getTotalDestajosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $destajos = OrdenTrabajoPago::whereBetween('created_at', $dates)->sum('monto');
+        // $destajos = OrdenTrabajoPago::whereBetween('created_at', $dates)->sum('monto');
+        $destajos = OrdenTrabajo::whereBetween('created_at', $dates)->sum('monto');
         return $destajos;
     }
 
@@ -127,14 +129,14 @@ class FinanceDashboard extends Component
     }
 
     public function getTotalUtilidadRealProperty(){
-        return $this->total_pagos_realizados 
+        return $this->total_pagos_realizados
         - $this->total_gastos;
     }
 
     public function getTotalUtilidadVirtualProperty(){
         return $this->total_vehiculos_registrados
-        - $this->total_sueldos 
-        - $this->total_gastos_fijos 
+        - $this->total_sueldos
+        - $this->total_gastos_fijos
         - $this->total_pedidos;
     }
 
