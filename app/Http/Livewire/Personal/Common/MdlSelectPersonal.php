@@ -27,7 +27,8 @@ class MdlSelectPersonal extends Component
     {
         return view('livewire.personal.common.mdl-select-personal',[
             'personal' => Personal::orderBy('nombre')
-            ->orWhere('nombre', 'LIKE', "%{$this->searchValue}%")
+            ->where('activo', 1)
+            ->where('nombre', 'LIKE', "%{$this->searchValue}%")
             ->paginate(50, ['*'], 'selectPersonalPage'),
         ]);
     }
