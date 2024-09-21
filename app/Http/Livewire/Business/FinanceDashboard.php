@@ -182,7 +182,10 @@ class FinanceDashboard extends Component
 
     public function getTotalSueldosTallerProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('entrada_id', null)->sum('pago');
+        $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('entrada_id', null)
+        ->whereHas('personal', function($q){
+            $q->where('destajo', true);
+        })->sum('pago');
         return $pagos;
     }
 
