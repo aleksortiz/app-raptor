@@ -172,7 +172,7 @@ class FinanceDashboard extends Component
     }
 
     public function getUtilidadNetaProperty(){
-        return $this->utilidad_bruta - $this->total_sueldos_taller - $this->total_gastos_fijos - $this->total_gastos_generales;
+        return $this->utilidad_bruta - $this->total_gastos;
     }
 
     public function getTotalGastosGeneralesProperty(){
