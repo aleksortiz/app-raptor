@@ -98,7 +98,7 @@ class FinanceDashboard extends Component
 
     public function getTotalPagadoProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $entradas = Entrada::whereBetween('created_at', $dates)->get();
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
         $totalPagado = 0;
         foreach($entradas as $entrada){
             $totalPagado += $entrada->total_costos_pagados;
@@ -120,7 +120,7 @@ class FinanceDashboard extends Component
     public function getTotalPagosPendientesProperty(){
         // return $this->total_vehiculos_registrados - $this->total_pagos_realizados;
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $entradas = Entrada::whereBetween('created_at', $dates)->get();
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
         $totalPendiente = 0;
         foreach($entradas as $entrada){
             $totalPendiente += $entrada->total_costos_pendientes;
@@ -155,7 +155,11 @@ class FinanceDashboard extends Component
     }
 
     public function getTotalGastosProperty(){
-        return $this->total_sueldos + $this->total_gastos_fijos + $this->totalPagosProveedores;
+        // return $this->total_sueldos + $this->total_gastos_fijos + $this->totalPagosProveedores;
+        return $this->total_sueldos_taller
+        + $this->total_gastos_fijos
+        + $this->total_gastos_generales
+        + $this->totalPagosProveedores;
     }
 
     public function getUtilidadBrutaProperty(){

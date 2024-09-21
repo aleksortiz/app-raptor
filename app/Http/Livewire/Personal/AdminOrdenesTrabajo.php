@@ -120,8 +120,8 @@ class AdminOrdenesTrabajo extends Component
 
         $this->validate([
             'personal_id' => 'required|numeric',
-            'monto' => 'required|numeric',
-            'porcentaje' => 'required|numeric|min:10|max:100',
+            'monto' => 'required|numeric|min:0.01',
+            'porcentaje' => 'required|numeric|min:0|max:100',
             'notas' => 'required|string',
         ]);
 
