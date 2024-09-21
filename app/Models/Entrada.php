@@ -206,7 +206,7 @@ class Entrada extends BaseModel
 
     public function getTotalDestajosAttribute()
     {
-        return $this->ordenes_trabajo_pagos->sum('monto');
+        return $this->ordenes_trabajo->sum('monto');
     }
 
     public function getTotalUtilidadGlobalAttribute()
