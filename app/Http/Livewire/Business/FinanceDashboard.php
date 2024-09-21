@@ -159,7 +159,7 @@ class FinanceDashboard extends Component
 
     public function getTotalGastosProperty(){
         // return $this->total_sueldos + $this->total_gastos_fijos + $this->totalPagosProveedores;
-        return $this->total_sueldos_taller
+        return $this->total_sueldos_administrativos
         + $this->total_gastos_fijos
         + $this->total_gastos_generales;
         // + $this->totalPagosProveedores;
