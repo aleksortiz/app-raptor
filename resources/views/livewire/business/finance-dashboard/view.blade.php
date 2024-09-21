@@ -210,8 +210,8 @@
                   <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
 
                   <div class="info-box-content">
-                      <span class="info-box-text"><b>Sueldos Taller: </b></span>
-                      <span class="text-lg info-box-number">@money($this->totalSueldosTaller)</span>
+                      <span class="info-box-text"><b>Sueldos Administrativos: </b></span>
+                      <span class="text-lg info-box-number">@money($this->totalSueldosAdministrativos)</span>
                   </div>
 
                 </div>

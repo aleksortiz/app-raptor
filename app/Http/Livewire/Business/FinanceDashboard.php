@@ -67,7 +67,8 @@ class FinanceDashboard extends Component
     public function getTotalNominaProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $pagos = PagoPersonal::whereBetween('fecha', $dates)->whereHas('personal',function($personal){
-            $personal->where('destajo', false);
+            $personal->where('destajo', false)
+            ->where('administrativo', false);
         })->sum('pago');
         return $pagos;
     }
@@ -184,9 +185,19 @@ class FinanceDashboard extends Component
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
         $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('entrada_id', null)
         ->whereHas('personal', function($q){
-            $q->where('destajo', true);
+            $q->where('destajo', false);
         })->sum('pago');
         return $pagos;
+    }
+
+    public function getTotalSueldosAdministrativosProperty(){
+      $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+      $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('entrada_id', null)
+      ->whereHas('personal', function($q){
+          $q->where('destajo', false)
+          ->where('administrativo', true);
+      })->sum('pago');
+      return $pagos;
     }
 
     public function getPorcUtilidadNetaProperty(){
