@@ -21,7 +21,7 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text"><b>Total Refacciones</b></span>
-                        <span class="info-box-number">@money($this->entrada->refacciones_costo)</span>
+                        <span class="info-box-number">@money($this->entrada->total_costo_refacciones)</span>
                     </div>
 
                 </div>
