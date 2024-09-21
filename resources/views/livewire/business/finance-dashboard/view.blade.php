@@ -306,7 +306,7 @@
                       <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
                       <div class="info-box-content">
-                          <span class="info-box-text"><b>Utilidad antes de gastos: </b></span>
+                          <span class="info-box-text"><b>Utilidad antes de gastos: (Entregados) </b></span>
                           <span class="text-lg info-box-number">@money($this->utilidadBruta)</span>
                       </div>
 
