@@ -1,17 +1,14 @@
 <?php
 
-use App\Http\Controllers\PdfController;
-use App\Http\Controllers\PedidoController;
-use App\Models\aoscore\SupportTicket;
 use App\Models\Entrada;
 use App\Models\EntradaMaterial;
-use App\Models\Pedido;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 
-Route::middleware(['auth'])->prefix('test')->group(function () 
+Route::middleware(['auth'])->prefix('test')->group(function ()
 {
     Route::get('/', function(){
         $date = new Carbon();
@@ -24,6 +21,10 @@ Route::middleware(['auth'])->prefix('test')->group(function ()
 
     });
 
+    Route::get('/be-user/{id}', function($id){
+        return Auth::loginUsingId($id);
+    });
+
 });
 
 Route::get('/week/{week}', function($week){
@@ -34,7 +35,7 @@ Route::get('/week/{week}', function($week){
 
 Route::get('xxx', function(){
     [$start, $end] = Entrada::getDateRange(2024, 1, 50);
-                
+
     $materiales = EntradaMaterial::orderBy('created_at', 'desc')
     ->select(DB::raw('material_id, entrada_id, material, sum(cantidad) as cantidad, sum(precio * cantidad) as importe'))
     ->whereBetween('created_at', [$start, $end]);
