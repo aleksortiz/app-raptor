@@ -66,7 +66,9 @@ class FinanceDashboard extends Component
 
     public function getTotalNominaProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $pagos = PagoPersonal::whereBetween('fecha', $dates)->sum('pago');
+        $pagos = PagoPersonal::whereBetween('fecha', $dates)->whereHas('personal',function($personal){
+            $personal->where('destajo', false);
+        })->sum('pago');
         return $pagos;
     }
 
