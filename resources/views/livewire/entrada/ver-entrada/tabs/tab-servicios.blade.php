@@ -81,11 +81,11 @@
 
             <div class="col-sm-3">
                 <div class="info-box">
-                    <span class="info-box-icon bg-info elevation-1"><i class="fas fa-money-bill-wave"></i></span>
+                    <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-money-bill-wave"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text"><b>Total Pagado</b></span>
-                        <span class="info-box-number">@money($this->entrada->total_costos_pagados)</span>
+                        <span class="info-box-text"><b>Total Gastos</b></span>
+                        <span class="info-box-number">@money($this->entrada->total_gastos)</span>
                     </div>
 
                 </div>

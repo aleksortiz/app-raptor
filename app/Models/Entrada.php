@@ -97,6 +97,10 @@ class Entrada extends BaseModel
         return $this->morphMany(Costo::class, 'model');
     }
 
+    public function gastos(){
+        return $this->hasMany(EntradaGasto::class, 'entrada_id');
+    }
+
     public function fabricante()
     {
         return $this->belongsTo(Fabricante::class, 'fabricante_id');
@@ -144,6 +148,11 @@ class Entrada extends BaseModel
     public function getTotalMaterialesAttribute()
     {
         return $this->materiales->sum('importe');
+    }
+
+    public function getTotalGastosAttribute()
+    {
+        return $this->gastos->sum('monto');
     }
 
     public function total_materiales($dateStart, $dateEnd)
@@ -219,6 +228,7 @@ class Entrada extends BaseModel
         // $utilidad = $this->total_costos + $this->total_utilidad_refacciones;
         $utilidad = $this->total_costos;
         // $utilidad -= $this->total_costo_refacciones;
+        $utilidad -= $this->total_gastos;
         $utilidad -= $this->total_costo_costos;
         $utilidad -= $this->total_materiales;
         $utilidad -= $this->total_sueldos;

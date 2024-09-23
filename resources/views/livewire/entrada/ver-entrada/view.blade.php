@@ -17,7 +17,8 @@
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 5 ? 'active' : '' }}" wire:click="$set('activeTab',5)" href="#"><i class="fas fa-wrench"></i> Refacciones</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 6 ? 'active' : '' }}" wire:click="$set('activeTab',6)" href="#"><i class="fas fa-cubes"></i> Materiales</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 7 ? 'active' : '' }}" wire:click="$set('activeTab',7)" href="#"><i class="fas fa-hand-holding-usd"></i> Sueldos</a></li>
-                    <li class="nav-item"><a class="nav-link {{ $activeTab == 8 ? 'active' : '' }}" wire:click="$set('activeTab',8)" href="#"><i class="fas fa-money-bill"></i> Destajos</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $activeTab == 8 ? 'active' : '' }}" wire:click="$set('activeTab',8)" href="#"><i class="fas fa-hand-holding-usd"></i> Destajos</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $activeTab == 9 ? 'active' : '' }}" wire:click="$set('activeTab',9)" href="#"><i class="fas fa-money-bill"></i> Gastos</a></li>
                 </ul>
             </div>
 
@@ -56,6 +57,10 @@
                         @include('livewire.entrada.ver-entrada.tabs.tab-destajos')
                     </div>
 
+                    <div class="tab-pane {{ $activeTab == 9 ? 'active' : '' }}" id="tab_8">
+                        @include('livewire.entrada.ver-entrada.tabs.tab-gastos')
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -63,6 +68,7 @@
 
     @include('livewire.entrada.ver-entrada.modals.mdl-refacciones')
     @include('livewire.entrada.ver-entrada.modals.mdl-create-costo')
+    @include('livewire.entrada.ver-entrada.modals.mdl-create-gasto')
     @include('livewire.entrada.ver-entrada.modals.mdl-material-manual')
     @include('livewire.entrada.ver-entrada.modals.mdl-edit-date')
     @include('livewire.entrada.ver-entrada.modals.mdl-registrar-pago-destajo')

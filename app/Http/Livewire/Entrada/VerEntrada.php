@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Entrada;
 use App\Http\Traits\PhotoTrait;
 use App\Models\Costo;
 use App\Models\Entrada;
+use App\Models\EntradaGasto;
 use App\Models\EntradaMaterial;
 use App\Models\Foto;
 use App\Models\Material;
@@ -38,6 +39,9 @@ class VerEntrada extends Component
 
     public $selectedWorkOrder = null;
     public $pagoDestajo = null;
+
+    public $gastoConcepto;
+    public $gastoMonto;
 
     public $lastUrl;
 
@@ -529,5 +533,25 @@ class VerEntrada extends Component
 
     public function back(){
         return redirect()->to($this->lastUrl);
+    }
+
+    public function createGasto(){
+      $this->validate([
+        'gastoConcepto' => 'string|required|max:255',
+        'gastoMonto' => 'numeric|required|min:0',
+      ]);
+
+      EntradaGasto::create([
+        'entrada_id' => $this->entrada->id,
+        'concepto' => $this->gastoConcepto,
+        'monto' => $this->gastoMonto,
+        'user_id' => Auth::id(),
+      ]);
+
+      $this->entrada->load('gastos');
+      $this->gastoConcepto = null;
+      $this->gastoMonto = null;
+      $this->emit('ok', 'Se ha registrado gasto');
+      $this->emit('closeModal', '#mdlCreateGasto');
     }
 }
