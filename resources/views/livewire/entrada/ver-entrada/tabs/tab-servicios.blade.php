@@ -80,7 +80,7 @@
             </div>
 
             <div class="col-sm-3">
-                <div class="info-box">
+                <div class="info-box" wire:click="$set('activeTab', 9)" style="cursor: pointer;">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-money-bill-wave"></i></span>
 
                     <div class="info-box-content">
