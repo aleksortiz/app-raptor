@@ -31,8 +31,9 @@ class SubirFotosV2 extends Component
         $this->upload();
     }
 
-    public function mount($storage_path){
+    public function mount($storage_path, $model){
         $this->storage_path = $storage_path;
+        $this->model = $model;
     }
 
     public function render()

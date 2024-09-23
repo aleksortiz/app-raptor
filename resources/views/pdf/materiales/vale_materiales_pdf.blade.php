@@ -68,6 +68,7 @@
         <th>CANT</th>
         <th>NUMERO DE PARTE</th>
         <th>DESCRIPCIÓN</th>
+        <th>FOLIO</th>
       </tr>
     </thead>
     <tbody>
@@ -76,6 +77,7 @@
             <td width="20%" align="center">{{$item->cantidad}}</td>
             <td width="20%">{{$item->numero_parte}}</td>
             <td>{{$item->material}}</td>
+            <td>{{$item->entrada->folio_short}} - {{$item->entrada->vehiculo}}</td>
         </tr>
       @endforeach
     </tbody>
