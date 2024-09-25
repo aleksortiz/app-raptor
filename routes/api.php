@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ServicioFlotillaController;
+use App\Mail\SearchAutopartesMail;
 use App\Models\Entrada;
 use App\Models\GastoFijoLog;
 use App\Models\PagoPersonal;
@@ -8,6 +9,7 @@ use App\Models\Willys\Asociado;
 use App\Models\Willys\Autoparte;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -97,7 +99,20 @@ Route::get('/autopartes', function(Request $request){
       }
     });
   }
-  return $autopartes->get();
+  $res = $autopartes->get();
+
+  if($res->isEmpty()){
+    try{
+      $mails = Asociado::all()->pluck('correo')->toArray();
+      $mailable = new SearchAutopartesMail($searchQuery);
+      Mail::to($mails)->send($mailable);
+    }
+    catch(Exception $e){
+      return $res;
+    }
+  }
+
+  return $res;
 });
 
 
