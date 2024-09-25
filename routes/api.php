@@ -4,6 +4,8 @@ use App\Http\Controllers\ServicioFlotillaController;
 use App\Models\Entrada;
 use App\Models\GastoFijoLog;
 use App\Models\PagoPersonal;
+use App\Models\Willys\Asociado;
+use App\Models\Willys\Autoparte;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -48,6 +50,33 @@ Route::get('/utilidad-neta/{week}', function(Request $request){
     return $utilidad_bruta - $pagos - $gastos;
 
 
-    
+
 });
+
+Route::post('/afiliados', function(Request $request){
+    $asociado = Asociado::create([
+      'nombre' => $request->nombre,
+      'correo' => $request->correo,
+      'telefono' => $request->telefono,
+      'empresa' => $request->empresa
+    ]);
+    return $asociado;
+});
+
+Route::post('/autopartes', function(Request $request){
+  $parte = Autoparte::create([
+    'name' => $request->name,
+    'description' => $request->description,
+    'brand' => $request->brand,
+    'model' => $request->model,
+    'year' => $request->year,
+    'price' => $request->price
+  ]);
+  return $parte;
+});
+
+Route::get('/autopartes', function(Request $request){
+  return Autoparte::all();
+});
+
 

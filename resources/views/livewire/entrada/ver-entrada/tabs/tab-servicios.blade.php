@@ -70,36 +70,30 @@
             <div class="col-sm-3">
                 <div class="info-box" wire:click="$set('activeTab', 8)" style="cursor: pointer;">
                     <span class="info-box-icon bg-secondary elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
-
                     <div class="info-box-content">
                         <span class="info-box-text"><b>Total Destajos</b></span>
                         <span class="info-box-number">@money($this->entrada->total_destajos)</span>
                     </div>
-
                 </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="info-box" wire:click="$set('activeTab', 9)" style="cursor: pointer;">
                     <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-money-bill-wave"></i></span>
-
                     <div class="info-box-content">
                         <span class="info-box-text"><b>Total Gastos</b></span>
                         <span class="info-box-number">@money($this->entrada->total_gastos)</span>
                     </div>
-
                 </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
-
                     <div class="info-box-content">
                         <span class="info-box-text"><b>Utilidad</b></span>
                         <span class="info-box-number">@money($this->entrada->total_utilidad_global) (@float($this->entrada->porcentaje_utilidad_global)%)</span>
                     </div>
-
                 </div>
             </div>
 
