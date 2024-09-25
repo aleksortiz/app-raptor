@@ -76,7 +76,24 @@ Route::post('/autopartes', function(Request $request){
 });
 
 Route::get('/autopartes', function(Request $request){
-  return Autoparte::all();
+  $searchQuery = $request->query('search');
+  $autopartes = Autoparte::orderBy('name', 'asc');
+  if($searchQuery){
+    $searchQuery = strtolower($searchQuery);
+    $searchQuery = str_replace('  ', ' ', $searchQuery);
+    $searchQuery = str_replace(',', ' ', $searchQuery);
+    $parts = explode(' ', $searchQuery);
+    $autopartes = $autopartes->where(function($q) use ($parts){
+      foreach($parts as $part){
+        $q->orWhere('name', 'like', "%$part%");
+        $q->orWhere('description', 'like', "%$part%");
+        $q->orWhere('brand', 'like', "%$part%");
+        $q->orWhere('model', 'like', "%$part%");
+        $q->orWhere('year', 'like', "%$part%");
+      }
+    });
+  }
+  return $autopartes->get();
 });
 
 
