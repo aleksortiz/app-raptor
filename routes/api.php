@@ -64,13 +64,17 @@ Route::post('/afiliados', function(Request $request){
 });
 
 Route::post('/autopartes', function(Request $request){
+
+  $provider = Asociado::where('telefono', $request->telefono)->first();
+
   $parte = Autoparte::create([
     'name' => $request->name,
     'description' => $request->description,
     'brand' => $request->brand,
     'model' => $request->model,
     'year' => $request->year,
-    'price' => $request->price
+    'price' => $request->price,
+    'provider' => $provider?->empresa ?? null,
   ]);
   return $parte;
 });

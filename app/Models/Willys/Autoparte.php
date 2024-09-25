@@ -16,5 +16,6 @@ class Autoparte extends Model
         'model',
         'year',
         'price',
+        'provider',
     ];
 }
