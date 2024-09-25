@@ -104,8 +104,11 @@ Route::get('/autopartes', function(Request $request){
   if($res->isEmpty()){
     try{
       $mails = Asociado::all()->pluck('correo')->toArray();
-      $mailable = new SearchAutopartesMail($searchQuery);
-      Mail::to($mails)->send($mailable);
+      if(!empty($mails)){
+        $mailable = new SearchAutopartesMail($searchQuery);
+        Mail::to($mails)->send($mailable);
+      }
+
     }
     catch(Exception $e){
       return $res;
