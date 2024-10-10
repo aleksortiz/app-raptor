@@ -18,6 +18,7 @@ class OrdenTrabajo extends BaseModel
         'monto',
         'notas',
         'porcentaje',
+        'costo_id'
     ];
 
     public function entrada(){
@@ -39,5 +40,5 @@ class OrdenTrabajo extends BaseModel
     public function getPendienteAttribute(){
         return $this->monto - $this->pagado;
     }
-    
+
 }

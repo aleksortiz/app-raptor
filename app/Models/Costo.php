@@ -66,7 +66,10 @@ class Costo extends BaseModel
     }
 
     public function getAsignadoAttribute(){
+      if($this->model->ordenes_trabajo->where('costo_id', $this->id)->count() == 0){
         return $this->model->ordenes_trabajo->sum('monto');
+      }
+      return $this->model->ordenes_trabajo->where('costo_id', $this->id)->sum('monto');
     }
 
     public function getPorcentajeAsignadoAttribute(){

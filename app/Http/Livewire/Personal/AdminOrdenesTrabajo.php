@@ -132,6 +132,7 @@ class AdminOrdenesTrabajo extends Component
             'monto' => $this->monto,
             'porcentaje' => $this->porcentaje,
             'notas' => $this->notas,
+            'costo_id' => $this->selected_costo->id,
         ]);
 
         $this->selected_costo = null;
