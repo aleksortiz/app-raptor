@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="col-1">
                     <div class="form-group">
                         <label for="keyWord">a la</label>
@@ -53,24 +53,24 @@
                 <div class="col-sm-3">
                     <div class="info-box">
                         <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
-    
+
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Pagado (Fecha)</b></span>
                             <span class="info-box-number">@money($pagado)</span>
                         </div>
-    
+
                     </div>
                 </div>
-    
+
                 <div class="col-sm-3">
                     <div class="info-box">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clock"></i></span>
-    
+
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Pendiente (Totalidad)</b></span>
                             <span class="info-box-number">@money($pendiente)</span>
                         </div>
-    
+
                     </div>
                 </div>
 
@@ -120,7 +120,7 @@
                         <td>{{ $item->model?->domicilio_fiscal ?? 'N/A' }}</td>
                         <td>{{ $item->concepto }}</td>
                         <td>{{ $item->model?->orden ?? 'N/A' }}</td>
-                        <td>@money($item->costo)</td>
+                        <td>@money($item->venta)</td>
                         <td>
                             @if ($item->pagado == null)
                                 <button wire:click="mdlPagoServicios({{ $item->model->id }})" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> PENDIENTE</button>
