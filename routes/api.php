@@ -118,4 +118,8 @@ Route::get('/autopartes', function(Request $request){
   return $res;
 });
 
+Route::post('/mirror', function(Request $request){
+  return $request->all();
+});
+
 
