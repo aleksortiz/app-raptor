@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 /*
 |--------------------------------------------------------------------------
@@ -119,6 +121,39 @@ Route::get('/autopartes', function(Request $request){
 });
 
 Route::post('/mirror', function(Request $request){
+  if ($request->hasFile('image')) {
+      $image = $request->file('image');
+
+      // Generar un nombre único para la imagen original
+      $originalImageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+
+      // Almacenar la imagen original en el almacenamiento local (puedes cambiar el disco si es necesario)
+      $originalPath = $image->storeAs('images/original', $originalImageName, 'public');
+
+      // Aquí deberías implementar la lógica para eliminar el fondo de la imagen
+      // Por ejemplo, llamar a un servicio externo o usar una librería de procesamiento de imágenes
+      // Supongamos que la función `processImage` devuelve la ruta de la imagen procesada
+      $processedImageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+      $processedPath = 'images/processed/' . $processedImageName;
+
+      // Ejemplo: Copiar la imagen original como procesada (reemplaza esto con tu lógica real)
+      Storage::disk('public')->copy($originalPath, $processedPath);
+
+      // Generar las URLs completas
+      $originalImageUrl = Storage::disk('public')->url($originalPath);
+      $processedImageUrl = Storage::disk('public')->url($processedPath);
+
+      // Generar el timestamp actual
+      $timestamp = now()->toIso8601String();
+
+      return response()->json([
+          'original_image_url' => $originalImageUrl,
+          'processed_image_url' => $processedImageUrl,
+          'timestamp' => $timestamp,
+      ], 200);
+  }
+
+
   return $request->all();
 });
 
