@@ -44,9 +44,10 @@
                         <div class="form-group col-3">
                             <label>Existencia</label>
                             <input wire:model.defer="model.existencia"
-                            @if(!auth()->user()->can('administrar-existencia-materiales'))
+                            @can('administrar-existencia-materiales')
+                            @else
                                 disabled
-                            @endif
+                            @endcan
                             type="text" class="form-control" style="text-align: center" onkeypress="return event.charCode >= 46 && event.charCode <= 57"/>
                             @error('model.existencia') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
