@@ -46,6 +46,7 @@ class Permission extends SpatiePermission
         'servicio-flotillas' => 'Puede ver servicio de flotillas',
         'administrar-catalogos' => 'Puede ver, crear y editar catalogos',
         'venta-vehiculos' => 'Modulo de venta de vehiculos',
+        'administrar-existencia-materiales' => 'Puede editar existencia de materiales',
 
     ];
 

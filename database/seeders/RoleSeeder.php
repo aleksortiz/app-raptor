@@ -57,5 +57,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'reporte-facturas'])->syncRoles([$superuser, $gerente]);
         Permission::create(['name' => 'reporte-depositos'])->syncRoles([$superuser, $gerente]);
         Permission::create(['name' => 'gastos-generales'])->syncRoles([$superuser, $gerente]);
+        Permission::create(['name' => 'administrar-existencia-materiales'])->syncRoles([$superuser, $gerente]);
     }
 }

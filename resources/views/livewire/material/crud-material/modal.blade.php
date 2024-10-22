@@ -43,7 +43,11 @@
                         </div>
                         <div class="form-group col-3">
                             <label>Existencia</label>
-                            <input wire:model.defer="model.existencia" disabled type="text" class="form-control" style="text-align: center" onkeypress="return event.charCode >= 46 && event.charCode <= 57"/>
+                            <input wire:model.defer="model.existencia"
+                            @cannot(['administrar-existencia-materiales'])
+                                disabled
+                            @endcannot
+                            type="text" class="form-control" style="text-align: center" onkeypress="return event.charCode >= 46 && event.charCode <= 57"/>
                             @error('model.existencia') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
@@ -64,7 +68,7 @@
                 @else
                     <button type="button" wire:click.prevent="save()" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar</button>
                 @endif
-                
+
             </div>
         </div>
         <!-- /.modal-content -->
