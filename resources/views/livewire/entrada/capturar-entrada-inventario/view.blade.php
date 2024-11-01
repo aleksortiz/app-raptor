@@ -2,8 +2,31 @@
 
 <div>
     <div class="row">
-        <div class="col-sm-12 col-md-5">
-            <h4>Inventario:  {{$this->entrada->folio_short}} - {{$this->entrada->vehiculo}}</h4>
+
+
+        @if ($this->firmar)
+
+          <div class="col-sm-12">
+              <h4>Firma de Cliente</h4>
+              <div>
+                  <div class="layer">
+                      <center>
+                        <div wire:ignore>
+
+                          <canvas id="drawingCanvas"></canvas>
+                        </div>
+                          <br>
+                          <button class="btn btn-secondary" wire:click="toggle"><i class="fa fa-arrow-left"></i> Regresar</button>
+                          <button class="btn btn-success" wire:click="aceptar"><i class="fa fa-check"></i> Aceptar</button>
+
+                      </center>
+                  </div>
+              </div>
+          </div>
+
+        @else
+          <div class="col-sm-12">
+            <h4>Inventario:  </h4>
 
             <div class="form-group">
                 <label>Descripción</label>
@@ -57,19 +80,16 @@
                 </div>
             </div>
 
-        </div>
-        <div class="col-sm-12 col-md-7">
-            <h4>Firma de Cliente</h4>
-            <div wire:ignore>
-                <div class="layer">
-                    <center>
-                        <canvas id="drawingCanvas"></canvas>
-                        <button class="btn btn-success" wire:click="aceptar"><i class="fa fa-check"></i> Aceptar</button>
-                        {{-- <button id="downloadBtn">Descargar imagen</button> --}}
-                    </center>
-                </div>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-success" wire:click="toggle"><i class="fa fa-check"></i> Terminar</button>
+                <button class="btn btn-success" wire:click="slider"><i class="fa fa-check"></i> SKUDER</button>
+              </div>
             </div>
-        </div>
+
+          </div>
+        @endif
+
     </div>
 </div>
 

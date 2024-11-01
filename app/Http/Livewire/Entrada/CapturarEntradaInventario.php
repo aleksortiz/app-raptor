@@ -15,6 +15,7 @@ use Livewire\Component;
 class CapturarEntradaInventario extends Component
 {
     public Entrada $entrada;
+    public $firmar = false;
 
     protected $rules = [
         'entrada.inventario' => 'required|string',
@@ -29,8 +30,8 @@ class CapturarEntradaInventario extends Component
         'setGas',
     ];
 
-    public function mount(Entrada $entrada){
-        $this->entrada = $entrada;
+    public function mount(){
+      $this->entrada = new Entrada();
     }
 
     public function render(){
@@ -49,10 +50,20 @@ class CapturarEntradaInventario extends Component
         ];
     }
 
+    public function toggle(){
+
+      $this->firmar = !$this->firmar;
+      $this->emit('init-canvas');
+    }
+
+    public function slider(){
+      $this->emit('init-range-slider');
+    }
+
     public function aceptar(){
-        $this->validate();
-        $this->entrada->save();
-        $this->emit('ok', 'Inventario guardado correctamente');
+        // $this->validate();
+        // $this->entrada->save();
+        // $this->emit('ok', 'Inventario guardado correctamente');
     }
 
 }
