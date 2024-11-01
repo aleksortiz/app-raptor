@@ -154,8 +154,10 @@
 
           const image = new Image();
           const image2 = new Image();
-          image.src = 'http://127.0.0.1:8000/images/inventario/foto1.png';
-          image2.src = 'http://127.0.0.1:8000/images/inventario/foto2.png';
+          // image.src = 'http://127.0.0.1:8000/images/inventario/foto1.png';
+          // image2.src = 'http://127.0.0.1:8000/images/inventario/foto2.png';
+          image.src = asset('images/inventario/foto1.png');
+          image2.src = asset('images/inventario/foto2.png');
 
           image.onload = () => {
             image2.onload = () => {
