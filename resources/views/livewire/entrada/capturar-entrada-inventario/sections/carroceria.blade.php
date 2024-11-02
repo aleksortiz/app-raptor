@@ -19,7 +19,7 @@
         <div class="d-flex align-items-center">
           <label id="lblPuertas" style="font-size: 35px;" for="puertas">Puertas</label>
           <input type="checkbox" data-target="#selectPuertas" wire:model.defer="puertas" class="ml-3 checkB">
-
+          <br>
           <div wire:ignore id="selectPuertas" class="d-none" style="margin-left: 80px;">
             <label style="font-size: 35px;" for="puertas_1">1</label>
             <input type="checkbox" id="puertas_1" wire:model.defer="puertas_1" class="ml-4 checkB-2">
