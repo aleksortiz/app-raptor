@@ -16,16 +16,22 @@ class CreateEntradaInventariosTable extends Migration
         Schema::create('entrada_inventarios', function (Blueprint $table) {
             $table->id();
             $table->string('cliente');
+            $table->string('telefono');
             $table->string('marca');
             $table->string('modelo');
-            $table->string('year');
-            $table->integer('kilometros');
-            $table->string('telefono');
+            $table->string('year')->nullable();
+            $table->integer('kilometros')->nullable();
             $table->string('color');
-            $table->string('placas');
-            $table->string('notes');
+            $table->string('placas')->nullable();
+            $table->string('notas')->nullable();
             $table->integer('gasolina');
-            $table->json('data');
+            $table->json('inventario');
+            $table->json('testigos');
+            $table->json('carroceria');
+            $table->json('mecanica');
+            $table->json('servicios_extras');
+            $table->text('firma')->nullable();
+            $table->text('diagrama')->nullable();
             $table->timestamps();
         });
     }

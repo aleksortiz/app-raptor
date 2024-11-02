@@ -31,39 +31,75 @@
     <script src="{{ asset('vendor/ion-range-slider/ion.rangeSlider.min.js') }}"></script>
     <script>
 
+        function loadEvents(){
+          $('.checkB').on('change', function(e){
+            const target = $(this).data('target');
 
-        function initRangeSlider(){
-          $("#range_gas").ionRangeSlider({
-              skin: "round",
-              postfix : ' %',
-              prettify_enabled: true,
-              min: 0,
-              max: 100,
-              from: 39,
-              onStart: function(data) {
-                  // fired then range slider is ready
-              },
-              onChange: function(data) {
-              },
-              onFinish: function(data) {
-                window.livewire.emit('setGas', data.from);
-
-              },
-              onUpdate: function(data) {
-                  // fired on changing slider with Update method
+            if(target){
+              const $target = $(target);
+              if($(this).is(':checked')){
+                $target.removeClass('d-none');
               }
+              else{
+                $target.addClass('d-none');
+              }
+            }
           });
         }
 
+        // load
+        document.addEventListener('DOMContentLoaded', function() {
+            initRangeSlider(50);
+            initCanvas();
+            $('.form-select').on('change', function(e){
+              const labelId = $(this).data('label');
+              const $label = $('#' + labelId);
+
+              if($(this).val()){
+                $label.addClass('text-success');
+              }
+              else{
+                $label.removeClass('text-success');
+              }
+
+            });
+
+            loadEvents();
+        });
+
+
         Livewire.on('init-canvas', function(target){
             initCanvas();
-            console.log('init-canvas');
         });
 
         Livewire.on('init-range-slider', function(target){
             initRangeSlider();
         });
 
+        function cleanCanvas(){
+          console.log('cleaning canvas');
+          const canvas = document.getElementById('drawingCanvas');
+          const ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          initCanvas();
+        }
+
+
+
+        function initRangeSlider(value){
+          $("#range_gas").ionRangeSlider({
+              skin: "round",
+              postfix : ' %',
+              prettify_enabled: true,
+              min: 0,
+              max: 100,
+              from: value,
+              onFinish: function(data) {
+                window.livewire.emit('setGas', data.from);
+
+              }
+          });
+        }
 
         function initCanvas(){
           const canvas = document.getElementById('drawingCanvas');
@@ -72,7 +108,7 @@
           // Ajusta el tamaño del canvas
           // canvas.width = window.innerWidth * 0.5;
           // canvas.height = window.innerHeight * 0.5;
-          canvas.height = 600;
+          canvas.height = 500;
           canvas.width = 1050;
 
           // Variables para el dibujo
@@ -154,15 +190,13 @@
 
           const image = new Image();
           const image2 = new Image();
-          // image.src = 'http://127.0.0.1:8000/images/inventario/foto1.png';
-          // image2.src = 'http://127.0.0.1:8000/images/inventario/foto2.png';
-          image.src = 'https://app.autoservicioraptor.com/images/inventario/foto1.png'
-          image2.src = 'https://app.autoservicioraptor.com/images/inventario/foto2.png'
+          image.src = "{{asset('/images/inventario/foto1.png')}}";
+          image2.src = "{{asset('/images/inventario/foto2.png')}}";
 
           image.onload = () => {
             image2.onload = () => {
               ctx.drawImage(image, 20, 20, 500, 400);
-              ctx.drawImage(image2, 520, 20, 500, 400);
+              ctx.drawImage(image2, 500, 20, 550, 400);
             };
           };
 
@@ -172,6 +206,7 @@
           // const saveBtn = document.getElementById('saveBtn');
           // saveBtn.addEventListener('click', saveCanvas);
         }
+
 
 
 
