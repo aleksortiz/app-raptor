@@ -7,10 +7,10 @@
 <body>
 
 <h2>Captura una Imagen</h2>
-<video id="video" width="640" height="480" autoplay></video>
+<video id="video" width="1280" height="720" autoplay></video>
 <button id="capture">Capturar Foto</button>
-<canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
-<img id="photo" alt="Vista previa" width="640" height="480">
+<canvas id="canvas" width="1280" height="720" style="display: none;"></canvas>
+<img id="photo" alt="Vista previa" width="1280" height="720">
 
 <!-- Formulario para enviar la imagen -->
 <form action="" method="POST" enctype="multipart/form-data">
