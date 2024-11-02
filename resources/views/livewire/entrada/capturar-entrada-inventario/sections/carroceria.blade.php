@@ -147,6 +147,9 @@
         <div class="d-flex align-items-center mt-5">
           <label id="lblFallaMecanica" style="font-size: 35px;" for="falla_mecanica">Falla Mecánica</label>
           <input data-target="#falla_mecanica_section" type="checkbox" wire:model.defer="falla_mecanica" class="ml-3 checkB">
+        </div>
+
+        <div class="d-flex align-items-center mt-2">
           <div class="d-none" id="falla_mecanica_section">
             <input type="text" wire:model.defer="falla_mecanica_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
           </div>
@@ -160,6 +163,9 @@
         <div class="d-flex align-items-center mt-5">
           <label id="lblSuspension" style="font-size: 35px;" for="suspension">Suspensión</label>
           <input data-target="#suspension_section" type="checkbox" wire:model.defer="suspension" class="ml-3 checkB">
+        </div>
+
+        <div class="d-flex align-items-center mt-2">
           <div class="d-none" id="suspension_section">
             <input type="text" wire:model.defer="suspension_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
           </div>
@@ -168,6 +174,9 @@
         <div class="d-flex align-items-center mt-5">
           <label id="lblMecanicaOtro" style="font-size: 35px;" for="mecanica_otro">Otro</label>
           <input data-target="#mecanica_otro_text_section" type="checkbox" wire:model.defer="mecanica_otro" class="ml-3 checkB">
+        </div>
+
+        <div class="d-flex align-items-center mt-2">
           <div class="d-none" id="mecanica_otro_text_section">
             <input type="text" wire:model.defer="mecanica_otro_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
           </div>
