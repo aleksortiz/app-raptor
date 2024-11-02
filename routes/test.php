@@ -51,3 +51,7 @@ Route::get('xxx', function(){
     //     'materiales' => $materiales->paginate(50),
     // ];
 });
+
+Route::get('/camara', function(){
+    return view('camara');
+});
