@@ -151,7 +151,7 @@
 
         <div class="d-flex align-items-center mt-2">
           <div class="d-none" id="falla_mecanica_section">
-            <input type="text" wire:model.defer="falla_mecanica_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
+            <input style="width: 500px;" type="text" wire:model.defer="falla_mecanica_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
           </div>
         </div>
 
@@ -167,7 +167,7 @@
 
         <div class="d-flex align-items-center mt-2">
           <div class="d-none" id="suspension_section">
-            <input type="text" wire:model.defer="suspension_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
+            <input style="width: 500px;" type="text" wire:model.defer="suspension_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
           </div>
         </div>
 
@@ -178,7 +178,7 @@
 
         <div class="d-flex align-items-center mt-2">
           <div class="d-none" id="mecanica_otro_text_section">
-            <input type="text" wire:model.defer="mecanica_otro_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
+            <input style="width: 500px;" type="text" wire:model.defer="mecanica_otro_text" class="ml-4 form-control form-control-lg" placeholder="Especificar">
           </div>
         </div>
 
