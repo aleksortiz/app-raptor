@@ -15,6 +15,7 @@ class CreateEntradaInventariosTable extends Migration
     {
         Schema::create('entrada_inventarios', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained();
             $table->string('cliente');
             $table->string('telefono');
             $table->string('marca');
@@ -31,7 +32,7 @@ class CreateEntradaInventariosTable extends Migration
             $table->json('mecanica');
             $table->json('servicios_extras');
             $table->text('firma')->nullable();
-            $table->text('diagrama')->nullable();
+            $table->mediumText('diagrama')->nullable();
             $table->timestamps();
         });
     }

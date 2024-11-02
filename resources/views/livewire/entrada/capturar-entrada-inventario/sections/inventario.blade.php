@@ -13,6 +13,7 @@
               <option value="NO TIENE">NO TIENE</option>
               <option value="NO FUNCIONA">NO FUNCIONA</option>
             </select>
+            @error('estereo') <span class="text-danger">* Seleccione</span> @enderror
           </div>
         </div>
 
@@ -25,6 +26,7 @@
               <option value="INCOMPLETOS">INCOMPLETOS (Incluir Notas)</option>
               <option value="SIN TAPETES">SIN TAPETES</option>
             </select>
+            @error('tapetes') <span class="text-danger">* Seleccione</span> @enderror
           </div>
         </div>
 
@@ -36,6 +38,7 @@
               <option value="SIN DETALLES">SIN DETALLES</option>
               <option value="TIENE DETALLE">TIENE DETALLE</option>
             </select>
+            @error('parabrisas') <span class="text-danger">* Seleccione</span> @enderror
           </div>
         </div>
 
@@ -47,6 +50,7 @@
               <option value="TIENE">TIENE GATO</option>
               <option value="NO TIENE">NO TIENE</option>
             </select>
+            @error('gato') <span class="text-danger">* Seleccione</span> @enderror
           </div>
         </div>
 
@@ -58,6 +62,7 @@
               <option value="TIENE">TIENE EXTRA</option>
               <option value="NO TIENE">NO TIENE</option>
             </select>
+            @error('extra') <span class="text-danger">* Seleccione</span> @enderror
           </div>
         </div>
 
@@ -69,6 +74,7 @@
               <option value="TIENE">TIENE HERRAMIENTAS</option>
               <option value="NO TIENE">NO TIENE</option>
             </select>
+            @error('herramientas') <span class="text-danger">* Seleccione</span> @enderror
           </div>
         </div>
 
@@ -80,6 +86,7 @@
               <option value="TIENE">TIENE CABLES</option>
               <option value="NO TIENE">NO TIENE</option>
             </select>
+            @error('cables') <span class="text-danger">* Seleccione</span> @enderror
           </div>
         </div>
 

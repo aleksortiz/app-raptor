@@ -49,7 +49,7 @@
 
         // load
         document.addEventListener('DOMContentLoaded', function() {
-            initRangeSlider(50);
+            initRangeSlider(0);
             initCanvas();
             $('.form-select').on('change', function(e){
               const labelId = $(this).data('label');
@@ -76,15 +76,18 @@
             initRangeSlider();
         });
 
+        Livewire.on('create-inventario', function(target){
+            const canvas = document.getElementById('drawingCanvas');
+            const dataUrl = canvas.toDataURL('image/png');
+            window.livewire.emit('createInventario', dataUrl);
+        });
+
         function cleanCanvas(){
-          console.log('cleaning canvas');
           const canvas = document.getElementById('drawingCanvas');
           const ctx = canvas.getContext('2d');
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           initCanvas();
         }
-
-
 
         function initRangeSlider(value){
           $("#range_gas").ionRangeSlider({
@@ -96,7 +99,6 @@
               from: value,
               onFinish: function(data) {
                 window.livewire.emit('setGas', data.from);
-
               }
           });
         }
@@ -154,10 +156,14 @@
           }
 
           function downloadCanvas() {
-              const link = document.createElement('a');
-              link.href = canvas.toDataURL('image/png');
-              link.download = 'canvas-image.png';
-              link.click();
+              // const link = document.createElement('a');
+              // link.href = canvas.toDataURL('image/png');
+              // link.download = 'canvas-image.png';
+              // link.click();
+
+              const dataUrl = canvas.toDataURL('image/png');
+              window.livewire.emit('setCanvas', dataUrl);
+
           }
 
           async function saveCanvas() {

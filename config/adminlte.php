@@ -330,6 +330,11 @@ return [
                     'can' => ['administrar-entradas'],
                 ],
                 [
+                    'text' => 'Inventarios',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/inventarios',
+                ],
+                [
                     'text' => 'Vehiculos Entregados',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/vehiculos-entregados',

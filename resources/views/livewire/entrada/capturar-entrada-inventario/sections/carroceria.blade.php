@@ -109,11 +109,11 @@
 
         <div class="d-flex align-items-center mt-2">
           <div id="selectFacia" class="d-none" style="margin-left: 20px;">
-            <label style="font-size: 35px;" for="facia_izquierda">Izquierda</label>
-            <input type="checkbox" id="facia_izquierda" wire:model.defer="facia_izquierda" class="ml-4 checkB-2">
+            <label style="font-size: 35px;" for="facia_delantera">Delantera</label>
+            <input type="checkbox" id="facia_delantera" wire:model.defer="facia_delantera" class="ml-4 checkB-2">
 
-            <label class="ml-4" style="font-size: 35px;" for="facia_derecha">Derecha</label>
-            <input type="checkbox" id="facia_derecha" wire:model.defer="facia_derecha" class="ml-4 checkB-2">
+            <label class="ml-4" style="font-size: 35px;" for="facia_trasera">Trasera</label>
+            <input type="checkbox" id="facia_trasera" wire:model.defer="facia_trasera" class="ml-4 checkB-2">
           </div>
         </div>
 
@@ -123,8 +123,11 @@
         </div>
 
         <div class="d-flex align-items-center mt-2">
-          <div class="d-none" id="carroceria_otro_section">
-            <input type="text" style="width: 500px;" wire:model.defer="carroceria_otro_text" class="form-control form-control-lg" placeholder="Especificar">
+          <div>
+            <div wire:ignore.self class="d-none" id="carroceria_otro_section">
+              <input style="width: 500px;" type="text" wire:model.defer="carroceria_otro_text" class="form-control form-control-lg" placeholder="Especificar">
+              @error('carroceria_otro_text') <span class="text-danger">* Campo obligatorio</span> @enderror
+            </div>
           </div>
         </div>
 
@@ -150,8 +153,11 @@
         </div>
 
         <div class="d-flex align-items-center mt-2">
-          <div class="d-none" id="falla_mecanica_section">
-            <input style="width: 500px;" type="text" wire:model.defer="falla_mecanica_text" class="form-control form-control-lg" placeholder="Especificar">
+          <div>
+            <div wire:ignore.self class="d-none" id="falla_mecanica_section">
+              <input style="width: 500px;" type="text" wire:model.defer="falla_mecanica_text" class="form-control form-control-lg" placeholder="Especificar">
+              @error('falla_mecanica_text') <span class="text-danger">* Campo obligatorio</span> @enderror
+            </div>
           </div>
         </div>
 
@@ -166,8 +172,11 @@
         </div>
 
         <div class="d-flex align-items-center mt-2">
-          <div class="d-none" id="suspension_section">
-            <input style="width: 500px;" type="text" wire:model.defer="suspension_text" class="form-control form-control-lg" placeholder="Especificar">
+          <div>
+            <div wire:ignore.self class="d-none" id="suspension_section">
+              <input style="width: 500px;" type="text" wire:model.defer="suspension_text" class="form-control form-control-lg" placeholder="Especificar">
+              @error('suspension_text') <span class="text-danger">* Campo obligatorio</span> @enderror
+            </div>
           </div>
         </div>
 
@@ -177,8 +186,11 @@
         </div>
 
         <div class="d-flex align-items-center mt-2">
-          <div class="d-none" id="mecanica_otro_text_section">
-            <input style="width: 500px;" type="text" wire:model.defer="mecanica_otro_text" class="form-control form-control-lg" placeholder="Especificar">
+          <div>
+            <div wire:ignore.self class="d-none" id="mecanica_otro_text_section">
+              <input style="width: 500px;" type="text" wire:model.defer="mecanica_otro_text" class="form-control form-control-lg" placeholder="Especificar">
+              @error('mecanica_otro_text') <span class="text-danger">* Campo obligatorio</span> @enderror
+            </div>
           </div>
         </div>
 
