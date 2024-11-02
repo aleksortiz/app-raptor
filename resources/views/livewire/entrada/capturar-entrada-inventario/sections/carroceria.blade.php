@@ -16,11 +16,13 @@
     <div class="col">
       <h1>Carroceria:</h1>
       <div>
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center mt-5">
           <label id="lblPuertas" style="font-size: 35px;" for="puertas">Puertas</label>
           <input type="checkbox" data-target="#selectPuertas" wire:model.defer="puertas" class="ml-3 checkB">
-          <br>
-          <div wire:ignore id="selectPuertas" class="d-none" style="margin-left: 80px;">
+        </div>
+
+        <div class="d-flex align-item-center mt-2">
+          <div id="selectPuertas" class="d-none mt-3" style="margin-left: 10px;">
             <label style="font-size: 35px;" for="puertas_1">1</label>
             <input type="checkbox" id="puertas_1" wire:model.defer="puertas_1" class="ml-4 checkB-2">
 
@@ -37,13 +39,15 @@
             <input type="checkbox" id="puertas_5" wire:model.defer="puertas_5" class="ml-4 checkB-2">
           </div>
 
-
         </div>
 
         <div class="d-flex align-items-center mt-5">
           <label id="lblCostados" style="font-size: 35px;" for="costados">Costados</label>
           <input type="checkbox" data-target="#selectCostados" wire:model.defer="costados" class="ml-3 checkB">
-          <div id="selectCostados" class="d-none" style="margin-left: 80px;">
+        </div>
+
+        <div class="d-flex align-items-center mt-2">
+          <div id="selectCostados" class="d-none" style="margin-left: 20px;">
             <label style="font-size: 35px;" for="costados_izquierdo">Izquierdo</label>
             <input type="checkbox" id="costados_izquierdo" wire:model.defer="costados_izquierdo" class="ml-4 checkB-2">
 
@@ -85,7 +89,10 @@
         <div class="d-flex align-items-center mt-5">
           <label id="lblFender" style="font-size: 35px;" for="fender">Fender</label>
           <input data-target="#selectFender" type="checkbox" wire:model.defer="fender" class="ml-3 checkB">
-          <div id="selectFender" class="d-none" style="margin-left: 80px;">
+        </div>
+
+        <div class="d-flex align-items-center mt-2">
+          <div id="selectFender" class="d-none" style="margin-left: 20px;">
             <label style="font-size: 35px;" for="fender_izquierdo">Izquierdo</label>
             <input type="checkbox" id="fender_izquierdo" wire:model.defer="fender_izquierdo" class="ml-4 checkB-2">
 
@@ -97,7 +104,11 @@
         <div class="d-flex align-items-center mt-5">
           <label id="lblFacia" style="font-size: 35px;" for="facia">Facia</label>
           <input data-target="#selectFacia" type="checkbox" wire:model.defer="facia" class="ml-3 checkB">
-          <div id="selectFacia" class="d-none" style="margin-left: 80px;">
+
+        </div>
+
+        <div class="d-flex align-items-center mt-2">
+          <div id="selectFacia" class="d-none" style="margin-left: 20px;">
             <label style="font-size: 35px;" for="facia_izquierda">Izquierda</label>
             <input type="checkbox" id="facia_izquierda" wire:model.defer="facia_izquierda" class="ml-4 checkB-2">
 
@@ -108,7 +119,13 @@
 
         <div class="d-flex align-items-center mt-5">
           <label id="lblCarroceriaOtro" style="font-size: 35px;" for="carroceria_otro">Otro</label>
-          <input type="checkbox" wire:model.defer="carroceria_otro" class="ml-3 checkB">
+          <input data-target="#carroceria_otro_section" type="checkbox" wire:model.defer="carroceria_otro" class="ml-3 checkB">
+        </div>
+
+        <div class="d-flex align-items-center mt-2">
+          <div class="d-none" id="carroceria_otro_section">
+            <input type="text" style="width: 500px;" wire:model.defer="carroceria_otro_text" class="form-control form-control-lg" placeholder="Especificar">
+          </div>
         </div>
 
       </div>
