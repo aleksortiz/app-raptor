@@ -7,42 +7,32 @@
       <div class="col-sm-12 p-5">
 
         <div class="row">
-            <div class="col-7">
-                <div class="form-group">
-                    <label style="font-size: 25px;">Cliente</label>
-                    <input type="text" wire:model.defer="cliente" class="form-control form-control-lg" placeholder="Cliente">
-                    @error('cliente') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
             <div class="col-5">
                 <div class="form-group">
+                    <label style="font-size: 25px;">Cliente</label>
+                    <h4>{{$this->cita->cliente->nombre}}</h4>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="form-group">
+                    <label style="font-size: 25px;">Vehículo</label>
+                    <h4>{{$this->cita->vehiculo}}</h4>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="form-group">
                     <label style="font-size: 25px;">Teléfono</label>
-                    <input type="text" wire:model.defer="telefono" class="form-control form-control-lg" placeholder="Teléfono">
-                    @error('telefono') <span class="text-danger">{{ $message }}</span> @enderror
+                    <h4>{{$this->cita->cliente->telefono}}</h4>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-3">
-                <div class="form-group">
-                    <label style="font-size: 25px;">Marca</label>
-                    <input type="text" wire:model.defer="marca" class="form-control form-control-lg" placeholder="Marca">
-                    @error('marca') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="form-group">
-                    <label style="font-size: 25px;">Modelo</label>
-                    <input type="text" wire:model.defer="modelo" class="form-control form-control-lg" placeholder="Modelo">
-                    @error('modelo') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
 
             <div class="col-3">
                 <div class="form-group">
                     <label style="font-size: 25px;">Año</label>
-                    <input type="text" wire:model.defer="year" class="form-control form-control-lg" maxlength="4" placeholder="Año">
+                    <input type="text" wire:model.defer="year" class="form-control form-control-lg" maxlength="4" placeholder="Año" onkeypress="return event.charCode >= 46 && event.charCode <= 57">
                     @error('year') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
             </div>
@@ -55,28 +45,27 @@
                 </div>
             </div>
 
-
-
-        </div>
-
-        <div class="row">
-
-          <div class="col-3">
+            <div class="col-3">
               <div class="form-group">
                   <label style="font-size: 25px;">Color</label>
-                  <input type="text" wire:model.defer="color" class="form-control form-control-lg" placeholder="Color">
+                  <input type="text" style="text-transform: uppercase;" wire:model.defer="color" class="form-control form-control-lg" placeholder="Color">
                   @error('color') <span class="text-danger">{{ $message }}</span> @enderror
               </div>
           </div>
 
-            <div class="col-3">
-                <div class="form-group">
-                    <label style="font-size: 25px;">Placas</label>
-                    <input type="text" wire:model.defer="placas" class="form-control form-control-lg" placeholder="Placas">
-                    @error('placas') <span class="text-danger">{{ $message }}</span> @enderror
-                </div>
-            </div>
+          <div class="col-3">
+              <div class="form-group">
+                  <label style="font-size: 25px;">Placas</label>
+                  <input type="text" style="text-transform: uppercase;" wire:model.defer="placas" class="form-control form-control-lg" placeholder="Placas">
+                  @error('placas') <span class="text-danger">{{ $message }}</span> @enderror
+              </div>
+          </div>
+
+
+
         </div>
+
+
 
         <div class="row">
             <div class="col">

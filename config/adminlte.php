@@ -330,7 +330,12 @@ return [
                     'can' => ['administrar-entradas'],
                 ],
                 [
-                    'text' => 'Inventarios',
+                    'text' => 'Citas para reparación',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/citas-reparacion',
+                ],
+                [
+                    'text' => 'Inventarios de Ingreso',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/inventarios',
                 ],

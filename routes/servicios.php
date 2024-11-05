@@ -42,10 +42,6 @@ Route::middleware(['auth'])->group(function ()
     //     return view('livewire.entrada.capturar-entrada-inventario.index', compact('entrada'));
     // });
 
-    Route::get('/registro-inventario', function(){
-      return view('livewire.entrada.capturar-entrada-inventario.index');
-    });
-
     Route::get('/servicios/{entrada}/subir-fotos', function(Entrada $entrada){
         return view('livewire.entrada.subir-fotos.index', compact('entrada'));
     });
@@ -72,7 +68,19 @@ Route::middleware(['auth'])->group(function ()
       return view('livewire.entrada-inventario.catalogo-inventarios.index');
     });
 
+    Route::get('/registro-inventario', function(){
+      return view('livewire.entrada.capturar-entrada-inventario.index');
+    });
+
     Route::get('/inventarios/{inventario}/pdf', [PdfController::class, 'inventario_pdf']);
+
+    Route::get('/registrar-cita-reparacion', function(){
+        return view('livewire.entrada.crear-cita-reparacion.index');
+    });
+
+    Route::get('/citas-reparacion', function(){
+        return view('livewire.entrada.catalogo-citas-reparacion.index');
+    });
 
 
 

@@ -33,6 +33,7 @@ class CreateEntradaInventariosTable extends Migration
             $table->json('servicios_extras');
             $table->text('firma')->nullable();
             $table->mediumText('diagrama')->nullable();
+            $table->foreignId('entrada_id')->nullable()->constrained('entradas');
             $table->timestamps();
         });
     }

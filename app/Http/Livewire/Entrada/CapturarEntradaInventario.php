@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Entrada;
 
+use App\Models\CitaReparacion;
 use App\Models\Entrada;
 use App\Models\EntradaInventario;
 use App\Models\Fabricante;
@@ -12,10 +13,9 @@ class CapturarEntradaInventario extends Component
 {
     public $firmar = false;
 
-    public $cliente;
-    public $telefono;
-    public $marca;
-    public $modelo;
+    public $cita;
+    public $folioCita;
+
     public $year;
     public $kilometros;
     public $color;
@@ -65,12 +65,11 @@ class CapturarEntradaInventario extends Component
     public $suspension, $suspension_text;
     public $mecanica_otro, $mecanica_otro_text;
 
+    protected $queryString = [
+        'folioCita',
+    ];
 
     protected $rules = [
-        'cliente' => 'required|string|max:255',
-        'telefono' => 'required|string|max:255',
-        'marca' => 'required|string|max:255',
-        'modelo' => 'required|string|max:255',
         'year' => 'nullable|numeric|digits:4',
         'kilometros' => 'nullable|numeric',
         'color' => 'required|string|max:255',
@@ -105,6 +104,13 @@ class CapturarEntradaInventario extends Component
         'createInventario',
     ];
 
+    public function mount(){
+      $this->cita = CitaReparacion::find($this->folioCita);
+      if(!$this->cita || $this->cita->inventario_id){
+        abort(404, 'Cita no encontrada');
+      }
+    }
+
     public function render(){
         return view('livewire.entrada.capturar-entrada-inventario.view', $this->getRenderData());
     }
@@ -136,24 +142,21 @@ class CapturarEntradaInventario extends Component
         $this->validate();
 
         $this->emit('create-inventario');
-        // $this->emit('ok');
-
-
     }
 
     public function createInventario($b64){
         $diagramaB64 = $b64;
 
-        EntradaInventario::create([
+        $inventario = EntradaInventario::create([
           'user_id' => Auth::id(),
-          'cliente' => $this->cliente,
-          'telefono' => $this->telefono,
-          'marca' => $this->marca,
-          'modelo' => $this->modelo,
+          'cliente' => $this->cita->cliente->nombre,
+          'telefono' => $this->cita->cliente->telefono,
+          'marca' => $this->cita->marca,
+          'modelo' => $this->cita->modelo,
           'year' => $this->year,
           'kilometros' => $this->kilometros,
-          'color' => $this->color,
-          'placas' => $this->placas,
+          'color' => trim(strtoupper($this->color)),
+          'placas' => trim(strtoupper($this->placas)),
           'notas' => $this->notas,
           'gasolina' => $this->gasolina,
           'inventario' => json_encode([
@@ -217,9 +220,27 @@ class CapturarEntradaInventario extends Component
 
         ]);
 
-        // $this->reset();
+        $this->cita->inventario_id = $inventario->id;
+        $this->cita->save();
+
+        $fabricante = Fabricante::where('nombre', $this->cita->marca)->first();
+
+        $entrada = Entrada::create([
+          'user_id' => Auth::id(),
+          'sucursal_id' => 1,
+          'aseguradora_id' => 1,
+          'fabricante_id' => $fabricante->id,
+          'cliente_id' => $this->cita->cliente_id,
+          'origen' => 'ASEGURADORA',
+          'modelo' => $this->cita->modelo,
+          'orden' => $this->cita->no_reporte,
+          'rfc' => $this->cita->cliente->rfc,
+          'razon_social' => $this->cita->cliente->razon_social,
+          'domicilio_fiscal' => $this->cita->cliente->codigo_postal,
+        ]);
+
         $this->emit('ok','Se ha registrado Inventario');
-        return redirect()->to('/inventarios');
+        return redirect()->to("/servicios/$entrada->id?activeTab=3");
     }
 
 }

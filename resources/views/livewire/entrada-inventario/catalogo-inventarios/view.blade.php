@@ -51,7 +51,7 @@
 
             </div>
 
-            <a href="/registro-inventario" class="btn btn-success btn-xs m-3"><i class="fa fa-plus"></i> Registrar Inventario</a>
+            {{-- <a href="/registro-inventario" class="btn btn-success btn-xs m-3"><i class="fa fa-plus"></i> Registrar Inventario</a> --}}
             <table class="table table-hover">
                 <thead>
                     <tr>
