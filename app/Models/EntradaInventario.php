@@ -28,6 +28,7 @@ class EntradaInventario extends BaseModel
         'servicios_extras',
         'firma',
         'diagrama',
+        'entrada_id',
     ];
 
     public function user(){
@@ -58,6 +59,10 @@ class EntradaInventario extends BaseModel
     public function getVehiculoAttribute(){
         $veh = "{$this->marca} {$this->modelo} {$this->year} {$this->color}";
         return trim($veh);
+    }
+
+    public function entrada(){
+        return $this->belongsTo(Entrada::class);
     }
 
 

@@ -72,9 +72,13 @@
                     @endif
                 </div> --}}
 
-                <br><br><br>
-                <h1>*INVENTARIO: Seccion Pendiente*</h1>
 
+                @if ($inventario)
+                  <h3>INVENTARIO: </h3>
+                  <a href="/inventarios/{{$inventario->id}}/pdf" target="_blank" class="btn btn-secondary"><i class="fa fa-file-alt"></i> Ver Inventario</a>
+                @else
+                  <h3>INVENTARIO: ***Pendiente***</h3>
+                @endif
 
                 {{-- <div class="row">
 

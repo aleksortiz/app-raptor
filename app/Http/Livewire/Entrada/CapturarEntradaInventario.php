@@ -239,8 +239,11 @@ class CapturarEntradaInventario extends Component
           'domicilio_fiscal' => $this->cita->cliente->codigo_postal,
         ]);
 
+        $inventario->entrada_id = $entrada->id;
+        $inventario->save();
+
         $this->emit('ok','Se ha registrado Inventario');
-        return redirect()->to("/servicios/$entrada->id?activeTab=3");
+        return redirect()->to("/inventarios/$inventario->id/tomar-fotos");
     }
 
 }

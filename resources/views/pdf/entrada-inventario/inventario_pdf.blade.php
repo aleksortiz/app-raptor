@@ -111,7 +111,7 @@
     </tbody>
   </table>
 
-  <table style="width: 100%">
+  {{-- <table style="width: 100%">
     <tbody>
       <tr>
         <td style="width: 50%; vertical-align: top">
@@ -232,7 +232,7 @@
         </td>
       </tr>
     </tbody>
-  </table>
+  </table> --}}
 
 
 
@@ -246,7 +246,8 @@
   @endif
 
   <center>
-    <h4 style="margin-top: 20px;">_____________________________________<br>{{$inventario->cliente}}</h4>
+    <img style="margin: 0px;" src="{{$inventario->firma}}" width="160" height="100" />
+    <h4 style="margin: 0px;">_____________________________________<br>{{$inventario->cliente}}</h4>
   </center>
 
 

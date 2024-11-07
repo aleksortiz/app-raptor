@@ -1,9 +1,9 @@
 <div class="card-body p-2">
 
     <div wire:loading.remove>
-        <label class="btn btn-sm btn-warning m-1 p-2">
+        <label class="btn btn-lg btn-warning m-1 p-2">
             <i class="fa fa-camera"></i>
-            Subir Foto
+            Subir Fotos
             <input wire:model="image" accept="image/*" style="display: none;" type="file" name="iptImage">
         </label>
     </div>
@@ -20,10 +20,10 @@
             <div class="col-md-2 col-sm-6 m-2">
                 <center>
                 <a href="{{$location_url}}/{{$item->url}}" data-toggle="lightbox" data-title="{{$item->fecha_creacion}}" data-gallery="gallery">
-                    <img style="height: 140px; width: 210px; object-fit:cover" src="{{$location_url}}/{{$item->url}}" class="img-fluid mb-2" alt="image"  />
+                    <img style="height: 210; width: 315px; object-fit:cover" src="{{$location_url}}/{{$item->url}}" class="img-fluid mb-2" alt="image"  />
                 </a><br>
-                <button onclick="destroy({{$item->id}}, 'Foto', 'removePhoto')" class="btn btn-xs btn-danger"><i class="fa fa-trash-alt"></i></button>
-                <button wire:click="downloadPhoto({{$item->id}})" class="btn btn-xs btn-default"><i class="fa fa-download"></i> Descarga</button>
+                <button onclick="destroy({{$item->id}}, 'Foto', 'removePhoto')" class="btn btn-lg btn-danger"><i class="fa fa-times"></i></button>
+                {{-- <button wire:click="downloadPhoto({{$item->id}})" class="btn btn-xs btn-default"><i class="fa fa-download"></i> Descarga</button> --}}
                 </center>
             </div>
         @endforeach

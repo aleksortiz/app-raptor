@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PdfController;
 use App\Models\Entrada;
+use App\Models\EntradaInventario;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -73,6 +74,9 @@ Route::middleware(['auth'])->group(function ()
     });
 
     Route::get('/inventarios/{inventario}/pdf', [PdfController::class, 'inventario_pdf']);
+    Route::get('/inventarios/{inventario}/tomar-fotos', function(EntradaInventario $inventario){
+        return view('livewire.entrada-inventario.tomar-fotos-inventario.index', compact('inventario'));
+    });
 
     Route::get('/registrar-cita-reparacion', function(){
         return view('livewire.entrada.crear-cita-reparacion.index');

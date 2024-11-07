@@ -6,6 +6,7 @@ use App\Http\Traits\PhotoTrait;
 use App\Models\Costo;
 use App\Models\Entrada;
 use App\Models\EntradaGasto;
+use App\Models\EntradaInventario;
 use App\Models\EntradaMaterial;
 use App\Models\Foto;
 use App\Models\Material;
@@ -44,6 +45,8 @@ class VerEntrada extends Component
     public $gastoMonto;
 
     public $lastUrl;
+
+    public $inventario;
 
     public $materialManual = [
         'descripcion' => null,
@@ -121,6 +124,7 @@ class VerEntrada extends Component
     {
         $this->lastUrl = url()->previous();
         $this->entrada = $entrada;
+        $this->inventario = EntradaInventario::where('entrada_id', $entrada->id)->first();
 
     }
 
