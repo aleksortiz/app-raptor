@@ -77,7 +77,8 @@
                   <h3>INVENTARIO: </h3>
                   <a href="/inventarios/{{$inventario->id}}/pdf" target="_blank" class="btn btn-secondary"><i class="fa fa-file-alt"></i> Ver Inventario</a>
                 @else
-                  <h3>INVENTARIO: ***Pendiente***</h3>
+                  <h3>INVENTARIO:</h3>
+                  <a href="/registro-inventario?entradaId={{$this->entrada->id}}" class="btn btn-secondary"><i class="fa fa-plus"></i> Crear Inventario</a>
                 @endif
 
                 {{-- <div class="row">

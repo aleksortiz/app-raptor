@@ -10,19 +10,19 @@
             <div class="col-5">
                 <div class="form-group">
                     <label style="font-size: 25px;">Cliente</label>
-                    <h4>{{$this->cita->cliente->nombre}}</h4>
+                    <h4>{{$this->cliente?->nombre}}</h4>
                 </div>
             </div>
             <div class="col-4">
                 <div class="form-group">
                     <label style="font-size: 25px;">Vehículo</label>
-                    <h4>{{$this->cita->vehiculo}}</h4>
+                    <h4>{{$this->vehiculo}}</h4>
                 </div>
             </div>
             <div class="col-3">
                 <div class="form-group">
                     <label style="font-size: 25px;">Teléfono</label>
-                    <h4>{{$this->cita->cliente->telefono}}</h4>
+                    <h4>{{$this->cliente?->telefono}}</h4>
                 </div>
             </div>
         </div>

@@ -15,6 +15,10 @@ class CapturarEntradaInventario extends Component
 
     public $cita;
     public $folioCita;
+    public $entradaId;
+    public $entrada;
+    public $cliente;
+    public $vehiculo;
 
     public $year;
     public $kilometros;
@@ -67,6 +71,7 @@ class CapturarEntradaInventario extends Component
 
     protected $queryString = [
         'folioCita',
+        'entradaId'
     ];
 
     protected $rules = [
@@ -105,7 +110,26 @@ class CapturarEntradaInventario extends Component
     ];
 
     public function mount(){
+      $this->entrada = Entrada::find($this->entradaId);
+      if($this->entrada){
+        $this->cita = new CitaReparacion([
+          'cliente_id' => $this->entrada->cliente_id,
+          'marca' => $this->entrada->fabricante->nombre,
+          'modelo' => $this->entrada->modelo,
+          'no_reporte' => $this->entrada->orden,
+          'cliente_id' => $this->entrada->cliente_id,
+          'cita' => now(),
+        ]);
+        $this->cliente = $this->entrada->cliente;
+        $this->vehiculo = $this->entrada->vehiculo;
+        return;
+      }
+      $this->entradaId = null;
+      $this->entrada = null;
+
       $this->cita = CitaReparacion::find($this->folioCita);
+      $this->cliente = $this->cita->cliente;
+      $this->vehiculo = $this->cita->vehiculo;
       if(!$this->cita || $this->cita->inventario_id){
         abort(404, 'Cita no encontrada');
       }
@@ -149,8 +173,8 @@ class CapturarEntradaInventario extends Component
 
         $inventario = EntradaInventario::create([
           'user_id' => Auth::id(),
-          'cliente' => $this->cita->cliente->nombre,
-          'telefono' => $this->cita->cliente->telefono,
+          'cliente' => $this->cliente->nombre,
+          'telefono' => $this->cliente->telefono,
           'marca' => $this->cita->marca,
           'modelo' => $this->cita->modelo,
           'year' => $this->year,
@@ -221,25 +245,32 @@ class CapturarEntradaInventario extends Component
         ]);
 
         $this->cita->inventario_id = $inventario->id;
+        if($this->entrada){
+          $this->cita->cliente_id = $this->cliente->id;
+        }
         $this->cita->save();
 
         $fabricante = Fabricante::where('nombre', $this->cita->marca)->first();
 
-        $entrada = Entrada::create([
-          'user_id' => Auth::id(),
-          'sucursal_id' => 1,
-          'aseguradora_id' => 1,
-          'fabricante_id' => $fabricante->id,
-          'cliente_id' => $this->cita->cliente_id,
-          'origen' => 'ASEGURADORA',
-          'modelo' => $this->cita->modelo,
-          'orden' => $this->cita->no_reporte,
-          'rfc' => $this->cita->cliente->rfc,
-          'razon_social' => $this->cita->cliente->razon_social,
-          'domicilio_fiscal' => $this->cita->cliente->codigo_postal,
-        ]);
+        if(!$this->entrada){
+          $this->entrada = Entrada::create([
+            'user_id' => Auth::id(),
+            'sucursal_id' => 1,
+            'aseguradora_id' => 1,
+            'fabricante_id' => $fabricante->id,
+            'cliente_id' => $this->cita->cliente_id,
+            'origen' => 'ASEGURADORA',
+            'modelo' => $this->cita->modelo,
+            'orden' => $this->cita->no_reporte,
+            'rfc' => $this->cita->cliente->rfc,
+            'razon_social' => $this->cita->cliente->razon_social,
+            'domicilio_fiscal' => $this->cita->cliente->codigo_postal,
+          ]);
+        }
 
-        $inventario->entrada_id = $entrada->id;
+
+
+        $inventario->entrada_id = $this->entrada->id;
         $inventario->save();
 
         $this->emit('ok','Se ha registrado Inventario');
