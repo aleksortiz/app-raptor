@@ -117,7 +117,7 @@ class Entrada extends BaseModel
     {
 
         $week = str_pad(Carbon::today()->weekOfYear, 2, '0', STR_PAD_LEFT);
-        $year = Carbon::today()->format('y');
+        $year = Carbon::today()->endOfWeek()->format('y');
 
         $consecutivo = Entrada::whereBetween('created_at', [
             Carbon::today()->startOfWeek()->toDateTimeString(),
