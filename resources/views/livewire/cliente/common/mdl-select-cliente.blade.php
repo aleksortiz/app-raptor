@@ -125,12 +125,12 @@
                         </thead>
                         <tbody>
                             @foreach ($clientes as $item)
-                            <tr>
-                                <td>{{$item->id_paddy}}</td>
-                                <td>{{$item->nombre}}</td>
-                                <td>{{$item->direccion}}</td>
-                                <td><button wire:click="select({{$item->id}})" class="btn btn-xs btn-secondary"><i class="fa fa-check"></i> Seleccionar</button></td>
-                            </tr>
+                              <tr>
+                                  <td>{{$item->id_paddy}}</td>
+                                  <td>{{$item->nombre}}</td>
+                                  <td>{{$item->direccion}}</td>
+                                  <td><button wire:click="select({{$item->id}})" class="btn btn-xs btn-secondary"><i class="fa fa-check"></i> Seleccionar</button></td>
+                              </tr>
                             @endforeach
                         </tbody>
                     </table>

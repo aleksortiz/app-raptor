@@ -28,7 +28,7 @@ class CatalogoPagosProveedor extends Component
     ];
 
     public function mount(){
-        $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->year;
+        $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->endOfWeek()->year;
         $this->weekStart = $this->weekStart ? $this->weekStart : Carbon::today()->weekOfYear;
         $this->year = $this->year ? $this->year : $this->maxYear;
     }

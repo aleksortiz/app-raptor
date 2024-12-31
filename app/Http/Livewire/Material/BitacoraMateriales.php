@@ -32,7 +32,7 @@ class BitacoraMateriales extends Component
     {
         $this->weekStart = $this->weekStart ? $this->weekStart : Carbon::today()->weekOfYear;
         $this->weekEnd = $this->weekEnd ? $this->weekEnd : Carbon::today()->weekOfYear;
-        $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->year;
+        $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->endOfWeek()->year;
         $this->year = $this->year ? $this->year : $this->maxYear;
     }
 
