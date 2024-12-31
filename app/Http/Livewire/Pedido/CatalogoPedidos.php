@@ -36,12 +36,12 @@ class CatalogoPedidos extends LivewireBaseCrudController
     protected $rules = [
         'selectedPedido.pagado' => 'required|date',
     ];
-    
+
     public function mount(){
         Parent::mount();
         $this->weekStart = $this->weekStart ? $this->weekStart : Carbon::today()->weekOfYear;
         $this->weekEnd = $this->weekEnd ? $this->weekEnd : Carbon::today()->weekOfYear;
-        $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->year;
+        $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->endOfWeek()->year;
         $this->year = $this->year ? $this->year : $this->maxYear;
     }
 
@@ -146,7 +146,7 @@ class CatalogoPedidos extends LivewireBaseCrudController
         $this->validate([
             'providerIdCombo' => 'numeric|min:1',
         ]);
-        
+
         Pedido::where('id', $this->selectedPedido->id)->update(['proveedor_id' => $this->providerIdCombo]);
         $this->emit('ok', 'Proveedor actualizado');
         $this->emit('closeModal', '#mdlProviders');

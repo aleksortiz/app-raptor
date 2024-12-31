@@ -113,7 +113,7 @@
                     </div>
                     <div class="m-2">
                         <button wire:click="$set('createMode', true)" class="btn btn-xs btn-primary"><i class="fa fa-plus"></i> Crear Cliente</button>
-                    </div>         
+                    </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>
@@ -130,9 +130,9 @@
                                 <td>{{$item->nombre}}</td>
                                 <td>{{$item->direccion}}</td>
                                 <td><button wire:click="select({{$item->id}})" class="btn btn-xs btn-secondary"><i class="fa fa-check"></i> Seleccionar</button></td>
-                            </tr>    
+                            </tr>
                             @endforeach
-                            
+
                         </tbody>
                     </table>
                 @endif
