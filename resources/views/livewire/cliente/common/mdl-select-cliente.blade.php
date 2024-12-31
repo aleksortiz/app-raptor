@@ -132,7 +132,6 @@
                                 <td><button wire:click="select({{$item->id}})" class="btn btn-xs btn-secondary"><i class="fa fa-check"></i> Seleccionar</button></td>
                             </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 @endif
