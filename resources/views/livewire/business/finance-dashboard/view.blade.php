@@ -132,19 +132,7 @@
         </div>
 
         <div class="row">
-          <div class="col">
-            <a style="color: inherit" href="/materiales/pedidos?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
-                <div class="info-box" style="cursor: pointer;">
-                    <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Pedidos a Proveedor: </b></span>
-                        <span class="text-lg info-box-number">@money($this->totalPedidos)</span>
-                    </div>
-
-                </div>
-            </a>
-          </div>
 
           <div class="col">
             <a style="color: inherit" href="/materiales/bitacora?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
@@ -192,14 +180,42 @@
         </div>
 
         <div class="row">
-          <div class="col-3">
+          <div class="col-4">
+            <a style="color: inherit" href="/materiales/pedidos?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+                <div class="info-box" style="cursor: pointer;">
+                    <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text"><b>Pedidos a Proveedor: </b></span>
+                        <span class="text-lg info-box-number">@money($this->totalPedidos)</span>
+                    </div>
+
+                </div>
+            </a>
+          </div>
+
+          <div class="col-4">
             <a style="color: inherit" href="/materiales/pedidos?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
               <div class="info-box" style="cursor: pointer;">
-                  <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-truck"></i></span>
+                  <span class="info-box-icon bg-success elevation-1"><i class="fas fa-truck"></i></span>
 
                   <div class="info-box-content">
                       <span class="info-box-text"><b>Pagos a Proveedor: </b></span>
                       <span class="text-lg info-box-number">@money($this->totalPagosProveedores)</span>
+                  </div>
+
+              </div>
+            </a>
+          </div>
+
+          <div class="col-4">
+            <a style="color: inherit" href="/materiales/pedidos?keyWord=&year={{$this->year}}&weekStart={{$this->weekStart}}&weekEnd={{$this->weekEnd}}" target="_blank" >
+              <div class="info-box" style="cursor: pointer;">
+                  <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-truck"></i></span>
+
+                  <div class="info-box-content">
+                      <span class="info-box-text"><b>Saldo Pendiente Proveedores: </b></span>
+                      <span class="text-lg info-box-number">@money($this->totalPendienteProveedores)</span>
                   </div>
 
               </div>

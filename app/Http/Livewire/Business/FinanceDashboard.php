@@ -157,6 +157,10 @@ class FinanceDashboard extends Component
         return collect($pedidos)->sum('total');
     }
 
+    public function getTotalPendienteProveedoresProperty(){
+        return $this->total_pedidos - $this->total_pagos_proveedores;
+    }
+
     public function getTotalGastosProperty(){
         // return $this->total_sueldos + $this->total_gastos_fijos + $this->totalPagosProveedores;
         return $this->total_sueldos_administrativos
