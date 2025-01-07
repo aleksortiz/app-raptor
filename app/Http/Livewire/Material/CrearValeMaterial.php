@@ -128,8 +128,9 @@ class CrearValeMaterial extends Component
 
 
       //TODO: REFRESH QUANTITY OF MATERIAL MODAL
+
+      $this->emit('print', "vale_material#{$vale->id}");
       $this->limpiar();
-      $this->emit('redirect', "/materiales/vales/$vale->id/pdf");
       $this->emit('ok', 'Se ha creado vale de material');
     }
 }
