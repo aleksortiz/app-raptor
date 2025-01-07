@@ -15,7 +15,7 @@ class ValeMaterialConceptoResource extends JsonResource
           'material' => $this->material,
           'cantidad' => $this->cantidad,
           'vehiculo' => $this->entrada->vehiculo,
-
+          'folio' => $this->entrada->folio_short,
         ];
     }
 }
