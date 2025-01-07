@@ -46,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
 
             $rutas = [
                 'api-email.php',
+                'api-tickets.php',
                 'aos.php',
                 'web.php',
                 'users.php',
