@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function(){
+
     Livewire.on('closeModal', function(target = '.modal'){
       $(target).modal('hide');
     });
@@ -143,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function(){
       .then();
     });
 
-    
+
     Livewire.on('post-complemento', function(data, token, successAction){
       Swal.fire({
         title: data['title'],
@@ -248,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function(){
         }
       })
     });
-    
+
     Livewire.on('confirm', function(text, title, emit_confirm, id){
       new Swal({
         title: title,

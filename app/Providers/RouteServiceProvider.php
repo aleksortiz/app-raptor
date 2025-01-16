@@ -57,7 +57,7 @@ class RouteServiceProvider extends ServiceProvider
                 'materiales.php',
                 'catalogos.php',
                 'servicios.php',
-                'evaluaciones.php',
+                'valuaciones.php',
                 'business.php',
                 'flotillas.php',
                 'refacciones.php',

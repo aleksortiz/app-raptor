@@ -271,11 +271,22 @@ return [
             'icon' => 'fas fa-fw fa-home',
             'route' => 'home'
         ],
-        // [
-        //     'text' => 'Evaluaciones',
-        //     'icon' => 'fas fa-calendar-check',
-        //     'url' => '/evaluaciones'
-        // ],
+        [
+            'text' => 'Valuaciones',
+            'icon' => 'fas fa-fw fa-file-alt',
+            'submenu' => [
+              [
+                'text' => 'Todas las valuaciones',
+                'icon'   => 'fas fa-fw fa-chevron-right',
+                'url' => '/valuaciones',
+              ],
+              [
+                'text' => 'Calendario de valuaciones',
+                'icon'   => 'fas fa-fw fa-chevron-right',
+                'url' => '/valuaciones/calendario-valuaciones',
+              ]
+            ]
+        ],
         [
             'text' => 'Negocio',
             'icon' => 'fas fa-fw fa-building',
