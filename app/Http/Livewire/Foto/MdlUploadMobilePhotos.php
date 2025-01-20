@@ -44,7 +44,7 @@ class MdlUploadMobilePhotos extends Component
             'model_id' => $this->model_id,
             'model_type' => $this->model_type,
             'storage_path' => $this->storage_path,
-            'exp' => time() + 60 // 1 minute
+            'exp' => time() + 60 * 60 // 1 hour
         ];
 
         $jwt = JWT::encode($payload, $key, 'HS256');

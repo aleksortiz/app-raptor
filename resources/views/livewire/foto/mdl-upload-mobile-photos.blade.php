@@ -8,7 +8,6 @@
                 </button>
             </div>
             <div class="modal-body">
-                {{-- <textarea wire:model="token" id="qrcode" style="width: 100%; height: 100px;"></textarea> --}}
 
                 @php
                     $valor = QrCode::size(300)->generate($this->qrString);
@@ -17,7 +16,7 @@
                     <img src="data:image/svg+xml;base64,{{ base64_encode($valor) }}">
                 </center>
 
-                <textarea wire:model="qrString" id="qrcode" style="width: 100%; height: 100px;"></textarea>
+                {{-- <textarea wire:model="qrString" id="qrcode" style="width: 100%; height: 100px;"></textarea> --}}
   
             </div>
             <div class="modal-footer justify-content-between">
