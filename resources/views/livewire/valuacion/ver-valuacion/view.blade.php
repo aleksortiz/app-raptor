@@ -10,7 +10,7 @@
               <ul class="nav nav-pills ml-auto p-2">
                   <li class="nav-item"><a class="nav-link" style="cursor: pointer;" wire:click="back"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a></li>
                   <li class="nav-item"><a class="nav-link {{ $tab == '' ? 'active' : '' }}" wire:click="$set('tab','')" href="#"><i class="fas fa-car"></i> Valuación</a></li>
-                  <li class="nav-item"><a class="nav-link {{ $tab == 'cliente' ? 'active' : '' }}" wire:click="$set('tab','cliente')" href="#"><i class="fas fa-user"></i> Cliente</a></li>
+                  {{-- <li class="nav-item"><a class="nav-link {{ $tab == 'cliente' ? 'active' : '' }}" wire:click="$set('tab','cliente')" href="#"><i class="fas fa-user"></i> Cliente</a></li> --}}
                   <li class="nav-item"><a class="nav-link {{ $tab == 'fotos' ? 'active' : '' }}" wire:click="$set('tab','fotos')" href="#"><i class="fas fa-camera"></i> Fotos</a></li>
 
               </ul>
@@ -22,10 +22,10 @@
                   <div class="tab-pane {{ $tab == '' ? 'active' : '' }}" id="tab_1">
                       @include('livewire.valuacion.ver-valuacion.tabs.tab-data')
                   </div>
-
+{{-- 
                   <div class="tab-pane {{ $tab == 'cliente' ? 'active' : '' }}" id="tab_2">
                       @include('livewire.valuacion.ver-valuacion.tabs.tab-cliente')
-                  </div>
+                  </div> --}}
 
                   <div class="tab-pane {{ $tab == 'fotos' ? 'active' : '' }}" id="tab_3">
                       @include('livewire.valuacion.ver-valuacion.tabs.tab-fotos')
