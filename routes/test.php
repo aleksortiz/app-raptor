@@ -55,3 +55,7 @@ Route::get('xxx', function(){
 Route::get('/camara', function(){
     return view('camara');
 });
+
+Route::get('/php', function(){
+    return phpinfo();
+});

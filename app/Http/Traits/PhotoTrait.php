@@ -10,6 +10,6 @@ trait PhotoTrait {
 
     public function downloadPhoto($id){
         $foto = Foto::findOrFail($id);
-        return Storage::disk('s3')->download($foto->url);
+        return Storage::disk('s3')->download($foto->location);
     }
 }

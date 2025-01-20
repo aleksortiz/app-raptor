@@ -16,6 +16,7 @@ class CreatePresupuestosTable extends Migration
         Schema::create('presupuestos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cliente_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->morphs('model');
             $table->string('marca');
             $table->string('modelo');

@@ -50,6 +50,7 @@ class RouteServiceProvider extends ServiceProvider
                 'aos.php',
                 'web.php',
                 'users.php',
+                'fotos.php',
                 'clientes.php',
                 'personal.php',
                 'test.php',

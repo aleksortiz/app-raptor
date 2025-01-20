@@ -28,7 +28,7 @@
 
             </div>
             <div class="col-9">
-
+              @include('livewire.valuacion.ver-valuacion.tabs.tab-presupuestos')
             </div>
 
         </div>
@@ -37,7 +37,6 @@
     </div>
 
     <div class="card-footer">
-        <a class="btn btn-warning" href="/servicios/{{ $this->valuacion->id }}/editar"><i class="fas fa-edit"></i> Editar
-            Valuacion</a>
+        {{-- <a class="btn btn-warning" href="/servicios/{{ $this->valuacion->id }}/editar"><i class="fas fa-edit"></i> Editar Valuación</a> --}}
     </div>
 </div>

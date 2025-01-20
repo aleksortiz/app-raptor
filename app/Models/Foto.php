@@ -14,8 +14,10 @@ class Foto extends BaseModel
         'model_id',
         'url',
     ];
-
-    public function getLocationPathAttribute(){
-        return asset($this->attributes['url']);
+    
+    public function getLocationAttribute(){
+        $bucket = env('AWS_BUCKET_URL');
+        $location = str_replace($bucket, '', $this->url);
+        return $location;
     }
 }

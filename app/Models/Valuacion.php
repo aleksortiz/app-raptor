@@ -32,6 +32,26 @@ class Valuacion extends BaseModel
         static::creating(function($valuacion){
             $valuacion->user_id = auth()->id();
         });
+
+        static::created(function($valuacion){
+            $valuacion->presupuestos()->create([
+                'cliente_id' => $valuacion->cliente_id,
+                'user_id' => auth()->id(),
+                'model_id' => $valuacion->id,
+                'model_type' => Valuacion::class,
+                'marca' => $valuacion->marca,
+                'modelo' => $valuacion->modelo,
+                'year' => $valuacion->year,
+                'color' => $valuacion->color,
+                'subtotal' => 0,
+                'iva' => 0,
+                'total' => 0,
+                'mecanica' => 0,
+                'hojalateria' => 0,
+                'pintura' => 0,
+                'armado' => 0,
+            ]);
+        });
     }
 
     protected $cast = [
@@ -95,6 +115,10 @@ class Valuacion extends BaseModel
 
     public function getEntradaSpanAttribute(){
         return $this->entrada ? '<a href="/servicios/' . $this->entrada->id . '" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> ' . $this->entrada->folio_short . '</a>' : "SIN ENTRADA";
+    }
+
+    public function presupuestos(){
+        return $this->morphMany(Presupuesto::class, 'model');
     }
 
 }
