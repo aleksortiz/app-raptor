@@ -55,10 +55,6 @@ class MdlCrearValuacion extends Component
         $this->fecha_cita = now()->format('Y-m-d\TH:i');
     }
 
-    public function mount(){
-        $this->test();
-    }
-
     public function render(){
         return view('livewire.valuacion.mdl-crear-valuacion', $this->getRenderData());
     }

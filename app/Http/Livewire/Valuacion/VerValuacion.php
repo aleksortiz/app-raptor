@@ -80,7 +80,9 @@ class VerValuacion extends Component
 
     public function mount($id){
       $this->lastUrl = url()->previous();
-      $this->valuacion = Valuacion::findOrFail($id);
+      $this->valuacion = cache()->remember("valuacion_{$id}", 60, function () use ($id) {
+        return Valuacion::findOrFail($id);
+      });
       $this->presupuesto = $this->valuacion->presupuestos[0];
 
       $this->mecanica = $this->presupuesto?->mecanica ?? 0;
@@ -171,8 +173,8 @@ class VerValuacion extends Component
         }
 
         $this->presupuesto->load('conceptos');
+        cache()->forget("valuacion_{$this->valuacion->id}");
 
-        // $this->emit('ok', 'Presupuesto guardado correctamente');
         $this->edit_mode = false;
     }
 
