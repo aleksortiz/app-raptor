@@ -32,7 +32,7 @@
               <div class="col-1">
                   <div class="form-group">
                       <label for="keyWord">Semana</label>
-                      <select wire:model.lazy="weekStart" class="form-control" id="weekStart">
+                      <select wire:model.lazy="start" class="form-control" id="start">
                           @foreach (range(1, 52) as $item)
                               <option value="{{ $item }}">{{ $item }}</option>
                           @endforeach
@@ -43,7 +43,7 @@
               <div class="col-1">
                   <div class="form-group">
                       <label for="keyWord">a la</label>
-                      <select wire:model.lazy="weekEnd" class="form-control" id="weekEnd">
+                      <select wire:model.lazy="end" class="form-control" id="end">
                           @foreach (range(1, 52) as $item)
                               <option value="{{ $item }}">{{ $item }}</option>
                           @endforeach
@@ -53,9 +53,7 @@
 
           </div>
 
-          {{-- <a href="/materiales/vales/crear-vale" class="btn btn-success btn-xs m-3"><i class="fa fa-plus"></i> Crear Vale</a> --}}
           <button class="btn btn-success btn-xs m-3" wire:click="$emit('initMdlCrearValuacion')"><i class="fa fa-plus"></i> Crear Valuación</button>
-          {{-- initMdlCrearCita --}}
 
           <table class="table table-hover">
               <thead>

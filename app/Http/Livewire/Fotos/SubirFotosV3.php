@@ -13,6 +13,7 @@ class SubirFotosV3 extends Component
     use WithFileUploads, PhotoTrait;
 
     public $model;
+    
     public $storage_path;
     public $redirectMode;
     public $images = [];

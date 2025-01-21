@@ -19,13 +19,15 @@ class MdlUploadMobilePhotos extends Component
 
     public $qrString;
 
+    protected $listeners = ['createMobilePhotoToken'];
+
     public function mount($model_id, $model_type, $storage_path){
         $this->model_id = $model_id;
         $this->model_type = $model_type;
         $this->storage_path = $storage_path;
 
 
-        $this->createToken();
+        $this->createMobilePhotoToken();
     }
 
     public function render()
@@ -38,7 +40,7 @@ class MdlUploadMobilePhotos extends Component
         $this->emit('showModal', $this->mdlName);
     }
 
-    public function createToken(){
+    public function createMobilePhotoToken(){
         $key = env('JWT_SECRET');
         $payload = [
             'model_id' => $this->model_id,
@@ -51,6 +53,7 @@ class MdlUploadMobilePhotos extends Component
 
         $this->token = $jwt;
         $this->qrString = url("/upload-mobile-photos?token=$jwt");
+        $this->emit('showModal', "#{$this->mdlName}");
 
     }
 

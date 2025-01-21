@@ -1,6 +1,9 @@
 
 <div class="card-body p-2">
 
+    @livewire('foto.mdl-upload-mobile-photos', ['model_id' => $this->model?->id, 'model_type' => 'App\\Models\\'.class_basename($this->model), 'storage_path' => $this->storage_path])
+
+
     @push('css')
         <link href="{{asset('vendor/lightbox-master/dist/ekko-lightbox.css')}}" rel="stylesheet">
         <style>
@@ -53,7 +56,7 @@
                 Subir fotos
                 <input wire:model="images" accept="image/*" multiple style="display: none;" type="file" name="iptImage">
             </label>
-            <button class="btn btn-xs btn-primary m-1 p-2" wire:click="$emit('showModal', '#mdlUploadMobilePhotos')"><i class="fa fa-mobile"></i> Subir desde celular</button>
+            <button class="btn btn-xs btn-primary m-1 p-2" wire:click="$emit('createMobilePhotoToken')"><i class="fa fa-mobile"></i> Subir desde celular</button>
         @else
             <button class="btn btn-xs btn-primary m-1 p-2" wire:click="upload"><i class="fa fa-save"></i> Guardar</a>
             <button class="btn btn-xs btn-default m-1 p-2" wire:click="cancelar"><i class="fa fa-times"></i> Cancelar</a>

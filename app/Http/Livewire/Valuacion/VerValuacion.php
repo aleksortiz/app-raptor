@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Valuacion;
 
 use App\Models\Valuacion;
+use Illuminate\Support\Facades\File;
 use Livewire\Component;
 
 class VerValuacion extends Component
@@ -21,6 +22,8 @@ class VerValuacion extends Component
     public $presupuestoConceptos = [];
 
     public $edit_mode = false;
+    
+    public $cliente_id;
 
     protected $queryString = [
         'tab' => ['except' => ''],
@@ -88,7 +91,18 @@ class VerValuacion extends Component
 
     public function render()
     {
-        return view('livewire.valuacion.ver-valuacion.view');
+        return view('livewire.valuacion.ver-valuacion.view', $this->getRenderData());
+    }
+
+    public function getRenderData(){
+        $path = base_path('app/Data');
+        $marcas = json_decode(File::get("$path/marcas.json"), true);
+        $modelos = json_decode(File::get("$path/modelos.json"), true);
+
+        return [
+            'marcas' => $marcas,
+            'modelos' => $modelos,
+        ];
     }
 
     public function back(){

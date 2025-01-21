@@ -1,6 +1,7 @@
 <div class="card m-0" style="min-height: 65vh;">
     <div style="overflow: scroll;" class="card-body">
         <div class="row">
+            
             <div class="col-3">
                 <h3>{{ $valuacion->vehiculo }}</h3>
                 </h5>
@@ -27,6 +28,7 @@
 
 
             </div>
+
             <div class="col-9">
               @include('livewire.valuacion.ver-valuacion.tabs.tab-presupuestos')
             </div>

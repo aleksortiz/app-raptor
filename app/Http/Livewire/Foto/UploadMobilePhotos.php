@@ -41,7 +41,7 @@ class UploadMobilePhotos extends Component
             $jwt = JWT::decode($token, new Key($key, 'HS256'));
             $this->model = app($jwt->model_type)->find($jwt->model_id);
         } catch (\Exception $e) {
-            $this->emit('error', $e->getMessage());
+            abort(403, 'Token inválido');
         }
     }
 
