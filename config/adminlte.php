@@ -424,7 +424,6 @@ return [
                     'text' => 'Ordenes de Trabajo',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/ordenes-trabajo',
-                    // 'can' => ['xxxxxxx'],
                 ],
             ]
         ],
@@ -437,12 +436,11 @@ return [
         [
             'text' => 'Refacciones',
             'icon' => 'fas fa-fw fa-wrench',
-            'can' => ['reporte-comisiones'],
             'submenu' => [
                 [
-                    'text' => 'Reporte de Comisiones',
+                    'text' => 'Catalogo de Comisiones',
                     'icon' => 'fas fa-fw fa-chevron-right',
-                    'url'  => '/refacciones/reporte-comisiones',
+                    'url'  => '/refacciones',
                 ],
             ]
         ],
