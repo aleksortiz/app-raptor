@@ -438,7 +438,7 @@ return [
             'icon' => 'fas fa-fw fa-wrench',
             'submenu' => [
                 [
-                    'text' => 'Catalogo de Comisiones',
+                    'text' => 'Catalogo de Refacciones',
                     'icon' => 'fas fa-fw fa-chevron-right',
                     'url'  => '/refacciones',
                 ],
