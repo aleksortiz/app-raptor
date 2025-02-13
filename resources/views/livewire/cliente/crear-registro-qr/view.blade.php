@@ -6,6 +6,30 @@
             -moz-appearance: textfield; /* Firefox */
             -webkit-appearance: textfield; /* Safari y Chrome */
         }
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .overlay-buttons {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            display: block;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px;
+            border-radius: 5px;
+        }
+
+        /* .image-container:hover .overlay-buttons {
+            display: block;
+        } */
+
+        .overlay-buttons button {
+            margin: 2px;
+            /* Opcional: Ajusta estilos de botones si es necesario */
+        }
     </style>
 
     <div class="card-header text-center">
@@ -93,15 +117,24 @@
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
                             <label for="ine_frontal">INE Frontal</label><br>
-                            <label class="btn btn-md btn-warning m-1 p-2">
-                                <i class="fa fa-id-card"></i>
-                                Subir INE Frontal
-                                <input wire:model="ine_frontal_file" accept="image/*" style="display: none;" type="file">
-                            </label>
 
-                            <center>
-                                <img style="height: 210; width: 315px; object-fit:cover" src="{{ $ine_frontal_file?->temporaryUrl() ?? "" }}" class="img-fluid mb-2" alt="image" />
-                            </center>
+
+                            @if ($this->ine_frontal_file)
+                                <center>
+                                    <div class="image-container">
+                                        <img style="height: 210; width: 315px; object-fit:cover" src="{{ $ine_frontal_file?->temporaryUrl() ?? "" }}" class="img-fluid mb-2" alt="image" />
+                                        <div class="overlay-buttons">
+                                            <button wire:click="removePhoto('frontal')" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Borrar</button>
+                                        </div>
+                                    </div>
+                                </center>
+                            @else
+                                <label class="btn btn-md btn-warning m-1 p-2">
+                                    <i class="fa fa-id-card"></i>
+                                    Subir INE Frontal
+                                    <input wire:model="ine_frontal_file" accept="image/*" style="display: none;" type="file">
+                                </label>
+                            @endif
 
                             @error('ine_frontal') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
@@ -110,19 +143,41 @@
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
                             <label for="ine_reverso">INE Reverso</label><br>
-                            <label class="btn btn-md btn-warning m-1 p-2">
-                                <i class="fa fa-id-card"></i>
-                                Subir INE Reverso
-                                <input wire:model="ine_reverso_file" accept="image/*" style="display: none;" type="file">
-                            </label>
-
-                            <center>
-                                <img style="height: 210; width: 315px; object-fit:cover" src="{{ $ine_reverso_file?->temporaryUrl() ?? "" }}" class="img-fluid mb-2" alt="image" />
-                            </center>
+                            @if ($this->ine_reverso_file)                                
+                                <center>
+                                    <div class="image-container">
+                                        <img style="height: 210; width: 315px; object-fit:cover" src="{{ $ine_reverso_file?->temporaryUrl() ?? "" }}" class="img-fluid mb-2" alt="image" />
+                                        <div class="overlay-buttons">
+                                            <button wire:click="removePhoto('reverso')" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> Borrar</button>
+                                        </div>
+                                    </div>
+                                </center>
+                            @else
+                                <label class="btn btn-md btn-warning m-1 p-2">
+                                    <i class="fa fa-id-card"></i>
+                                    Subir INE Reverso
+                                    <input wire:model="ine_reverso_file" accept="image/*" style="display: none;" type="file">
+                                </label>
+                            @endif
 
                             @error('ine_reverso') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
+                </div>
+
+                <div class="mt-4 form-group">
+                    <label>Orden de Admisión</label><br>
+                    @if ($this->orden_admision_file)
+                        <button class="btn btn-md btn-danger m-1 p-2" wire:click="removeOrdenAdmision"><i class="fa fa-times"></i> Remover Archivo</button>
+                    @else
+                        <label class="btn btn-md btn-primary m-1 p-2">
+                            <i class="fa fa-file-pdf"></i>
+                            Orden de Admisión
+                            <input wire:model="orden_admision_file" accept="application/pdf" style="display: none;" type="file">
+                        </label>
+                        @error('orden_admision_file') <span class="text-danger">{{ $message }}</span> @enderror
+                    @endif
+
                 </div>
 
 
