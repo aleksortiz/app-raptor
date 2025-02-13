@@ -10,7 +10,7 @@
                     <img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="Logo de Autoservicio-Raptor">
                 </center>
 
-                <h1 class="text-center">Registro de Cita</h1>
+                <h2 class="text-center">Registro de Cita</h2>
 
                 <div class="form-group">
                     <label for="nombre_cliente">Nombre</label>
