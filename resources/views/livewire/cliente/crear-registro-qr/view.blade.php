@@ -7,7 +7,7 @@
             <div class="col-md-6 col-lg-5"> <!-- Sección centrada y con un ancho controlado -->
 
                 <center>
-                    <img style="height: 180px;" src="{{ asset('images/logo.png') }}" class="img-fluid" alt="Logo de Autoservicio-Raptor">
+                    <img src="{{ asset('images/logo.png') }}" class="img-fluid" alt="Logo de Autoservicio-Raptor">
                 </center>
 
                 <h1 class="text-center">Registro de Cita</h1>
