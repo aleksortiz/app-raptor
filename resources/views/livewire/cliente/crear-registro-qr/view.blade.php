@@ -64,27 +64,68 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-7">
+                    <div class="col-12 col-md-6 col-lg-7">
                         <div class="form-group">
                             <label for="fecha_cita">Fecha de Cita</label>
-                            <input type="date" id="fecha_cita" class="form-control" wire:model.defer="fecha_cita">
+                            <input type="date" id="fecha_cita" class="form-control" wire:model.lazy="fecha_cita">
                             @error('fecha_cita') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
-                    <div class="col-5">
+
+                    @if ($this->fecha_cita)
+                        <div class="col-12 col-md-6 col-lg-5">
+                            <div class="form-group">
+                                <label for="hora_cita">Hora de la Cita</label>
+                                <select id="hora_cita" class="form-control" wire:model.defer="hora_cita">
+                                    <option value="">--Seleccione Hora--</option>
+                                    @foreach ($horas_disponibles as $item)
+                                        <option value="{{ $item }}">{{ $item }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>                
+                    @endif
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 col-lg-6">
                         <div class="form-group">
-                            <label for="hora_cita">Hora de la Cita</label>
-                            {{-- <input type="text" id="hora_cita" class="form-control" wire:model.defer="hora_cita">
-                            @error('hora_cita') <span class="text-danger">{{ $message }}</span> @enderror --}}
-                            <select id="hora_cita" class="form-control" wire:model.defer="hora_cita">
-                                <option value="">Seleccione una hora</option>
-                                @foreach ($horas as $item)
-                                    <option value="{{ $item }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
+                            <label for="ine_frontal">INE Frontal</label><br>
+                            <label class="btn btn-md btn-warning m-1 p-2">
+                                <i class="fa fa-id-card"></i>
+                                Subir INE Frontal
+                                <input wire:model="ine_frontal_file" accept="image/*" style="display: none;" type="file">
+                            </label>
+
+                            <center>
+                                <img style="height: 210; width: 315px; object-fit:cover" src="{{ $ine_frontal_file?->temporaryUrl() ?? "" }}" class="img-fluid mb-2" alt="image" />
+                            </center>
+
+                            @error('ine_frontal') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-lg-6">
+                        <div class="form-group">
+                            <label for="ine_reverso">INE Reverso</label><br>
+                            <label class="btn btn-md btn-warning m-1 p-2">
+                                <i class="fa fa-id-card"></i>
+                                Subir INE Reverso
+                                <input wire:model="ine_reverso_file" accept="image/*" style="display: none;" type="file">
+                            </label>
+
+                            <center>
+                                <img style="height: 210; width: 315px; object-fit:cover" src="{{ $ine_reverso_file?->temporaryUrl() ?? "" }}" class="img-fluid mb-2" alt="image" />
+                            </center>
+
+                            @error('ine_reverso') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                 </div>
+
+
 
                 <div style="margin-top: 40px;" class="form-group text-center">
                     <button wire:click="aceptar" class=" btn btn-lg btn-block btn-success"><i class="fa fa-calendar-alt"></i> Registrar Cita</button>

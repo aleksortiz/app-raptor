@@ -18,7 +18,7 @@ class RegistroQr extends Model
         'color',
         'fecha_cita',
         'ine_frontal',
-        'ine_trasera',
+        'ine_reverso',
         'orden_admision',
     ];
 

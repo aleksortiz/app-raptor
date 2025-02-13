@@ -26,7 +26,7 @@ class CreateRegistroQrsTable extends Migration
             $table->string('color');
             $table->dateTime('fecha_cita');
             $table->string('ine_frontal')->nullable();
-            $table->string('ine_trasera')->nullable();
+            $table->string('ine_reverso')->nullable();
             $table->string('orden_admision')->nullable();
             $table->timestamps();
         });

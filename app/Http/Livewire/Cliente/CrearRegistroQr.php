@@ -21,8 +21,11 @@ class CrearRegistroQr extends Component
     public $fecha_cita;
     public $hora_cita;
 
+    public $ine_frontal_file;
+    public $ine_reverso_file;
+
     public $ine_frontal;
-    public $ine_trasera;
+    public $ine_reverso;
     public $orden_admision;
 
     public function render(){
@@ -37,8 +40,13 @@ class CrearRegistroQr extends Component
         return [
             'marcas' => $marcas,
             'modelos' => $modelos,
-            'horas' => ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
+            'horas_disponibles' => ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
         ];
+    }
+
+    public function getHorasDisponibles(){
+
+        return ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
     }
 
     public function aceptar(){
