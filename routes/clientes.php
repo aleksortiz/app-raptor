@@ -11,3 +11,8 @@ Route::middleware(['auth'])->prefix('clientes')->group(function ()
     });
 
 });
+
+Route::get('/clientes/registrar-cita', function(){
+    return view('livewire.cliente.crear-registro-qr.index');
+});
+
