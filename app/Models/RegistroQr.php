@@ -57,7 +57,7 @@ class RegistroQr extends BaseModel
     }
 
     public function getFechaCitaFormatAttribute(){
-        return Carbon::parse($this->fecha_cita)->format('M/d/Y h:i A');
+        return Carbon::parse($this->fecha_cita)->format('d-M-Y h:i A');
     }
 
     public function getTipoSpanAttribute(){
