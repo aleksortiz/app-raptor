@@ -10,6 +10,8 @@ class CatalogoCitasQr extends Component
     public $orderBy = 'fecha_cita';
     public $search = '';
 
+    protected $listeners = ['reloadCatalogoCitas' => '$refresh'];
+
     protected $queryString = [
         'orderBy' => ['except' => 'fecha_cita'],
         'search' => ['except' => ''],
@@ -29,5 +31,10 @@ class CatalogoCitasQr extends Component
         return [
             'citas' => $citas,
         ];
+    }
+
+    public function verCita($id)
+    {
+        $this->emit('initMdlVerRegistroQr', $id);
     }
 }

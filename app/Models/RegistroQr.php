@@ -77,4 +77,22 @@ class RegistroQr extends BaseModel
     public function getTipoFormatAttribute(){
         return str_replace('CION', 'CIÓN', $this->tipo);
     }
+
+    public function getOrdenAdmisionLocationAttribute(){
+        $bucket = env('AWS_BUCKET_URL');
+        $location = str_replace($bucket, '', $this->orden_admision);
+        return $location;
+    }
+
+    public function getIneFrontalLocationAttribute(){
+        $bucket = env('AWS_BUCKET_URL');
+        $location = str_replace($bucket, '', $this->ine_frontal);
+        return $location;
+    }
+
+    public function getIneReversoLocationAttribute(){
+        $bucket = env('AWS_BUCKET_URL');
+        $location = str_replace($bucket, '', $this->ine_reverso);
+        return $location;
+    }
 }

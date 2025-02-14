@@ -1,4 +1,7 @@
 <div class="pt-3">
+
+    @livewire('registro-qr.mdl-ver-registro-qr')
+
     <div class="card">
 
         <div class="card-header">
@@ -20,10 +23,10 @@
                         <input type="text" wire:model.lazy="search" class="form-control" id="search" placeholder="Busqueda">
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col-3">
                     <div class="form-group">
                         <label for="orderBy">Ordenar Por</label>
-                        <select wire:model.lazy="orderBy" id="orderBy" class="form-control">
+                        <select wire:model="orderBy" id="orderBy" class="form-control">
                             <option value="fecha_cita">Fecha de Cita</option>
                             <option value="created_at">Fecha de Registro</option>
                         </select>
@@ -45,17 +48,13 @@
                 </thead>
                 <tbody>
                     @foreach ($citas as $row)
-                        <tr>
+                        <tr style="cursor: pointer" wire:click="verCita({{ $row->id }})">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $row->cliente_nombre }}</td>
                             <td>{{ $row->numero_reporte }}</td>
                             <td>{{ $row->vehiculo }}</td>
                             <td>{!! $row->tipo_span !!}</td>
                             <td>{{ $row->fecha_cita_format }}</td>
-                            {{-- <td> --}}
-                                {{-- <a href="/servicio-flotillas/{{ $row->identificador }}" class="btn btn-xs btn-primary"><i class="fa fa-user"></i> Ver Clientes</a> --}}
-                                {{-- <button class="btn btn-xs btn-warning" wire:click="verFlotilla({{ $row->id }})"><i class="fa fa-car"></i> Flotilla</button> --}}
-                            {{-- </td> --}}
                         </tr>
                     @endforeach
                 </tbody>
