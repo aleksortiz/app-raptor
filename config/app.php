@@ -67,8 +67,7 @@ return [
     |
     */
 
-    'timezone' => 'America/Chihuahua',
-
+    'timezone' => env('APP_TIMEZONE', 'America/Ciudad_Juarez'),
     /*
     |--------------------------------------------------------------------------
     | Application Locale Configuration

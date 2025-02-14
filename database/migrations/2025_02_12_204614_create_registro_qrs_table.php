@@ -28,6 +28,7 @@ class CreateRegistroQrsTable extends Migration
             $table->string('ine_frontal')->nullable();
             $table->string('ine_reverso')->nullable();
             $table->string('orden_admision')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

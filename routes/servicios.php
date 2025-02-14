@@ -86,6 +86,10 @@ Route::middleware(['auth'])->group(function ()
         return view('livewire.entrada.catalogo-citas-reparacion.index');
     });
 
+    Route::get('/calendario-citas', function(){
+        return view('livewire.calendario-citas.index');
+    });
+
 
 
 });

@@ -276,15 +276,15 @@ return [
             'icon' => 'fas fa-fw fa-file-alt',
             'submenu' => [
               [
-                'text' => 'Todas las valuaciones',
+                'text' => 'Ver valuaciones',
                 'icon'   => 'fas fa-fw fa-chevron-right',
                 'url' => '/valuaciones',
               ],
-              [
-                'text' => 'Calendario de valuaciones',
-                'icon'   => 'fas fa-fw fa-chevron-right',
-                'url' => '/valuaciones/calendario-valuaciones',
-              ]
+            //   [
+            //     'text' => 'Calendario de valuaciones',
+            //     'icon'   => 'fas fa-fw fa-chevron-right',
+            //     'url' => '/valuaciones/calendario-valuaciones',
+            //   ]
             ]
         ],
         [
@@ -357,6 +357,16 @@ return [
                     'can' => ['vehiculos-entregados'],
                 ]
             ]
+        ],
+        [
+            'text' => 'Registros QR',
+            'icon' => 'fas fa-fw fa-qrcode',
+            'url'    => '/clientes/registros-qr',
+        ],
+        [
+            'text' => 'Calendario de Citas',
+            'icon' => 'fas fa-fw fa-calendar-alt',
+            'url'    => '/calendario-citas',
         ],
         [
             'text' => 'Clientes',

@@ -46,15 +46,36 @@
                 <h2 class="text-center">Registro de Cita</h2>
 
                 <div class="form-group">
-                    <label for="nombre_cliente">Nombre</label>
-                    <input type="text" style="text-transform: uppercase; text-align: center;" maxlength="255" id="nombre_cliente" class="form-control" wire:model.defer="nombre_cliente">
-                    @error('nombre_cliente') <span class="text-danger">{{ $message }}</span> @enderror
+                    <label for="cliente_nombre">Nombre</label>
+                    <input type="text" style="text-transform: uppercase; text-align: center;" maxlength="255" id="cliente_nombre" class="form-control" wire:model.defer="cliente_nombre">
+                    @error('cliente_nombre') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+
                 <div class="form-group">
                     <label for="numero_reporte">Número de Reporte</label>
                     <input type="text" onkeypress="return event.charCode >= 46 && event.charCode <= 57" style="text-transform: uppercase; text-align: center;" maxlength="11" id="numero_reporte" class="form-control" wire:model.defer="numero_reporte">
                     @error('numero_reporte') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+
+                <div class="row">
+
+                    <div class="col-12 col-md-5">
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                            <input maxlength="13" onkeypress="return event.charCode >= 46 && event.charCode <= 57" type="text" id="telefono" class="form-control" wire:model.lazy="telefono">
+                            @error('telefono') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-7">
+                        <div class="form-group">
+                            <label for="correo">Correo</label>
+                            <input style="text-transform: lowercase;" type="text" id="correo" class="form-control" wire:model.lazy="correo">
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="form-group">
                     <label for="marca">Marca del Vehículo</label>
                     <input type="text" style="text-transform: uppercase; text-align: center;" maxlength="180" id="marca" list="marcas" class="form-control" wire:model.defer="marca">
@@ -65,6 +86,7 @@
                     </datalist>
                     @error('marca') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+
                 <div class="form-group">
                     <label for="modelo">Modelo</label>
                     <input type="text" style="text-transform: uppercase; text-align: center;" maxlength="180" id="modelo" list="modelos" class="form-control" wire:model.defer="modelo">
@@ -87,30 +109,48 @@
                     @error('color') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
 
-                <div class="row">
-                    <div class="col-12 col-md-6 col-lg-7">
-                        <div class="form-group">
-                            <label for="fecha_cita">Fecha de Cita</label>
-                            <input type="date" id="fecha_cita" class="form-control" wire:model.lazy="fecha_cita">
-                            @error('fecha_cita') <span class="text-danger">{{ $message }}</span> @enderror
-                        </div>
-                    </div>
-
-                    @if ($this->fecha_cita)
-                        <div class="col-12 col-md-6 col-lg-5">
-                            <div class="form-group">
-                                <label for="hora_cita">Hora de la Cita</label>
-                                <select id="hora_cita" class="form-control" wire:model.defer="hora_cita">
-                                    <option value="">--Seleccione Hora--</option>
-                                    @foreach ($horas_disponibles as $item)
-                                        <option value="{{ $item }}">{{ $item }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>                
-                    @endif
-
+                <div class="form-group">
+                    <label for="tipo">Tipo de Cita</label>
+                    <select id="tipo" class="form-control" wire:model="tipo">
+                        <option value="">--Seleccione--</option>
+                        <option value="REPARACION">Reparación</option>
+                        <option value="VALUACION">Valuación</option>
+                    </select>
+                    @error('tipo') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+
+                @if($this->tipo)
+                    <div class="row">
+                        <div class="col-12 col-md-6 col-lg-7">
+                            <div class="form-group">
+                                <label for="fecha_cita">Fecha de Cita</label>
+                                <input type="date" id="fecha_cita" class="form-control" wire:model.lazy="fecha_cita">
+                                @error('fecha_cita') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                        </div>
+
+                        @if ($this->fecha_cita)
+                            <div class="col-12 col-md-6 col-lg-5">
+                                <div class="form-group">
+                                    <label for="hora_cita">Hora de la Cita</label>
+                                    <select id="hora_cita" class="form-control" wire:model.defer="hora_cita">
+                                        <option value="">--Seleccione Hora--</option>
+                                        @foreach ($horas_disponibles as $item)
+                                            <option value="{{ $item }}">{{ $this->convertTimeFormat($item) }}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @if (!$horas_disponibles)
+                                        <span class="text-danger">No hay horas disponibles para la fecha seleccionada</span>
+                                    @else
+                                        @error('hora_cita') <span class="text-danger">Seleccione Hora</span> @enderror
+                                    @endif
+                                </div>
+                            </div>                
+                        @endif
+
+                    </div>
+                @endif
 
 
                 <div class="row">
@@ -136,7 +176,7 @@
                                 </label>
                             @endif
 
-                            @error('ine_frontal') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('ine_frontal_file') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
 
@@ -160,7 +200,7 @@
                                 </label>
                             @endif
 
-                            @error('ine_reverso') <span class="text-danger">{{ $message }}</span> @enderror
+                            @error('ine_reverso_file') <span class="text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
                 </div>
@@ -175,15 +215,20 @@
                             Orden de Admisión
                             <input wire:model="orden_admision_file" accept="application/pdf" style="display: none;" type="file">
                         </label>
-                        @error('orden_admision_file') <span class="text-danger">{{ $message }}</span> @enderror
                     @endif
+                    @error('orden_admision_file') <span class="text-danger">{{ $message }}</span> @enderror
 
                 </div>
 
 
 
                 <div style="margin-top: 40px;" class="form-group text-center">
-                    <button wire:click="aceptar" class=" btn btn-lg btn-block btn-success"><i class="fa fa-calendar-alt"></i> Registrar Cita</button>
+                    <div wire:loading.remove wire:target="aceptar">
+                        <button wire:click="aceptar" class=" btn btn-lg btn-block btn-success"><i class="fa fa-calendar-alt"></i> Registrar Cita</button>
+                    </div>
+                    <div wire:loading wire:target="aceptar">
+                        <button wire:click="" class=" btn btn-lg btn-block btn-secondary" disabled><i class="fa fa-spin fa-spinner"></i> Espere...</button>
+                    </div>
                 </div>
             </div>
         </div>
