@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\shared\BaseModel;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
 
-class RegistroQr extends Model
+class RegistroQr extends BaseModel
 {
     protected $fillable = [
         'numero_reporte',

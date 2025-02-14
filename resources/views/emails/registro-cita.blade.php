@@ -32,15 +32,15 @@
                             <table width="100%" cellspacing="0" cellpadding="10" style="background: #1e1e1e; color: #ffffff; border-radius: 8px;">
                                 <tr>
                                     <td style="text-align: left;"><strong>👤 Nombre:</strong></td>
-                                    <td style="text-align: right;">Alejandro Ortiz</td>
+                                    <td style="text-align: right;">{{$registroQR->cliente_nombre}}</td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left;"><strong>🚗 Vehículo:</strong></td>
-                                    <td style="text-align: right;">Chevrolet Silverado 2023 PERLA</td>
+                                    <td style="text-align: right;">{{$registroQR->vehiculo}}</td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left;"><strong>📅 Fecha de Cita:</strong></td>
-                                    <td style="text-align: right;">18-Feb-2025 10:30 AM</td>
+                                    <td style="text-align: right;">{{$registroQR->fecha_cita_format}}</td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left;"><strong>🛠️ Asunto:</strong></td>
