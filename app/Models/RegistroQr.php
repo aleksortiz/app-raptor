@@ -64,10 +64,10 @@ class RegistroQr extends BaseModel
         $tipo = $this->tipo_format;
         $icon = '';
         $color = '';
-        if($tipo == 'REPARACION'){
+        if($tipo == 'REPARACION' || $tipo == 'REPARACIÓN'){
             $color = 'warning';
             $icon = 'fa-wrench';
-        }else if($tipo == 'VALUACION'){
+        }else if($tipo == 'VALUACION' || $tipo == 'VALUACIÓN'){
             $color = 'primary';
             $icon = 'fa-file-alt';
         }
