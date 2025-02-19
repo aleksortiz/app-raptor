@@ -14,7 +14,7 @@
                     <!-- Logo -->
                     <tr>
                         <td align="center">
-                            <img src="https://app.autoservicioraptor.com/images/logogv.png" width="500px" alt="logo" style="margin-bottom: 20px;">
+                            <img src="https://app.autoservicioraptor.com/images/logogv.png" width="300px" alt="logo" style="margin-bottom: 20px;">
                         </td>
                     </tr>
 
@@ -32,7 +32,7 @@
                             <table width="100%" cellspacing="0" cellpadding="10" style="background: #1e1e1e; color: #ffffff; border-radius: 8px;">
                                 <tr>
                                     <td style="text-align: left;"><strong>👤 Nombre:</strong></td>
-                                    <td style="text-align: right;">{{$data['comprador']}}</td>
+                                    <td style="text-align: right;">{{ strtoupper($data['comprador']) }}</td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: left;"><strong>📅 Fecha de Contrato:</strong></td>
