@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Mail;
 
 trait CreateContratoTrait
 {
-    public $contratoVendedor = 'GUILLERMO VILLANUEZA GUTIERREZ';
+    public $contratoVendedor = 'GUILLERMO VILLANUEVA GUTIERREZ';
     public $contratoComprador;
     public $contratoDomicilioComprador;
     public $contratoFecha;
