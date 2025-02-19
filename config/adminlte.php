@@ -375,6 +375,12 @@ return [
             'can' => ['administrar-clientes'],
         ],
         [
+            'text' => 'Vehículos',
+            'icon' => 'fas fa-fw fa-car',
+            'url'    => '/vehiculos',
+            'can' => ['venta-vehiculos'],
+        ],
+        [
             'text' => 'Materiales',
             'icon' => 'fas fa-fw fa-cubes',
             'can' => ['administrar-materiales', 'ver-materiales'],
@@ -436,12 +442,6 @@ return [
                     'url'    => '/personal/ordenes-trabajo',
                 ],
             ]
-        ],
-        [
-            'text' => 'Venta de Vehículos',
-            'icon' => 'fas fa-fw fa-car',
-            'url'    => '/vsc/venta-vehiculos',
-            'can' => ['venta-vehiculos'],
         ],
         [
             'text' => 'Refacciones',

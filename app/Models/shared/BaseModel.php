@@ -20,15 +20,15 @@ class BaseModel extends Model
 
     public function getFechaCreacionAttribute(){
         $date = Carbon::parse($this->created_at);
-        $format = 'M/d/Y h:i A';
+        $format = 'd/M/Y h:i A';
         if ($date->year = Carbon::now()->year){
-            $format = 'M/d h:i A';
+            $format = 'd/M h:i A';
         }
         return $date->format($format);
     }
 
     public function getFechaModificacionAttribute(){
-        return Carbon::parse($this->updated_at)->format('M/d/Y h:i A');
+        return Carbon::parse($this->updated_at)->format('d/M/Y h:i A');
     }
 
     public function SoftDelete(){
