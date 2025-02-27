@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="form-group col-12">
                         <label>Notas / Comentarios</label>
-                        <textarea wire:model.defer="notasCosto" style="resize: none;" cols="4" class="form-control"></textarea>
+                        <textarea wire:model.defer="notasCosto" style="resize: none;" cols="6" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
