@@ -20,6 +20,7 @@ class Costo extends BaseModel
         'pagado',
         'no_factura',
         'tipo',
+        'notas',
     ];
 
     protected $attributes = [

@@ -114,6 +114,7 @@
                         <tr>
                             <th><button wire:click="addCosto" class="btn btn-xs btn-success"><i class="fa fa-plus"></i>
                                 Agregar Servicio</button></th>
+                            <th></th>
                             <th>Concepto</th>
                             <th>Tipo</th>
                             <th>Costo</th>
@@ -135,6 +136,15 @@
                                                 class="fa fa-save"></i></button>
                                     @else
                                         <button wire:click="" onclick="destroy({{ $item->id }},'Costo', 'destroyCosto')" class="btn btn-xs btn-danger"><i class="fa fa-trash-alt"></i></button>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if (!$editMode)
+                                        @php
+                                            $color = $item->notas ? 'success' : 'secondary';
+                                            $textComment = $item->notas ? '(1)' : '';
+                                        @endphp
+                                        <button wire:click="" wire:click="editNotasCosto({{$item->id}})" class="btn btn-xs btn-{{$color}}"><i class="fa fa-comments">{{ $textComment }}</i></button>
                                     @endif
                                 </td>
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AlterCostosTable2 extends Migration
+class AlterCostosTable3 extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class AlterCostosTable2 extends Migration
      */
     public function up()
     {
-      Schema::table('costos', function (Blueprint $table) {
-          $table->string('tipo')->nullable();
-          $table->decimal('venta', 12, 2)->after('costo');
-      });
+        Schema::table('costos', function (Blueprint $table) {
+            $table->string('notas')->nullable();
+        });
     }
 
     /**
@@ -27,8 +26,7 @@ class AlterCostosTable2 extends Migration
     public function down()
     {
         Schema::table('costos', function (Blueprint $table) {
-            $table->dropColumn('tipo');
-            $table->dropColumn('venta');
+            $table->dropColumn('notas');
         });
     }
 }

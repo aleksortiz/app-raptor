@@ -48,6 +48,9 @@ class VerEntrada extends Component
 
     public $inventario;
 
+    public $notasCosto;
+    public $selectedCostoId;
+
     public $materialManual = [
         'descripcion' => null,
         'cantidad' => null,
@@ -557,5 +560,25 @@ class VerEntrada extends Component
       $this->gastoMonto = null;
       $this->emit('ok', 'Se ha registrado gasto');
       $this->emit('closeModal', '#mdlCreateGasto');
+    }
+
+    public function editNotasCosto($id){
+        $this->selectedCostoId = $id;
+        $this->notasCosto = Costo::findOrFail($id)->notas;
+        $this->emit('showModal', '#mdlNotasCosto');
+    }
+
+    public function saveNotasCosto(){
+        $this->validate([
+            'notasCosto' => 'string|nullable',
+        ]);
+        
+        Costo::findOrFail($this->selectedCostoId)->update([
+            'notas' => $this->notasCosto,
+        ]);
+
+        $this->reset('selectedCostoId', 'notasCosto');
+
+        $this->emit('ok', 'Se han guardado notas');
     }
 }
