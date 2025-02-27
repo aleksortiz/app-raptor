@@ -144,7 +144,7 @@
                                             $color = $item->notas ? 'success' : 'secondary';
                                             $textComment = $item->notas ? '(1)' : '';
                                         @endphp
-                                        <button wire:click="" wire:click="editNotasCosto({{$item->id}})" class="btn btn-xs btn-{{$color}}"><i class="fa fa-comments">{{ $textComment }}</i></button>
+                                        <button wire:click="editNotasCosto({{$item->id}})" class="btn btn-xs btn-{{$color}}"><i class="fa fa-comments">{{ $textComment }}</i></button>
                                     @endif
                                 </td>
 

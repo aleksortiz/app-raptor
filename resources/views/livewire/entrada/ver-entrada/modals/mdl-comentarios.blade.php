@@ -11,7 +11,7 @@
                 <div class="row">
                     <div class="form-group col-12">
                         <label>Notas / Comentarios</label>
-                        <input wire:model.defer="notasConcepto" type="text" class="form-control" />
+                        <input wire:model.defer="notasCosto" type="text" class="form-control" />
                     </div>
                 </div>
             </div>
