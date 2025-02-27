@@ -577,8 +577,10 @@ class VerEntrada extends Component
             'notas' => $this->notasCosto,
         ]);
 
-        $this->reset('selectedCostoId', 'notasCosto');
+        $this->entrada->load('costos');
 
+        $this->reset('selectedCostoId', 'notasCosto');
+        $this->emit('closeModal', '#mdlNotasCosto');
         $this->emit('ok', 'Se han guardado notas');
     }
 }
