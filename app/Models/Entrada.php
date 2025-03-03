@@ -406,4 +406,8 @@ class Entrada extends BaseModel
     {
         return $this->refacciones->count() > 0;
     }
+
+    public function registros_factura(){
+        return $this->morphMany(RegistroFactura::class, 'model');
+    }
 }

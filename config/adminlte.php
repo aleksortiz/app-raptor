@@ -299,9 +299,15 @@ return [
                     'url' => '/reporte-finanzas',
                 ],
                 [
+                    'text' => 'Control de Facturación',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url' => '/control-facturacion',
+                    'can' => ['reporte-facturas'],
+                ],
+                [
                     'text' => 'Reporte de Facturas',
                     'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url' => '/reporte-facturas',
+                    'url' => '/control-facturas',
                     'can' => ['reporte-facturas'],
                 ],
                 [
