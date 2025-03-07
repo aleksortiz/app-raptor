@@ -4,7 +4,7 @@
             <div class="col-3">
 
                 <div class="p-3">
-                    <button class="btn btn-success btn-md" wire:click="shareWhatsapp"><i class="fab fa-whatsapp"></i> Enviar Whatsapp</button>
+                    <a class="btn btn-success btn-md" href="https://api.whatsapp.com/send?text=¡Mira%20esto!%20{{ url()->current() }}"><i class="fab fa-whatsapp"></i> Enviar Whatsapp</a>
                     <button class="btn btn-primary btn-md" wire:click="shareWhatsapp"><i class="fa fa-envelope"></i> Enviar Correo</button>
                 </div>
 

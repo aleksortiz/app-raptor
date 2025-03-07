@@ -2,7 +2,7 @@
     @section('meta_tags')
         <meta property="og:title" content="{{ $this->vehiculo->descripcion ?? 'Vehículo a la venta' }}">
         <meta property="og:description" content="{{ $this->vehiculo->descripcion_venta ?? 'Descripción por defecto' }}">
-        <meta property="og:image" content="{{ $this->vehiculo->fotos_publicas[0]?->url_thumb ?? asset('images/logogv.png') }}">
+        <meta property="og:image" content="{{ $this->vehiculo->fotos_publicas[0]?->location_thumb ?? asset('images/logogv.png') }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="website">
 
@@ -10,7 +10,7 @@
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="{{ $this->vehiculo->descripcion ?? 'Vehículo a la venta' }}">
         <meta name="twitter:description" content="{{ $this->vehiculo->descripcion_venta ?? 'Descripción por defecto' }}">
-        <meta name="twitter:image" content="{{ $this->vehiculo->fotos_publicas[0]?->url_thumb ?? asset('images/logogv.png') }}">
+        <meta name="twitter:image" content="{{ $this->vehiculo->fotos_publicas[0]?->location_thumb ?? asset('images/logogv.png') }}">
     @endsection
     
     <style>
@@ -56,13 +56,24 @@
                 <h3 class="text-center">Modelo: {{ $this->vehiculo->modelo }}</h3>
                 <h3 class="text-center">Año: {{ $this->vehiculo->year }}</h3>
                 <h3 class="text-center">Venta: @money($this->vehiculo->nombre_proveedor)</h3>
+                
                 {{-- <center> --}}
-                    <div class="grid-container">
+                    <div class="mt-2 grid-container">
+                        @if ($this->vehiculo->fotos_publicas->isEmpty())
+                            <h3 class="p-3 text-center text-info">No hay fotos disponibles</h3>
+                        @endif
+                        
                         @foreach ($this->vehiculo->fotos_publicas ?? [] as $image)
                             <img src="{{ $image->url }}" class="img-fluid mb-2" alt="image" />
                         @endforeach
                     </div>
                 {{-- </center> --}}
+
+                {{-- description --}}
+                <div class="mt-3">
+                    <h3>Mas detalles:</h3>
+                    <p class="text-center">{{ $this->vehiculo->descripcion_venta }}</p>
+                </div>
             </div>
         </div>
     </center>

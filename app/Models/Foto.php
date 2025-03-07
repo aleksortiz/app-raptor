@@ -22,4 +22,10 @@ class Foto extends BaseModel
         $location = str_replace($bucket, '', $this->url);
         return $location;
     }
+
+    public function getLocationThumbAttribute(){
+        $bucket = env('AWS_BUCKET_URL');
+        $location = str_replace($bucket, '', $this->url_thumb);
+        return $location;
+    }
 }
