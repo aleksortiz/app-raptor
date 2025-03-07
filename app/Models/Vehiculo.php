@@ -56,6 +56,10 @@ class Vehiculo extends BaseModel
         return $this->morphMany(Foto::class, 'model');
     }
 
+    public function fotos_publicas(){
+        return $this->fotos()->where('public', true);
+    }
+
     public function gastos(){
         return $this->hasMany(VehiculoGasto::class);
     }

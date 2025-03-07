@@ -13,6 +13,7 @@ class Foto extends BaseModel
         'model_type',
         'model_id',
         'url',
+        'url_thumb',
         'public',
     ];
     
