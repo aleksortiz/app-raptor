@@ -1,17 +1,17 @@
 <div>
-    <head>
+    @section('meta_tags')
         <meta property="og:title" content="{{ $this->vehiculo->descripcion ?? 'Vehículo a la venta' }}">
         <meta property="og:description" content="{{ $this->vehiculo->descripcion_venta ?? 'Descripción por defecto' }}">
         <meta property="og:image" content="{{ $this->vehiculo->fotos[0]?->url ?? asset('images/logogv.png') }}">
         <meta property="og:url" content="{{ url()->current() }}">
         <meta property="og:type" content="website">
-    
+
         <!-- Para Twitter -->
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="{{ $this->vehiculo->descripcion ?? 'Vehículo a la venta' }}">
         <meta name="twitter:description" content="{{ $this->vehiculo->descripcion_venta ?? 'Descripción por defecto' }}">
         <meta name="twitter:image" content="{{ $this->vehiculo->fotos[0]?->url ?? asset('images/logogv.png') }}">
-    </head>
+    @endsection
     
     <style>
         body {
