@@ -13,6 +13,7 @@ class VehiculoGasto extends BaseModel
     protected $fillable = [
         'vehiculo_id',
         'descripcion',
+        'estimacion',
         'monto',
         'fecha',
     ];

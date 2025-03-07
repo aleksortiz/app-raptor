@@ -22,6 +22,8 @@ Route::middleware(['auth'])->prefix('vehiculos')->group(function () {
         return view('livewire.vehiculo.ver-vehiculo.index', ['id' => $id]);
     });
 
+});
 
-
+Route::get('/vehiculos/share/{id}', function($id){
+    return view('livewire.vehiculo.ver-vehiculo-public.index', ['id' => $id]);
 });

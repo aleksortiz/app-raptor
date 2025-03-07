@@ -92,7 +92,12 @@
                         <img src="{{$item->url}}" class="img-fluid mb-2" alt="image"  />
                     </a>
                     <div class="overlay-buttons">
+                        @php
+                            $icon = $item->public ? 'users' : 'user';
+                            $color = $item->public ? 'warning' : 'secondary';
+                        @endphp
                         <button wire:click="downloadPhoto({{$item->id}})" class="btn btn-xs btn-default"><i class="fa fa-download"></i></button>
+                        <button wire:click="changeScope({{$item->id}})" class="btn btn-xs btn-{{$color}}"><i class="fa fa-{{$icon}}"></i></button>
                         <button onclick="destroy({{$item->id}}, 'foto', 'removePhoto')" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button>
                     </div>
                 </div>

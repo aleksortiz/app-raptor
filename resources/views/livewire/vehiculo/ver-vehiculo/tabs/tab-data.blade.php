@@ -3,6 +3,11 @@
         <div class="row">
             <div class="col-3">
 
+                <div class="p-3">
+                    <button class="btn btn-success btn-md" wire:click="shareWhatsapp"><i class="fab fa-whatsapp"></i> Enviar Whatsapp</button>
+                    <button class="btn btn-primary btn-md" wire:click="shareWhatsapp"><i class="fa fa-envelope"></i> Enviar Correo</button>
+                </div>
+
                 <h5><b>Marca:</b><br>{{ $vehiculo->marca }}</h5>
                 <hr>
 
@@ -12,7 +17,7 @@
                 <h5><b>Año:</b><br> {{ $vehiculo->year }}</h5>
                 <hr>
 
-                <h5><b>Precio Venta:</b><br> {{ $vehiculo->precio_venta }} MXN</h5>
+                <h5><b>Precio Venta:</b><br> @money($vehiculo->precio_venta) MXN</h5>
                 <hr>
 
                 @if ($vehiculo->placa)
@@ -39,7 +44,41 @@
             </div>
             <div class="col-9">
 
+                <div class="m-2">
+                    <button class="btn btn-primary btn-xs" wire:click="saveGastos"><i class="fa fa-save"></i> Guardar</button>
+                    <button class="btn btn-success btn-xs" wire:click="addGasto"><i class="fa fa-plus"></i> Agregar</button>
+                </div>
 
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="5%"></th>
+                            <th>Concepto</th>
+                            <th width="20%">Estimacion</th>
+                            <th width="20%">Costo Real</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($vehiculo->gastos as $gasto)
+                            <tr>
+                                <td><button class="btn btn-danger btn-xs" onclick="destroy({{$gasto->id}}, 'Gasto', 'deleteGasto')" ><i class="fa fa-times"></i></button></td>
+                                <td>
+                                    <input wire:model.defer="vehiculo.gastos.{{$loop->index}}.descripcion" type="text" class="form-control" />
+                                    @error('vehiculo.gastos.'.$loop->index.'.descripcion') <span class="text-danger">{{ $message }}</span> @enderror
+                                </td>
+                                <td>
+                                    <input wire:model.defer="vehiculo.gastos.{{$loop->index}}.estimacion" type="text" style="text-align: right;" class="form-control" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
+                                    @error('vehiculo.gastos.'.$loop->index.'.estimacion') <span class="text-danger">{{ $message }}</span> @enderror
+                                </td>
+                                <td>
+                                    <input wire:model.defer="vehiculo.gastos.{{$loop->index}}.monto" type="text" style="text-align: right;" class="form-control" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
+                                    @error('vehiculo.gastos.'.$loop->index.'.monto') <span class="text-danger">{{ $message }}</span> @enderror
+
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
 
             </div>
         </div>

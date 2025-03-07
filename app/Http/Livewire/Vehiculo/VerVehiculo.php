@@ -16,7 +16,14 @@ class VerVehiculo extends Component
 
     public $vehiculo;
     public $lastUrl;
+
+    // public $gastos;
     
+    protected $rules = [
+        'vehiculo.gastos.*.descripcion' => 'required|string|max:255',
+        'vehiculo.gastos.*.estimacion' => 'required|numeric',
+        'vehiculo.gastos.*.monto' => 'required|numeric',
+    ];
 
     protected $listeners = [
         'deleteGasto',
@@ -31,6 +38,8 @@ class VerVehiculo extends Component
         $this->contratoFecha = now()->format('Y-m-d');
         $this->lastUrl = url()->previous();
         $this->vehiculo = Vehiculo::findOrFail($id);
+
+        // $this->gastos = $this->vehiculo->gastos;
     }
 
     public function render()
@@ -40,6 +49,28 @@ class VerVehiculo extends Component
 
     public function back(){
         return redirect()->to($this->lastUrl);
+    }
+
+    public function saveGastos(){
+        $this->validate();
+
+        foreach ($this->vehiculo->gastos as $gasto) {
+            $gasto->save();
+        }
+        
+        $this->emit('ok', 'Se han guardado gastos');
+    }
+
+    public function addGasto(){
+        $this->vehiculo->gastos()->create([
+            'fecha' => now(),
+            'estimacion' => 0,
+            'monto' => 0,
+            'descripcion' => '',
+        ]);
+
+        // $this->gastos = $this->vehiculo->gastos;
+        $this->vehiculo->load('gastos');
     }
 
 

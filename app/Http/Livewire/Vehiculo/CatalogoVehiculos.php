@@ -19,9 +19,6 @@ class CatalogoVehiculos extends Component
     public $placas;
     public $factura;
     public $pedimento;
-    public $costo;
-    public $flete;
-    public $importacion;
     public $precio_venta;
 
     protected $rules = [
@@ -33,9 +30,6 @@ class CatalogoVehiculos extends Component
         'placas' => 'nullable',
         'factura' => 'nullable',
         'pedimento' => 'nullable',
-        'costo' => 'required',
-        'flete' => 'required',
-        'importacion' => 'required',
         'precio_venta' => 'required',
     ];
 
@@ -70,9 +64,6 @@ class CatalogoVehiculos extends Component
             'placas' => $this->placas,
             'factura' => $this->factura,
             'pedimento' => $this->pedimento,
-            'costo' => $this->costo,
-            'flete' => $this->flete,
-            'importacion' => $this->importacion,
             'precio_venta' => $this->precio_venta,
             'estado' => 'DISPONIBLE',
         ]);
@@ -86,9 +77,6 @@ class CatalogoVehiculos extends Component
             'placas',
             'factura',
             'pedimento',
-            'costo',
-            'flete',
-            'importacion',
             'precio_venta',
         ]);
 

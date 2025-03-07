@@ -49,6 +49,7 @@ class RouteServiceProvider extends ServiceProvider
                 'api-tickets.php',
                 'aos.php',
                 'web.php',
+                'chat.php',
                 'users.php',
                 'fotos.php',
                 'clientes.php',

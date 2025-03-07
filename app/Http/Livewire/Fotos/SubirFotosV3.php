@@ -85,4 +85,13 @@ class SubirFotosV3 extends Component
         $foto->delete();
         $this->model->load('fotos');
     }
+
+    public function changeScope($id){
+        $foto = Foto::findOrFail($id);
+        $foto->update(['public' => !$foto->public]);
+        $this->model->load('fotos');
+
+        $state = $foto->public ? 'pública' : 'privada';
+        $this->emit('ok', 'Se ha cambiado a foto ' . $state);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\shared\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class Vehiculo extends BaseModel
 {
@@ -18,12 +19,26 @@ class Vehiculo extends BaseModel
         'serie',
         'factura',
         'pedimento',
-        'costo',
-        'flete',
-        'importacion',
         'precio_venta',
         'estado',
+        'slug',
+        'descripcion_venta'
     ];
+
+    // boot and generate slug
+    protected static function boot(){
+        parent::boot();
+        static::creating(function($vehiculo){
+            $vehiculo->slug = $vehiculo->generateSlug($vehiculo->descripcion);
+        });
+    }
+
+    //create slug from descripcion
+    public function generateSlug($descripcion){
+        $slug = Str::slug($descripcion);
+        $count = Vehiculo::whereRaw("slug RLIKE '^{$slug}(-[0-9]+)?$'")->count();
+        return $count ? "{$slug}-{$count}" : $slug;
+    }
 
     public function partes(){
         return $this->hasMany(VehiculoParte::class);

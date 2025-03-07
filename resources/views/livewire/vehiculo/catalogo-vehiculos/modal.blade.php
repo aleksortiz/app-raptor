@@ -73,7 +73,7 @@
                 <div class="row">
 
 
-                    <div class="col-12 col-md-5">
+                    <div class="col-12 col-md-4">
                         <div class="form-group">
                             <label for="factura">Factura</label>
                             <input type="text" wire:model.lazy="factura" class="form-control" id="factura" placeholder="Factura">
@@ -87,33 +87,6 @@
                             @error('pedimento') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                     </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-12 col-md-3">
-                        <div class="form-group">
-                            <label for="costo">Costo</label>
-                            <input onkeypress="return event.charCode >= 46 && event.charCode <= 57" type="text" wire:model.lazy="costo" class="form-control" id="costo" placeholder="Costo">
-                            @error('costo') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-3">
-                        <div class="form-group">
-                            <label for="flete">Flete</label>
-                            <input onkeypress="return event.charCode >= 46 && event.charCode <= 57" type="text" wire:model.lazy="flete" class="form-control" id="flete" placeholder="Flete">
-                            @error('flete') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-                    </div>
-
-                    <div class="col-12 col-md-3">
-                        <div class="form-group">
-                            <label for="importacion">Importación</label>
-                            <input onkeypress="return event.charCode >= 46 && event.charCode <= 57" type="text" wire:model.lazy="importacion" class="form-control" id="importacion" placeholder="Importación">
-                            @error('importacion') <small class="text-danger">{{ $message }}</small> @enderror
-                        </div>
-                    </div>
-
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="precio_venta">Precio Venta</label>
@@ -121,8 +94,9 @@
                             @error('precio_venta') <small class="text-danger">{{ $message }}</small> @enderror
                         </div>
                     </div>
-                    
                 </div>
+
+                
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" data-dismiss="modal" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
