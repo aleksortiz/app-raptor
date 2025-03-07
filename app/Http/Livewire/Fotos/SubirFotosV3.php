@@ -61,7 +61,7 @@ class SubirFotosV3 extends Component
                 $bucket = env('AWS_BUCKET_URL');
     
                 $thumbImage = Image::make($image)
-                ->resize(1200, null, function ($constraint) {
+                ->resize(600, null, function ($constraint) {
                     $constraint->aspectRatio(); // Mantiene la proporción
                     $constraint->upsize(); // No aumenta el tamaño si es menor a 1200px
                 })
