@@ -19,8 +19,14 @@
                 <h5><b>Año:</b><br> {{ $vehiculo->year }}</h5>
                 <hr>
 
-                <h5><b>Precio Venta:</b><br> @money($vehiculo->precio_venta) MXN</h5>
+                <h5><b>Precio Venta:</b><br> @money($vehiculo->precio_venta) {{$this->vehiculo->moneda}}</h5>
                 <hr>
+
+                @if ($this->vehiculo->moneda == 'USD')
+                    <h5><b>Precio en MXN:</b><br> @money($vehiculo->precio_venta_mxn) MXN</h5>
+                    <hr>
+                @endif
+                
 
                 @if ($vehiculo->placa)
                     <h5><b>Placa:</b><br> {{ $vehiculo->placa }}</h5>
@@ -87,8 +93,28 @@
 
 
                 <div class="m-2">
-                    <button class="btn btn-primary btn-xs" wire:click="saveGastos"><i class="fa fa-save"></i> Guardar</button>
-                    <button class="btn btn-success btn-xs" wire:click="addGasto"><i class="fa fa-plus"></i> Agregar</button>
+                    <div class="row">
+                        <div class="col-8">
+                            <button class="btn btn-primary btn-xs" wire:click="saveGastos"><i class="fa fa-save"></i> Guardar</button>
+                            <button class="btn btn-success btn-xs" wire:click="addGasto"><i class="fa fa-plus"></i> Agregar</button>
+                        </div>
+
+                        <div class="col-2">
+                            <select wire:model="vehiculo.moneda" class="form-control pull-right" style="width: 150px;">
+                                <option value="MXN">Pesos MXN</option>
+                                <option value="USD">Dolares USD</option>
+                            </select>
+                        </div>
+
+                        @if ($this->vehiculo->moneda == 'USD')
+                            <div class="col-2">
+                                <input wire:model.defer="vehiculo.cotizacion_usd" type="text" class="form-control pull-right" style="width: 150px; text-align: right" onkeypress="return event.charCode >= 46 && event.charCode <= 57" placeholder="Tipo de Cambio" />
+                                @error('vehiculo.cotizacion_usd') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+                            
+                        @endif
+
+                    </div>
                 </div>
 
                 <table class="table table-hover">

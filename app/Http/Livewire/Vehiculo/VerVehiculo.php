@@ -26,6 +26,8 @@ class VerVehiculo extends Component
         'vehiculo.gastos.*.descripcion' => 'required|string|max:255',
         'vehiculo.gastos.*.estimacion' => 'required|numeric',
         'vehiculo.gastos.*.monto' => 'required|numeric',
+        'vehiculo.moneda' => 'required|string|max:3',
+        'vehiculo.cotizacion_usd' => 'required|numeric',
     ];
 
     protected $listeners = [
@@ -96,5 +98,9 @@ class VerVehiculo extends Component
         $this->reset('emailAddress');
     }
 
+    //TODO: notas agarre carros a cuenta
+    //TODO: clientes catalogo
+    //TODO: agregaste carros a cuenta? y senalar en contrato
+    //TODO: ver status de vehiculo
 
 }

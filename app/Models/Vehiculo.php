@@ -24,7 +24,9 @@ class Vehiculo extends BaseModel
         'precio_venta',
         'estado',
         'slug',
-        'descripcion_venta'
+        'descripcion_venta',
+        'moneda',
+        'cotizacion_usd',
     ];
 
     // boot and generate slug
@@ -113,5 +115,15 @@ class Vehiculo extends BaseModel
     public function sendMail($address){
         $mailable = new VehiculoVentaMailable($this);
         Mail::to($address)->queue($mailable);
+    }
+
+    public function getPrecioVentaMxnAttribute(){
+        if($this->moneda == 'MXN'){
+            return $this->precio_venta;
+        }
+        if(!$this->cotizacion_usd || $this->cotizacion_usd <= 0){
+            return $this->precio_venta;
+        }
+        return $this->precio_venta * $this->cotizacion_usd;
     }
 }
