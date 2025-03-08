@@ -17,6 +17,9 @@ class VerVehiculo extends Component
     public $vehiculo;
     public $lastUrl;
 
+    public $descripcionVenta;
+    public $emailAddress;
+
     // public $gastos;
     
     protected $rules = [
@@ -38,6 +41,7 @@ class VerVehiculo extends Component
         $this->contratoFecha = now()->format('Y-m-d');
         $this->lastUrl = url()->previous();
         $this->vehiculo = Vehiculo::findOrFail($id);
+        $this->descripcionVenta = $this->vehiculo->descripcion_venta;
 
         // $this->gastos = $this->vehiculo->gastos;
     }
@@ -71,6 +75,27 @@ class VerVehiculo extends Component
 
         // $this->gastos = $this->vehiculo->gastos;
         $this->vehiculo->load('gastos');
+    }
+
+    public function saveDescripcionVenta(){
+        $this->vehiculo->descripcion_venta = $this->descripcionVenta;
+        $this->vehiculo->save();
+        $this->emit('ok', 'Se ha guardado la descripción de venta');
+    }
+
+    public function mdlSendMail(){
+        $this->emit('showModal', '#mdlSendMail');
+    }
+
+    public function sendMail(){
+        $this->validate([
+            'emailAddress' => 'required',
+        ]);
+
+        $this->vehiculo->sendMail($this->emailAddress);
+        $this->emit('ok', 'Correo enviado');
+        $this->emit('closeModal', '#mdlSendMail');
+        $this->reset('emailAddress');
     }
 
 

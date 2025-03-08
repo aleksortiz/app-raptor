@@ -47,6 +47,7 @@
 
     @include('livewire.vehiculo.ver-vehiculo.modals.mdl-create-gasto')
     @include('livewire.vehiculo.ver-vehiculo.modals.mdl-create-parte')
+    @include('livewire.vehiculo.ver-vehiculo.modals.mdl-send-mail')
 
 
     {{-- @include('livewire.entrada.ver-entrada.modals.mdl-refacciones')

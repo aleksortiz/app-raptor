@@ -4,8 +4,10 @@
             <div class="col-3">
 
                 <div class="p-3">
-                    <a class="btn btn-success btn-md" target="_blank" href="https://web.whatsapp.com/send?text=¡Mira%20este {{$this->vehiculo->descripcion}}!%20{{ url("vehiculos/share/" . $this->vehiculo->id) }}"><i class="fab fa-whatsapp"></i> Enviar Whatsapp</a>
-                    <button class="btn btn-primary btn-md" wire:click="shareWhatsapp"><i class="fa fa-envelope"></i> Enviar Correo</button>
+                    <button class="btn btn-warning btn-xs" wire:click="mdlSendMail"><i class="fa fa-envelope"></i> Enviar Correo</button>
+                    <a class="btn btn-success btn-xs" target="_blank" href="https://web.whatsapp.com/send?text=¡Mira%20este {{$this->vehiculo->descripcion}}!%20{{ url("vehiculos/share/" . $this->vehiculo->id) }}"><i class="fab fa-whatsapp"></i> Whatsapp</a>
+                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url("vehiculos/share/" . $this->vehiculo->id) }}" target="_blank" class="btn btn-xs btn-primary"><i class="fab fa-facebook"></i> Facebook</a>
+                    <a class="btn btn-secondary btn-xs" target="_blank" href="{{ url("vehiculos/share/" . $this->vehiculo->id) }}"><i class="fa fa-eye"></i> Ver</a>
                 </div>
 
                 <h5><b>Marca:</b><br>{{ $vehiculo->marca }}</h5>
@@ -40,9 +42,49 @@
                     <hr>
                 @endif
 
+                <h5><b>Descripción de Venta:</b></h5>
+                <textarea wire:model.defer="descripcionVenta" style="resize: none;" class="form-control" rows="4"></textarea>
+                <button wire:click="saveDescripcionVenta" class="btn btn-primary btn-xs mt-2"><i class="fa fa-save"></i> Guardar</button>
+                <hr>
+
 
             </div>
             <div class="col-9">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-dollar-sign"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Costos</b></span>
+                                <span class="info-box-number">@money($this->vehiculo->total_gastos)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-wrench"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Partes</b></span>
+                                <span class="info-box-number">@money($this->vehiculo->total_partes)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="info-box">
+                            <span class="info-box-icon bg-success elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Utilidad</b></span>
+                                <span class="info-box-number">@money($this->vehiculo->utilidad_final)</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
 
                 <div class="m-2">
                     <button class="btn btn-primary btn-xs" wire:click="saveGastos"><i class="fa fa-save"></i> Guardar</button>

@@ -60,7 +60,7 @@
                 {{-- <center> --}}
                     <div class="mt-2 grid-container">
                         @if ($this->vehiculo->fotos_publicas->isEmpty())
-                            <h3 class="p-3 text-center text-info">No hay fotos disponibles</h3>
+                            <h3 class="p-3 text-center text-danger">No hay fotos disponibles</h3>
                         @endif
                         
                         @foreach ($this->vehiculo->fotos_publicas ?? [] as $image)
@@ -69,11 +69,19 @@
                     </div>
                 {{-- </center> --}}
 
-                {{-- description --}}
-                <div class="mt-3">
-                    <h3>Mas detalles:</h3>
-                    <p class="text-center">{{ $this->vehiculo->descripcion_venta }}</p>
-                </div>
+
+                @if ($this->vehiculo->descripcion_venta)
+                    <div class="mt-3">
+                        <h3>Más detalles:</h3>
+                        <p class="text-center">{{ $this->vehiculo->descripcion_venta }}</p>
+                    </div>
+                @endif
+
+                <center class="mt-5">
+                    <a class="btn btn-success btn-lg" href="https://wa.me/5216563817465?text=Hola,%20me%20gustaría%20obtener%20más%20información." target="_blank">
+                        <i class="fab fa-whatsapp fa-2x"></i> Pedir Información
+                    </a>
+                </center>
             </div>
         </div>
     </center>

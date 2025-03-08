@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Mail\VehiculoVentaMailable;
 use App\Models\shared\BaseModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class Vehiculo extends BaseModel
@@ -98,5 +100,14 @@ class Vehiculo extends BaseModel
 
     public function getTotalPartesAttribute(){
         return $this->partes->sum('importe');
+    }
+
+    public function getUtilidadFinalAttribute(){
+        return $this->precio_venta - $this->totalGastos - $this->totalPartes;
+    }
+
+    public function sendMail($address){
+        $mailable = new VehiculoVentaMailable($this);
+        Mail::to($address)->queue($mailable);
     }
 }
