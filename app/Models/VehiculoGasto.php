@@ -25,4 +25,12 @@ class VehiculoGasto extends BaseModel
     public function setDescripcionAttribute($value){
         $this->attributes['descripcion'] = trim(strtoupper($value));
     }
+
+    public function getMontoAttribute(){
+        return $this->attributes['monto'] ? number_format($this->attributes['monto'], 2) : 0;
+    }
+
+    public function getEstimacionAttribute(){
+        return $this->attributes['estimacion'] ? number_format($this->attributes['estimacion'], 2) : 0;
+    }
 }

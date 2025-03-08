@@ -80,9 +80,19 @@
 
                     <div class="col">
                         <div class="info-box">
+                            <span class="info-box-icon bg-info elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text"><b>Utilidad Estimada</b></span>
+                                <span class="info-box-number">@money($this->vehiculo->utilidad_estimada)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="info-box">
                             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-hand-holding-usd"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text"><b>Utilidad</b></span>
+                                <span class="info-box-text"><b>Utilidad Real</b></span>
                                 <span class="info-box-number">@money($this->vehiculo->utilidad_final)</span>
                             </div>
                         </div>
@@ -128,6 +138,12 @@
                     </thead>
                     <tbody>
                         @foreach ($vehiculo->gastos as $gasto)
+                            @php
+                                $estimacion = $this->vehiculo->gastos[$loop->index]->estimacion;
+                                $monto = $this->vehiculo->gastos[$loop->index]->monto;
+                                $isEstimacionValid = (!empty($estimacion) && intval($estimacion) > 0) ? 'success' : 'danger';
+                                $isMontoValid = (!empty($monto) && intval($monto) > 0) ? 'success' : 'danger';
+                            @endphp
                             <tr>
                                 <td><button class="btn btn-danger btn-xs" onclick="destroy({{$gasto->id}}, 'Gasto', 'deleteGasto')" ><i class="fa fa-times"></i></button></td>
                                 <td>
@@ -135,11 +151,11 @@
                                     @error('vehiculo.gastos.'.$loop->index.'.descripcion') <span class="text-danger">{{ $message }}</span> @enderror
                                 </td>
                                 <td>
-                                    <input wire:model.defer="vehiculo.gastos.{{$loop->index}}.estimacion" type="text" style="text-align: right;" class="form-control" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
+                                    <input wire:model.defer="vehiculo.gastos.{{$loop->index}}.estimacion" type="text" style="text-align: right;" class="form-control border-{{ $isEstimacionValid }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
                                     @error('vehiculo.gastos.'.$loop->index.'.estimacion') <span class="text-danger">{{ $message }}</span> @enderror
                                 </td>
                                 <td>
-                                    <input wire:model.defer="vehiculo.gastos.{{$loop->index}}.monto" type="text" style="text-align: right;" class="form-control" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
+                                    <input wire:model.defer="vehiculo.gastos.{{$loop->index}}.monto" type="text" style="text-align: right;" class="form-control border-{{ $isMontoValid }}" onkeypress="return event.charCode >= 46 && event.charCode <= 57" />
                                     @error('vehiculo.gastos.'.$loop->index.'.monto') <span class="text-danger">{{ $message }}</span> @enderror
 
                                 </td>

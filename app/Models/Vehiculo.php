@@ -112,6 +112,10 @@ class Vehiculo extends BaseModel
         return $this->precio_venta - $this->totalGastos - $this->totalPartes;
     }
 
+    public function getUtilidadEstimadaAttribute(){
+        return $this->precio_venta - $this->totalGastosEstimacion - $this->totalPartes;
+    }
+
     public function sendMail($address){
         $mailable = new VehiculoVentaMailable($this);
         Mail::to($address)->queue($mailable);
