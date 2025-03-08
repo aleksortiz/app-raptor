@@ -98,6 +98,10 @@ class Vehiculo extends BaseModel
         return $this->gastos->sum('monto');
     }
 
+    public function getTotalGastosEstimacionAttribute(){
+        return $this->gastos->sum('estimacion');
+    }
+
     public function getTotalPartesAttribute(){
         return $this->partes->sum('importe');
     }

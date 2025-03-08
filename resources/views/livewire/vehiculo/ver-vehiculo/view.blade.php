@@ -10,7 +10,7 @@
                     <li class="nav-item"><a class="nav-link" style="cursor: pointer;" wire:click="back"><i class="fas fa-long-arrow-alt-left"></i> Regresar</a></li>
                     <li class="nav-item"><a class="nav-link {{ $tab == '' ? 'active' : '' }}" wire:click="$set('tab','')" style="cursor: pointer;"><i class="fas fa-car"></i> Info Gral.</a></li>
                     <li class="nav-item"><a class="nav-link {{ $tab == 'fotos' ? 'active' : '' }}" wire:click="$set('tab','fotos')" style="cursor: pointer;"><i class="fas fa-camera"></i> Fotos</a></li>
-                    <li class="nav-item"><a class="nav-link {{ $tab == 'refacciones' ? 'active' : '' }}" wire:click="$set('tab','refacciones')" style="cursor: pointer;"><i class="fas fa-cubes"></i> Partes / Refacciones</a></li>
+                    {{-- <li class="nav-item"><a class="nav-link {{ $tab == 'refacciones' ? 'active' : '' }}" wire:click="$set('tab','refacciones')" style="cursor: pointer;"><i class="fas fa-cubes"></i> Partes / Refacciones</a></li> --}}
                     {{-- <li class="nav-item"><a class="nav-link {{ $tab == 'gastos' ? 'active' : '' }}" wire:click="$set('tab','gastos')" style="cursor: pointer;"><i class="fas fa-hand-holding-usd"></i> Otros Gastos</a></li> --}}
                     <li class="nav-item"><a class="nav-link {{ $tab == 'compra-venta' ? 'active' : '' }}" wire:click="$set('tab','compra-venta')" style="cursor: pointer;"><i class="fas fa-handshake"></i> Compra / Venta</a></li>
                 </ul>
@@ -27,9 +27,9 @@
                         @include('livewire.vehiculo.ver-vehiculo.tabs.tab-fotos')
                     </div>
 
-                    <div class="tab-pane {{ $tab == 'refacciones' ? 'active' : '' }}">
+                    {{-- <div class="tab-pane {{ $tab == 'refacciones' ? 'active' : '' }}">
                         @include('livewire.vehiculo.ver-vehiculo.tabs.tab-refacciones')
-                    </div>
+                    </div> --}}
 
                     {{-- <div class="tab-pane {{ $tab == 'gastos' ? 'active' : '' }}">
                         @include('livewire.vehiculo.ver-vehiculo.tabs.tab-gastos')

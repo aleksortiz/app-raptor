@@ -56,8 +56,8 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-primary elevation-1"><i class="fas fa-dollar-sign"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text"><b>Costos</b></span>
-                                <span class="info-box-number">@money($this->vehiculo->total_gastos)</span>
+                                <span class="info-box-text"><b>Costos Estimados</b></span>
+                                <span class="info-box-number">@money($this->vehiculo->total_gastos_estimados)</span>
                             </div>
                         </div>
                     </div>
@@ -66,8 +66,8 @@
                         <div class="info-box">
                             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-wrench"></i></span>
                             <div class="info-box-content">
-                                <span class="info-box-text"><b>Partes</b></span>
-                                <span class="info-box-number">@money($this->vehiculo->total_partes)</span>
+                                <span class="info-box-text"><b>Costos Reales</b></span>
+                                <span class="info-box-number">@money($this->vehiculo->total_gastos)</span>
                             </div>
                         </div>
                     </div>

@@ -42,8 +42,6 @@ class VerVehiculo extends Component
         $this->lastUrl = url()->previous();
         $this->vehiculo = Vehiculo::findOrFail($id);
         $this->descripcionVenta = $this->vehiculo->descripcion_venta;
-
-        // $this->gastos = $this->vehiculo->gastos;
     }
 
     public function render()
