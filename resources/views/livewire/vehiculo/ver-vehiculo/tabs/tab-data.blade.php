@@ -64,7 +64,7 @@
 
                     <div class="col">
                         <div class="info-box">
-                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-wrench"></i></span>
+                            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-dollar-sign"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text"><b>Costos Reales</b></span>
                                 <span class="info-box-number">@money($this->vehiculo->total_gastos)</span>
