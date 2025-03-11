@@ -49,7 +49,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->descripcion }}</td>
                             <td>{{ $item->serie }}</td>
-                            <td>{{ $item->placas }}</td>
+                            <td>{{ $item->placa }}</td>
                             <td>{{ $item->factura }}</td>
                             <td>{{ $item->pedimento }}</td>
                             <td>-----</td>

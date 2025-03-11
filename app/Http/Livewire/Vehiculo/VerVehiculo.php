@@ -6,6 +6,7 @@ use App\Http\Livewire\Vehiculo\Traits\CreateContratoTrait;
 use App\Http\Livewire\Vehiculo\Traits\CreateGastoTrait;
 use App\Http\Livewire\Vehiculo\Traits\CreateParteTrait;
 use App\Models\Vehiculo;
+use Illuminate\Support\Facades\File;
 use Livewire\Component;
 
 class VerVehiculo extends Component
@@ -28,6 +29,16 @@ class VerVehiculo extends Component
         'vehiculo.gastos.*.monto' => 'required|numeric',
         'vehiculo.moneda' => 'required|string|max:3',
         'vehiculo.cotizacion_usd' => 'required|numeric',
+
+        'vehiculo.marca' => 'required',
+        'vehiculo.modelo' => 'required',
+        'vehiculo.year' => 'required',
+        'vehiculo.color' => 'required',
+        'vehiculo.serie' => 'nullable',
+        'vehiculo.placa' => 'nullable',
+        'vehiculo.factura' => 'nullable',
+        'vehiculo.pedimento' => 'nullable',
+        'vehiculo.precio_venta' => 'required',
     ];
 
     protected $listeners = [
@@ -48,7 +59,17 @@ class VerVehiculo extends Component
 
     public function render()
     {
-        return view('livewire.vehiculo.ver-vehiculo.view');
+        return view('livewire.vehiculo.ver-vehiculo.view', $this->getRenderData());
+    }
+
+    public function getRenderData(){
+        $path = base_path('app/Data');
+        $marcas = json_decode(File::get("$path/marcas.json"), true);
+        $modelos = json_decode(File::get("$path/modelos.json"), true);
+        return [
+            'marcas' => $marcas,
+            'modelos' => $modelos,
+        ];
     }
 
     public function back(){
@@ -98,9 +119,29 @@ class VerVehiculo extends Component
         $this->reset('emailAddress');
     }
 
+    public function saveData(){
+        $this->validate([
+            'vehiculo.marca' => 'required',
+            'vehiculo.modelo' => 'required',
+            'vehiculo.year' => 'required',
+            'vehiculo.color' => 'required',
+            'vehiculo.serie' => 'nullable',
+            'vehiculo.placa' => 'nullable',
+            'vehiculo.factura' => 'nullable',
+            'vehiculo.pedimento' => 'nullable',
+            'vehiculo.precio_venta' => 'required',
+        ]);
+
+        $this->vehiculo->save();
+        $this->emit('closeModal', '#mdlEdit');
+        $this->emit('ok', 'Se han guardado los datos');
+    }
+
     //TODO: notas agarre carros a cuenta
     //TODO: clientes catalogo
     //TODO: agregaste carros a cuenta? y senalar en contrato
     //TODO: ver status de vehiculo
+    //TODO: Numero de Lote
+    //TODO: Editar y Fecha de venta
 
 }

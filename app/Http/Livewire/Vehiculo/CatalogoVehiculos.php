@@ -16,7 +16,7 @@ class CatalogoVehiculos extends Component
     public $year;
     public $color;
     public $serie;
-    public $placas;
+    public $placa;
     public $factura;
     public $pedimento;
     public $precio_venta;
@@ -27,7 +27,7 @@ class CatalogoVehiculos extends Component
         'year' => 'required',
         'color' => 'required',
         'serie' => 'nullable',
-        'placas' => 'nullable',
+        'placa' => 'nullable',
         'factura' => 'nullable',
         'pedimento' => 'nullable',
         'precio_venta' => 'required',
@@ -61,7 +61,7 @@ class CatalogoVehiculos extends Component
             'year' => $this->year,
             'color' => $this->color,
             'serie' => $this->serie,
-            'placas' => $this->placas,
+            'placa' => $this->placa,
             'factura' => $this->factura,
             'pedimento' => $this->pedimento,
             'precio_venta' => $this->precio_venta,
@@ -74,7 +74,7 @@ class CatalogoVehiculos extends Component
             'year',
             'color',
             'serie',
-            'placas',
+            'placa',
             'factura',
             'pedimento',
             'precio_venta',
