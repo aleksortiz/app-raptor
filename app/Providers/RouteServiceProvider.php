@@ -53,6 +53,7 @@ class RouteServiceProvider extends ServiceProvider
                 'users.php',
                 'fotos.php',
                 'clientes.php',
+                'facturacion.php',
                 'personal.php',
                 'test.php',
                 'proveedores.php',

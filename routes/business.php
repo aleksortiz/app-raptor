@@ -22,9 +22,5 @@ Route::middleware(['auth'])->group(function(){
         return view('livewire.business.capturar-egresos.index');
     });
 
-    Route::get('control-facturacion', function(){
-        return view('livewire.control-facturacion.index');
-    });
-
 });
 

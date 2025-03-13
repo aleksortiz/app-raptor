@@ -16,7 +16,8 @@
     @include('livewire.control-facturacion.mdl-registro-factura')
 
 
-    <h5><i class="fa fa-car"></i> Entradas Pendientes ({{ $entradas->count() }})</h5>
+    <h5><i class="fa fa-car"></i> Entradas Pendientes ({{ $entradas->count() }}) / <a href="/control-facturacion/facturas-registradas" ><i class="fa fa-file-alt"></i> Facturas Registradas</a></h5>
+
     <div>
         <div class="form-row">
             <div class="form-group col-md-3">
