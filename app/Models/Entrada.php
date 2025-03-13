@@ -136,6 +136,10 @@ class Entrada extends BaseModel
         return [$start, $end];
     }
 
+    public function getNumeroReporteAttribute(){
+        return $this->orden;
+    }
+
     public function getFolioShortAttribute()
     {
         $year = Carbon::today()->format('y');
