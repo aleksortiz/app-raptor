@@ -17,6 +17,14 @@
 
 
     <h5><i class="fa fa-car"></i> Entradas Pendientes ({{ $entradas->count() }})</h5>
+    <div>
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="search">Buscar</label>
+                <input type="text" class="form-control" id="search" wire:model="search">
+            </div>
+        </div>
+    </div>
     <table class="mt-3 table table-hover">
         <thead>
             <tr>

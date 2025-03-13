@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Entrada;
 use App\Models\Refaccion;
 use App\Models\RegistroFactura;
+use Illuminate\Support\Facades\DB;
 // use App\Models\Venta;
 use Livewire\Component;
 
@@ -18,6 +19,9 @@ class ControlFacturacion extends Component
     public $monto;
     public $notas;
     public $fecha_pago;
+    
+    public $search;
+
 
     protected $rules = [
         'numero_factura' => 'required',
@@ -40,11 +44,28 @@ class ControlFacturacion extends Component
 
     public function getRenderData()
     {
-        $entradas = Entrada::whereDoesntHave('registros_factura')->get();
-        // $refacciones = Refaccion::whereDoesntHave('registros_factura')->where('proveedor_id', 1)->get();
+        $entradas = Entrada::whereDoesntHave('registros_factura');
+        $this->search = trim($this->search);
+
+        if($this->search != ''){
+            $entradas->where(function ($q){
+                $q->orWhere('modelo', 'LIKE', "%{$this->search}%")
+                ->orWhereHas('fabricante', function($fab){
+                    $fab->where('nombre', 'LIKE', "%{$this->search}%");
+                })
+                ->orWhereHas('cliente', function($fab){
+                    $fab->where('nombre', 'LIKE', "%{$this->search}%");
+                })
+                ->orWhere('folio', 'LIKE', "{$this->search}%")
+                ->orWhere('serie', 'LIKE', "{$this->search}%")
+                ->orWhere('orden', 'LIKE', "{$this->search}%")
+                ->orWhere(DB::raw('REPLACE(orden, " ", "")'), 'LIKE', trim($this->search).'%');
+            });
+        }
+        
 
         return [
-            'entradas' => $entradas,
+            'entradas' => $entradas->get(),
             // 'refacciones' => $refacciones
         ];
     }
