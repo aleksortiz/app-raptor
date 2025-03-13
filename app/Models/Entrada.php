@@ -140,6 +140,11 @@ class Entrada extends BaseModel
         return $this->orden;
     }
 
+    public function getFolioButtonAttribute()
+    {
+        return '<a href="/servicios/'. $this->id .'" target="_blank" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> ' . $this->folio_short . '</a>';
+    }
+
     public function getFolioShortAttribute()
     {
         $year = Carbon::today()->format('y');
