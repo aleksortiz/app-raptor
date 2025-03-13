@@ -304,12 +304,12 @@ return [
                     'url' => '/control-facturacion',
                     'can' => ['reporte-facturas'],
                 ],
-                [
-                    'text' => 'Reporte de Facturas',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url' => '/control-facturas',
-                    'can' => ['reporte-facturas'],
-                ],
+                // [
+                //     'text' => 'Reporte de Facturas',
+                //     'icon'   => 'fas fa-fw fa-chevron-right',
+                //     'url' => '/control-facturas',
+                //     'can' => ['reporte-facturas'],
+                // ],
                 [
                     'text' => 'Depósitos',
                     'icon'   => 'fas fa-fw fa-chevron-right',

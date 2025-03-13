@@ -81,63 +81,38 @@
                   <a href="/registro-inventario?entradaId={{$this->entrada->id}}" class="btn btn-secondary"><i class="fa fa-plus"></i> Crear Inventario</a>
                 @endif
 
-                {{-- <div class="row">
-
-                    @if ($entrada->refacciones->count() > 0)
-                        @if ($entrada->fecha_pago_refacciones)
-                            <div class="col-3">
-                                <label for="">Fecha de pago refacciones</label>
-                                <h6 style="cursor: pointer;" wire:click="editFechaPagoRefacciones">
-                                    {{ $entrada->fecha_pago_refacciones }}</h6>
+                <div class="mt-5">
+                    @if($this->entrada->registros_factura->count() > 0)
+                        <div class="row">
+                            <div class="col">
+                                <h5>Facturas Realizadas</h5>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Número de Factura</th>
+                                            <th>Monto</th>
+                                            <th>Notas</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($this->entrada->registros_factura as $item)
+                                            <tr>
+                                                <td>{{ $item->fecha_creacion }}</td>
+                                                <td>{{ $item->numero_factura }}</td>
+                                                <td>@money($item->monto)</td>
+                                                <td>{{ $item->notas ? $item->notas : "N/A" }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
-                        @else
-                            <div class="col-3">
-                                <button class="btn btn-secondary btn-sm" wire:click="pagarRefacciones"><i
-                                        class="fas fa-wrench"></i> Pagar Refacciones</button>
-                            </div>
-                        @endif
-                    @endif
-
-
-                    @if ($entrada->fecha_entrega)
-                        <div class="col-3">
-                            <label for="">Fecha de Entrega</label>
-                            <h6 style="cursor: pointer;" wire:click="editFechaEntrega">
-                                {{ $entrada->fecha_entrega_format }}</h6>
                         </div>
+
                     @else
-                        <div class="col-3">
-                            <button class="btn btn-secondary btn-sm" wire:click="entregarVehiculo"><i
-                                    class="fas fa-car"></i> Entregar Vehículo</button>
-                        </div>
+                        <h5>**No se han registrado facturas**</h5>
                     @endif
-
-                    @if ($entrada->fecha_pago)
-                        <div class="col-3">
-                            <label for="">Fecha de Pago</label>
-                            <h6 style="cursor: pointer;" wire:click="editFechaPago">{{ $entrada->fecha_pago_format }}
-                            </h6>
-                        </div>
-                    @else
-                        <div class="col-3">
-                            <button class="btn btn-secondary btn-sm" wire:click="pagarEntrada"><i
-                                    class="fas fa-hand-holding-usd"></i> Pagar Entrada</button>
-                        </div>
-                    @endif
-
-
-
-
-
-
                 </div>
-                <br>
-
-                <h4>Areas de Trabajo</h4>
-                @include('livewire.entrada.ver-entrada.partials.car-layout') --}}
-
-                {{-- <h1>INVENTARIO: ***Pendiente***</h1> --}}
-
 
 
 

@@ -44,7 +44,8 @@ class ControlFacturacion extends Component
 
     public function getRenderData()
     {
-        $entradas = Entrada::whereDoesntHave('registros_factura');
+        $entradas = Entrada::orderBy('created_at', 'DESC')
+        ->whereDoesntHave('registros_factura');
         $this->search = trim($this->search);
 
         if($this->search != ''){
