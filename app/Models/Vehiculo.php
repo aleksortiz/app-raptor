@@ -27,6 +27,7 @@ class Vehiculo extends BaseModel
         'descripcion_venta',
         'moneda',
         'cotizacion_usd',
+        'numero_lote',
     ];
 
     // boot and generate slug

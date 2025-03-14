@@ -22,14 +22,18 @@
                     </a>
                 </div>
 
-                <h5><b>Marca:</b><br>{{ $vehiculo->marca }}</h5>
+                <h5><b>Vehículo:</b><br>{{ $vehiculo->descripcion }}</h5>
                 <hr>
 
-                <h5><b>Modelo:</b><br> {{ $vehiculo->modelo }}</h5>
-                <hr>
+                @if ($vehiculo->numero_lote)
+                    <h5><b>Número de Lote:</b><br> {{ $vehiculo->numero_lote }}</h5>
+                    <hr>
+                @endif
 
-                <h5><b>Año:</b><br> {{ $vehiculo->year }}</h5>
-                <hr>
+                @if ($vehiculo->estado)
+                    <h5><b>Estatus:</b><br> {{ $vehiculo->estado }}</h5>
+                    <hr>
+                @endif
 
                 <h5><b>Precio Venta:</b><br> @money($vehiculo->precio_venta) {{$this->vehiculo->moneda}}</h5>
                 <hr>

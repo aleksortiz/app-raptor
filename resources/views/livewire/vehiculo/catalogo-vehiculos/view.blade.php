@@ -40,7 +40,7 @@
                         <th>Placas</th>
                         <th>Factura</th>
                         <th>Pedimento</th>
-                        <th>Opciones</th>
+                        <th>Estatus</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -52,7 +52,7 @@
                             <td>{{ $item->placa }}</td>
                             <td>{{ $item->factura }}</td>
                             <td>{{ $item->pedimento }}</td>
-                            <td>-----</td>
+                            <td>{{ $item->estado }}</td>
                         </tr>
                     @endforeach
                 </tbody>

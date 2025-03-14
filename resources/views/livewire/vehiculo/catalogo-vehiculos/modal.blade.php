@@ -96,6 +96,24 @@
                     </div>
                 </div>
 
+                <div class="row">
+
+                    <div class="col-12 col-md-4">
+                        <div class="form-group">
+                            <label for="numero_lote">Número de Lote</label>
+                            <input type="text" wire:model.lazy="numero_lote" class="form-control" id="numero_lote" placeholder="Número de Lote">
+                            @error('numero_lote') <small class="text-danger">{{ $message }}</small> @enderror
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div class="form-group">
+                            <label for="estado">Estatus</label>
+                            <input type="text" wire:model.lazy="estado" class="form-control" id="estado" placeholder="Estatus">
+                            @error('estado') <small class="text-danger">{{ $message }}</small> @enderror
+                        </div>
+                    </div>
+                </div>
+
                 
             </div>
             <div class="modal-footer justify-content-between">

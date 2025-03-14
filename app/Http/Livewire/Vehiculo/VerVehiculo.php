@@ -40,6 +40,9 @@ class VerVehiculo extends Component
         'vehiculo.factura' => 'nullable',
         'vehiculo.pedimento' => 'nullable',
         'vehiculo.precio_venta' => 'required',
+        'vehiculo.numero_lote' => 'nullable',
+        'vehiculo.estado' => 'nullable',
+
     ];
 
     protected $listeners = [
@@ -132,6 +135,8 @@ class VerVehiculo extends Component
             'vehiculo.factura' => 'nullable',
             'vehiculo.pedimento' => 'nullable',
             'vehiculo.precio_venta' => 'required',
+            'vehiculo.numero_lote' => 'nullable',
+            'vehiculo.estado' => 'nullable',
         ]);
 
         $this->vehiculo->save();
@@ -139,11 +144,11 @@ class VerVehiculo extends Component
         $this->emit('ok', 'Se han guardado los datos');
     }
 
-    //TODO: notas agarre carros a cuenta
+    //**TODO: notas agarre carros a cuenta
     //TODO: clientes catalogo
-    //TODO: agregaste carros a cuenta? y senalar en contrato
-    //TODO: ver status de vehiculo
-    //TODO: Numero de Lote
+    //TODO: agregaste carros a cuenta y senalar en contrato
+    //**TODO: ver status de vehiculo
+    //**TODO: Numero de Lote
     //TODO: Editar y Fecha de venta
 
 }

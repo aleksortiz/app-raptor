@@ -20,6 +20,8 @@ class CatalogoVehiculos extends Component
     public $factura;
     public $pedimento;
     public $precio_venta;
+    public $numero_lote;
+    public $estado;
 
     protected $rules = [
         'marca' => 'required',
@@ -31,6 +33,8 @@ class CatalogoVehiculos extends Component
         'factura' => 'nullable',
         'pedimento' => 'nullable',
         'precio_venta' => 'required',
+        'numero_lote' => 'nullable',
+        'estado' => 'nullable',
     ];
 
     public function render()
@@ -65,7 +69,8 @@ class CatalogoVehiculos extends Component
             'factura' => $this->factura,
             'pedimento' => $this->pedimento,
             'precio_venta' => $this->precio_venta,
-            'estado' => 'DISPONIBLE',
+            'numero_lote' => $this->numero_lote,
+            'estado' => $this->estado,
         ]);
 
         $this->reset([
@@ -78,6 +83,8 @@ class CatalogoVehiculos extends Component
             'factura',
             'pedimento',
             'precio_venta',
+            'numero_lote',
+            'estado',
         ]);
 
         $this->emit('closeModal', "#mdl");
