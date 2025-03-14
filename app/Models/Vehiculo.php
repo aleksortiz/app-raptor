@@ -97,10 +97,16 @@ class Vehiculo extends BaseModel
     }
 
     public function getTotalGastosAttribute(){
+        if(!$this->gastos){
+            return 0;
+        }
         return $this->gastos->sum('monto');
     }
 
     public function getTotalGastosEstimacionAttribute(){
+        if(!$this->gastos){
+            return 0;
+        }
         return $this->gastos->sum('estimacion');
     }
 
@@ -129,5 +135,16 @@ class Vehiculo extends BaseModel
             return $this->precio_venta;
         }
         return $this->precio_venta * $this->cotizacion_usd;
+    }
+
+    public function vehiculos_cuenta(){
+        return $this->hasMany(VehiculoCuenta::class);
+    }
+
+    public function getSumaVehiculosCuentaAttribute(){
+        if($this->vehiculos_cuenta->isEmpty()){
+            return 0;
+        }
+        return $this->vehiculos_cuenta->sum('monto');
     }
 }

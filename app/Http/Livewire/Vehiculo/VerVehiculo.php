@@ -5,13 +5,14 @@ namespace App\Http\Livewire\Vehiculo;
 use App\Http\Livewire\Vehiculo\Traits\CreateContratoTrait;
 use App\Http\Livewire\Vehiculo\Traits\CreateGastoTrait;
 use App\Http\Livewire\Vehiculo\Traits\CreateParteTrait;
+use App\Http\Livewire\Vehiculo\Traits\CreateVehiculoCuentaTrait;
 use App\Models\Vehiculo;
 use Illuminate\Support\Facades\File;
 use Livewire\Component;
 
 class VerVehiculo extends Component
 {
-    use CreateGastoTrait, CreateParteTrait, CreateContratoTrait;
+    use CreateGastoTrait, CreateParteTrait, CreateContratoTrait, CreateVehiculoCuentaTrait;
 
     public $tab;
 
@@ -44,6 +45,7 @@ class VerVehiculo extends Component
     protected $listeners = [
         'deleteGasto',
         'deleteParte',
+        'deleteVehiculoCuenta',
     ];
 
     protected $queryString = [
