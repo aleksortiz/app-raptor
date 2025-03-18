@@ -153,36 +153,31 @@
     
             <!-- Área de mensajes -->
             <div class="chat-messages">
-                <!-- Mensaje recibido -->
-                <div class="message received">
-                    <div class="message-sender">Autoservicio-Raptor</div>
-                    <div class="message-content">Hola, Bienvenido a AutoservicioRaptor ¿En que te puedo ayudar?</div>
-                    <div class="message-time">10:00 AM</div>
-                </div>
-    
-                <!-- Mensaje enviado -->
-                <div class="message sent">
-                    <div class="message-content">¡Hola! que estatus tiene mi vehiculo 05-23?</div>
-                    <div class="message-time">10:01 AM</div>
-                </div>
-    
-                <!-- Mensaje recibido -->
-                <div class="message received">
-                    <div class="message-sender">Autoservicio-Raptor</div>
-                    <div class="message-content">Tu vehiculo se encuentra en proceso de PINTURA, puedes ver aqui las <u>FOTOS</u> </div>
-                    <div class="message-time">10:02 AM</div>
-                </div>
-    
-                <!-- Mensaje enviado -->
-                <div class="message sent">
-                    <div class="message-content">Gracias</div>
-                    <div class="message-time">10:03 AM</div>
-                </div>
+
+                @foreach ($messages as $message)
+                    @if ($message['user'] == "You")
+
+                        <div class="message sent">
+                            <div style="color: black;" class="message-sender">You</div>
+                            <div class="message-content">{{ $message['message'] }}</div>
+                            <div class="message-time">{{ $message['time'] }}</div>
+                        </div>
+                    @else
+
+                        <div class="message received">
+                            <div class="message-sender">Autoservicio-Raptor</div>
+                            <div class="message-content">{{ $message['message'] }}</div>
+                            <div class="message-time">{{ $message['time'] }}</div>
+                        </div>
+                    @endif
+                    
+                @endforeach
+                
             </div>
     
             <!-- Área de entrada de texto -->
             <div class="chat-input">
-                <input type="text" placeholder="Escribe un mensaje..." class="input-field">
+                <input type="text" wire:keydown.enter="sendMessage" wire:model.defer="inputMessage" placeholder="Escribe un mensaje..." class="input-field">
                 <button wire:click="sendMessage" class="send-button">Enviar</button>
             </div>
         </div>

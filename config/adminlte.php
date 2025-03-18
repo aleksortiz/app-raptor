@@ -250,6 +250,13 @@ return [
             'topnav' => true,
         ],
         [
+            'text' => 'Vehículos',
+            'icon' => 'fas fa-fw fa-car',
+            'url'    => '/vehiculos',
+            'topnav' => true,
+            'can' => ['venta-vehiculos'],
+        ],
+        [
           'text' => 'Vales de Materiales',
           'icon' => 'fas fa-fw fa-ticket-alt',
           'url' => '/materiales/vales',
