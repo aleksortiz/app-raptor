@@ -188,7 +188,7 @@ class VerVehiculo extends Component
             'ventaFecha' => 'required|date',
             'ventaLugar' => 'required|max:200',
             'ventaPrecioVenta' => 'required|numeric',
-            'ventaAnticipo' => 'required|numeric',
+            'ventaAnticipo' => 'required|numeric|lt:ventaPrecioVenta',
             'ventaKilometraje' => 'nullable|numeric',
             'ventaIdentificacion' => 'nullable|max:40',
             'ventaNoIdentificacion' => 'required_with:ventaIdentificacion|max:40',
@@ -249,7 +249,6 @@ class VerVehiculo extends Component
                 $monto = $this->ventaPrecioVenta - $this->ventaAnticipo;
                 $monto = $monto / $this->ventaPlazos;
 
-
                 foreach (range(1, $this->ventaPlazos) as $i) {
                     $fecha = Carbon::parse($this->ventaFecha)->addMonths($i);
                     $this->vehiculo->pagares()->create([
@@ -302,6 +301,7 @@ class VerVehiculo extends Component
 
     public function deleteVenta(){
         $this->vehiculo->venta->delete();
+        $this->vehiculo->pagares()->delete();
         $this->vehiculo->estado = 'DISPONIBLE';
         $this->vehiculo->save();
         $this->vehiculo->load('venta');
