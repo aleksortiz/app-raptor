@@ -4,23 +4,6 @@
         <div class="row">
             <!-- Columna Izquierda -->
             <div class="col-12 col-md-3">
-                <div class="p-3">
-                    <button class="btn btn-warning btn-xs" wire:click="mdlSendMail">
-                        <i class="fa fa-envelope"></i> Enviar Correo
-                    </button>
-                    <a class="btn btn-success btn-xs" target="_blank"
-                       href="https://web.whatsapp.com/send?text=¡Mira%20este {{$this->vehiculo->descripcion}}!%20{{ url("vehiculos/share/" . $this->vehiculo->id) }}">
-                        <i class="fab fa-whatsapp"></i> Whatsapp
-                    </a>
-                    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url("vehiculos/share/" . $this->vehiculo->id) }}"
-                       target="_blank" class="btn btn-xs btn-primary">
-                        <i class="fab fa-facebook"></i> Facebook
-                    </a>
-                    <a class="btn btn-secondary btn-xs" target="_blank"
-                       href="{{ url("vehiculos/share/" . $this->vehiculo->id) }}">
-                        <i class="fa fa-eye"></i> Ver
-                    </a>
-                </div>
 
                 <h5><b>Vehículo:</b><br>{{ $vehiculo->descripcion }}</h5>
                 <hr>
@@ -221,8 +204,32 @@
     </div>
 
     <div class="card-footer">
-        <a class="btn btn-warning" wire:click="$emit('showModal','#mdlEdit')">
-            <i class="fas fa-edit"></i> Editar Datos
-        </a>
+
+        <div class="row justify-content-between">
+            <a class="btn btn-warning" wire:click="$emit('showModal','#mdlEdit')">
+                <i class="fas fa-edit"></i> Editar Datos
+            </a>
+    
+            <button class="btn btn-info" wire:click="mdlSendMail">
+                <i class="fa fa-envelope"></i> Enviar Correo
+            </button>
+    
+            <a class="btn btn-success" target="_blank"
+               href="https://web.whatsapp.com/send?text=¡Mira%20este {{$this->vehiculo->descripcion}}!%20{{ url("vehiculos/share/" . $this->vehiculo->id) }}">
+                <i class="fab fa-whatsapp"></i> Whatsapp
+            </a>
+    
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url("vehiculos/share/" . $this->vehiculo->id) }}"
+               target="_blank" class="btn btn-primary">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
+            
+            <a class="btn btn-secondary" target="_blank"
+               href="{{ url("vehiculos/share/" . $this->vehiculo->id) }}">
+                <i class="fa fa-eye"></i> Ver
+            </a>
+        </div>
+
+
     </div>
 </div>
