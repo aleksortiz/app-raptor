@@ -7,6 +7,7 @@ use App\Models\EntradaInventario;
 use App\Models\Pedido;
 use App\Models\ValeMaterial;
 use App\Models\Vehiculo;
+use App\Models\VehiculoPagare;
 use Barryvdh\DomPDF\Facade as PDF;
 use Luecano\NumeroALetras\NumeroALetras;
 
@@ -47,7 +48,7 @@ class PdfController extends Controller
         $contratoAnticipo = strtoupper(trim($data['anticipo']));
         $contratoAnticipoLetra = $ob->toInvoice(floatval($data['anticipo']), 2, 'MXN');
         $contratoKilometraje = strtoupper(trim($data['kilometraje']));
-        $contratoIdentificacion = strtoupper(trim($data['indentificacion']));
+        $contratoIdentificacion = strtoupper(trim($data['identificacion']));
         $contratoIdentificacionNumero = strtoupper(trim($data['noIdentificacion']));
 
         $vehiculo = Vehiculo::findOrFail($data['idVehiculo']);
@@ -88,6 +89,22 @@ class PdfController extends Controller
         return $pdf->stream('contrato_compra_venta.pdf');
     }
 
+    public static function vehiculo_pagare_pdf(VehiculoPagare $pagare){
+        $ob = new NumeroALetras();
+        $ob->apocope = false;
+        $montoLetra = $ob->toInvoice(floatval($pagare->monto), 2, 'MXN');
+        $vehiculo = $pagare->vehiculo;
+        $venta = $vehiculo->venta;
+        $pdf = PDF::loadView('pdf.vehiculo.pagare', compact(
+            'vehiculo',
+            'venta',
+            'pagare',
+            'montoLetra',
+        ));
+
+        $pdf->setPaper('A4');
+        return $pdf->stream('pagare_'. $pagare->id_paddy .'.pdf');
+    }
 
     public static function inventario_pdf(EntradaInventario $inventario){
         $inv = json_decode($inventario->inventario);

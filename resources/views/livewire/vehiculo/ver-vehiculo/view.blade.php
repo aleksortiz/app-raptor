@@ -12,7 +12,10 @@
                     <li class="nav-item"><a class="nav-link {{ $tab == 'vehiculos-cuenta' ? 'active' : '' }}" wire:click="$set('tab','vehiculos-cuenta')" style="cursor: pointer;"><i class="fas fa-exchange-alt"></i> Vehiculos a Cuenta</a></li>
                     <li class="nav-item"><a class="nav-link {{ $tab == 'fotos' ? 'active' : '' }}" wire:click="$set('tab','fotos')" style="cursor: pointer;"><i class="fas fa-camera"></i> Fotos</a></li>
                     {{-- <li class="nav-item"><a class="nav-link {{ $tab == 'gastos' ? 'active' : '' }}" wire:click="$set('tab','gastos')" style="cursor: pointer;"><i class="fas fa-hand-holding-usd"></i> Otros Gastos</a></li> --}}
-                    <li class="nav-item"><a class="nav-link {{ $tab == 'compra-venta' ? 'active' : '' }}" wire:click="$set('tab','compra-venta')" style="cursor: pointer;"><i class="fas fa-handshake"></i> Compra / Venta</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $tab == 'compra-venta' ? 'active' : '' }}" wire:click="$set('tab','compra-venta')" style="cursor: pointer;"><i class="fas fa-handshake"></i> Venta</a></li>
+                    @if ($vehiculo->venta)
+                        <li class="nav-item"><a class="nav-link {{ $tab == 'pagares' ? 'active' : '' }}" wire:click="$set('tab','pagares')" style="cursor: pointer;"><i class="fas fa-money-check"></i> Pagares</a></li>
+                    @endif
                 </ul>
             </div>
 
@@ -39,6 +42,12 @@
                         @include('livewire.vehiculo.ver-vehiculo.tabs.tab-compra-venta')
                     </div>
 
+                    @if ($vehiculo->venta)
+                        <div class="tab-pane {{ $tab == 'pagares' ? 'active' : '' }}">
+                            @include('livewire.vehiculo.ver-vehiculo.tabs.tab-pagares')
+                        </div>
+                    @endif
+
 
                 </div>
             </div>
@@ -50,6 +59,8 @@
     @include('livewire.vehiculo.ver-vehiculo.modals.mdl-create-parte')
     @include('livewire.vehiculo.ver-vehiculo.modals.mdl-create-vehiculo-cuenta')
     @include('livewire.vehiculo.ver-vehiculo.modals.mdl-send-mail')
+
+    @livewire('cliente.common.mdl-select-cliente')
 
 
     {{-- @include('livewire.entrada.ver-entrada.modals.mdl-refacciones')

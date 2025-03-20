@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PdfController;
+use App\Models\VehiculoPagare;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf;
@@ -21,6 +22,8 @@ Route::middleware(['auth'])->prefix('vehiculos')->group(function () {
     Route::get('/{id}', function($id){
         return view('livewire.vehiculo.ver-vehiculo.index', ['id' => $id]);
     });
+
+    Route::get('/pagare/{pagare}', [PdfController::class, 'vehiculo_pagare_pdf']);
 
 });
 

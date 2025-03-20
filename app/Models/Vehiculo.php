@@ -148,4 +148,14 @@ class Vehiculo extends BaseModel
         }
         return $this->vehiculos_cuenta->sum('monto');
     }
+
+    public function pagares(){
+        return $this->hasMany(VehiculoPagare::class)->orderBy('fecha', 'asc');
+    }
+
+    public function venta(){
+        return $this->hasOne(VehiculoVenta::class);
+    }
+
+
 }

@@ -88,7 +88,9 @@
         <ul>
             <li>Ser legítimo propietario del vehículo descrito en este contrato.</li>
             <li>Que el vehículo se encuentra libre de gravamen, embargo o adeudo.</li>
-            <li>Que su identidad se acredita con <strong>{{ $contratoIdentificacion }}</strong>, con número <strong>{{ $contratoIdentificacionNumero }}</strong>.</li>
+            @if ($contratoIdentificacion)
+                <li>Que su identidad se acredita con <strong>{{ $contratoIdentificacion }}</strong>, con número <strong>{{ $contratoIdentificacionNumero }}</strong>.</li>
+            @endif
         </ul>
 
         <p>2. <strong>EL COMPRADOR</strong> declara:</p>
@@ -106,10 +108,20 @@
         <ul>
             <li><strong>Marca y Modelo:</strong> {{ $contratoMarca }} {{ $contratoModelo }}</li>
             <li><strong>Año:</strong> {{ $contratoYear }}</li>
-            <li><strong>Número de serie (VIN):</strong> {{ $contratoNumeroSerie }}</li>
-            <li><strong>Kilometraje:</strong> {{ number_format($contratoKilometraje, 0) }} km</li>
+
+            @if ($contratoNumeroSerie )
+                <li><strong>Número de serie (VIN):</strong> {{ $contratoNumeroSerie }}</li>
+            @endif
+            
+            @if ($contratoKilometraje )
+                <li><strong>Kilometraje:</strong> {{ number_format($contratoKilometraje, 0) }} km</li>
+            @endif
+
             <li><strong>Color:</strong> {{ $contratoColor }}</li>
-            <li><strong>Placas:</strong> {{ $contratoPlacas }}</li>
+
+            @if ($contratoPlacas )
+                <li><strong>Placas:</strong> {{ $contratoPlacas }}</li>
+            @endif
         </ul>
         
         <br>

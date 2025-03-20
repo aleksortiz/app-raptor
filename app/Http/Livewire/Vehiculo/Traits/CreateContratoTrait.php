@@ -48,7 +48,7 @@ trait CreateContratoTrait
             'plazos' => $this->contratoPlazos,
             'anticipo' => $this->contratoAnticipo,
             'kilometraje' => $this->contratoKilometraje,
-            'indentificacion' => $this->contratoIdentificacion,
+            'identificacion' => $this->contratoIdentificacion,
             'noIdentificacion' => $this->contratoIdentificacionNumero,
             'idVehiculo' => $this->vehiculo->id,
         ];
