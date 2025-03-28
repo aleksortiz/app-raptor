@@ -106,19 +106,12 @@ class UploadMobilePhotos extends Component
     {
         $foto = Foto::findOrFail($id);
     
-    
         $originalPath = str_replace(env('AWS_BUCKET_URL'), '', $foto->url);
         $thumbPath = str_replace(env('AWS_BUCKET_URL'), '', $foto->url_thumb);
     
-    
         Storage::disk('s3')->delete([$originalPath, $thumbPath]);
-    
-    
         $foto->delete();
-    
-    
         $this->model->load('fotos');
-    
     
         $this->emit('ok', 'Se han eliminado foto');
     }

@@ -59,6 +59,7 @@ class VerEntrada extends Component
 
     protected $listeners = [
         'destroyCosto',
+        'deleteGasto',
         'destroyRefaccion',
         'removePhoto',
         'setMaterial',
@@ -245,6 +246,14 @@ class VerEntrada extends Component
                 $pedidoConcepto->cantidad_recibida -= $elem->cantidad;
                 $pedidoConcepto->save();
             }
+        }
+    }
+
+    public function deleteGasto($id){
+        $gasto = EntradaGasto::findOrFail($id);
+        if ($gasto->delete()) {
+            $this->emit('ok', "Se ha eliminado gasto");
+            $this->entrada->load('gastos');
         }
     }
 

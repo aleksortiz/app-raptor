@@ -8,6 +8,7 @@
                     <thead>
                       <tr>
                         <th></th>
+                        <th>#</th>
                         <th>Fecha Creación</th>
                         <th>Usuario</th>
                         <th>Concepto</th>
@@ -17,6 +18,7 @@
                     <tbody>
                         @foreach ($this->entrada->gastos as $item)
                         <tr>
+                            <td><button onclick="destroy({{$item->id}}, 'Gasto', 'deleteGasto')" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button></td>
                             <td>{{$loop->iteration}}</td>
                             <td>{{$item->fecha_creacion}}</td>
                             <td>{{$item->user->name}}</td>
