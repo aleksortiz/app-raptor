@@ -157,5 +157,14 @@ class Vehiculo extends BaseModel
         return $this->hasOne(VehiculoVenta::class);
     }
 
+    public function getEstadoSpanAttribute(){
+        if($this->estado == 'DISPONIBLE'){
+            return '<buton class="p-2 btn btn-xs btn-secondary">DISPONIBLE</buton>';
+        }
+        if($this->estado == 'VENDIDO'){
+            return '<button class="p-2 btn btn-xs btn-success">VENDIDO</button>';
+        }
+    }
+
 
 }

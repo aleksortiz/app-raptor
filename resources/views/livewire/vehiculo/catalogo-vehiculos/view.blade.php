@@ -38,8 +38,8 @@
                         <th>Vehículo</th>
                         <th>Serie</th>
                         <th>Placas</th>
-                        <th>Factura</th>
-                        <th>Pedimento</th>
+                        <th>Utilidad Estimada</th>
+                        <th>Utilidad Real</th>
                         <th>Estatus</th>
                     </tr>
                 </thead>
@@ -50,9 +50,9 @@
                             <td>{{ $item->descripcion }}</td>
                             <td>{{ $item->serie }}</td>
                             <td>{{ $item->placa }}</td>
-                            <td>{{ $item->factura }}</td>
-                            <td>{{ $item->pedimento }}</td>
-                            <td>{{ $item->estado }}</td>
+                            <td>@money($item->utilidad_estimada)</td>
+                            <td>@money($item->utilidad_final)</td>
+                            <td>{!! $item->estado_span !!}</td>
                         </tr>
                     @endforeach
                 </tbody>
