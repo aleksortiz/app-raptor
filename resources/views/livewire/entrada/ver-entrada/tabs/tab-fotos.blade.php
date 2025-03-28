@@ -1,8 +1,13 @@
 <div class="card m-0" style="min-height: 65vh;">
     <div class="card-body">
 
-        {{-- <a href="/servicios/{{$this->entrada->id}}/subir-fotos" class="mb-3 btn btn-xs btn-warning"><i class="fa fa-edit"></i> Subir Fotos</a> --}}
-        <div wire:loading.remove>
+        @livewire('fotos.subir-fotos-v3', [
+            'model_id' => $this->entrada->id,
+            'model_type' => 'App\\Models\\Entrada',
+            'storage_path' => "/entradas/{$this->entrada->id}",
+        ])
+
+        {{-- <div wire:loading.remove>
             <label class="btn btn-xs btn-warning mb-2 p-2">
                 <i class="fa fa-camera"></i>
                 Subir Foto
@@ -41,7 +46,7 @@
                     </center>
                 </div>
             @endforeach
-        </div>
+        </div> --}}
 
     </div>
 </div>
