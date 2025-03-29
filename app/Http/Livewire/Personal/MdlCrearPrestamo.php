@@ -13,7 +13,7 @@ class MdlCrearPrestamo extends Component
 
     public $personal_id;
     public $monto;
-    public $cuotas;
+    public $cuotas = 1;
     public $inicia;
     public $year;
     public $week;
@@ -71,7 +71,7 @@ class MdlCrearPrestamo extends Component
     }
 
     public function getCuotaSemanalProperty(){
-        if($this->cuotas == 0){
+        if(!$this->cuotas || $this->cuotas == "0"){
             return 0;
         }
         $cuota = $this->monto / $this->cuotas;
