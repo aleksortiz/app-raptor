@@ -17,4 +17,8 @@ Route::middleware(['auth'])->prefix('personal')->group(function ()
         return view('livewire.personal.admin-ordenes-trabajo.index');
     });
 
+    Route::get('/prestamos', function(){
+        return view('livewire.personal.catalogo-prestamos.index');
+    });
+
 });
