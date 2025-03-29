@@ -450,6 +450,12 @@ return [
                     'can' => ['diagrama-nomina'],
                 ],
                 [
+                    'text' => 'Prestamos',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/personal/prestamos',
+                    'can' => ['diagrama-nomina'],
+                ],
+                [
                     'text' => 'Ordenes de Trabajo',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/ordenes-trabajo',
