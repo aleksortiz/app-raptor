@@ -92,7 +92,7 @@
             <div class="col-md-2 col-sm-6 m-2">
                 <div class="image-container">
                     <a href="{{$item->complete_url}}" data-toggle="lightbox" data-title="{{$item->fecha_creacion}}" data-gallery="gallery">
-                        <img src="{{$item->complete_url_thumb}}" class="img-fluid mb-2" alt="image"  />
+                        <img src="{{$item->complete_url}}" class="img-fluid mb-2" alt="image"  />
                     </a>
                     <div class="overlay-buttons">
                         @php
