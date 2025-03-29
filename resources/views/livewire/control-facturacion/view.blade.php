@@ -44,7 +44,7 @@
                     <td>{{ $item->numero_reporte }}</td>
                     <td>{!! $item->folio_button !!}</td>
                     <td>{{ $item->vehiculo }}</td>
-                    <td>@money($item->mano_obra)</td>
+                    <td>@money($item->total_costos)</td>
                     <td><button wire:click="registrarFactura({{$item->id}}, 'ENTRADA')" class="btn btn-primary btn-xs"><i class="fa fa-plus"></i> Registrar factura</button></td>
                 </tr>
             @endforeach
