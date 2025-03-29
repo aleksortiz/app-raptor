@@ -39,7 +39,7 @@ class MdlCrearPrestamo extends Component
     }
 
     public function getRenderData(){
-        $personal = Personal::orderBy('nombre')->get();
+        $personal = Personal::where('activo', 1)->orderBy('nombre')->get();
 
         return [
             'personal' => $personal,
