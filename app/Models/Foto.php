@@ -28,4 +28,25 @@ class Foto extends BaseModel
         $location = str_replace($bucket, '', $this->url_thumb);
         return $location;
     }
+
+    public function getCompleteUrlAttribute(){
+        $bucket = env('AWS_BUCKET_URL');
+        // if url contains
+        if (str_contains($this->url, $bucket)) {
+            return $this->url;
+        }
+        else{
+            return $bucket . $this->url;
+        }
+    }
+
+    public function getCompleteThumbUrlAttribute(){
+        $bucket = env('AWS_BUCKET_URL');
+        if (str_contains($this->url_thumb, $bucket)) {
+            return $this->url_thumb;
+        }
+        else{
+            return $bucket . $this->url_thumb;
+        }
+    }
 }
