@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\PdfController;
 use App\Models\Entrada;
 use App\Models\EntradaInventario;
@@ -89,6 +90,8 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/calendario-citas', function(){
         return view('livewire.calendario-citas.index');
     });
+
+    Route::get('/vehiculos-piso/excel', [ExcelController::class, 'vehiculosPiso']);
 
 
 

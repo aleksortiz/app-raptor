@@ -71,9 +71,12 @@
             </div>
 
             @canany(['administrar-materiales'])
-            <a href="/crear-entrada" target="_blank" class="btn btn-xs btn-success m-2"><i class="fas fa-plus"></i> Agregar
-              {{ $this->model_name }}</a>
+                <a href="/crear-entrada" target="_blank" class="btn btn-xs btn-primary m-2"><i class="fas fa-plus"></i> Agregar {{ $this->model_name }}</a>
             @endcanany
+
+            <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#mdlEditDate">
+                <i class="fas fa-file-excel"></i> Vehiculos en piso
+            </button>
 
             <table class="table table-hover">
                 <thead>
