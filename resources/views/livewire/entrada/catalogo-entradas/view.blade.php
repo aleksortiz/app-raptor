@@ -74,9 +74,7 @@
                 <a href="/crear-entrada" target="_blank" class="btn btn-xs btn-primary m-2"><i class="fas fa-plus"></i> Agregar {{ $this->model_name }}</a>
             @endcanany
 
-            <button type="button" class="btn btn-xs btn-success" data-toggle="modal" data-target="#mdlEditDate">
-                <i class="fas fa-file-excel"></i> Vehiculos en piso
-            </button>
+            <a type="button" href="/vehiculos-piso/excel" class="btn btn-xs btn-success"><i class="fas fa-file-excel"></i> Vehiculos en piso </a>
 
             <table class="table table-hover">
                 <thead>
