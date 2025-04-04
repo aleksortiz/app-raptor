@@ -91,7 +91,7 @@ class SubirFotosV3 extends Component
         }
     
         $this->images = [];
-        $this->emit('ok', 'Se han subido fotos con miniaturas optimizadas para Open Graph');
+        $this->emit('ok', 'Se han subido fotos');
     }
     
 
