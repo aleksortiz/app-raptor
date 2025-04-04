@@ -72,8 +72,6 @@
         <span class="error text-danger">{{ $message }}</span>
     @enderror
 
-    {{$this->storage_path}}
-
     @if ($images)
         <div class="row justify-content-center">
             @foreach ($images as $image)
