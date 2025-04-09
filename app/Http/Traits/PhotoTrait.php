@@ -23,12 +23,12 @@ trait PhotoTrait {
         }
 
         $name = get_class($model) . '_' . $model->id;
-        if($model->orden){
-            $name = $model->orden;
+        if($model->numero_reporte){
+            $name = $model->numero_reporte;
         }
 
 
-        $zipFileName = $model->orden . '_' . $model->id . '.zip';
+        $zipFileName = $name . '.zip';
         $tempZipPath = storage_path('app/' . $zipFileName);
 
         $zip = new ZipArchive;
