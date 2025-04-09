@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Cache;
 
 class Entrada extends BaseModel
 {
-
     protected $fillable = [
         'folio',
         'cliente_id',

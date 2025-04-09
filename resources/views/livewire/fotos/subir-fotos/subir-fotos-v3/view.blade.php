@@ -57,6 +57,7 @@
                 <input wire:model="images" accept="image/*" multiple style="display: none;" type="file" name="iptImage">
             </label>
             <button class="btn btn-xs btn-primary m-1 p-2" wire:click="$emit('createMobilePhotoToken')"><i class="fa fa-mobile"></i> Subir desde celular</button>
+            <button class="btn btn-xs btn-secondary m-1 p-2" wire:click="downloadAllPhotos"><i class="fa fa-download"></i> Descargar Todo</button>
         @else
             <button class="btn btn-xs btn-primary m-1 p-2" wire:click="upload"><i class="fa fa-save"></i> Guardar</a>
             <button class="btn btn-xs btn-default m-1 p-2" wire:click="cancelar"><i class="fa fa-times"></i> Cancelar</a>

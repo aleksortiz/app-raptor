@@ -29,10 +29,6 @@ class SubirFotosV3 extends Component
 
     protected $queryString = ['redirectMode'];
 
-
-
-
-
     public function mount($model_id, $model_type, $storage_path){
         $this->model = $model_type::find($model_id);
         $this->storage_path = $storage_path;
