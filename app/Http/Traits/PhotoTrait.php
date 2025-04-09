@@ -16,18 +16,24 @@ trait PhotoTrait {
 
     public function downloadAllPhotos()
     {
-        $auto = $this->model;
+        $model = $this->model;
 
-        if ($auto->fotos->isEmpty()) {
+        if ($model->fotos->isEmpty()) {
             abort(404, 'No hay fotos disponibles para este auto.');
         }
 
-        $zipFileName = 'auto_fotos_' . $auto->id . '.zip';
+        $name = get_class($model) . '_' . $model->id;
+        if($model->orden){
+            $name = $model->orden;
+        }
+
+
+        $zipFileName = $model->orden . '_' . $model->id . '.zip';
         $tempZipPath = storage_path('app/' . $zipFileName);
 
         $zip = new ZipArchive;
         if ($zip->open($tempZipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
-            foreach ($auto->fotos as $foto) {
+            foreach ($model->fotos as $foto) {
                 $fileContent = Storage::disk('s3')->get($foto->location); // Obtener contenido desde S3
                 $fileName = basename($foto->location); // Nombre base del archivo
                 $zip->addFromString($fileName, $fileContent); // Agregar al ZIP
