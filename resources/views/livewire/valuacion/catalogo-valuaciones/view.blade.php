@@ -59,6 +59,7 @@
               <thead>
                   <tr>
                     <th>Fecha</th>
+                    <th>Folio</th>
                     <th>Número de Reporte</th>
                     <th>Vehículo</th>
                     <th>Es Grua</th>
@@ -71,6 +72,7 @@
                   @foreach ($valuaciones as $item)
                   <tr style="cursor: pointer" onclick="window.location.href='/valuaciones/{{ $item->id }}'">
                       <td>{{ $item->fecha_creacion }}</td>
+                      <td>{{ $item->id_paddy }}</td>
                       <td>{{ $item->numero_reporte }}</td>
                       <td>{{ $item->vehiculo }}</td>
                       <td>{!! $item->grua_span !!}</td>

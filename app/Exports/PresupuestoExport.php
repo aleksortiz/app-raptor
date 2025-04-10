@@ -191,13 +191,13 @@ class PresupuestoExport implements FromCollection, WithMapping, WithColumnFormat
         $ivaRow = $subtotalRow + 1;
         $totalRow = $ivaRow + 1;
         $sheet->setCellValue("F{$subtotalRow}", 'SUB-TOTAL');
-        $sheet->setCellValue("G{$subtotalRow}", 666);
+        $sheet->setCellValue("G{$subtotalRow}", 0);
 
         $sheet->setCellValue("F{$ivaRow}", 'IVA');
         $sheet->setCellValue("G{$ivaRow}", 0);
 
         $sheet->setCellValue("F{$totalRow}", 'TOTAL');
-        $sheet->setCellValue("G{$totalRow}", 666);
+        $sheet->setCellValue("G{$totalRow}", 0);
         $sheet->getStyle("F{$totalRow}:G{$totalRow}")->getFont()->setBold(true);
         $sheet->getStyle("G{$subtotalRow}:G{$totalRow}")->getNumberFormat()->setFormatCode(NumberFormat::FORMAT_CURRENCY_USD_INTEGER);
         $sheet->getStyle("F{$subtotalRow}:F{$totalRow}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
