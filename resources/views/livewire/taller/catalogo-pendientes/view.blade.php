@@ -105,7 +105,7 @@
                                 @else
                                     {!! 
                                         $item->fecha_terminado_format ? $this->fecha_terminado_format :
-                                        'PENDIENTE'
+                                        '<button class="btn btn-xs btn-warning">PENDIENTE</button>'
                                     !!}
                                 @endif
                             </td>
