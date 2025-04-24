@@ -12,7 +12,8 @@ class Pendiente extends BaseModel
     protected $table = 'pendientes';
 
     protected $fillable = [
-        ' ',
+        'user_id',
+        'entrada_id',
         'descripcion',
         'fecha_promesa',
         'fecha_terminado',
