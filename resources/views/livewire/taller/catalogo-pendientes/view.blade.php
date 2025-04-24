@@ -94,13 +94,20 @@
                             <td>{{ $item->descripcion }}</td>
                             <td>{{ $item->fecha_promesa_format }}</td>
                             <td>
-                                {!! 
-                                    $item->fecha_terminado_format ? $this->fecha_terminado_format :
-                                    '<label class="content-input">
-                                        <input wire:model="desglosar" type="checkbox" />
-                                        <i></i>
-                                    </label>'
-                                !!}
+                                @if($item->user_id == auth()->user()->id)
+                                    {!! 
+                                        $item->fecha_terminado_format ? $this->fecha_terminado_format :
+                                        '<label class="content-input">
+                                            <input '. ($item->fecha_terminado ? 'checked' : '') .' type="checkbox" />
+                                            <i></i>
+                                        </label>'
+                                    !!}
+                                @else
+                                    {!! 
+                                        $item->fecha_terminado_format ? $this->fecha_terminado_format :
+                                        'PENDIENTE'
+                                    !!}
+                                @endif
                             </td>
                         </tr>
                     @endforeach
