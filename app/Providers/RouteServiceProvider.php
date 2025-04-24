@@ -65,6 +65,7 @@ class RouteServiceProvider extends ServiceProvider
                 'flotillas.php',
                 'refacciones.php',
                 'vsc.php',
+                'taller.php',
                 'vehiculos.php',
             ];
 

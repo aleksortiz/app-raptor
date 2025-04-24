@@ -238,7 +238,13 @@ return [
             'input_name' => 'folio',       // Name for the underlying input ('adminlteSearch' by default).
         ],
         [
-            'text' => 'Servicios',
+            'text' => 'Pendientes',
+            'icon' => 'fas fa-fw fa-clock',
+            'url' => '/taller/pendientes',
+            'topnav' => true,
+        ],
+        [
+            'text' => 'Entradas',
             'icon' => 'fas fa-fw fa-car',
             'url' => '/servicios',
             'topnav' => true,
