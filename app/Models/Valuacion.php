@@ -121,4 +121,14 @@ class Valuacion extends BaseModel
         return $this->morphMany(Presupuesto::class, 'model');
     }
 
+    public function getMainPhotoAttribute()
+    {
+        if($this->fotos()->count() > 0){
+            return $this->fotos()->first()->complete_thumb_url;
+        }
+        else{
+            return asset('images/logo_new.jpg');
+        }
+    }
+
 }
