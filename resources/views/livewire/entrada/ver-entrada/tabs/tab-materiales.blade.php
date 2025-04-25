@@ -27,6 +27,7 @@
                             <th>Fecha</th>
                             <th>Número de Parte</th>
                             <th>Descripción</th>
+                            <th>Trabajador</th>
                             <th>Cantidad</th>
                             <th>Precio</th>
                             <th>Importe</th>
@@ -38,6 +39,7 @@
                             {{-- <td><button class="btn btn-xs btn-danger" onclick="destroy({{$item->id}},'material','destroyMaterial')"><i class="fa fa-trash-alt"></i></button></td> --}}
                             <td>{{$item->fecha_creacion}}</td>
                             <td>{{$item->numero_parte}}</td>
+                            <td>{{$item->vale_material?->personal->nombre ?? 'INDEFINIDO'}}</td>
                             <td>{{$item->material}}</td>
                             <td>{{$item->cantidad}}</td>
                             <td>@money($item->precio)</td>

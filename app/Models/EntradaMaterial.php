@@ -30,4 +30,8 @@ class EntradaMaterial extends BaseModel
     public function getImporteAttribute(){
         return $this->precio * $this->cantidad;
     }
+
+    public function vale_material(){
+        return $this->hasOne(ValeMaterial::class, 'id', 'vale_id');
+    }
 }
