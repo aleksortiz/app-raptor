@@ -97,6 +97,7 @@ class SubirFotosV3 extends Component
         foreach ($this->images as $image) {
             // 📤 1. Comprimir como WhatsApp (máximo 1600px, calidad 80)
             $mainImage = Image::make($image)
+                ->orientate() 
                 ->resize(1600, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
@@ -111,6 +112,7 @@ class SubirFotosV3 extends Component
 
             // 📷 2. Crear thumb (300px de ancho)
             $thumbImage = Image::make($image)
+                ->orientate() 
                 ->resize(300, null, function ($constraint) {
                     $constraint->aspectRatio();
                     $constraint->upsize();
