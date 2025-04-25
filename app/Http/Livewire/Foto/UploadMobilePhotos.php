@@ -57,49 +57,97 @@ class UploadMobilePhotos extends Component
         $this->images = [];
     }
 
+    // public function upload()
+    // {
+    //     $this->validate();
+    
+    //     foreach ($this->images as $image) {
+        
+    //         $fileName = $image->store($this->storage_path, 's3');
+    
+    //         if ($fileName) {
+    //             $bucket = env('AWS_BUCKET_URL');
+    
+    //             $thumbImage = Image::make($image)
+    //             ->resize(600, null, function ($constraint) {
+    //                 $constraint->aspectRatio(); // Mantiene la proporción
+    //                 $constraint->upsize(); // No aumenta el tamaño si es menor a 1200px
+    //             })
+    //             ->encode('jpg', 80); 
+
+
+    //             $thumbFileName = $this->storage_path . '/thumbs/' . basename($fileName);
+    //             Storage::disk('s3')->put($thumbFileName, (string) $thumbImage->encode('jpg', 90), 'public');
+
+    //             if(str_starts_with($thumbFileName, '/')){
+    //                 $thumbFileName = substr($thumbFileName, 1);
+    //             }
+    //             if(str_starts_with($fileName, '/')){
+    //                 $fileName = substr($fileName, 1);
+    //             }
+    
+    //             $foto = new Foto([
+    //                 'model_id' => $this->model->id,
+    //                 'model_type' => get_class($this->model),
+    //                 'url' => $bucket . $fileName,
+    //                 'url_thumb' => $bucket . $thumbFileName,
+    //             ]);
+    
+    //             $this->model->fotos()->save($foto);
+    //             $this->model->load('fotos');
+    //         }
+    //     }
+    
+    //     $this->images = [];
+    //     $this->emit('ok', 'Se han subido fotos');
+    // }
+
     public function upload()
     {
         $this->validate();
-    
+
         foreach ($this->images as $image) {
-        
-            $fileName = $image->store($this->storage_path, 's3');
-    
-            if ($fileName) {
-                $bucket = env('AWS_BUCKET_URL');
-    
-                $thumbImage = Image::make($image)
-                ->resize(600, null, function ($constraint) {
-                    $constraint->aspectRatio(); // Mantiene la proporción
-                    $constraint->upsize(); // No aumenta el tamaño si es menor a 1200px
+            $mainImage = Image::make($image)
+                ->orientate() 
+                ->resize(1600, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
                 })
-                ->encode('jpg', 80); 
+                ->encode('jpg', 80);
 
+            $fileName = $this->storage_path . '/' . uniqid() . '.jpg';
 
-                $thumbFileName = $this->storage_path . '/thumbs/' . basename($fileName);
-                Storage::disk('s3')->put($thumbFileName, (string) $thumbImage->encode('jpg', 90), 'public');
+            Storage::disk('s3')->put($fileName, (string) $mainImage, 'public');
 
-                if(str_starts_with($thumbFileName, '/')){
-                    $thumbFileName = substr($thumbFileName, 1);
-                }
-                if(str_starts_with($fileName, '/')){
-                    $fileName = substr($fileName, 1);
-                }
-    
-                $foto = new Foto([
-                    'model_id' => $this->model->id,
-                    'model_type' => get_class($this->model),
-                    'url' => $bucket . $fileName,
-                    'url_thumb' => $bucket . $thumbFileName,
-                ]);
-    
-                $this->model->fotos()->save($foto);
-                $this->model->load('fotos');
-            }
+            $thumbImage = Image::make($image)
+                ->orientate() 
+                ->resize(300, null, function ($constraint) {
+                    $constraint->aspectRatio();
+                    $constraint->upsize();
+                })
+                ->encode('jpg', 75);
+
+            $thumbFileName = $this->storage_path . '/thumbs/' . basename($fileName);
+
+            Storage::disk('s3')->put($thumbFileName, (string) $thumbImage, 'public');
+
+            $fileName = ltrim($fileName, '/');
+            $thumbFileName = ltrim($thumbFileName, '/');
+
+            $bucket = env('AWS_BUCKET_URL');
+            $foto = new Foto([
+                'model_id'    => $this->model->id,
+                'model_type'  => get_class($this->model),
+                'url'         => $bucket . $fileName,
+                'url_thumb'   => $bucket . $thumbFileName,
+            ]);
+
+            $this->model->fotos()->save($foto);
+            $this->model->load('fotos');
         }
-    
+
         $this->images = [];
-        $this->emit('ok', 'Se han subido fotos');
+        $this->emit('ok', 'Se han subido fotos estilo WhatsApp 👍');
     }
 
     public function removePhoto($id)

@@ -95,7 +95,7 @@ class SubirFotosV3 extends Component
         $this->validate();
 
         foreach ($this->images as $image) {
-            // 📤 1. Comprimir como WhatsApp (máximo 1600px, calidad 80)
+            // 1. Comprimir como WhatsApp (máximo 1600px, calidad 80)
             $mainImage = Image::make($image)
                 ->orientate() 
                 ->resize(1600, null, function ($constraint) {
@@ -110,7 +110,7 @@ class SubirFotosV3 extends Component
             // Subir imagen principal comprimida
             Storage::disk('s3')->put($fileName, (string) $mainImage, 'public');
 
-            // 📷 2. Crear thumb (300px de ancho)
+            //  2. Crear thumb (300px de ancho)
             $thumbImage = Image::make($image)
                 ->orientate() 
                 ->resize(300, null, function ($constraint) {
@@ -124,11 +124,11 @@ class SubirFotosV3 extends Component
             // Subir thumb
             Storage::disk('s3')->put($thumbFileName, (string) $thumbImage, 'public');
 
-            // 📁 3. Eliminar `/` inicial si existe
+            //  3. Eliminar `/` inicial si existe
             $fileName = ltrim($fileName, '/');
             $thumbFileName = ltrim($thumbFileName, '/');
 
-            // 🔗 4. Guardar en modelo Foto
+            // 4. Guardar en modelo Foto
             $bucket = env('AWS_BUCKET_URL');
             $foto = new Foto([
                 'model_id'    => $this->model->id,
