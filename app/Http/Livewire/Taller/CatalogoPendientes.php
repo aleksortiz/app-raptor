@@ -7,10 +7,16 @@ use App\Models\Pendiente;
 use Carbon\Carbon;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use Livewire\WithPagination;
 
 class CatalogoPendientes extends Component
 {
 
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
+    public $user_id_search;
+    public $solo_pendientes = false;
     public $user_id;
     public $fecha_promesa;
     public $descripcion;
@@ -19,11 +25,15 @@ class CatalogoPendientes extends Component
     public $weekEnd;
     public $year;
 
+    protected $listeners = [
+        'check'
+    ];
+
     protected $queryString = ['weekStart', 'weekEnd'];
 
     public function mount()
     {
-        // $this->user_id = auth()->user()->id;
+        $this->user_id = auth()->user()->id;
         $this->fecha_promesa = Carbon::now()->addHour(2)->setMinute(0)->setSecond(0)->toDateTimeString();
         $this->weekStart = Carbon::now()->startOfWeek()->week();
         $this->weekEnd = $this->weekStart;
@@ -104,13 +114,13 @@ class CatalogoPendientes extends Component
             'fecha_promesa' => $this->fecha_promesa,
             'descripcion' => $this->descripcion,
         ]);
-        $this->fecha_promesa = Carbon::now()->addHour(2)->setMinute(0)->setSecond(0)->toDateTimeString();
 
         $this->reset(['user_id', 'fecha_promesa', 'descripcion']);
+        $this->user_id = auth()->user()->id;
+        $this->fecha_promesa = Carbon::now()->addHour(2)->setMinute(0)->setSecond(0)->toDateTimeString();
+
         $this->emit('closeModal','#mdlCrearPendiente');
         $this->emit('ok', 'Pendiente creado con éxito');
-
-
     }
 
     public function render()
@@ -128,8 +138,11 @@ class CatalogoPendientes extends Component
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
 
         $pendientes = Pendiente::whereBetween('created_at', [$start, $end]);
-        if($this->user_id){
-            $pendientes = $pendientes->where('user_id', $this->user_id);
+        if($this->user_id_search){
+            $pendientes = $pendientes->where('user_id', $this->user_id_search);
+        }
+        if($this->solo_pendientes){
+            $pendientes = $pendientes->where('fecha_terminado', null);
         }
 
         return $pendientes->paginate(30);

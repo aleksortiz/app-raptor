@@ -7,7 +7,7 @@
     
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Pendientes del Taller</h3>
+            <h3 class="card-title">Tareas del Taller</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
@@ -54,8 +54,8 @@
 
                 <div class="col-2">
                     <div class="form-group">
-                        <label for="user_id">Responsable:</label>
-                        <select wire:model.lazy="user_id" class="form-control" id="user_id">
+                        <label for="user_id_search">Responsable:</label>
+                        <select wire:model.lazy="user_id_search" class="form-control" id="user_id_search">
                             <option value="">Todos</option>
                             @foreach ($users as $item)
                                 <option value="{{ $item->id }}">{{ $item->name }}</option>
@@ -70,12 +70,24 @@
                     </div>
                 </div>
 
+
                 <div class="col-3">
                     <div class="info-box">
                         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clock"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text"><b>Pendientes totales: {{$this->pendientes_count}}</b></span>
                         </div>
+                    </div>
+                </div>
+
+                <div class="col-2">
+
+                    <div class="form-group">
+                        <label for="keyWord">Solo pendientes:</label>
+                        <label class="content-input">
+                            <input  type="checkbox" wire:model="solo_pendientes" />
+                            <i></i>
+                        </label>
                     </div>
                 </div>
 
@@ -87,6 +99,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Fecha Registrado</th>
                         <th>Responsable</th>
                         <th>Tarea a Realizar:</th>
@@ -97,6 +110,7 @@
                 <tbody>
                     @foreach ($pendientes as $item)
                         <tr>
+                            <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->created_at->format('d/M/Y h:i A') }}</td>
                             <td>{{ $item->user->name }}</td>
                             <td>{{ $item->descripcion }}</td>
@@ -104,7 +118,8 @@
                             <td>
                                 @if($item->user_id == auth()->user()->id && !$item->fecha_terminado)
                                     <label class="content-input">
-                                        <input  type="checkbox" wire:click="check({{$item->id}})" />
+                                        {{-- <input  type="checkbox" wire:click="check({{$item->id}})" /> --}}
+                                        <input  type="checkbox" onclick="confirm('Marcar tarea como concluida', 'check', {{$item->id}})" />
                                         <i></i>
                                     </label>
                                 @else
