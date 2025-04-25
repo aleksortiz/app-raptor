@@ -1,6 +1,14 @@
 <div class="card m-0" style="min-height: 65vh;">
     <div class="card-body">
 
+        @if ($this->entrada->orden)
+            <div class="row">
+                <div class="col-12">
+                    <h5><b>No. Reporte: </b> {{ $this->entrada->orden }}</h5>
+                </div>
+            </div>
+        @endif
+
         <div class="row">
 
             <div class="col-sm-3">
