@@ -2,7 +2,7 @@
     <div class="card-body">
 
         @if ($this->entrada->orden)
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-12">
                     <h5><b>No. Reporte: </b> {{ $this->entrada->orden }}</h5>
                 </div>
