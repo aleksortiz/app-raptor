@@ -20,7 +20,7 @@ class PendientesFilter implements FilterInterface
             });
 
             if ($count <= 0) {
-                return;
+                return $item;
             }
 
             $item['label'] = $count;
