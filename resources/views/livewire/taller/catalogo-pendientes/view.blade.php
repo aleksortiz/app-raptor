@@ -83,9 +83,9 @@
                 <div class="col-2">
 
                     <div class="form-group">
-                        <label for="keyWord">Solo pendientes:</label>
+                        <label for="solo_pendientes">Solo pendientes:</label>
                         <label class="content-input">
-                            <input  type="checkbox" wire:model="solo_pendientes" />
+                            <input  type="checkbox" id="solo_pendientes" wire:model="solo_pendientes" />
                             <i></i>
                         </label>
                     </div>
