@@ -41,6 +41,9 @@ class Foto extends BaseModel
     }
 
     public function getCompleteThumbUrlAttribute(){
+        if (!$this->url_thumb) {
+            return $this->getCompleteUrlAttribute();
+        }
         $bucket = env('AWS_BUCKET_URL');
         if (str_contains($this->url_thumb, $bucket)) {
             return $this->url_thumb;
