@@ -418,4 +418,14 @@ class Entrada extends BaseModel
     public function registros_factura(){
         return $this->morphMany(RegistroFactura::class, 'model');
     }
+
+    public function getMainPhotoAttribute()
+    {
+        if($this->fotos()->count() > 0){
+            return $this->fotos()->first()->complete_thumb_url;
+        }
+        else{
+            return asset('images/logo_new.jpg');
+        }
+    }
 }

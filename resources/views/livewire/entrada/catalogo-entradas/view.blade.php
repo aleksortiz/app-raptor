@@ -79,7 +79,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>Foto</th>
                         <th>Folio</th>
                         <th>Origen</th>
                         <th>Cliente</th>
@@ -94,12 +94,15 @@
                     @foreach ($entradas as $row)
                     <tr>
                         <td>
+                            <img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 50px; height: 50px; object-fit: cover;">
+                        </td>
+                        {{-- <td>
                             @if($row->has_parts)
                                 <a href="/servicios/{{$row->id}}?activeTab=5" data-toggle="tooltip" data-placement="top" title="Tiene Refacciones" class="btn btn-xs btn-default"><i class="fa fa-wrench"></i></a>
                             @elseif ($row->check_parts)
                                 <a href="/servicios/{{$row->id}}?activeTab=5" data-toggle="tooltip" data-placement="top" title="Revisar Refacciones" class="btn btn-xs btn-danger"><i class="fa fa-wrench"></i></a>
                             @endif
-                        </td>
+                        </td> --}}
                         <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
                         <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                         <td>{{ $row->cliente->nombre }}</td>
