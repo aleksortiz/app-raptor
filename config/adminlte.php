@@ -244,7 +244,7 @@ return [
             'topnav' => true,
         ],
         [
-            'text' => 'Entradas',
+            'text' => 'Piso',
             'icon' => 'fas fa-fw fa-car',
             'url' => '/servicios',
             'topnav' => true,
@@ -567,6 +567,7 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\DataFilter::class,
         App\Adminlte\menu_filters\PendientesFilter::class,
+        App\Adminlte\menu_filters\PisoFilter::class,
     ],
 
     /*
