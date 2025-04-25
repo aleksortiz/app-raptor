@@ -94,7 +94,7 @@
                     @foreach ($entradas as $row)
                     <tr>
                         <td>
-                            <a href="/servicios/{{$row->id}}?activeTab=3"><img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%; border: solid 1px #ddd;"></a>
+                            <a href="/servicios/{{$row->id}}?activeTab=3"><img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 90%; border: solid 1px #ddd;"></a>
                         </td>
                         {{-- <td>
                             @if($row->has_parts)
