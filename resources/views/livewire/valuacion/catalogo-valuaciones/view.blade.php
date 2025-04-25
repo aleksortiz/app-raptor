@@ -73,7 +73,7 @@
                   @foreach ($valuaciones as $item)
                     <tr style="cursor: pointer" onclick="window.location.href='/valuaciones/{{ $item->id }}'">
                             <td>
-                                <img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 80px; height: 60px; object-fit: cover; border-radius: 10%; border: solid 1px #ddd;">
+                                <img src="{{ $item->main_photo }}" class="img-fluid" alt="image" style="width: 80px; height: 60px; object-fit: cover; border-radius: 10%; border: solid 1px #ddd;">
                             </td>
                             <td>{{ $item->fecha_creacion }}</td>
                             <td>{{ $item->id_paddy }}</td>
