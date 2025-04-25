@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Taller;
 
+use App\Models\Entrada;
+use App\Models\Pendiente;
 use Carbon\Carbon;
 use Livewire\Component;
 use Illuminate\Support\Str;
@@ -15,13 +17,43 @@ class CatalogoPendientes extends Component
 
     public $weekStart;
     public $weekEnd;
+    public $year;
+
+    protected $queryString = ['weekStart', 'weekEnd'];
 
     public function mount()
     {
-        $this->user_id = auth()->user()->id;
+        // $this->user_id = auth()->user()->id;
         $this->fecha_promesa = Carbon::now()->addHour(2)->setMinute(0)->setSecond(0)->toDateTimeString();
         $this->weekStart = Carbon::now()->startOfWeek()->week();
         $this->weekEnd = $this->weekStart;
+        $this->year = Carbon::today()->startOfWeek()->year;
+    }
+
+    public function getPendientesCountProperty()
+    {
+        $pendientesCount = Pendiente::where('fecha_terminado', null)->count();
+        return $pendientesCount;
+    }
+
+    public function updatedWeekStart()
+    {
+        if($this->weekStart > $this->weekEnd){
+            $this->weekEnd = $this->weekStart;
+        }
+    }
+
+    public function check($id){
+
+        $pendiente = \App\Models\Pendiente::find($id);
+        if ($pendiente) {
+            $pendiente->update([
+                'fecha_terminado' => Carbon::now(),
+            ]);
+            $this->emit('ok', 'Pendiente marcado como terminado');
+        } else {
+            $this->emit('error', 'Pendiente no encontrado');
+        }
     }
 
     public function getTiempoRestanteProperty(){
@@ -93,7 +125,14 @@ class CatalogoPendientes extends Component
 
     public function getPendientes()
     {
-        return \App\Models\Pendiente::paginate();
+        [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+
+        $pendientes = Pendiente::whereBetween('created_at', [$start, $end]);
+        if($this->user_id){
+            $pendientes = $pendientes->where('user_id', $this->user_id);
+        }
+
+        return $pendientes->paginate(30);
     }
 
     public function getRenderData()

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Pendiente;
+use App\Observers\PendienteObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -14,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        
     }
 
     /**
@@ -24,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Pendiente::observe(PendienteObserver::class);
+        
         Blade::directive('qty', function ($amount) {
             return "<?php echo number_format($amount); ?>";
         });

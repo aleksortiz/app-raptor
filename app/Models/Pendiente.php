@@ -30,10 +30,12 @@ class Pendiente extends BaseModel
     }
 
     public function getFechaPromesaFormatAttribute(){
-        return $this->fecha_promesa ? $this->fecha_promesa->format('d/m/Y h:i A') : null;
+        $format = 'd/M/Y h:i A';
+        return $this->fecha_promesa ? $this->fecha_promesa->format($format) : null;
     }
 
     public function getFechaTerminadoFormatAttribute(){
-        return $this->fecha_terminado ? $this->fecha_terminado->format('d/m/Y h:i A') : null;
+        $format = 'd/M/Y h:i A';
+        return $this->fecha_terminado ? $this->fecha_terminado->format($format) : null;
     }
 }
