@@ -33,7 +33,7 @@ class EditarAsignacion extends Component
 
     public function mount()
     {
-        $this->personal_list = Personal::orderBy('nombre')->get();
+        $this->personal_list = Personal::where('activo', true)->orderBy('nombre')->get();
     }
 
     public function showModal($asignacion_id)

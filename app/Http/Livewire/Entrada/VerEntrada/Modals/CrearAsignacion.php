@@ -35,7 +35,7 @@ class CrearAsignacion extends Component
     public function mount($entrada_id = null)
     {
         $this->entrada_id = $entrada_id;
-        $this->personal_list = Personal::orderBy('nombre')->get();
+        $this->personal_list = Personal::where('activo', true)->orderBy('nombre')->get();
     }
 
     public function showModal($entrada_id = null)
