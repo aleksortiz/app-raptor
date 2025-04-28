@@ -3,22 +3,27 @@
 namespace App\Http\Livewire\Entrada;
 
 use App\Http\Traits\PhotoTrait;
+use App\Models\Asignacion;
 use App\Models\Costo;
+use App\Models\Destajo;
 use App\Models\Entrada;
 use App\Models\EntradaGasto;
 use App\Models\EntradaInventario;
 use App\Models\EntradaMaterial;
 use App\Models\Foto;
+use App\Models\Gasto;
 use App\Models\Material;
+use App\Models\OrdenPago;
 use App\Models\OrdenTrabajo;
 use App\Models\OrdenTrabajoPago;
 use App\Models\PedidoConcepto;
 use App\Models\Refaccion;
+use App\Models\Servicio;
+use App\Models\Sueldo;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
-// use Intervention\Image\Facades\Image as InterventionImage;
 use Livewire\WithFileUploads;
 
 class VerEntrada extends Component
@@ -66,9 +71,39 @@ class VerEntrada extends Component
         'destroyMaterial',
         'reload',
         'removeOrdenPago',
+        'eliminarAsignacion',
+        'refresh' => '$refresh'
     ];
 
     protected $queryString = ['activeTab'];
+
+    protected $rules = [
+        'refaccion.descripcion' => 'string|required|max:255',
+        'refaccion.numero_parte' => 'string|nullable|max:255',
+        'refaccion.cantidad' => 'numeric|required|min:0',
+        'refaccion.costo' => 'numeric|required|min:0',
+        'refaccion.precio' => 'numeric|required|min:0',
+
+        'costo.concepto' => 'string|required|max:255',
+        'costo.costo' => 'numeric|required|min:0',
+        'costo.venta' => 'numeric|required|min:0',
+        'costo.no_factura' => 'string|nullable|max:255',
+        'costo.tipo' => 'string|nullable|max:255',
+        'costo.pagado' => 'date|nullable',
+
+        'entrada.venta_refacciones' => 'boolean|required',
+        'entrada.tarea_realizar' => 'nullable|string',
+
+        'pagoDestajo' => 'numeric|required|min:0',
+
+        'materialManual.descripcion' => 'string|required|max:255',
+        'materialManual.cantidad' => 'numeric|required|min:0',
+        'materialManual.precio' => 'numeric|required|min:0',
+    ];
+
+    protected $messages = [
+        'entrada.tarea_realizar.string' => 'La tarea a realizar debe ser texto'
+    ];
 
     public function updatedEntradaPagoRefacciones(){
 
@@ -96,29 +131,6 @@ class VerEntrada extends Component
       }
 
     }
-
-    protected $rules = [
-        'refaccion.descripcion' => 'string|required|max:255',
-        'refaccion.numero_parte' => 'string|nullable|max:255',
-        'refaccion.cantidad' => 'numeric|required|min:0',
-        'refaccion.costo' => 'numeric|required|min:0',
-        'refaccion.precio' => 'numeric|required|min:0',
-
-        'costo.concepto' => 'string|required|max:255',
-        'costo.costo' => 'numeric|required|min:0',
-        'costo.venta' => 'numeric|required|min:0',
-        'costo.no_factura' => 'string|nullable|max:255',
-        'costo.tipo' => 'string|nullable|max:255',
-        'costo.pagado' => 'date|nullable',
-
-        'entrada.venta_refacciones' => 'boolean|required',
-
-        'pagoDestajo' => 'numeric|required|min:0',
-
-        'materialManual.descripcion' => 'string|required|max:255',
-        'materialManual.cantidad' => 'numeric|required|min:0',
-        'materialManual.precio' => 'numeric|required|min:0',
-    ];
 
     public function reload(){
         $this->entrada->refresh();
@@ -591,5 +603,36 @@ class VerEntrada extends Component
         $this->reset('selectedCostoId', 'notasCosto');
         $this->emit('closeModal', '#mdlNotasCosto');
         $this->emit('ok', 'Se han guardado notas');
+    }
+
+    public function eliminarAsignacion($id)
+    {
+        $asignacion = Asignacion::findOrFail($id);
+        $asignacion->delete();
+        
+        $this->dispatchBrowserEvent('notify', [
+            'type' => 'success',
+            'message' => 'Asignación eliminada correctamente'
+        ]);
+    }
+
+    public function updatedEntradaTareaRealizar()
+    {
+        // $this->showSaveTareaButton = true;
+    }
+
+    public function guardarTareaRealizar()
+    {
+        $this->validate([
+            'entrada.tarea_realizar' => 'nullable|string'
+        ]);
+        
+        $this->entrada->tarea_realizar = mb_strtoupper($this->entrada->tarea_realizar);
+        $this->entrada->save();
+        
+        $this->dispatchBrowserEvent('notify', [
+            'type' => 'success',
+            'message' => 'Tarea a realizar guardada correctamente'
+        ]);
     }
 }

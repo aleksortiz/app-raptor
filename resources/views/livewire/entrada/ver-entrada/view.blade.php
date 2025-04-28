@@ -19,6 +19,7 @@
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 7 ? 'active' : '' }}" wire:click="$set('activeTab',7)" href="#"><i class="fas fa-hand-holding-usd"></i> Sueldos</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 8 ? 'active' : '' }}" wire:click="$set('activeTab',8)" href="#"><i class="fas fa-hand-holding-usd"></i> Destajos</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 9 ? 'active' : '' }}" wire:click="$set('activeTab',9)" href="#"><i class="fas fa-money-bill"></i> Gastos</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $activeTab == 10 ? 'active' : '' }}" wire:click="$set('activeTab',10)" href="#"><i class="fas fa-tasks"></i> Asignaciones</a></li>
                 </ul>
             </div>
 
@@ -57,8 +58,12 @@
                         @include('livewire.entrada.ver-entrada.tabs.tab-destajos')
                     </div>
 
-                    <div class="tab-pane {{ $activeTab == 9 ? 'active' : '' }}" id="tab_8">
+                    <div class="tab-pane {{ $activeTab == 9 ? 'active' : '' }}" id="tab_9">
                         @include('livewire.entrada.ver-entrada.tabs.tab-gastos')
+                    </div>
+
+                    <div class="tab-pane {{ $activeTab == 10 ? 'active' : '' }}" id="tab_10">
+                        @include('livewire.entrada.ver-entrada.tabs.tab-asignaciones')
                     </div>
 
                 </div>
@@ -75,4 +80,35 @@
     @include('livewire.entrada.ver-entrada.modals.mdl-registrar-pago-destajo')
     @livewire('material.common.select-material')
     @livewire('personal.mdl-crear-orden-trabajo', ['entrada_id' => $this->entrada->id])
+    @livewire('entrada.ver-entrada.modals.crear-asignacion', ['entrada_id' => $this->entrada->id])
+    @livewire('entrada.ver-entrada.modals.editar-asignacion')
 </div>
+
+@push('js')
+<script>
+    window.addEventListener('show-mdl-crear-asignacion', event => {
+        $('#mdl-crear-asignacion').modal('show');
+    });
+
+    window.addEventListener('hide-mdl-crear-asignacion', event => {
+        $('#mdl-crear-asignacion').modal('hide');
+    });
+
+    window.addEventListener('show-mdl-editar-asignacion', event => {
+        $('#mdl-editar-asignacion').modal('show');
+    });
+
+    window.addEventListener('hide-mdl-editar-asignacion', event => {
+        $('#mdl-editar-asignacion').modal('hide');
+    });
+
+    window.addEventListener('notify', event => {
+        Swal.fire({
+            icon: event.detail.type,
+            title: event.detail.message,
+            showConfirmButton: false,
+            timer: 2000
+        });
+    });
+</script>
+@endpush

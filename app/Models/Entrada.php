@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\shared\BaseModel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use App\Models\Asignacion;
 
 class Entrada extends BaseModel
 {
@@ -31,6 +32,7 @@ class Entrada extends BaseModel
         'rfc',
         'razon_social',
         'domicilio_fiscal',
+        'tarea_realizar',
     ];
 
     protected $attributes = [
@@ -352,6 +354,11 @@ class Entrada extends BaseModel
         $this->attributes['domicilio_fiscal'] = strtoupper($value);
     }
 
+    protected function setTareaRealizarAttribute($value)
+    {
+        $this->attributes['tarea_realizar'] = mb_strtoupper($value);
+    }
+
     public function ordenes_trabajo()
     {
         return $this->hasMany(OrdenTrabajo::class);
@@ -427,5 +434,13 @@ class Entrada extends BaseModel
         else{
             return asset('images/logo_new.jpg');
         }
+    }
+
+    /**
+     * Obtiene las asignaciones de trabajo relacionadas con esta entrada
+     */
+    public function asignaciones()
+    {
+        return $this->hasMany(Asignacion::class);
     }
 }

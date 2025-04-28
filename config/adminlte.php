@@ -466,6 +466,12 @@ return [
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/ordenes-trabajo',
                 ],
+                [
+                    'text' => 'Asignaciones',
+                    'icon'   => 'fas fa-fw fa-tasks',
+                    'url'    => '/personal/asignaciones',
+                    'can' => ['administrar-personal'],
+                ],
             ]
         ],
         [

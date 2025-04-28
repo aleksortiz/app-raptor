@@ -143,5 +143,4 @@ class CatalogoEntradas extends Component
         $this->emit('ok', 'Se ha eliminado pago de servicio: ' . $costo->concepto);
     }
 
-
 }

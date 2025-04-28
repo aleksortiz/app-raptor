@@ -86,6 +86,7 @@
                         <th>Orden</th>
                         <th>Vehículo</th>
                         <th>Monto</th>
+                        <th>Asignaciones</th>
                         <th>Estatus Pago</th>
                         <th>Estatus Entrega</th>
                     </tr>
@@ -96,19 +97,17 @@
                         <td>
                             <a href="/servicios/{{$row->id}}?activeTab=3"><img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 80px; height: 60px; object-fit: cover; border-radius: 10%; border: solid 1px #ddd;"></a>
                         </td>
-                        {{-- <td>
-                            @if($row->has_parts)
-                                <a href="/servicios/{{$row->id}}?activeTab=5" data-toggle="tooltip" data-placement="top" title="Tiene Refacciones" class="btn btn-xs btn-default"><i class="fa fa-wrench"></i></a>
-                            @elseif ($row->check_parts)
-                                <a href="/servicios/{{$row->id}}?activeTab=5" data-toggle="tooltip" data-placement="top" title="Revisar Refacciones" class="btn btn-xs btn-danger"><i class="fa fa-wrench"></i></a>
-                            @endif
-                        </td> --}}
                         <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
                         <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
                         <td>{{ $row->cliente->nombre }}</td>
                         <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
                         <td>{{ $row->vehiculo }}</td>
                         <td>@money($row->total)</td>
+                        <td>
+                            <a href="/servicios/{{$row->id}}?activeTab=10" class="btn btn-xs btn-{{ $row->asignaciones->count() > 0 ? 'success' : 'secondary' }}">
+                                <i class="fas fa-tasks"></i> {{ $row->asignaciones->count() }}
+                            </a>
+                        </td>
                         <td>{!! $row->estatus_entrada !!}</td>
                         <td>{!! $row->entrega_button !!}</td>
                     </tr>
