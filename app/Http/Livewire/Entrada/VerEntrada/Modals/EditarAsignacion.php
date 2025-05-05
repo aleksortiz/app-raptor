@@ -15,7 +15,7 @@ class EditarAsignacion extends Component
     public $fecha_realizado;
     public $personal_list;
 
-    protected $listeners = ['showModal'];
+    // protected $listeners = ['showModal'];
 
     protected $rules = [
         'personal_id' => 'required|exists:personal,id',

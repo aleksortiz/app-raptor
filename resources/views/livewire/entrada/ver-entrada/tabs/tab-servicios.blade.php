@@ -136,14 +136,14 @@
                         @foreach ($entrada->costos as $item)
                             @php
                                 $editMode = $this->costo && $this->costo->id == $item->id;
+                                // $editMode = true;
                             @endphp
                             <tr>
                                 <td>
                                     @if ($editMode)
-                                        <button wire:click="saveCosto" class="btn btn-xs btn-success"><i
-                                                class="fa fa-save"></i></button>
+                                        <button wire:click="saveCosto" class="btn btn-xs btn-success"><i class="fa fa-save"></i></button>
                                     @else
-                                        <button wire:click="" onclick="destroy({{ $item->id }},'Costo', 'destroyCosto')" class="btn btn-xs btn-danger"><i class="fa fa-trash-alt"></i></button>
+                                        <button wire:click="" type="button" onclick="destroy({{ $item->id }}, 'Costo', 'destroyCosto')" class="btn btn-xs btn-danger"><i class="fa fa-trash-alt"></i></button>
                                     @endif
                                 </td>
                                 <td>

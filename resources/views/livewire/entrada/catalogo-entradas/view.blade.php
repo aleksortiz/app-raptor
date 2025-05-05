@@ -83,12 +83,12 @@
                         <th>Folio</th>
                         <th>Origen</th>
                         <th>Cliente</th>
-                        <th>Orden</th>
+                        <th>No. Reporte</th>
                         <th>Vehículo</th>
                         <th>Monto</th>
                         <th>Asignaciones</th>
-                        <th>Estatus Pago</th>
-                        <th>Estatus Entrega</th>
+                        {{-- <th>Estatus Pago</th> --}}
+                        <th>Estatus</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -108,8 +108,8 @@
                                 <i class="fas fa-tasks"></i> {{ $row->asignaciones->count() }}
                             </a>
                         </td>
-                        <td>{!! $row->estatus_entrada !!}</td>
-                        <td>{!! $row->entrega_button !!}</td>
+                        {{-- <td>{!! $row->estatus_entrada !!}</td> --}}
+                        <td>{!! $row->estado_button !!}</td>
                     </tr>
                     @endforeach
                 </tbody>

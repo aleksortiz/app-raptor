@@ -443,4 +443,35 @@ class Entrada extends BaseModel
     {
         return $this->hasMany(Asignacion::class);
     }
+
+    public function avance()
+    {
+        return $this->hasOne(EntradaAvance::class, 'entrada_id');
+    }
+
+    public function getEstadoAttribute()
+    {
+        if($this->fecha_entrega){
+            return 'ENTREGADO';
+        }
+        if ($this->avance) {
+            return $this->avance->estado;
+        }
+        return 'PENDIENTE';
+    }
+
+    public function getEstadoButtonAttribute()
+    {
+        if($this->estado == 'ENTREGADO'){
+            // return '<button class="btn btn-xs btn-success"><i class="fa fa-check"></i> '. $this->estado .'</button>';
+            $tooltip = "Vehiculo Entregado: ". $this->fecha_entrega_format;
+            return ' <button style="cursor: pointer;" wire:click="editFechaEntrega(' . $this->id . ')" data-toggle="tooltip" data-placement="right" title="'.$tooltip.'" class="py-1 btn btn-xs btn-success"><i class="fa fa-check"></i> ENTREGADO</button>';
+        }
+        if($this->estado == 'TERMINADO'){
+            return ' <button style="cursor: pointer;" wire:click="" onclick="confirm(\'Entregar vehículo: '.$this->vehiculo.'\', \'entregarVehiculo\', '. $this->id .')" class="py-1 btn btn-xs btn-primary"><i class="fa fa-check"></i> TERMINADO</button>';
+        }
+        else{
+            return '<a href="/servicios/' . $this->id .'?activeTab=11" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> '. $this->estado .'</a>';
+        }
+    }
 }

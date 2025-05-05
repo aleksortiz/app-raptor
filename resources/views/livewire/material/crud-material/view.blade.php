@@ -46,7 +46,7 @@
                         <th>Precio</th>
                         <th>Existencia</th>
                         @canany(['administrar-materiales'])
-                        <th>Asignar</th>
+                        {{-- <th>Asignar</th> --}}
                         <th>Opciones</th>
                         @endcanany
                     </tr>
@@ -63,9 +63,9 @@
                             <td>{{ $row->existencia }}</td>
 
                             @canany(['administrar-materiales'])
-                              <td>
+                              {{-- <td>
                                   <button class="btn btn-xs btn-primary" wire:click="mdlAsignarMaterial({{ $row->id }})"><i class="fa fa-car"></i> Asignar a folio</button>
-                              </td>
+                              </td> --}}
 
                               <td>
                                   <button class="btn btn-xs btn-warning" wire:click="mdlEdit({{ $row->id }})"><i

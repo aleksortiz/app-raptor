@@ -16,7 +16,7 @@ class CrearAsignacion extends Component
     public $fecha_realizado;
     public $personal_list;
 
-    protected $listeners = ['showModal'];
+    protected $listeners = ['showModalAsignacion' => 'showModal'];
 
     protected $rules = [
         'personal_id' => 'required|exists:personal,id',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Entrada;
 
+use App\Http\Traits\EntradaAvanceTrait;
 use App\Http\Traits\PhotoTrait;
 use App\Models\Asignacion;
 use App\Models\Costo;
@@ -28,7 +29,7 @@ use Livewire\WithFileUploads;
 
 class VerEntrada extends Component
 {
-    use PhotoTrait, WithFileUploads;
+    use PhotoTrait, WithFileUploads, EntradaAvanceTrait;
 
     public $activeTab = 2;
     public Entrada $entrada;
@@ -276,8 +277,6 @@ class VerEntrada extends Component
         $count = $this->entrada->costos->count();
         $count++;
         $this->costo->concepto = null;
-
-        $this->resetValidation();
         $this->emit('showModal', '#mdlCreateCosto');
     }
 
@@ -299,7 +298,7 @@ class VerEntrada extends Component
             'costo.venta' => 'numeric|required|min:0',
             'costo.tipo' => 'string|required',
         ]);
-
+        
         if($this->costo->tipo == 'SERVICIO' || $this->costo->tipo == 'MANO DE OBRA'){
             $this->costo->costo = 0;
         }
