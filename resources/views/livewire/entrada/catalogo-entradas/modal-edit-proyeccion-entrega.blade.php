@@ -9,6 +9,7 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <button wire:click="removeProyeccion" class="btn btn-danger btn-xs mr-1"><i class="fas fa-times"></i></button>
                     <label for="proyeccionFecha">Fecha de Entrega</label>
                     <input type="date" class="form-control" id="proyeccionFecha" wire:model="proyeccionFecha">
                     @error('proyeccionFecha') <span class="text-danger">{{ $message }}</span> @enderror

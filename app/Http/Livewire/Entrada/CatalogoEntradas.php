@@ -203,6 +203,18 @@ class CatalogoEntradas extends Component
         $this->emit('ok', 'Se ha actualizado la fecha de entrega');
     }
 
+    public function removeProyeccion()
+    {
+        $this->selectedEntrada->update([
+            'proyeccion_entrega' => null
+        ]);
+        $this->editingProyeccion = false;
+        $this->selectedEntrada = null;
+        $this->proyeccionFecha = null;
+        $this->emit('closeModal', '#mdlProyeccionEntrega');
+        $this->emit('ok', 'Se ha eliminado la proyección de entrega');
+    }
+
     public function cancelProyeccion()
     {
         $this->editingProyeccion = false;
