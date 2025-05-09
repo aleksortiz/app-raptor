@@ -33,6 +33,7 @@ class Entrada extends BaseModel
         'razon_social',
         'domicilio_fiscal',
         'tarea_realizar',
+        'proyeccion_entrega',
     ];
 
     protected $attributes = [

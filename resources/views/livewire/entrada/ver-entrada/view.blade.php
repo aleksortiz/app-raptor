@@ -26,7 +26,12 @@
 
             <div class="card-body p-0">
                 <div class="tab-content">
-
+                    <div class="flex items-center space-x-4 mb-4">
+                        <div class="flex items-center">
+                            <input wire:model.live="filtroEnPiso" id="filtro-en-piso" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                            <label for="filtro-en-piso" class="ml-2 block text-sm text-gray-900">Mostrar solo vehículos en piso</label>
+                        </div>
+                    </div>
                     <div class="tab-pane {{ $activeTab == 1 ? 'active' : '' }}" id="tab_1">
                         @include('livewire.entrada.ver-entrada.tabs.tab-data')
                     </div>

@@ -12,7 +12,18 @@
         <div class="card-body p-0">
             <div class="row p-3">
 
-                <div class="col-1">
+                <div class="col-2">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <label class="content-input">
+                            <input wire:model.live="filtroEnPiso" type="checkbox" id="filtroEnPiso">
+                            <i></i>
+                            <span class="ml-2">Solo en piso</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="col-1 {{ $filtroEnPiso ? 'd-none' : '' }}">
                     <div class="form-group">
                         <label for="keyWord">Año</label>
                         <select wire:model.lazy="year" class="form-control" id="year">
@@ -23,7 +34,7 @@
                     </div>
                 </div>
 
-                <div class="col-1">
+                <div class="col-1 {{ $filtroEnPiso ? 'd-none' : '' }}">
                     <div class="form-group">
                         <label for="keyWord">Semana</label>
                         <select wire:model.lazy="weekStart" class="form-control" id="weekStart">
@@ -35,7 +46,7 @@
                 </div>
 
                 
-                <div class="col-1">
+                <div class="col-1 {{ $filtroEnPiso ? 'd-none' : '' }}">
                     <div class="form-group">
                         <label for="keyWord">a la</label>
                         <select wire:model.lazy="weekEnd" class="form-control" id="weekEnd">
@@ -45,6 +56,7 @@
                         </select>
                     </div>
                 </div>
+
 
 
                 <div class="col">
@@ -76,49 +88,146 @@
 
             <a type="button" href="/vehiculos-piso/excel" class="btn btn-xs btn-success"><i class="fas fa-file-excel"></i> Vehiculos en piso </a>
 
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Foto</th>
-                        <th>Folio</th>
-                        <th>Origen</th>
-                        <th>Cliente</th>
-                        <th>No. Reporte</th>
-                        <th>Vehículo</th>
-                        <th>Monto</th>
-                        <th>Asignaciones</th>
-                        {{-- <th>Estatus Pago</th> --}}
-                        <th>Estatus</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($entradas as $row)
-                    <tr>
-                        <td>
-                            <a href="/servicios/{{$row->id}}?activeTab=3"><img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 80px; height: 60px; object-fit: cover; border-radius: 10%; border: solid 1px #ddd;"></a>
-                        </td>
-                        <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
-                        <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
-                        <td>{{ $row->cliente->nombre }}</td>
-                        <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
-                        <td>{{ $row->vehiculo }}</td>
-                        <td>@money($row->total)</td>
-                        <td>
-                            <a href="/servicios/{{$row->id}}?activeTab=10" class="btn btn-xs btn-{{ $row->asignaciones->count() > 0 ? 'success' : 'secondary' }}">
-                                <i class="fas fa-tasks"></i> {{ $row->asignaciones->count() }}
-                            </a>
-                        </td>
-                        {{-- <td>{!! $row->estatus_entrada !!}</td> --}}
-                        <td>{!! $row->estado_button !!}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            @if($entregasHoy->count() > 0)
+                <div class="card mt-3">
+                    <div class="card-header bg-warning">
+                        <h3 class="card-title">Entregas de hoy</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Foto</th>
+                                    <th>Folio</th>
+                                    <th>Origen</th>
+                                    <th>Cliente</th>
+                                    <th>No. Reporte</th>
+                                    <th>Vehículo</th>
+                                    <th>Monto</th>
+                                    <th>Asignaciones</th>
+                                    <th>Estatus</th>
+                                    <th>Se entrega Hoy</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($entregasHoy as $row)
+                                <tr>
+                                    <td>
+                                        <a href="/servicios/{{$row->id}}?activeTab=3"><img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 80px; height: 60px; object-fit: cover; border-radius: 10%; border: solid 1px #ddd;"></a>
+                                    </td>
+                                    <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
+                                    <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
+                                    <td>{{ $row->cliente->nombre }}</td>
+                                    <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
+                                    <td>{{ $row->vehiculo }}</td>
+                                    <td>@money($row->total)</td>
+                                    <td>
+                                        <a href="/servicios/{{$row->id}}?activeTab=10" class="btn btn-xs btn-{{ $row->asignaciones->count() > 0 ? 'success' : 'secondary' }}">
+                                            <i class="fas fa-tasks"></i> {{ $row->asignaciones->count() }}
+                                        </a>
+                                    </td>
+                                    <td>{!! $row->estado_button !!}</td>
+                                    <td>
+                                        <label class="content-input">
+                                            <input type="checkbox" wire:click="toggleProyeccion({{$row->id}})" {{ $row->proyeccion_entrega ? 'checked' : '' }}>
+                                            <i></i>
+                                        </label>
+                                        @if($row->proyeccion_entrega)
+                                            <small class="text-muted d-block">{{ \Carbon\Carbon::parse($row->proyeccion_entrega)->format('d/m/Y') }}</small>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {{ $entregasHoy->links() }}
+            @endif
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3 class="card-title">Otras Entradas</h3>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Foto</th>
+                                <th>Folio</th>
+                                <th>Origen</th>
+                                <th>Cliente</th>
+                                <th>No. Reporte</th>
+                                <th>Vehículo</th>
+                                <th>Monto</th>
+                                <th>Asignaciones</th>
+                                <th>Estatus</th>
+                                <th>Se entrega Hoy</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($otrasEntradas as $row)
+                            <tr>
+                                <td>
+                                    <a href="/servicios/{{$row->id}}?activeTab=3"><img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 80px; height: 60px; object-fit: cover; border-radius: 10%; border: solid 1px #ddd;"></a>
+                                </td>
+                                <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
+                                <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
+                                <td>{{ $row->cliente->nombre }}</td>
+                                <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
+                                <td>{{ $row->vehiculo }}</td>
+                                <td>@money($row->total)</td>
+                                <td>
+                                    <a href="/servicios/{{$row->id}}?activeTab=10" class="btn btn-xs btn-{{ $row->asignaciones->count() > 0 ? 'success' : 'secondary' }}">
+                                        <i class="fas fa-tasks"></i> {{ $row->asignaciones->count() }}
+                                    </a>
+                                </td>
+                                <td>{!! $row->estado_button !!}</td>
+                                <td>
+                                    <label class="content-input">
+                                        <input type="checkbox" wire:click="toggleProyeccion({{$row->id}})" {{ $row->proyeccion_entrega ? 'checked' : '' }}>
+                                        <i></i>
+                                    </label>
+                                    @if($row->proyeccion_entrega)
+                                        <small class="text-muted d-block">{{ \Carbon\Carbon::parse($row->proyeccion_entrega)->format('d/m/Y') }}</small>
+                                    @endif
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {{ $otrasEntradas->links() }}
 
         </div>
     </div>
-    {{ $entradas->links() }}
 
     @include('livewire.entrada.ver-entrada.modals.mdl-edit-date')
     @include('livewire.entrada.catalogo-entradas.modal-pago-servicios')
+
+    <!-- Modal Proyección Entrega -->
+    <div class="modal fade" id="mdlProyeccionEntrega" tabindex="-1" role="dialog" aria-labelledby="mdlProyeccionEntregaLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mdlProyeccionEntregaLabel">Editar Fecha de Entrega</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="proyeccionFecha">Fecha de Entrega</label>
+                        <input type="date" class="form-control" id="proyeccionFecha" wire:model="proyeccionFecha">
+                        @error('proyeccionFecha') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" wire:click="cancelProyeccion">Cancelar</button>
+                    <button type="button" class="btn btn-primary" wire:click="saveProyeccion">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

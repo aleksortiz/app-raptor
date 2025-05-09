@@ -63,6 +63,8 @@ class VerEntrada extends Component
         'precio' => null,
     ];
 
+    public $filtroEnPiso = false;
+
     protected $listeners = [
         'destroyCosto',
         'deleteGasto',
@@ -147,7 +149,18 @@ class VerEntrada extends Component
 
     public function render()
     {
-        return view('livewire.entrada.ver-entrada.view');
+        $query = Entrada::query()
+            ->with(['cliente', 'sucursal', 'aseguradora', 'fabricante'])
+            ->when($this->filtroEnPiso, function($query) {
+                return $query->whereNull('fecha_entrega');
+            })
+            ->orderBy('created_at', 'desc');
+
+        $entradas = $query->paginate(25);
+
+        return view('livewire.entrada.ver-entrada', [
+            'entradas' => $entradas,
+        ]);
     }
 
     public function getFechaTituloProperty()

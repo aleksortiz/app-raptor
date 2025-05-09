@@ -25,17 +25,21 @@ class CatalogoEntradas extends Component
     public $weekStart;
     public $weekEnd;
     public $origen;
+    public $filtroEnPiso = true;
 
     public $selectedEntrada;
     public $selectedCosto;
+    public $editingProyeccion = false;
+    public $proyeccionFecha;
 
-    protected $queryString = ['keyWord', 'year', 'weekStart', 'weekEnd'];
+    protected $queryString = ['keyWord', 'year', 'weekStart', 'weekEnd', 'origen', 'filtroEnPiso'];
 
     protected $rules = [
         'selectedCosto.concepto' => 'string|required|max:255',
         'selectedCosto.costo' => 'numeric|required|min:0',
         'selectedCosto.no_factura' => 'string|nullable|max:255',
         'selectedCosto.pagado' => 'date',
+        'proyeccionFecha' => 'date|nullable',
     ];
 
     protected $listeners = [
@@ -61,10 +65,17 @@ class CatalogoEntradas extends Component
 
     public function getRenderData(){
         $this->keyWord = trim($this->keyWord);
-        [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        
+        $entradas = Entrada::OrderBy('id','asc');
 
-        $entradas = Entrada::OrderBy('id','asc')
-        ->whereBetween('created_at', [$start, $end])
+        if (!$this->filtroEnPiso) {
+            [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+            $entradas = $entradas->whereBetween('created_at', [$start, $end]);
+        }
+
+        $baseQuery = $entradas->when($this->filtroEnPiso, function($query) {
+            return $query->whereNull('fecha_entrega');
+        })
         ->where(function ($q){
             $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
             ->orWhereHas('fabricante', function($fab){
@@ -80,13 +91,28 @@ class CatalogoEntradas extends Component
         });
 
         if($this->origen){
-            $entradas = $entradas->where('origen', $this->origen);
+            $baseQuery = $baseQuery->where('origen', $this->origen);
         }
 
-        $entradas = $entradas->paginate(50);
+        // Entregas de hoy
+        $entregasHoy = (clone $baseQuery)
+            ->whereNotNull('proyeccion_entrega')
+            ->where('proyeccion_entrega', '<=', now()->toDateString())
+            ->whereNull('fecha_entrega')
+            ->paginate(50);
+
+        // Resto de entradas
+        $otrasEntradas = (clone $baseQuery)
+            ->where(function($query) {
+                $query->whereNull('proyeccion_entrega')
+                    ->orWhere('proyeccion_entrega', '>', now()->toDateString())
+                    ->orWhereNotNull('fecha_entrega');
+            })
+            ->paginate(50);
 
         return [
-            'entradas' => $entradas,
+            'entregasHoy' => $entregasHoy,
+            'otrasEntradas' => $otrasEntradas,
         ];
     }
 
@@ -141,6 +167,48 @@ class CatalogoEntradas extends Component
         $this->selectedEntrada->load('costos');
         $this->removeCosto();
         $this->emit('ok', 'Se ha eliminado pago de servicio: ' . $costo->concepto);
+    }
+
+    public function toggleProyeccion($entradaId)
+    {
+        $entrada = Entrada::findOrFail($entradaId);
+        
+        if ($entrada->proyeccion_entrega) {
+            $this->editingProyeccion = true;
+            $this->selectedEntrada = $entrada;
+            $this->proyeccionFecha = $entrada->proyeccion_entrega;
+            $this->emit('showModal', '#mdlProyeccionEntrega');
+        } else {
+            $entrada->update([
+                'proyeccion_entrega' => now()->toDateString()
+            ]);
+            $this->emit('ok', 'Se ha establecido la fecha de entrega para hoy');
+        }
+    }
+
+    public function saveProyeccion()
+    {
+        $this->validate([
+            'proyeccionFecha' => 'required|date'
+        ]);
+
+        $this->selectedEntrada->update([
+            'proyeccion_entrega' => $this->proyeccionFecha
+        ]);
+
+        $this->editingProyeccion = false;
+        $this->selectedEntrada = null;
+        $this->proyeccionFecha = null;
+        $this->emit('closeModal', '#mdlProyeccionEntrega');
+        $this->emit('ok', 'Se ha actualizado la fecha de entrega');
+    }
+
+    public function cancelProyeccion()
+    {
+        $this->editingProyeccion = false;
+        $this->selectedEntrada = null;
+        $this->proyeccionFecha = null;
+        $this->emit('closeModal', '#mdlProyeccionEntrega');
     }
 
 }
