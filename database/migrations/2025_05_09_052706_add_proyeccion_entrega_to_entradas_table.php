@@ -14,7 +14,7 @@ class AddProyeccionEntregaToEntradasTable extends Migration
     public function up()
     {
         Schema::table('entradas', function (Blueprint $table) {
-            //
+            $table->date('proyeccion_entrega')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddProyeccionEntregaToEntradasTable extends Migration
     public function down()
     {
         Schema::table('entradas', function (Blueprint $table) {
-            //
+            $table->dropColumn('proyeccion_entrega');
         });
     }
 }
