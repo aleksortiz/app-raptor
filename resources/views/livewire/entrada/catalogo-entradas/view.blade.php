@@ -162,7 +162,7 @@
                                 <th>Monto</th>
                                 <th>Asignaciones</th>
                                 <th>Estatus</th>
-                                <th>Se entrega Hoy</th>
+                                <th>Proyección de Entrega</th>
                             </tr>
                         </thead>
                         <tbody>
