@@ -1,8 +1,8 @@
-@section('title', __($this->model_name_plural))
+@section('title', __('Catalogo de Entradas'))
 <div class="pt-3">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Catalogo de {{ $this->model_name_plural }}</h3>
+            <h3 class="card-title">Catalogo de Entradas</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
