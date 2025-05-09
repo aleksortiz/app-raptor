@@ -269,6 +269,15 @@ return [
           'topnav' => true,
         ],
         [
+            'text' => 'Manual',
+            'icon' => 'fas fa-fw fa-book',
+            'url' => '/docs/manual-trabajo-rev-1.pdf',
+            'topnav' => true,
+            'target' => '_blank',
+            'label' => '!!!',
+            'label_color' => 'danger',
+        ],
+        [
             'type'         => 'darkmode-widget',
             'topnav_right' => true,
         ],
