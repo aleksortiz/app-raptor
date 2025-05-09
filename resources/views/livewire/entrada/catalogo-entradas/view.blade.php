@@ -91,7 +91,7 @@
             @if($entregasHoy->count() > 0)
                 <div class="card mt-3">
                     <div class="card-header bg-warning">
-                        <h3 class="card-title">ENTREGAS DE HOY</h3>
+                        <h3 class="card-title"><b>ENTREGAS DE HOY</b></h3>
                     </div>
                     <div class="card-body p-0">
                         <table class="table table-hover">
