@@ -250,12 +250,6 @@ return [
             'topnav' => true,
         ],
         [
-            'text' => 'Ordenes de Trabajo',
-            'icon' => 'fas fa-fw fa-file-alt',
-            'url' => '/personal/ordenes-trabajo',
-            'topnav' => true,
-        ],
-        [
             'text' => 'Vehículos',
             'icon' => 'fas fa-fw fa-car',
             'url'    => '/vehiculos',
@@ -469,11 +463,6 @@ return [
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/prestamos',
                     'can' => ['diagrama-nomina'],
-                ],
-                [
-                    'text' => 'Ordenes de Trabajo',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/personal/ordenes-trabajo',
                 ],
                 [
                     'text' => 'Asignaciones',

@@ -1,8 +1,8 @@
-<div class="modal fade" id="{{ $mdlName }}" tabindex="-1" role="dialog" aria-labelledby="{{ $mdlName }}Label" aria-hidden="true">
+<div wire:ignore.self class="modal fade" id="{{ $mdlName }}" tabindex="-1" role="dialog" aria-labelledby="{{ $mdlName }}Label" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="{{ $mdlName }}Label">Crear Orden de Trabajo</h5>
+                <h5 class="modal-title" id="{{ $mdlName }}Label">Registrar Destajo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,7 +13,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="entrada">Entrada</label>
-                                <input type="text" class="form-control" id="entrada" value="{{ $entrada?->folio ?? '' }}" readonly>
+                                <input type="text" class="form-control" id="entrada" value="{{ $entrada?->folio_short . ' - ' . $entrada?->vehiculo }}" readonly>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -45,8 +45,42 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="notas">Notas</label>
-                        <textarea class="form-control @error('notas') is-invalid @enderror" id="notas" wire:model.defer="notas" rows="3"></textarea>
+                        <label>Componentes y Acciones</label>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Componente</th>
+                                        @foreach($acciones as $accion)
+                                            <th class="text-center">{{ $accion }}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($componentes as $componente)
+                                        <tr>
+                                            <td>{{ $componente }}</td>
+                                            @foreach($acciones as $accion)
+                                                <td class="text-center">
+                                                    <div class="custom-control custom-checkbox">
+                                                        <input type="checkbox" 
+                                                               class="custom-control-input" 
+                                                               id="check_{{ $componente }}_{{ $accion }}"
+                                                               wire:model="selecciones.{{ $componente }}.{{ $accion }}">
+                                                        <label class="custom-control-label" for="check_{{ $componente }}_{{ $accion }}"></label>
+                                                    </div>
+                                                </td>
+                                            @endforeach
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notas">Notas Generadas</label>
+                        <textarea class="form-control @error('notas') is-invalid @enderror" id="notas" wire:model="notas" rows="3" readonly></textarea>
                         @error('notas')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror

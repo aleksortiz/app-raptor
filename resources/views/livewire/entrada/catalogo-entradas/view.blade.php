@@ -105,7 +105,7 @@
                                     <th>Vehículo</th>
                                     <th>Monto</th>
                                     {{-- <th>Asignaciones</th> --}}
-                                    <th>Ordenes de Trabajo</th>
+                                    <th>Destajos</th>
                                     <th>Estatus</th>
                                     <th>Se entrega Hoy</th>
                                 </tr>
@@ -166,7 +166,7 @@
                                 <th>No. Reporte</th>
                                 <th>Vehículo</th>
                                 <th>Monto</th>
-                                <th>Ordenes de Trabajo</th>
+                                <th>Destajos</th>
                                 <th>Estatus</th>
                                 <th>Proyección de Entrega</th>
                             </tr>

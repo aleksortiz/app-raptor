@@ -23,13 +23,81 @@ class MdlCrearOrdenTrabajo extends Component
     public $notas;
     public $costo_id;
 
+    public $componentes = [
+        'DEFENSA DEL',
+        'DEFENSA TRA',
+        'FENDER TRA IZQ',
+        'FENDER TRA DER',
+        'PUERTA IZQ DEL',
+        'PUERTA DER DEL',
+        'PUERTA IZQ TRA',
+        'PUERTA DER TRA',
+        'PARRILLA',
+    ];
+
+    public $acciones = [
+        'REPARAR',
+        'PINTAR',
+        'REEMPLAZAR'
+    ];
+
+    public $selecciones = [];
+
     protected $rules = [
         'entrada_id' => 'required|numeric',
         'personal_id' => 'required|numeric',
-        'monto' => 'required|numeric|min:0',
-        'notas' => 'nullable|string|max:255',
+        'monto' => 'required|numeric|gt:0',
+        'notas' => 'required|string|max:255',
         'costo_id' => 'nullable|numeric'
     ];
+
+    public function mount()
+    {
+        foreach ($this->componentes as $componente) {
+            foreach ($this->acciones as $accion) {
+                $this->selecciones[$componente][$accion] = false;
+            }
+        }
+    }
+
+    public function updatedSelecciones()
+    {
+        $this->generarNotas();
+    }
+
+    protected function generarNotas()
+    {
+        $notas = [];
+        foreach ($this->selecciones as $componente => $acciones) {
+            $accionesSeleccionadas = array_filter($acciones, function($seleccionada) {
+                return $seleccionada;
+            });
+            
+            if (!empty($accionesSeleccionadas)) {
+                $accionesArray = array_keys($accionesSeleccionadas);
+                if (count($accionesArray) > 2) {
+                    $ultimaAccion = array_pop($accionesArray);
+                    $accionesStr = implode(', ', $accionesArray) . ' Y ' . $ultimaAccion;
+                } else {
+                    $accionesStr = implode(' Y ', $accionesArray);
+                }
+                $notas[] = $componente . ' --> ' . $accionesStr;
+            }
+        }
+        
+        $this->notas = implode(' / ', $notas);
+    }
+
+    public function resetForm()
+    {
+        $this->entrada_id = null;
+        $this->entrada = null;
+        $this->personal_id = null;
+        $this->monto = null;
+        $this->notas = null;
+        $this->costo_id = null;
+        $this->mount();
+    }
 
     public function render()
     {
@@ -50,7 +118,7 @@ class MdlCrearOrdenTrabajo extends Component
 
     public function initMdlCrearOrdenTrabajo($entrada_id = null)
     {
-        $this->reset();
+        $this->resetForm();
         $this->resetValidation();
         if ($entrada_id) {
             $this->setEntrada($entrada_id);
@@ -88,7 +156,7 @@ class MdlCrearOrdenTrabajo extends Component
         if ($ordenTrabajo->save()) {
             $this->emit('ok', 'Orden de trabajo creada correctamente');
             $this->emit('closeModal', "#{$this->mdlName}");
-            $this->reset();
+            $this->resetForm();
             $this->emit('reloadOrdenesTrabajo');
         }
     }
