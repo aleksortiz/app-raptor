@@ -362,7 +362,12 @@ class Entrada extends BaseModel
 
     public function ordenes_trabajo()
     {
-        return $this->hasMany(OrdenTrabajo::class);
+        return $this->hasMany(OrdenTrabajo::class, 'entrada_id');
+    }
+
+    public function ordenesTrabajo()
+    {
+        return $this->ordenes_trabajo();
     }
 
     public function ordenes_trabajo_pagos()

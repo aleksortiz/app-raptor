@@ -42,15 +42,6 @@
                                 @enderror
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="porcentaje">Porcentaje</label>
-                                <input type="number" class="form-control @error('porcentaje') is-invalid @enderror" id="porcentaje" wire:model.defer="porcentaje" step="0.01">
-                                @error('porcentaje')
-                                    <span class="invalid-feedback">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
                     </div>
 
                     <div class="form-group">

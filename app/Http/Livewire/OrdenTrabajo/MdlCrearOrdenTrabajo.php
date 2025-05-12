@@ -21,7 +21,6 @@ class MdlCrearOrdenTrabajo extends Component
     public $personal_id;
     public $monto;
     public $notas;
-    public $porcentaje;
     public $costo_id;
 
     protected $rules = [
@@ -29,7 +28,6 @@ class MdlCrearOrdenTrabajo extends Component
         'personal_id' => 'required|numeric',
         'monto' => 'required|numeric|min:0',
         'notas' => 'nullable|string|max:255',
-        'porcentaje' => 'nullable|numeric|min:0|max:100',
         'costo_id' => 'nullable|numeric'
     ];
 
@@ -83,7 +81,7 @@ class MdlCrearOrdenTrabajo extends Component
             'personal_id' => $this->personal_id,
             'monto' => $this->monto,
             'notas' => $this->notas,
-            'porcentaje' => $this->porcentaje,
+            'porcentaje' => 0,
             'costo_id' => $this->costo_id
         ]);
 
