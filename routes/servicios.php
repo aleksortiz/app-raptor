@@ -52,6 +52,10 @@ Route::middleware(['auth'])->group(function ()
         return view('livewire.entrada.edit-area-trabajo.index', compact('entrada'));
     });
 
+    Route::get('/servicios/{entrada}/final-checklist', function(Entrada $entrada){
+        return view('livewire.entrada.final-checklist.index', compact('entrada'));
+    });
+
     Route::get('/crear-entrada', function(){
         return view('livewire.entrada.crear-entrada.index');
     });
