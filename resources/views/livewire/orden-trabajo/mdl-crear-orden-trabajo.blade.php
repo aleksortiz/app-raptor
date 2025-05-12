@@ -42,6 +42,16 @@
                                 @enderror
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                @if($verOtrosDestajosUrl)
+                                    <a href="{{ $verOtrosDestajosUrl }}" class="btn btn-success btn-block">
+                                        Ver otros destajos ({{ $destajosCount }})
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">

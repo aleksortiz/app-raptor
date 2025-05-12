@@ -111,8 +111,12 @@ class MdlCrearOrdenTrabajo extends Component
             ->where('destajo', true)
             ->get();
 
+        $destajosCount = $this->entrada ? OrdenTrabajo::where('entrada_id', $this->entrada->id)->count() : 0;
+
         return [
-            'personal' => $personal
+            'personal' => $personal,
+            'verOtrosDestajosUrl' => $this->entrada ? "/servicios/{$this->entrada->id}?activeTab=8" : null,
+            'destajosCount' => $destajosCount
         ];
     }
 
