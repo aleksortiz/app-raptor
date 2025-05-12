@@ -73,7 +73,8 @@ class VerEntrada extends Component
         'reload',
         'removeOrdenPago',
         'eliminarAsignacion',
-        'refresh' => '$refresh'
+        'refresh' => '$refresh',
+        'eliminarOrdenTrabajo',
     ];
 
     protected $queryString = ['activeTab'];
@@ -613,6 +614,17 @@ class VerEntrada extends Component
             'type' => 'success',
             'message' => 'Asignación eliminada correctamente'
         ]);
+    }
+
+    public function eliminarOrdenTrabajo($id)
+    {
+        $ordenTrabajo = OrdenTrabajo::findOrFail($id);
+        foreach($ordenTrabajo->pagos as $pago){
+            $pago->delete();
+        }
+        $ordenTrabajo->delete();
+        $this->entrada->load('ordenes_trabajo');
+        $this->emit('ok', 'Orden de trabajo eliminada correctamente');
     }
 
     public function updatedEntradaTareaRealizar()

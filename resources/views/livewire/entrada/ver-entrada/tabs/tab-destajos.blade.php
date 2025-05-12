@@ -42,6 +42,7 @@
                             <td>{{$item->notas ? $item->notas : "N/A"}}</td>
                             <td>
                                 <button wire:click="mdlRegistrarPagoDestajo({{$item->id}})" class="btn btn-xs btn-success" wire:click=""><i class="fa fa-money-bill"></i> Registrar Pago</button>
+                                <button onclick="confirm('Eliminar Pago', 'eliminarOrdenTrabajo', '{{$item->id}}')" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i> Eliminar</button>
                             </td>
                         </tr>
                         @endforeach
