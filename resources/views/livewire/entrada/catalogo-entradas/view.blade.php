@@ -107,6 +107,7 @@
                                     <th>Asignaciones</th>
                                     <th>Estatus</th>
                                     <th>Se entrega Hoy</th>
+                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -136,6 +137,25 @@
                                             <small class="text-muted d-block">{{ \Carbon\Carbon::parse($row->proyeccion_entrega)->format('d/m/Y') }}</small>
                                         @endif
                                     </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="/servicios/{{ $row->id }}" class="btn btn-xs btn-primary">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            <a href="/servicios/{{ $row->id }}/editar" class="btn btn-xs btn-warning">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a href="/servicios/{{ $row->id }}/subir-fotos" class="btn btn-xs btn-info">
+                                                <i class="fas fa-camera"></i>
+                                            </a>
+                                            <a href="/servicios/{{ $row->id }}/area-trabajo" class="btn btn-xs btn-success">
+                                                <i class="fas fa-tools"></i>
+                                            </a>
+                                            <button type="button" class="btn btn-xs btn-secondary" wire:click="showMdlCrearOrdenTrabajo({{ $row->id }})">
+                                                <i class="fas fa-tasks"></i>
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -159,10 +179,10 @@
                                 <th>Cliente</th>
                                 <th>No. Reporte</th>
                                 <th>Vehículo</th>
-                                <th>Monto</th>
                                 <th>Asignaciones</th>
                                 <th>Estatus</th>
-                                <th>Proyección de Entrega</th>
+                                <th>Proyección de Entrega</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -176,7 +196,6 @@
                                 <td>{{ $row->cliente->nombre }}</td>
                                 <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
                                 <td>{{ $row->vehiculo }}</td>
-                                <td>@money($row->total)</td>
                                 <td>
                                     <a href="/servicios/{{$row->id}}?activeTab=10" class="btn btn-xs btn-{{ $row->asignaciones->count() > 0 ? 'success' : 'secondary' }}">
                                         <i class="fas fa-tasks"></i> {{ $row->asignaciones->count() }}
@@ -191,6 +210,25 @@
                                     @if($row->proyeccion_entrega)
                                         <small class="text-muted d-block">{{ \Carbon\Carbon::parse($row->proyeccion_entrega)->format('d/m/Y') }}</small>
                                     @endif
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="/servicios/{{ $row->id }}" class="btn btn-xs btn-primary">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="/servicios/{{ $row->id }}/editar" class="btn btn-xs btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="/servicios/{{ $row->id }}/subir-fotos" class="btn btn-xs btn-info">
+                                            <i class="fas fa-camera"></i>
+                                        </a>
+                                        <a href="/servicios/{{ $row->id }}/area-trabajo" class="btn btn-xs btn-success">
+                                            <i class="fas fa-tools"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-xs btn-secondary" wire:click="showMdlCrearOrdenTrabajo({{ $row->id }})">
+                                            <i class="fas fa-tasks"></i>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -207,5 +245,6 @@
     @include('livewire.entrada.catalogo-entradas.modal-pago-servicios')
     @include('livewire.entrada.catalogo-entradas.modal-edit-proyeccion-entrega')
 
+    @livewire('orden-trabajo.mdl-crear-orden-trabajo')
 
 </div>

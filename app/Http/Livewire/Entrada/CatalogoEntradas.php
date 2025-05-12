@@ -46,6 +46,7 @@ class CatalogoEntradas extends Component
         'pagarRefacciones',
         'pagarEntrada',
         'entregarVehiculo',
+        'reloadOrdenesTrabajo' => '$refresh'
     ];
 
     public function mount(){
@@ -221,6 +222,11 @@ class CatalogoEntradas extends Component
         $this->selectedEntrada = null;
         $this->proyeccionFecha = null;
         $this->emit('closeModal', '#mdlProyeccionEntrega');
+    }
+
+    public function showMdlCrearOrdenTrabajo($id)
+    {
+        $this->emit('initMdlCrearOrdenTrabajo', $id);
     }
 
 }
