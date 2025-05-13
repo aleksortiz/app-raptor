@@ -35,6 +35,11 @@ class CapturaAvanceEntrada extends Component
 
     public function check($tipo){
 
+        if($tipo == 'terminado'){
+            $this->redirect('/servicios/'.$this->entradaId.'/final-checklist');
+            return;
+        }
+
 
         $this->avance = \App\Models\EntradaAvance::updateOrCreate(
             ['entrada_id' => $this->entradaId],

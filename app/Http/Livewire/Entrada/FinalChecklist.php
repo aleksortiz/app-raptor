@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Entrada;
 
 use App\Models\Entrada;
+use App\Models\EntradaAvance;
 use App\Models\FinalChecklist as FinalChecklistModel;
 use Livewire\Component;
 
@@ -92,6 +93,15 @@ class FinalChecklist extends Component
                 'firma' => $image
             ]
         );
+
+        if($checklist){
+            EntradaAvance::updateOrCreate(
+                ['entrada_id' => $this->entrada->id],
+                [
+                    'terminado' => now()
+                ]
+            );
+        }
         
         $this->emit('ok', 'Checklist guardado correctamente');
         $this->redirect('/servicios');
