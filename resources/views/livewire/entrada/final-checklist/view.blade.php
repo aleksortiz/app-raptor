@@ -139,10 +139,120 @@
                     </div>
                 </div>
 
-                <div class="form-group text-center mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg" style="font-size: 1.4rem;">Guardar Checklist</button>
+                <!-- Firma -->
+                <div class="section mb-4 px-3">
+                    <h4 class="mb-3 text-center" style="font-size: 1.6rem;">✍️ 5. Firma de Verificación</h4>
+                    <div class="form-group text-center">
+                        <div class="signature-container" style="margin: 20px auto; max-width: 800px;">
+                            <canvas id="drawingCanvas" width="800" height="300" style="border: 1px solid #ccc; border-radius: 4px;"></canvas>
+                            <div class="mt-3">
+                                <button type="button" class="btn btn-secondary btn-lg" style="font-size: 1.2rem;" onclick="cleanCanvas()">
+                                    <i class="fas fa-eraser"></i>
+                                    Limpiar Firma
+                                </button>
+                                <button type="button" class="btn btn-success btn-lg" style="font-size: 1.2rem;" wire:click="guardarFirma">
+                                    <i class="fas fa-check-circle"></i>
+                                    ¡Vehículo Listo!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                {{-- <div class="form-group text-center mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg" style="font-size: 1.4rem;">Guardar Checklist</button>
+                </div> --}}
             </form>
         </div>
     </div>
+
+    @push('js')
+        <script>
+            let hasSignature = false;
+
+            document.addEventListener('DOMContentLoaded', function() {
+                initCanvas();
+            });
+
+            Livewire.on('init-canvas', function(target) {
+                initCanvas();
+            });
+
+            Livewire.on('guardar-firma', function(target) {
+                if (!hasSignature) {
+                    window.livewire.emit('info', 'Por favor firmar el checklist');
+                    return;
+                }
+                const canvas = document.getElementById('drawingCanvas');
+                const dataUrl = canvas.toDataURL('image/png');
+                window.livewire.emit('saveSign', dataUrl);
+            });
+
+            function initCanvas() {
+                const canvas = document.getElementById('drawingCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
+
+                canvas.height = 300;
+                canvas.width = 800;
+
+                // Variables para el dibujo
+                let drawing = false;
+
+                function startDrawing(e) {
+                    e.preventDefault();
+                    drawing = true;
+                    draw(e);
+                }
+
+                function stopDrawing(e) {
+                    e.preventDefault();
+                    drawing = false;
+                    ctx.beginPath();
+                }
+
+                function getEventPosition(e) {
+                    const rect = canvas.getBoundingClientRect();
+                    return {
+                        x: e.clientX !== undefined ? e.clientX - rect.left : e.touches[0].clientX - rect.left,
+                        y: e.clientY !== undefined ? e.clientY - rect.top : e.touches[0].clientY - rect.top
+                    };
+                }
+
+                function draw(e) {
+                    if (!drawing) return;
+
+                    e.preventDefault();
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'round';
+                    ctx.strokeStyle = 'black';
+
+                    const { x, y } = getEventPosition(e);
+
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    hasSignature = true;
+                }
+
+                // Event Listeners
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('mousemove', draw);
+
+                canvas.addEventListener('touchstart', startDrawing);
+                canvas.addEventListener('touchend', stopDrawing);
+                canvas.addEventListener('touchmove', draw);
+            }
+
+            function cleanCanvas() {
+                const canvas = document.getElementById('drawingCanvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                hasSignature = false;
+                initCanvas();
+            }
+        </script>
+    @endpush
 </div> 

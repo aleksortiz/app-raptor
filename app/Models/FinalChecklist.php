@@ -13,7 +13,7 @@ class FinalChecklist extends Model
         'entrada_id',
         'user_id',
         'fecha_revision',
-        'firma'
+        'firma',
     ];
 
     protected $casts = [

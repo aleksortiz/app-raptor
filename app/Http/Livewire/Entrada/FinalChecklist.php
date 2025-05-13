@@ -3,11 +3,13 @@
 namespace App\Http\Livewire\Entrada;
 
 use App\Models\Entrada;
+use App\Models\FinalChecklist as FinalChecklistModel;
 use Livewire\Component;
 
 class FinalChecklist extends Component
 {
     public Entrada $entrada;
+    public $firma = false;
     public $checklist = [
         'revision_general' => [
             'piezas_alineadas' => false,
@@ -38,6 +40,8 @@ class FinalChecklist extends Component
         ]
     ];
 
+    protected $listeners = ['saveSign'];
+
     public function mount(Entrada $entrada)
     {
         $this->entrada = $entrada;
@@ -47,13 +51,50 @@ class FinalChecklist extends Component
         }
     }
 
-    public function saveChecklist()
+    public function areAllCheckboxesChecked()
     {
-        // $this->entrada->update([
-        //     'checklist' => $this->checklist
-        // ]);
+        foreach ($this->checklist as $section) {
+            foreach ($section as $item) {
+                if (!$item) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
+    public function firmar()
+    {
+        $this->firma = true;
+        if ($this->firma) {
+            $this->emit('init-canvas');
+        }
+    }
+
+    public function guardarFirma()
+    {
+        $this->emit('guardar-firma');
+    }
+
+    public function saveSign($image)
+    {
+
+        if (!$this->areAllCheckboxesChecked()) {
+            $this->emit('error', 'Todos los elementos del checklist deben estar marcados para continuar');
+            return;
+        }
+
+        $checklist = FinalChecklistModel::updateOrCreate(
+            ['entrada_id' => $this->entrada->id],
+            [
+                'user_id' => auth()->id(),
+                'fecha_revision' => now(),
+                'firma' => $image
+            ]
+        );
+        
         $this->emit('ok', 'Checklist guardado correctamente');
+        $this->redirect('/servicios');
     }
 
     public function render()
