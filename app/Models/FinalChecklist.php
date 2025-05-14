@@ -14,10 +14,14 @@ class FinalChecklist extends Model
         'user_id',
         'fecha_revision',
         'firma',
+        'checklist_comments',
+        'checklist'
     ];
 
     protected $casts = [
         'fecha_revision' => 'datetime',
+        'checklist_comments' => 'array',
+        'checklist' => 'array'
     ];
 
     public function user()

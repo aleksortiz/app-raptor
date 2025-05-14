@@ -9,33 +9,68 @@
                 <div class="section mb-4 px-3">
                     <h4 class="mb-3 text-center" style="font-size: 1.6rem;">🛠️ 1. Revisión General de Carrocería</h4>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="piezas_alineadas" wire:model="checklist.revision_general.piezas_alineadas">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="piezas_alineadas">Todas las piezas están bien alineadas (cofres, puertas, fascias, etc.)</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="piezas_alineadas" wire:model="checklist.revision_general.piezas_alineadas.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="piezas_alineadas">{{ $checklist['revision_general']['piezas_alineadas']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_general', 'piezas_alineadas') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_general', 'piezas_alineadas')"
+                                    {{ !$checklist['revision_general']['piezas_alineadas']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="lineas_ensamble" wire:model="checklist.revision_general.lineas_ensamble">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="lineas_ensamble">Las líneas de ensamble son uniformes</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="lineas_ensamble" wire:model="checklist.revision_general.lineas_ensamble.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="lineas_ensamble">{{ $checklist['revision_general']['lineas_ensamble']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_general', 'lineas_ensamble') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_general', 'lineas_ensamble')"
+                                    {{ !$checklist['revision_general']['lineas_ensamble']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_abolladuras" wire:model="checklist.revision_general.sin_abolladuras">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_abolladuras">No hay abolladuras visibles</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_abolladuras" wire:model="checklist.revision_general.sin_abolladuras.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_abolladuras">{{ $checklist['revision_general']['sin_abolladuras']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_general', 'sin_abolladuras') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_general', 'sin_abolladuras')"
+                                    {{ !$checklist['revision_general']['sin_abolladuras']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_rayones" wire:model="checklist.revision_general.sin_rayones">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_rayones">No hay rayones ni imperfecciones en superficies reparadas</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_rayones" wire:model="checklist.revision_general.sin_rayones.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_rayones">{{ $checklist['revision_general']['sin_rayones']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_general', 'sin_rayones') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_general', 'sin_rayones')"
+                                    {{ !$checklist['revision_general']['sin_rayones']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_residuos" wire:model="checklist.revision_general.sin_residuos">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_residuos">No hay restos de polvo o residuos de lijado o pintura</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_residuos" wire:model="checklist.revision_general.sin_residuos.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_residuos">{{ $checklist['revision_general']['sin_residuos']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_general', 'sin_residuos') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_general', 'sin_residuos')"
+                                    {{ !$checklist['revision_general']['sin_residuos']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -44,33 +79,68 @@
                 <div class="section mb-4 px-3">
                     <h4 class="mb-3 text-center" style="font-size: 1.6rem;">🎨 2. Revisión de Pintura</h4>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="color_coincide" wire:model="checklist.revision_pintura.color_coincide">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="color_coincide">El color coincide con el resto del vehículo</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="color_coincide" wire:model="checklist.revision_pintura.color_coincide.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="color_coincide">{{ $checklist['revision_pintura']['color_coincide']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_pintura', 'color_coincide') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_pintura', 'color_coincide')"
+                                    {{ !$checklist['revision_pintura']['color_coincide']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_diferencias_tono" wire:model="checklist.revision_pintura.sin_diferencias_tono">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_diferencias_tono">No hay diferencia de tono entre partes reparadas y originales</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_diferencias_tono" wire:model="checklist.revision_pintura.sin_diferencias_tono.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_diferencias_tono">{{ $checklist['revision_pintura']['sin_diferencias_tono']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_pintura', 'sin_diferencias_tono') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_pintura', 'sin_diferencias_tono')"
+                                    {{ !$checklist['revision_pintura']['sin_diferencias_tono']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_escurrimientos" wire:model="checklist.revision_pintura.sin_escurrimientos">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_escurrimientos">No hay escurrimientos, burbujas o piel de naranja</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_escurrimientos" wire:model="checklist.revision_pintura.sin_escurrimientos.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_escurrimientos">{{ $checklist['revision_pintura']['sin_escurrimientos']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_pintura', 'sin_escurrimientos') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_pintura', 'sin_escurrimientos')"
+                                    {{ !$checklist['revision_pintura']['sin_escurrimientos']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_exceso_pintura" wire:model="checklist.revision_pintura.sin_exceso_pintura">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_exceso_pintura">No hay exceso de pintura en molduras, empaques o cristales</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_exceso_pintura" wire:model="checklist.revision_pintura.sin_exceso_pintura.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_exceso_pintura">{{ $checklist['revision_pintura']['sin_exceso_pintura']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_pintura', 'sin_exceso_pintura') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_pintura', 'sin_exceso_pintura')"
+                                    {{ !$checklist['revision_pintura']['sin_exceso_pintura']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="barniz_correcto" wire:model="checklist.revision_pintura.barniz_correcto">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="barniz_correcto">Se aplicó barniz correctamente</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="barniz_correcto" wire:model="checklist.revision_pintura.barniz_correcto.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="barniz_correcto">{{ $checklist['revision_pintura']['barniz_correcto']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('revision_pintura', 'barniz_correcto') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('revision_pintura', 'barniz_correcto')"
+                                    {{ !$checklist['revision_pintura']['barniz_correcto']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -79,15 +149,29 @@
                 <div class="section mb-4 px-3">
                     <h4 class="mb-3 text-center" style="font-size: 1.6rem;">🧼 3. Limpieza Exterior e Interior</h4>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="vehiculo_lavado" wire:model="checklist.limpieza.vehiculo_lavado">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="vehiculo_lavado">Vehículo lavado completamente</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="vehiculo_lavado" wire:model="checklist.limpieza.vehiculo_lavado.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="vehiculo_lavado">{{ $checklist['limpieza']['vehiculo_lavado']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('limpieza', 'vehiculo_lavado') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('limpieza', 'vehiculo_lavado')"
+                                    {{ !$checklist['limpieza']['vehiculo_lavado']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_residuos_limpieza" wire:model="checklist.limpieza.sin_residuos">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_residuos_limpieza">Se eliminaron residuos de masilla, polish o compuestos de pulido</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="sin_residuos_limpieza" wire:model="checklist.limpieza.sin_residuos.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="sin_residuos_limpieza">{{ $checklist['limpieza']['sin_residuos']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('limpieza', 'sin_residuos') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('limpieza', 'sin_residuos')"
+                                    {{ !$checklist['limpieza']['sin_residuos']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -96,45 +180,94 @@
                 <div class="section mb-4 px-3">
                     <h4 class="mb-3 text-center" style="font-size: 1.6rem;">💡 4. Sistema Eléctrico y Funcionalidades</h4>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="luces_altas_bajas" wire:model="checklist.sistema_electrico.luces_altas_bajas">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="luces_altas_bajas">Luces altas y bajas funcionando correctamente</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="luces_altas_bajas" wire:model="checklist.sistema_electrico.luces_altas_bajas.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="luces_altas_bajas">{{ $checklist['sistema_electrico']['luces_altas_bajas']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('sistema_electrico', 'luces_altas_bajas') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('sistema_electrico', 'luces_altas_bajas')"
+                                    {{ !$checklist['sistema_electrico']['luces_altas_bajas']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="direccionales" wire:model="checklist.sistema_electrico.direccionales">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="direccionales">Direccionales delanteras y traseras funcionando</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="direccionales" wire:model="checklist.sistema_electrico.direccionales.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="direccionales">{{ $checklist['sistema_electrico']['direccionales']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('sistema_electrico', 'direccionales') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('sistema_electrico', 'direccionales')"
+                                    {{ !$checklist['sistema_electrico']['direccionales']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="luces_freno_reversa" wire:model="checklist.sistema_electrico.luces_freno_reversa">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="luces_freno_reversa">Luces de freno y de reversa funcionando</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="luces_freno_reversa" wire:model="checklist.sistema_electrico.luces_freno_reversa.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="luces_freno_reversa">{{ $checklist['sistema_electrico']['luces_freno_reversa']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('sistema_electrico', 'luces_freno_reversa') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('sistema_electrico', 'luces_freno_reversa')"
+                                    {{ !$checklist['sistema_electrico']['luces_freno_reversa']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="claxon" wire:model="checklist.sistema_electrico.claxon">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="claxon">Claxon en funcionamiento</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="claxon" wire:model="checklist.sistema_electrico.claxon.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="claxon">{{ $checklist['sistema_electrico']['claxon']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('sistema_electrico', 'claxon') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('sistema_electrico', 'claxon')"
+                                    {{ !$checklist['sistema_electrico']['claxon']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="limpiaparabrisas" wire:model="checklist.sistema_electrico.limpiaparabrisas">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="limpiaparabrisas">Limpiaparabrisas (wipers) funcionando correctamente</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="limpiaparabrisas" wire:model="checklist.sistema_electrico.limpiaparabrisas.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="limpiaparabrisas">{{ $checklist['sistema_electrico']['limpiaparabrisas']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('sistema_electrico', 'limpiaparabrisas') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('sistema_electrico', 'limpiaparabrisas')"
+                                    {{ !$checklist['sistema_electrico']['limpiaparabrisas']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="elevadores_seguros" wire:model="checklist.sistema_electrico.elevadores_seguros">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="elevadores_seguros">Elevadores eléctricos y seguros de puertas operan bien</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="elevadores_seguros" wire:model="checklist.sistema_electrico.elevadores_seguros.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="elevadores_seguros">{{ $checklist['sistema_electrico']['elevadores_seguros']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('sistema_electrico', 'elevadores_seguros') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('sistema_electrico', 'elevadores_seguros')"
+                                    {{ !$checklist['sistema_electrico']['elevadores_seguros']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                     <div class="form-group" style="margin-bottom: 1.5rem;">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="aire_radio" wire:model="checklist.sistema_electrico.aire_radio">
-                            <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="aire_radio">Aire acondicionado y radio funcionando correctamente</label>
+                        <div class="d-flex align-items-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="aire_radio" wire:model="checklist.sistema_electrico.aire_radio.checked">
+                                <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="aire_radio">{{ $checklist['sistema_electrico']['aire_radio']['text'] }}</label>
+                            </div>
+                            <button type="button" class="btn btn-sm ml-2 {{ $this->hasComment('sistema_electrico', 'aire_radio') ? 'btn-info' : 'btn-outline-info' }}" 
+                                    wire:click="openCommentModal('sistema_electrico', 'aire_radio')"
+                                    {{ !$checklist['sistema_electrico']['aire_radio']['checked'] ? 'disabled' : '' }}>
+                                <i class="fas fa-comment"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -159,9 +292,31 @@
                     </div>
                 </div>
 
-                {{-- <div class="form-group text-center mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg" style="font-size: 1.5rem;">Guardar Checklist</button>
-                </div> --}}
+                <!-- Comment Modal -->
+                @if($showCommentModal)
+                <div class="modal fade show" style="display: block;" tabindex="-1" role="dialog">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Agregar Comentario</h5>
+                                <button type="button" class="close" wire:click="$set('showCommentModal', false)">
+                                    <span>&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <textarea class="form-control" wire:model="currentCommentText" rows="4" placeholder="Ingrese su comentario aquí..."></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" wire:click="$set('showCommentModal', false)">Cancelar</button>
+                                <button type="button" class="btn btn-primary" wire:click="saveComment">Guardar Comentario</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-backdrop fade show"></div>
+                @endif
             </form>
         </div>
     </div>
@@ -256,4 +411,10 @@
             }
         </script>
     @endpush
-</div> 
+</div>
+
+<style>
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+</style> 
