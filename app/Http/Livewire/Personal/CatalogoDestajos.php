@@ -18,6 +18,8 @@ class CatalogoDestajos extends Component
     public $maxYear;
     public $totalPendiente;
     public $totalPagado;
+    public $ordenesDetalle = [];
+    public $showModal = false;
 
     protected $queryString = ['year', 'weekStart'];
 
@@ -33,6 +35,30 @@ class CatalogoDestajos extends Component
         $this->weekStart = $this->weekStart ? $this->weekStart : Carbon::today()->weekOfYear;
         $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->endOfWeek()->year;
         $this->year = $this->year ? $this->year : $this->maxYear;
+    }
+
+    public function verOrdenes($personalId)
+    {
+        [$start, $end] = $this->getDateRange();
+
+        $this->ordenesDetalle = OrdenTrabajo::with(['entrada', 'personal'])
+            ->where('personal_id', $personalId)
+            ->whereBetween('created_at', [$start, $end])
+            ->get()
+            ->map(function ($orden) {
+                return [
+                    'id' => $orden->id,
+                    'folio_short' => $orden->entrada->folio_short,
+                    'entrada_id' => $orden->entrada_id,
+                    'vehiculo' => $orden->entrada->vehiculo,
+                    'notas' => $orden->notas,
+                    'monto' => $orden->monto,
+                    'pagado' => $orden->pagado,
+                    'pendiente' => $orden->pendiente,
+                ];
+            });
+
+        $this->emit('showModal');
     }
 
     public function render()

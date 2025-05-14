@@ -69,7 +69,11 @@
                         @foreach($destajos as $destajo)
                             <tr>
                                 <td>{{ $destajo->personal->nombre ?? 'N/A' }}</td>
-                                <td>{{ $destajo->total_ordenes }}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm" wire:click="verOrdenes({{ $destajo->personal_id }})">
+                                        {{ $destajo->total_ordenes }}
+                                    </button>
+                                </td>
                                 <td>${{ number_format($destajo->monto_total, 2) }}</td>
                                 <td>${{ number_format($destajo->monto_pagado, 2) }}</td>
                                 <td>${{ number_format($destajo->monto_pendiente, 2) }}</td>
@@ -84,4 +88,63 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="ordenesModal" tabindex="-1" role="dialog" wire:ignore.self>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalle de Órdenes</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Folio</th>
+                                    <th>Vehículo</th>
+                                    <th>Notas</th>
+                                    <th>Monto</th>
+                                    <th>Pagado</th>
+                                    <th>Pendiente</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($ordenesDetalle as $orden)
+                                    <tr>
+                                        <td>
+                                            <a href="/servicios/{{ $orden['entrada_id'] }}" class="btn btn-primary btn-sm">
+                                                {{ $orden['folio_short'] }}
+                                            </a>
+                                        </td>
+                                        <td>{{ $orden['vehiculo'] }}</td>
+                                        <td>{{ $orden['notas'] }}</td>
+                                        <td>${{ number_format($orden['monto'], 2) }}</td>
+                                        <td>${{ number_format($orden['pagado'], 2) }}</td>
+                                        <td>${{ number_format($orden['pendiente'], 2) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('showModal', () => {
+                $('#ordenesModal').modal('show');
+            });
+        });
+    </script>
+    @endpush
 </div> 
