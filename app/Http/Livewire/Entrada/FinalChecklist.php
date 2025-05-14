@@ -95,6 +95,32 @@ class FinalChecklist extends Component
                 'checked' => false,
                 'text' => 'Aire acondicionado y radio funcionando correctamente'
             ],
+        ],
+        'testigos' => [
+            'abs' => [
+                'checked' => false,
+                'text' => 'ABS apagado'
+            ],
+            'check_engine' => [
+                'checked' => false,
+                'text' => 'CHECK ENGINE apagado'
+            ],
+            'antiderrapante' => [
+                'checked' => false,
+                'text' => 'ANTIDERRAPANTE apagado'
+            ],
+            'brake' => [
+                'checked' => false,
+                'text' => 'BRAKE apagado'
+            ],
+            'bolsas' => [
+                'checked' => false,
+                'text' => 'AIRBAGS apagado'
+            ],
+            'stability_track' => [
+                'checked' => false,
+                'text' => 'STABILITY TRACK apagado'
+            ],
         ]
     ];
 
