@@ -459,6 +459,11 @@ return [
                     'can' => ['diagrama-nomina'],
                 ],
                 [
+                    'text' => 'Destajos',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url'    => '/personal/destajos',
+                ],
+                [
                     'text' => 'Prestamos',
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/prestamos',
@@ -470,11 +475,7 @@ return [
                     'url'    => '/personal/asignaciones',
                     'can' => ['administrar-personal'],
                 ],
-                [
-                    'text' => 'Destajos',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/personal/destajos',
-                ],
+
             ]
         ],
         [
