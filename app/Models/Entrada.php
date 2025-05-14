@@ -480,4 +480,8 @@ class Entrada extends BaseModel
             return '<a href="/servicios/' . $this->id .'?activeTab=11" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> '. $this->estado .'</a>';
         }
     }
+    
+    public function final_checklist(){
+        return $this->hasOne(FinalChecklist::class, 'entrada_id');
+    }
 }

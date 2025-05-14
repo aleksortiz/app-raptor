@@ -69,6 +69,7 @@ Route::middleware(['auth'])->group(function ()
     });
 
     Route::get('/servicios/{entrada}/pdf', [PdfController::class, 'entrada_pdf']);
+    Route::get('/servicios/{entrada}/final-checklist-pdf', [PdfController::class, 'final_checklist_pdf']);
 
     Route::get('/inventarios', function(){
       return view('livewire.entrada-inventario.catalogo-inventarios.index');

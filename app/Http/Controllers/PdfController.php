@@ -116,4 +116,14 @@ class PdfController extends Controller
         $pdf->setPaper('A4');
         return $pdf->stream('inventario_' . $inventario->id_paddy . '.pdf');
     }
+
+    public static function final_checklist_pdf(Entrada $entrada){
+        if (!$entrada->final_checklist) {
+            abort(404, 'No se encontró el checklist para esta entrada');
+        }
+        
+        $pdf = PDF::loadView('pdf.entradas.final-checklist-pdf', compact('entrada'));
+        $pdf->setPaper('A4');
+        return $pdf->stream('Checklist_Final_' . $entrada->folio_short . '.pdf');
+    }
 }
