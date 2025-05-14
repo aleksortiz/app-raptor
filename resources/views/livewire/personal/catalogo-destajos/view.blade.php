@@ -25,6 +25,14 @@
                         </select>
                     </div>
                 </div>
+                <div class="col-md-8">
+                    <div wire:loading wire:target="weekStart, year" class="text-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="sr-only">Cargando...</span>
+                        </div>
+                        <p class="mt-2">Cargando datos...</p>
+                    </div>
+                </div>
             </div>
 
             <div class="row mb-3">

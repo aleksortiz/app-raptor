@@ -24,6 +24,8 @@ class CatalogoDestajos extends Component
     public function updated()
     {
         $this->resetPage();
+        // Add a small delay to make loading state visible
+        usleep(500000); // 500ms delay
     }
 
     public function mount()
