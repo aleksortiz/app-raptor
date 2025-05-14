@@ -21,4 +21,8 @@ Route::middleware(['auth'])->prefix('personal')->group(function ()
         return view('livewire.personal.catalogo-prestamos.index');
     });
 
+    Route::get('/destajos', function(){
+        return view('livewire.personal.catalogo-destajos.index');
+    });
+
 });

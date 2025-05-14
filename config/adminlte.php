@@ -470,6 +470,11 @@ return [
                     'url'    => '/personal/asignaciones',
                     'can' => ['administrar-personal'],
                 ],
+                [
+                    'text' => 'Destajos',
+                    'icon'   => 'fas fa-fw fa-money-bill',
+                    'url'    => '/personal/destajos',
+                ],
             ]
         ],
         [
