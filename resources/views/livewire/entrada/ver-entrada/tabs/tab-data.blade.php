@@ -81,6 +81,10 @@
                   <a href="/registro-inventario?entradaId={{$this->entrada->id}}" class="btn btn-secondary"><i class="fa fa-plus"></i> Crear Inventario</a>
                 @endif
 
+                @if($this->entrada->final_checklist)
+                  <a href="/servicios/{{$this->entrada->id}}/final-checklist-pdf" target="_blank" class="btn btn-success ml-2"><i class="fa fa-clipboard-check"></i> Ver Checklist Final</a>
+                @endif
+
                 <div class="mt-5">
                     @if($this->entrada->registros_factura->count() > 0)
                         <div class="row">
