@@ -466,13 +466,13 @@ return [
                 ],
                 [
                     'text' => 'Asignaciones',
-                    'icon'   => 'fas fa-fw fa-tasks',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/asignaciones',
                     'can' => ['administrar-personal'],
                 ],
                 [
                     'text' => 'Destajos',
-                    'icon'   => 'fas fa-fw fa-money-bill',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'    => '/personal/destajos',
                 ],
             ]
