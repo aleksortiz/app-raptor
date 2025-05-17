@@ -35,7 +35,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a href="{{route('entrada.download-document', $doc->id)}}" class="btn btn-xs btn-info"><i class="fa fa-download"></i></a>
-                                    <button wire:click="eliminarDocumento({{$doc->id}})" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                                    <button onclick="confirm('¿Desea eliminar el documento {{$doc->name}}?', 'eliminarDocumento', {{$doc->id}})" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>
