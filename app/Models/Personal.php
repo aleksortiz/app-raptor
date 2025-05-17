@@ -58,7 +58,7 @@ class Personal extends Model
     {
         $dates = Entrada::getDateRange($year, $week, $week);
         $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('personal_id', $this->id)->sum('pago');
-        return (float) $pagos;
+        return 0;
     }
 
     public function percent_acumulado($week, $year)
@@ -70,7 +70,7 @@ class Personal extends Model
             return 0;
         }
         $porcentaje = ($pagos / $sueldo) * 100;
-        return number_format($porcentaje, 0);
+        return 0;
     }
 
     public function getFechaIngresoFormatAttribute(){
