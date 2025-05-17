@@ -58,7 +58,7 @@ class Personal extends Model
     {
         $dates = Entrada::getDateRange($year, $week, $week);
         $pagos = PagoPersonal::whereBetween('fecha', $dates)->where('personal_id', $this->id)->sum('pago');
-        return $pagos;
+        return (float) $pagos;
     }
 
     public function percent_acumulado($week, $year)
