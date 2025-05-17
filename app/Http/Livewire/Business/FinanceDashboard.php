@@ -49,12 +49,20 @@ class FinanceDashboard extends Component
 
     public function getCantVehiculosEntregadosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        return Entrada::whereBetween('fecha_entrega', $dates)->count();
+        return Entrada::whereBetween('fecha_entrega', $dates)
+            ->orWhereHas('avance', function($query) use ($dates) {
+                $query->whereBetween('terminado', $dates);
+            })
+            ->count();
     }
 
     public function getTotalVehiculosEntregadosProperty(){
         $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
-        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)
+            ->orWhereHas('avance', function($query) use ($dates) {
+                $query->whereBetween('terminado', $dates);
+            })
+            ->get();
         return collect($entradas)->sum('total');
     }
 
