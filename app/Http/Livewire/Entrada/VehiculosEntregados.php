@@ -49,6 +49,8 @@ class VehiculosEntregados extends Component
     {
         $this->keyWord = trim($this->keyWord);
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $start = Carbon::parse($start)->startOfDay();
+        $end = Carbon::parse($end)->endOfDay();
 
         $entradas = Entrada::OrderBy('id', 'desc')
         ->where(function ($q) use ($start, $end) {
