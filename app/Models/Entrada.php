@@ -74,6 +74,11 @@ class Entrada extends BaseModel
         return $this->morphMany(Foto::class, 'model');
     }
 
+    public function documentos()
+    {
+        return $this->morphMany(Documento::class, 'model');
+    }
+
     public function refacciones()
     {
         return $this->morphMany(Refaccion::class, 'model');

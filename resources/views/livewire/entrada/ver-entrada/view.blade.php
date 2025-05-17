@@ -21,6 +21,7 @@
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 9 ? 'active' : '' }}" wire:click="$set('activeTab',9)" href="#"><i class="fas fa-money-bill"></i> Gastos</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 10 ? 'active' : '' }}" wire:click="$set('activeTab',10)" href="#"><i class="fas fa-tasks"></i> Asignaciones</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 11 ? 'active' : '' }}" wire:click="$set('activeTab',11)" href="#"><i class="fas fa-arrow-right"></i> Avance</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $activeTab == 12 ? 'active' : '' }}" wire:click="$set('activeTab',12)" href="#"><i class="fas fa-file"></i> Documentos</a></li>
                 </ul>
             </div>
 
@@ -69,6 +70,10 @@
 
                     <div class="tab-pane {{ $activeTab == 11 ? 'active' : '' }}" id="tab_11">
                         @include('livewire.entrada.ver-entrada.tabs.tab-avance')
+                    </div>
+
+                    <div class="tab-pane {{ $activeTab == 12 ? 'active' : '' }}" id="tab_12">
+                        @include('livewire.entrada.ver-entrada.tabs.tab-documentos')
                     </div>
 
                 </div>

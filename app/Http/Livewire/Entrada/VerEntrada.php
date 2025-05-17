@@ -21,6 +21,7 @@ use App\Models\PedidoConcepto;
 use App\Models\Refaccion;
 use App\Models\Servicio;
 use App\Models\Sueldo;
+use App\Models\Documento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -63,6 +64,14 @@ class VerEntrada extends Component
         'precio' => null,
     ];
 
+    // Document properties
+    public $documento;
+    public $tipoDocumento;
+    public $requiredDocs = [
+        'ORDEN ADMISION',
+        'VALUACION',
+    ];
+
     protected $listeners = [
         'destroyCosto',
         'deleteGasto',
@@ -75,6 +84,7 @@ class VerEntrada extends Component
         'eliminarAsignacion',
         'refresh' => '$refresh',
         'eliminarOrdenTrabajo',
+        'eliminarDocumento',
     ];
 
     protected $queryString = ['activeTab'];
@@ -101,6 +111,9 @@ class VerEntrada extends Component
         'materialManual.descripcion' => 'string|required|max:255',
         'materialManual.cantidad' => 'numeric|required|min:0',
         'materialManual.precio' => 'numeric|required|min:0',
+
+        'tipoDocumento' => 'string|required|max:80',
+        'documento' => 'required|max:2048',
     ];
 
     protected $messages = [
@@ -645,5 +658,55 @@ class VerEntrada extends Component
             'type' => 'success',
             'message' => 'Tarea a realizar guardada correctamente'
         ]);
+    }
+
+    public function getRequiredDocsProperty()
+    {
+        $docs = $this->entrada->documentos->pluck('tipo')->toArray();
+        return array_diff($this->requiredDocs, $docs);
+    }
+
+    public function subirDocumento()
+    {
+        $this->validate([
+            'tipoDocumento' => 'string|required|max:80',
+            'documento' => 'required|max:2048',
+        ]);
+
+        $url = Storage::disk('s3')->put('entradas/documentos', $this->documento);
+
+        $this->entrada->documentos()->create([
+            'url' => $url,
+            'tipo' => trim(strtoupper($this->tipoDocumento)),
+            'name' => $this->documento->getClientOriginalName(),
+        ]);
+
+        $this->entrada->load('documentos');
+        $this->documento = null;
+        $this->tipoDocumento = null;
+        $this->emit('closeModal', '#mdlUploadDocument');
+        $this->emit('ok', 'Se ha subido documento');
+    }
+
+    public function eliminarDocumento($id)
+    {
+        $documento = Documento::findOrFail($id);
+        if(Storage::disk('s3')->exists($documento->url))
+        {
+            Storage::disk('s3')->delete($documento->url);
+            $this->emit('ok', 'Se ha eliminado documento');
+        }
+
+        $documento->delete();
+        $this->entrada->load('documentos');
+    }
+
+    public function descargarDocumento($id)
+    {
+        $documento = Documento::findOrFail($id);
+        $contents = Storage::disk('s3')->get($documento->url);
+        return response($contents)
+            ->header('Content-Type', 'application/octet-stream')
+            ->header('Content-Disposition', 'attachment; filename="' . $documento->name . '"');
     }
 }
