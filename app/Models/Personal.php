@@ -70,7 +70,7 @@ class Personal extends Model
             return 0;
         }
         $porcentaje = ($pagos / $sueldo) * 100;
-        return number_format((float)$porcentaje, 0);
+        return $porcentaje;
     }
 
     public function getFechaIngresoFormatAttribute(){
