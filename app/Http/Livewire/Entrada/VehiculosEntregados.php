@@ -51,7 +51,16 @@ class VehiculosEntregados extends Component
         [$start, $end] = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
 
         $entradas = Entrada::OrderBy('id', 'desc')
-        ->whereBetween('fecha_entrega', [$start, $end])
+        ->where(function ($q) use ($start, $end) {
+            $q->where(function ($subQ) use ($start, $end) {
+                $subQ->whereHas('avance', function ($avance) use ($start, $end) {
+                    $avance->whereBetween('terminado', [$start, $end]);
+                });
+            })->orWhere(function ($subQ) use ($start, $end) {
+                $subQ->whereDoesntHave('avance')
+                    ->whereBetween('fecha_entrega', [$start, $end]);
+            });
+        })
         ->where(function ($q) {
             $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
                 ->orWhereHas('fabricante', function ($fab) {
@@ -63,7 +72,11 @@ class VehiculosEntregados extends Component
                 ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
                 ->orWhere('id', $this->keyWord);
         })
-        ->where('fecha_entrega', '!=', null);
+        ->where(function ($q) {
+            $q->whereHas('avance', function ($avance) {
+                $avance->whereNotNull('terminado');
+            })->orWhereNotNull('fecha_entrega');
+        });
 
         $this->totalRefacciones = collect($entradas->get())->sum('total_refacciones');
         $this->totalMateriales = collect($entradas->get())->sum('total_materiales');
