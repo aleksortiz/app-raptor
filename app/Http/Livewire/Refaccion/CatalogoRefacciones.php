@@ -17,9 +17,23 @@ class CatalogoRefacciones extends Component
     protected $listeners = ['reloadRefacciones' => '$refresh'];
 
     public $search;
+    public $showingRefaccion = false;
+    public $selectedRefaccion = null;
 
     public function updatingSearch(){
         $this->resetPage();
+    }
+
+    public function verRefaccion(Refaccion2 $refaccion)
+    {
+        $this->selectedRefaccion = $refaccion;
+        $this->showingRefaccion = true;
+    }
+
+    public function closeRefaccion()
+    {
+        $this->showingRefaccion = false;
+        $this->selectedRefaccion = null;
     }
 
     public function render()
@@ -28,8 +42,14 @@ class CatalogoRefacciones extends Component
     }
 
     private function getRenderData(){
-        $refacciones = Refaccion2::orderBy('id', 'desc')
-        ->where('descripcion', 'like', "%$this->search%");
+        $refacciones = Refaccion2::with('proveedor')
+            ->orderBy('id', 'desc')
+            ->where(function($query) {
+                $query->where('descripcion', 'like', "%$this->search%")
+                      ->orWhere('numero_parte', 'like', "%$this->search%")
+                      ->orWhere('numero_reporte', 'like', "%$this->search%");
+            });
+            
         return [
             'refacciones' => $refacciones->paginate(50),
         ];

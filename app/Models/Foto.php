@@ -16,6 +16,11 @@ class Foto extends BaseModel
         'url_thumb',
         'public',
     ];
+
+    public function model()
+    {
+        return $this->morphTo();
+    }
     
     public function getLocationAttribute(){
         $bucket = env('AWS_BUCKET_URL');

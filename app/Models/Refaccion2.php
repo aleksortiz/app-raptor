@@ -19,8 +19,6 @@ class Refaccion2 extends Model
         'proveedor_id',
         'estado',
         'condicion',
-        'fecha_promesa',
-        'fecha_recepcion',
         'ubicacion',
         'notas',
         'costo',
@@ -31,19 +29,9 @@ class Refaccion2 extends Model
         return $this->belongsTo(Proveedor::class);
     }
 
-    public function getFechaPromesaFormatAttribute(){
-        $date = Carbon::parse($this->fecha_promesa);
-        $format = 'M/d/Y';
-        return $date->format($format);
-    }
-
-    public function getFechaRecepcionFormatAttribute(){
-        if(!$this->fecha_recepcion){
-            return 'PENDIENTE';
-        }
-        $date = Carbon::parse($this->fecha_recepcion);
-        $format = 'M/d/Y h:i A';
-        return $date->format($format);
+    public function fotos()
+    {
+        return $this->morphMany(Foto::class, 'model');
     }
 
     public function getNombreProveedorAttribute(){

@@ -64,8 +64,10 @@
                                 <label for="condicion">Condición</label>
                                 <select wire:model.defer="condicion" class="form-control" id="condicion">
                                     <option value="">-- Seleccione Condición --</option>
-                                    <option value="NUEVA">NUEVA</option>
-                                    <option value="RECUPERADA">RECUPERADA</option>
+                                    <option value="NUEVA ORIGINAL">NUEVA ORIGINAL</option>
+                                    <option value="NUEVA GENERICA">NUEVA GENERICA</option>
+                                    <option value="USADA ORIGINAL">USADA ORIGINAL</option>
+                                    <option value="USADA GENERICA">USADA GENERICA</option>
                                 </select>
                                 @error('condicion') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
