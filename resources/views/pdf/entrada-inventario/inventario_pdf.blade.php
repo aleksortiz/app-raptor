@@ -249,7 +249,7 @@
     <img style="margin: 0px;" src="{{$inventario->firma}}" width="200" height="120" />
     <h4 style="margin: 0px;">_____________________________________<br>{{$inventario->cliente}}</h4>
     <p style="margin-top: 10px; font-size: 12px; color: #721c24; font-weight: bold;">
-      ** ACEPTO QUE NO DEJO COSAS DE VALOR EN EL AUTO **
+      ACEPTO QUE NO DEJO COSAS DE VALOR EN EL AUTO
     </p>
   </center>
 
