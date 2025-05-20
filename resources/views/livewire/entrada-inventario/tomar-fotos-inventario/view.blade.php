@@ -1,82 +1,127 @@
-<div class="p-5 mx-5">
+<div>
 
+  <div class="container py-2">
     @if ($this->firma)
-      <div class="row">
-        <div class="col-sm-8">
-          <div class="layer">
-            <center>
-              <h2 class="text-center">Firma: {{$this->entrada->cliente->nombre}}</h2>
-              <div wire:ignore>
-                <canvas id="drawingCanvas"></canvas>
-              </div>
-              <br>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 mb-4">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4 font-weight-bold">Firma: {{$this->entrada->cliente->nombre}}</h2>
+                        <div class="d-flex flex-column align-items-center">
+                            <div wire:ignore class="mb-3">
+                                <canvas id="drawingCanvas" style="margin-top: 8px; border: 2px solid #ced4da; border-radius: 8px; background: #fff; width: 100%; max-width: 900px; height: 350px; display: block;"></canvas>
+                              </div>
+                              <div id="aceptarLeyenda" class="alert text-center font-weight-bold mb-3" style="font-size: 1.3rem; letter-spacing: 1px; background: #f8d7da; color: #721c24; border: 2px solid #f5c6cb; cursor: pointer; transition: background 0.3s, color 0.3s;" onclick="aceptarLeyendaClick()">
+                                <span id="iconoLeyenda"><i class="fa fa-exclamation-triangle mr-2"></i></span>ACEPTO QUE NO DEJO COSAS DE VALOR EN EL AUTO
+                            </div>
+                            <div class="btn-group mt-2" role="group">
+                                <button wire:click="fotos" class="btn btn-lg btn-warning"><i class="fa fa-camera"></i> Fotos ({{$this->entrada->fotos->count()}})</button>
+                                <button class="btn btn-lg btn-secondary ml-2" onclick="cleanCanvas()"><i class="fa fa-eraser"></i> Limpiar Firma</button>
+                                <button wire:click="guardarFirma" class="btn btn-lg btn-success ml-2" id="btnAceptarFirma" disabled><i class="fa fa-check"></i> Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-              <button wire:click="fotos" class="btn btn-lg btn-warning"><i class="fa fa-camera"></i> Fotos ({{$this->entrada->fotos->count()}})</button>
-              <button class="ml-3 btn btn-lg btn-secondary" onclick="cleanCanvas()"><i class="fa fa-eraser"></i> Limpiar Firma</button>
-              <button wire:click="guardarFirma" class="ml-3 btn btn-lg btn-success"><i class="fa fa-check"></i> Aceptar</button>
-
-
-            </center>
-          </div>
+            <div class="col-lg-4 mb-4">
+                <div class="card shadow h-100">
+                    <div class="card-body">
+                        @php
+                            $inv = json_decode($this->inventario->inventario);
+                            $testigos = json_decode($this->inventario->testigos);
+                        @endphp
+                        <h4 class="mb-4 text-primary"><u>{{$this->entrada->vehiculo}}</u></h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Estereo:</strong> {{$inv->estereo}}</li>
+                            <li class="list-group-item"><strong>Tapetes:</strong> {{$inv->tapetes}}</li>
+                            <li class="list-group-item"><strong>Parabrisas:</strong> {{$inv->parabrisas}}</li>
+                            <li class="list-group-item"><strong>Gato:</strong> {{$inv->gato}}</li>
+                            <li class="list-group-item"><strong>Extra:</strong> {{$inv->extra}}</li>
+                            <li class="list-group-item"><strong>Herramientas:</strong> {{$inv->herramientas}}</li>
+                            <li class="list-group-item"><strong>Cables:</strong> {{$inv->cables}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="col-sm-4">
-          @php
-            $inv = json_decode($this->inventario->inventario);
-            $testigos = json_decode($this->inventario->testigos);
-          @endphp
-          <h3 class="mt-5 mb-4"><u>Inventario: {{$this->entrada->vehiculo}}</u></h3>
-          <h3 class="mb-4">Estereo: {{$inv->estereo}}</h3>
-          <h3 class="mb-4">Tapetes: {{$inv->tapetes}}</h3>
-          <h3 class="mb-4">Parabrisas: {{$inv->parabrisas}}</h3>
-          <h3 class="mb-4">Gato: {{$inv->gato}}</h3>
-          <h3 class="mb-4">Extra: {{$inv->extra}}</h3>
-          <h3 class="mb-4">Herramientas: {{$inv->herramientas}}</h3>
-          <h3 class="mb-4">Cables: {{$inv->cables}}</h3>
-        </div>
-
-
-      </div>
     @else
-
-      <div class="row">
-        <div class="col-3">
-            <div class="form-group">
-                <label style="font-size: 25px;">Cliente</label>
-                <h4>{{$this->entrada->cliente->nombre}}</h4>
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <label class="h5">Cliente</label>
+                        <h4>{{$this->entrada->cliente->nombre}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <label class="h5">Vehículo</label>
+                        <h4>{{$this->entrada->vehiculo}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body text-center">
+                        <label class="h5">Folio</label>
+                        <h4>{{$this->entrada->folio_short}}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex align-items-center justify-content-center">
+                <div>
+                    <label class="h5">Firmar</label><br>
+                    <button wire:click="firmar" class="btn btn-md btn-primary mt-2"><i class="fa fa-marker"></i> FIRMA CLIENTE</button>
+                </div>
             </div>
         </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label style="font-size: 25px;">Vehículo</label>
-                <h4>{{$this->entrada->vehiculo}}</h4>
+        <div class="row justify-content-center">
+            <div class="col-12 text-center">
+                @livewire('fotos.subir-fotos', [
+                    'model' => $this->entrada,
+                    'storage_path' => 'entradas/fotos'
+                ])
             </div>
         </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label style="font-size: 25px;">Folio</label>
-                <h4>{{$this->entrada->folio_short}}</h4>
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="form-group">
-                <label style="font-size: 25px;">Firmar</label><br>
-                <button wire:click="firmar" class="btn btn-md btn-primary"><i class="fa fa-marker"></i> FIRMA CLIENTE</button>
-
-            </div>
-        </div>
-    </div>
-
-      <center class="mt-5">
-        @livewire('fotos.subir-fotos', [
-          'model' => $this->entrada,
-          'storage_path' => 'entradas/fotos'
-        ])
-      </center>
-
-
-      <center class="mt-5">
-      </center>
     @endif
 
+</div>
+
+<script>
+    let aceptado = false;
+
+
+    function aceptarLeyendaClick() {
+        aceptado = !aceptado;
+        const leyenda = document.getElementById('aceptarLeyenda');
+        const btnAceptar = document.getElementById('btnAceptarFirma');
+        const icono = document.getElementById('iconoLeyenda');
+        if (aceptado) {
+            leyenda.style.background = '#28a745';
+            leyenda.style.color = '#fff';
+            leyenda.style.border = '2px solid #218838';
+            icono.innerHTML = '<i class="fa fa-check mr-2"></i>';
+            btnAceptar.removeAttribute('disabled');
+        } else {
+            leyenda.style.background = '#f8d7da';
+            leyenda.style.color = '#721c24';
+            leyenda.style.border = '2px solid #f5c6cb';
+            icono.innerHTML = '<i class="fa fa-exclamation-triangle mr-2"></i>';
+            btnAceptar.setAttribute('disabled', 'disabled');
+        }
+    }
+
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnAceptar = document.getElementById('btnAceptarFirma');
+        if(btnAceptar) btnAceptar.setAttribute('disabled', 'disabled');
+        const icono = document.getElementById('iconoLeyenda');
+        if(icono) icono.innerHTML = '<i class="fa fa-exclamation-triangle mr-2"></i>';
+    });
+
+  
+</script>
 </div>

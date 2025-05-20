@@ -74,10 +74,11 @@
 
           function getEventPosition(e) {
               const rect = canvas.getBoundingClientRect();
-              return {
-                  x: e.clientX !== undefined ? e.clientX - rect.left : e.touches[0].clientX - rect.left,
-                  y: e.clientY !== undefined ? e.clientY - rect.top : e.touches[0].clientY - rect.top
-              };
+
+              const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+              const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+
+              return { x, y };
           }
 
           function draw(e) {
@@ -133,6 +134,7 @@
           canvas.addEventListener('mousedown', startDrawing);
           canvas.addEventListener('mouseup', stopDrawing);
           canvas.addEventListener('mousemove', draw);
+          canvas.addEventListener('mouseleave', stopDrawing);
 
           canvas.addEventListener('touchstart', startDrawing);
           canvas.addEventListener('touchend', stopDrawing);
