@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Personal\PersonalController;
 
+// Public API route for destajos
+Route::get('/api/destajos', [PersonalController::class, 'getDestajos']);
 
 Route::middleware(['auth'])->prefix('personal')->group(function () 
 {
