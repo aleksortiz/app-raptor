@@ -107,14 +107,24 @@
           const canvas = document.getElementById('drawingCanvas');
           const ctx = canvas.getContext('2d');
 
-          // Ajusta el tamaño del canvas
-          // canvas.width = window.innerWidth * 0.5;
-          // canvas.height = window.innerHeight * 0.5;
           canvas.height = 500;
           canvas.width = 1050;
 
           // Variables para el dibujo
           let drawing = false;
+
+          // Prevenir scroll en dispositivos táctiles mientras se dibuja
+          canvas.addEventListener('touchstart', function(e) {
+              if (e.target === canvas) {
+                  e.preventDefault();
+              }
+          }, { passive: false });
+          
+          canvas.addEventListener('touchmove', function(e) {
+              if (e.target === canvas) {
+                  e.preventDefault();
+              }
+          }, { passive: false });
 
           function startDrawing(e) {
               e.preventDefault(); // Previene el comportamiento predeterminado
@@ -144,15 +154,11 @@
               ctx.lineCap = 'round';
               ctx.strokeStyle = 'red';
 
-              const {
-                  x,
-                  y
-              } = getEventPosition(e);
-
-              ctx.lineTo(x, y);
+              const pos = getEventPosition(e);
+              ctx.lineTo(pos.x, pos.y);
               ctx.stroke();
               ctx.beginPath();
-              ctx.moveTo(x, y);
+              ctx.moveTo(pos.x, pos.y);
           }
 
           function downloadCanvas() {
