@@ -29,6 +29,9 @@
     @livewire('entrada-inventario.tomar-fotos-inventario', ['inventario' => $inventario])
 @endsection
 
+
+
+
 @section('js')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -46,106 +49,72 @@
             window.livewire.emit('saveSign', dataUrl);
         });
 
-        function initCanvas(){
-          const canvas = document.getElementById('drawingCanvas');
-          if (!canvas) return;
-          const ctx = canvas.getContext('2d');
+        function initCanvas() {
+                const canvas = document.getElementById('drawingCanvas');
+                if (!canvas) return;
+                const ctx = canvas.getContext('2d');
 
-          // Ajusta el tamaño del canvas
-          // canvas.width = window.innerWidth * 0.5;
-          // canvas.height = window.innerHeight * 0.5;
-          canvas.height = 500;
-          canvas.width = 800;
+                canvas.height = 300;
+                canvas.width = 800;
 
-          // Variables para el dibujo
-          let drawing = false;
+                // Variables para el dibujo
+                let drawing = false;
 
-          function startDrawing(e) {
-              e.preventDefault(); // Previene el comportamiento predeterminado
-              drawing = true;
-              draw(e); // Llama a la función draw para comenzar a dibujar de inmediato
-          }
+                function startDrawing(e) {
+                    e.preventDefault();
+                    drawing = true;
+                    draw(e);
+                }
 
-          function stopDrawing(e) {
-              e.preventDefault(); // Previene el comportamiento predeterminado
-              drawing = false;
-              ctx.beginPath(); // Comienza un nuevo trazo
-          }
+                function stopDrawing(e) {
+                    e.preventDefault();
+                    drawing = false;
+                    ctx.beginPath();
+                }
 
-          function getEventPosition(e) {
-              const rect = canvas.getBoundingClientRect();
+                function getEventPosition(e) {
+                    const rect = canvas.getBoundingClientRect();
 
-              const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-              const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+                    const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+                    const y = (e.clientY - rect.top) * (canvas.height / rect.height);
 
-              return { x, y };
-          }
+                    return { x, y };
+                }
 
-          function draw(e) {
-              if (!drawing) return;
+                function draw(e) {
+                    if (!drawing) return;
 
-              e.preventDefault(); // Previene el comportamiento predeterminado
-              ctx.lineWidth = 3;
-              ctx.lineCap = 'round';
-              ctx.strokeStyle = 'black';
+                    e.preventDefault();
+                    ctx.lineWidth = 3;
+                    ctx.lineCap = 'round';
+                    ctx.strokeStyle = 'black';
 
-              const {
-                  x,
-                  y
-              } = getEventPosition(e);
+                    const { x, y } = getEventPosition(e);
 
-              ctx.lineTo(x, y);
-              ctx.stroke();
-              ctx.beginPath();
-              ctx.moveTo(x, y);
-          }
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(x, y);
+                    hasSignature = true;
+                }
 
-          function downloadCanvas() {
-              // const link = document.createElement('a');
-              // link.href = canvas.toDataURL('image/png');
-              // link.download = 'canvas-image.png';
-              // link.click();
+                // Event Listeners
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseleave', stopDrawing);
 
-              const dataUrl = canvas.toDataURL('image/png');
-              window.livewire.emit('setCanvas', dataUrl);
+                canvas.addEventListener('touchstart', startDrawing);
+                canvas.addEventListener('touchend', stopDrawing);
+                canvas.addEventListener('touchmove', draw);
+            }
 
-          }
-
-          async function saveCanvas() {
-              const dataUrl = canvas.toDataURL('image/png');
-              const response = await fetch('https://your-api-endpoint.com/save-image', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      image: dataUrl
-                  })
-              });
-
-              if (response.ok) {
-                  alert('Imagen guardada exitosamente!');
-              } else {
-                  alert('Error al guardar la imagen.');
-              }
-          }
-
-          // Event Listeners
-          canvas.addEventListener('mousedown', startDrawing);
-          canvas.addEventListener('mouseup', stopDrawing);
-          canvas.addEventListener('mousemove', draw);
-          canvas.addEventListener('mouseleave', stopDrawing);
-
-          canvas.addEventListener('touchstart', startDrawing);
-          canvas.addEventListener('touchend', stopDrawing);
-          canvas.addEventListener('touchmove', draw);
-        }
-
-        function cleanCanvas(){
-          const canvas = document.getElementById('drawingCanvas');
-          const ctx = canvas.getContext('2d');
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          initCanvas();
-        }
+            function cleanCanvas() {
+                const canvas = document.getElementById('drawingCanvas');
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                hasSignature = false;
+                initCanvas();
+            }
     </script>
 @endsection
