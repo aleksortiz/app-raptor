@@ -11,6 +11,7 @@ class FinalChecklist extends Component
 {
     public Entrada $entrada;
     public $firma = false;
+    public $masterAcceptance = false;
     public $checklist = [
         'revision_general' => [
             'piezas_alineadas' => [
@@ -130,7 +131,7 @@ class FinalChecklist extends Component
     public $currentCommentItem = '';
     public $currentCommentText = '';
 
-    protected $listeners = ['saveSign', 'openCommentModal', 'saveComment'];
+    protected $listeners = ['saveSign', 'openCommentModal', 'saveComment', 'confirmMasterAcceptance'];
 
     public function mount(Entrada $entrada)
     {
@@ -182,8 +183,39 @@ class FinalChecklist extends Component
         return !empty($this->comments[$section][$item]);
     }
 
+    public function toggleMasterAcceptance()
+    {
+        if (!$this->masterAcceptance) {
+            $this->emit('confirm', 
+                'Al marcar esta opción, usted confirma que ha realizado una revisión exhaustiva del vehículo y que todos los puntos del checklist han sido verificados y cumplen con los estándares de calidad requeridos. ¿Desea continuar?',
+                'Confirmación de Revisión Completa',
+                'confirmMasterAcceptance'
+            );
+        } else {
+            $this->masterAcceptance = false;
+            foreach ($this->checklist as $section => $items) {
+                foreach ($items as $item => $data) {
+                    $this->checklist[$section][$item]['checked'] = false;
+                }
+            }
+        }
+    }
+
+    public function confirmMasterAcceptance()
+    {
+        $this->masterAcceptance = true;
+        foreach ($this->checklist as $section => $items) {
+            foreach ($items as $item => $data) {
+                $this->checklist[$section][$item]['checked'] = true;
+            }
+        }
+    }
+
     public function areAllCheckboxesChecked()
     {
+        if ($this->masterAcceptance) {
+            return true;
+        }
         foreach ($this->checklist as $section) {
             foreach ($section as $item) {
                 if (!$item['checked']) {

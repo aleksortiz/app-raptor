@@ -1,9 +1,30 @@
-<div>
-    <div class="card my-4" style="margin-left: auto; max-width: 1200px;">
+<div class="d-flex justify-content-center align-items-start" style="min-height: 100vh;">
+    <div class="card my-4 w-100" style="max-width: 1200px;">
         <div class="card-header text-center">
             <h3 class="card-title" style="font-size: 2.2rem;">Checklist Final - {{ $entrada->folio_short }} / {{ $entrada->vehiculo }}</h3>
         </div>
         <div class="card-body px-4">
+            <div class="alert alert-info mb-4 p-3" style="background-color: #17a2b8; color: #fff; display: flex; align-items: center;">
+                <div style="flex-shrink:0; display: flex; align-items: center; justify-content: center; height: 100%;">
+                    <i class="fas fa-info-circle" style="font-size: 2.5rem; margin-right: 1.2rem;"></i>
+                </div>
+                <div style="flex-grow:1;">
+                    <h5 class="alert-heading mb-1" style="color: #fff; font-size: 1.3rem;">Revisión Completa del Vehículo</h5>
+                    <p class="mb-0" style="color: #eaf6fa; font-size: 1.08rem;">Si ha realizado una revisión exhaustiva y todos los puntos cumplen con los estándares de calidad, puede marcar la siguiente opción:</p>
+                </div>
+            </div>
+
+            <div class="form-group mb-4">
+                <div class="d-flex align-items-center">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input custom-control-input-success" style="width: 3rem; height: 3rem;" id="masterAcceptance" wire:click="toggleMasterAcceptance" @if($masterAcceptance) checked @endif>
+                        <label class="custom-control-label" style="font-size: 1.5rem; padding-left: 0.8rem;" for="masterAcceptance">
+                            <strong>Confirmo que he realizado una revisión completa y exhaustiva del vehículo</strong>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <form wire:submit.prevent="saveChecklist">
                 <!-- Revisión General -->
                 <div class="section mb-4 px-3">
