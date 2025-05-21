@@ -77,6 +77,8 @@
                                 <th>Cliente</th>
                                 <th>Estado</th>
                                 <th>Fecha</th>
+                                <th>Monto</th>
+                                <th>Utilidad</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -99,12 +101,29 @@
                                         {{ Carbon\Carbon::parse($entrada->avance->terminado)->format('M/d/y h:i A') }}
                                     @endif
                                 </td>
+                                <td>${{ number_format($entrada->total, 2) }}</td>
+                                <td class="{{ $entrada->porcentaje_utilidad_global < 30 ? 'text-danger' : '' }}">
+                                    ${{ number_format($entrada->total_utilidad_global, 2) }}
+                                    ({{ number_format($entrada->porcentaje_utilidad_global, 2) }}%)
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Total Materiales:</strong> ${{ number_format($totalMateriales, 2) }}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Total Costos:</strong> ${{ number_format($totalCostos, 2) }}
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Total Utilidad:</strong> ${{ number_format($totalUtilidad, 2) }}
+                            ({{ $porcentajeUtilidad }}%)
+                        </div>
+                    </div>
                     {{ $entradas->links() }}
                 </div>
             </div>

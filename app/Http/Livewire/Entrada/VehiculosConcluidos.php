@@ -18,6 +18,15 @@ class VehiculosConcluidos extends Component
     public $totalTerminados;
     public $totalEntregados;
     public $totalVehiculos;
+    public $totalMateriales;
+    public $totalCostos;
+    public $totalUtilidad;
+
+    public function getPorcentajeUtilidadProperty()
+    {
+        $porc = $this->totalCostos > 0 ? ($this->totalUtilidad / $this->totalCostos) * 100 : 0;
+        return number_format($porc, 2);
+    }
 
     protected $queryString = ['keyWord', 'year', 'weekStart'];
 
@@ -93,10 +102,16 @@ class VehiculosConcluidos extends Component
 
         $this->totalVehiculos = $entradasCollection->count();
 
+        // Calculate financial statistics
+        $this->totalMateriales = $entradasCollection->sum('total_materiales');
+        $this->totalCostos = $entradasCollection->sum('total');
+        $this->totalUtilidad = $entradasCollection->sum('total_utilidad_global');
+
         return [
             'entradas' => $entradas->paginate(50),
             'start' => $start,
             'end' => $end,
+            'porcentajeUtilidad' => $this->getPorcentajeUtilidadProperty(),
         ];
     }
 } 
