@@ -11,7 +11,7 @@ class TomarFotosInventario extends Component
     public $entrada;
     public $inventario;
 
-    public $firma = false;
+    public $firma = true;
 
     protected $listeners = ['saveSign'];
 
