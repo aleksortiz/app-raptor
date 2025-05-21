@@ -11,7 +11,7 @@
         </div>
         <div class="col-md-4">
             <div class="info-box">
-                <span class="info-box-icon bg-success"><i class="fa fa-car"></i></span>
+                <span class="info-box-icon bg-success"><i class="fa fa-check-double"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Vehículos Entregados</span>
                     <span class="info-box-number">{{ $totalEntregados }}</span>
@@ -20,7 +20,7 @@
         </div>
         <div class="col-md-4">
             <div class="info-box">
-                <span class="info-box-icon bg-primary"><i class="fa fa-total"></i></span>
+                <span class="info-box-icon bg-warning"><i class="fa fa-car"></i></span>
                 <div class="info-box-content">
                     <span class="info-box-text">Total Vehículos</span>
                     <span class="info-box-number">{{ $totalVehiculos }}</span>
