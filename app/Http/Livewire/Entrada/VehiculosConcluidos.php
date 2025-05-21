@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Entrada;
 use App\Models\Entrada;
 use Carbon\Carbon;
 use Livewire\Component;
+use Illuminate\Support\Facades\DB;
 
 class VehiculosConcluidos extends Component
 {
@@ -43,33 +44,41 @@ class VehiculosConcluidos extends Component
         $start = Carbon::parse($start)->startOfDay();
         $end = Carbon::parse($end)->endOfDay();
 
-        $entradas = Entrada::OrderBy('id', 'desc')
-        ->where(function ($q) use ($start, $end) {
-            $q->where(function ($subQ) use ($start, $end) {
-                $subQ->whereHas('avance', function ($avance) use ($start, $end) {
-                    $avance->whereBetween('terminado', [$start, $end]);
-                });
-            })->orWhere(function ($subQ) use ($start, $end) {
-                $subQ->whereDoesntHave('avance')
-                    ->whereBetween('fecha_entrega', [$start, $end]);
+        // Query for vehicles completed in the selected week
+        $completados = Entrada::OrderBy('id', 'desc')
+            ->whereHas('avance', function ($avance) use ($start, $end) {
+                $avance->whereBetween('terminado', [$start, $end]);
+            })
+            ->where(function ($q) {
+                $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
+                    ->orWhereHas('fabricante', function ($fab) {
+                        $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
+                    })
+                    ->orWhereHas('cliente', function ($fab) {
+                        $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
+                    })
+                    ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
+                    ->orWhere('id', $this->keyWord);
+            })
+            ->with('avance');
+
+        // Query for vehicles delivered in the selected week
+        $entregados = Entrada::OrderBy('id', 'desc')
+            ->whereBetween('fecha_entrega', [$start, $end])
+            ->where(function ($q) {
+                $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
+                    ->orWhereHas('fabricante', function ($fab) {
+                        $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
+                    })
+                    ->orWhereHas('cliente', function ($fab) {
+                        $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
+                    })
+                    ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
+                    ->orWhere('id', $this->keyWord);
             });
-        })
-        ->where(function ($q) {
-            $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
-                ->orWhereHas('fabricante', function ($fab) {
-                    $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
-                })
-                ->orWhereHas('cliente', function ($fab) {
-                    $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
-                })
-                ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
-                ->orWhere('id', $this->keyWord);
-        })
-        ->where(function ($q) {
-            $q->whereHas('avance', function ($avance) {
-                $avance->whereNotNull('terminado');
-            })->orWhereNotNull('fecha_entrega');
-        });
+
+        // Combine both queries
+        $entradas = $completados->union($entregados);
 
         $entradasCollection = $entradas->get();
         
@@ -86,6 +95,8 @@ class VehiculosConcluidos extends Component
 
         return [
             'entradas' => $entradas->paginate(50),
+            'start' => $start,
+            'end' => $end,
         ];
     }
 } 

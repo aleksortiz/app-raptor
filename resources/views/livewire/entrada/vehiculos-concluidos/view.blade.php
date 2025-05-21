@@ -85,11 +85,17 @@
                                 <td>{!! $entrada->folio_button !!}</td>
                                 <td>{{ $entrada->vehiculo }}</td>
                                 <td>{{ $entrada->cliente->nombre }}</td>
-                                <td>{!! $entrada->estado_button !!}</td>
                                 <td>
-                                    @if($entrada->fecha_entrega)
-                                        {{ $entrada->fecha_entrega_format }}
-                                    @elseif($entrada->avance && $entrada->avance->terminado)
+                                    @if($entrada->fecha_entrega && Carbon\Carbon::parse($entrada->fecha_entrega)->between($start, $end))
+                                        <span class="badge badge-success">ENTREGADO</span>
+                                    @elseif($entrada->avance && $entrada->avance->terminado && Carbon\Carbon::parse($entrada->avance->terminado)->between($start, $end))
+                                        <span class="badge badge-info">TERMINADO</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($entrada->fecha_entrega && Carbon\Carbon::parse($entrada->fecha_entrega)->between($start, $end))
+                                        {{ Carbon\Carbon::parse($entrada->fecha_entrega)->format('M/d/y h:i A') }}
+                                    @elseif($entrada->avance && $entrada->avance->terminado && Carbon\Carbon::parse($entrada->avance->terminado)->between($start, $end))
                                         {{ Carbon\Carbon::parse($entrada->avance->terminado)->format('M/d/y h:i A') }}
                                     @endif
                                 </td>
