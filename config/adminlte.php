@@ -373,9 +373,9 @@ return [
                     'url'    => '/inventarios',
                 ],
                 [
-                    'text' => 'Vehiculos Entregados',
+                    'text' => 'Vehiculos Concluidos',
                     'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'    => '/vehiculos-entregados',
+                    'url'    => '/vehiculos-concluidos',
                     'can' => ['vehiculos-entregados'],
                 ]
             ]

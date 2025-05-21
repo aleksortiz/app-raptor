@@ -64,6 +64,10 @@ Route::middleware(['auth'])->group(function ()
         return view('livewire.entrada.vehiculos-entregados.index');
     });
 
+    Route::get('/vehiculos-concluidos', function(){
+        return view('livewire.entrada.vehiculos-concluidos.index');
+    });
+
     Route::get('/gastos-fijos', function(){
         return view('livewire.gastos-fijos.capturar-gastos-fijos.index');
     });
