@@ -124,12 +124,15 @@
   <center>
     <img style="margin: 0px;" src="{{$inventario->firma}}" width="200" height="120" />
     <h4 style="margin: 0px;">_____________________________________<br>{{$inventario->cliente}}</h4>
-    <div style="border: 2px solid #000000; padding: 15px; margin: 20px 0;">
-        <p style="margin: 0; font-size: 13px; color: #000000; line-height: 1.5;">
-            <strong style="text-decoration: underline;">AVISO IMPORTANTE:</strong> Por medio de la presente, declaro que he sido informado y acepto que no he dejado objetos de valor dentro del vehículo. 
-            Entiendo y acepto que Autoservicio Raptor no será responsable por la pérdida, robo o daño de objetos olvidades.
-        </p>
-    </div>
+         <div style="border: 2px solid #000000; padding: 5px; margin-top: 10px; padding-left: 10px; padding-right: 10px;">
+          <p style="text-align: center; margin: 0 0 5px 0; font-size: 14px;">
+              <strong style="text-decoration: underline;">AVISO IMPORTANTE</strong>
+          </p>
+          <p style="margin: 0; font-size: 13px; color: #000000; line-height: 1.5; text-align: justify;">
+              Declaro que he sido informado y acepto que no he dejado objetos de valor dentro del vehículo. 
+              Entiendo y acepto que Autoservicio Raptor no será responsable por la pérdida, robo o daño de objetos olvidados.
+          </p>
+      </div>
   </center>
 
 
