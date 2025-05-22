@@ -109,7 +109,7 @@ class PersonalController extends Controller
                 'personal_id' => $personal_id,
                 'week' => $week,
                 'year' => $year,
-                'exp' => Carbon::now()->addDays(7)->timestamp // Token expires in 7 days
+                'exp' => Carbon::now()->addMinutes(2)->timestamp // Token expires in 7 days
             ];
 
             $token = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
