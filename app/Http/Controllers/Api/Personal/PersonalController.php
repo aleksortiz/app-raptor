@@ -96,20 +96,33 @@ class PersonalController extends Controller
     public function generateToken(Request $request)
     {
         try {
-            $personal_id = $request->input('personal_id', 1); // Default to 1 if not provided
-            $week = $request->input('week', Carbon::now()->weekOfYear); // Default to current week
-            $year = $request->input('year', Carbon::now()->year); // Default to current year
+            // Get required parameters without defaults
+            $personal_id = $request->input('personal_id');
+            $week = $request->input('week');
+            $year = $request->input('year');
+
+            // Validate all required parameters are present
+            if (!$personal_id || !$week || !$year) {
+                return response()->json(['error' => 'Todos los parámetros son requeridos (personal_id, week, year)'], 400);
+            }
 
             // Validate week number
             if ($week < 1 || $week > 52) {
                 return response()->json(['error' => 'Número de semana inválido'], 400);
             }
 
+            // Calculate the end of the specified week
+            $expiration = Carbon::now()
+                ->setISODate($year, $week)
+                ->endOfWeek()
+                ->endOfDay()
+                ->timestamp;
+
             $payload = [
                 'personal_id' => $personal_id,
                 'week' => $week,
                 'year' => $year,
-                'exp' => Carbon::now()->addMinutes(2)->timestamp // Token expires in 7 days
+                'exp' => $expiration
             ];
 
             $token = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
@@ -117,7 +130,7 @@ class PersonalController extends Controller
             return response()->json([
                 'token' => $token,
                 'expires_at' => Carbon::createFromTimestamp($payload['exp'])->toDateTimeString(),
-                'payload' => $payload // Including payload in response for verification
+                'payload' => $payload
             ]);
 
         } catch (\Exception $e) {
