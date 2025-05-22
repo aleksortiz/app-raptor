@@ -3,10 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Personal\PersonalController;
 
-// View for destajos
-Route::get('/api/destajos/view', function () {
-    return view('personal.destajos');
-});
 
 Route::middleware(['auth'])->prefix('personal')->group(function () 
 {

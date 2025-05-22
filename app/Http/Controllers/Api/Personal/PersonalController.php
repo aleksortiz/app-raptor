@@ -15,49 +15,31 @@ class PersonalController extends Controller
     public function getDestajos(Request $request)
     {
         try {
-            // Get token from URL parameter
             $token = $request->query('token');
             
             if (!$token) {
-                if ($request->wantsJson()) {
-                    return response()->json([
-                        'error' => 'Token no proporcionado',
-                    ], 401);
-                }
-                return view('personal.destajos');
+                return view('personal.destajos')->with('error', 'Token no proporcionado');
             }
 
             // Decode JWT token
             try {
                 $decoded = JWT::decode($token, new Key(config('app.jwt_secret'), 'HS256'));
             } catch (\Exception $e) {
-                if ($request->wantsJson()) {
-                    return response()->json(['error' => 'Token inválido'], 401);
-                }
                 return view('personal.destajos')->with('error', 'Token inválido');
             }
 
             // Validate required fields in token
             if (!isset($decoded->personal_id) || !isset($decoded->week) || !isset($decoded->year)) {
-                if ($request->wantsJson()) {
-                    return response()->json(['error' => 'Token mal formado'], 400);
-                }
                 return view('personal.destajos')->with('error', 'Token mal formado');
             }
 
             // Validate week number
             if ($decoded->week < 1 || $decoded->week > 52) {
-                if ($request->wantsJson()) {
-                    return response()->json(['error' => 'Número de semana inválido'], 400);
-                }
                 return view('personal.destajos')->with('error', 'Número de semana inválido');
             }
 
             // Check token expiration
             if (isset($decoded->exp) && $decoded->exp < time()) {
-                if ($request->wantsJson()) {
-                    return response()->json(['error' => 'Token expirado'], 401);
-                }
                 return view('personal.destajos')->with('error', 'Token expirado');
             }
 
@@ -80,9 +62,6 @@ class PersonalController extends Controller
             ->first();
 
             if (!$destajos) {
-                if ($request->wantsJson()) {
-                    return response()->json(['message' => 'No se encontraron destajos para el período especificado'], 404);
-                }
                 return view('personal.destajos')->with('error', 'No se encontraron destajos para el período especificado');
             }
 
@@ -104,22 +83,12 @@ class PersonalController extends Controller
                     ];
                 });
 
-            if ($request->wantsJson()) {
-                return response()->json([
-                    'resumen' => $destajos,
-                    'ordenes' => $ordenes
-                ]);
-            }
-
             return view('personal.destajos', [
                 'resumen' => $destajos,
                 'ordenes' => $ordenes
             ]);
 
         } catch (\Exception $e) {
-            if ($request->wantsJson()) {
-                return response()->json(['error' => 'Error interno del servidor'], 500);
-            }
             return view('personal.destajos')->with('error', 'Error interno del servidor');
         }
     }
