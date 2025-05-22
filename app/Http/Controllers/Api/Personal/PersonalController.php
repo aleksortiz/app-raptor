@@ -95,4 +95,36 @@ class PersonalController extends Controller
             return response()->json(['error' => 'Error interno del servidor'], 500);
         }
     }
+
+    public function generateToken(Request $request)
+    {
+        try {
+            $personal_id = $request->input('personal_id', 1); // Default to 1 if not provided
+            $week = $request->input('week', Carbon::now()->weekOfYear); // Default to current week
+            $year = $request->input('year', Carbon::now()->year); // Default to current year
+
+            // Validate week number
+            if ($week < 1 || $week > 52) {
+                return response()->json(['error' => 'Número de semana inválido'], 400);
+            }
+
+            $payload = [
+                'personal_id' => $personal_id,
+                'week' => $week,
+                'year' => $year,
+                'exp' => Carbon::now()->addDays(7)->timestamp // Token expires in 7 days
+            ];
+
+            $token = JWT::encode($payload, config('app.jwt_secret'), 'HS256');
+
+            return response()->json([
+                'token' => $token,
+                'expires_at' => Carbon::createFromTimestamp($payload['exp'])->toDateTimeString(),
+                'payload' => $payload // Including payload in response for verification
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al generar el token'], 500);
+        }
+    }
 } 

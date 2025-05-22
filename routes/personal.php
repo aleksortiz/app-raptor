@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Personal\PersonalController;
 
 // Public API route for destajos
 Route::get('/api/destajos', [PersonalController::class, 'getDestajos']);
+Route::get('/api/generate-token', [PersonalController::class, 'generateToken']);
 
 Route::middleware(['auth'])->prefix('personal')->group(function () 
 {
