@@ -141,7 +141,6 @@ class PersonalController extends Controller
                 'date' => now()->toDateTimeString(),
                 'url' => url('/destajos') . '?token=' . $token,
                 'expires_at' => Carbon::createFromTimestamp($payload['exp'])->toDateTimeString(),
-                'payload' => $payload
             ]);
 
         } catch (\Exception $e) {
