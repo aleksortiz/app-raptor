@@ -93,7 +93,7 @@
             }
 
             try {
-                const response = await fetch(`/api/destajos?token=${token}`);
+                const response = await fetch(`/destajos?token=${token}`);
                 const data = await response.json();
 
                 if (response.ok) {

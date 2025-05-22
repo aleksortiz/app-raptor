@@ -15,8 +15,8 @@ class PersonalController extends Controller
     public function getDestajos(Request $request)
     {
         try {
-            // Get token from Authorization header or query parameter
-            $token = $request->bearerToken() ?? $request->query('token');
+            // Get token from URL parameter
+            $token = $request->query('token');
             
             if (!$token) {
                 return response()->json([

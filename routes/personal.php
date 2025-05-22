@@ -7,8 +7,8 @@ use App\Http\Controllers\Api\Personal\PersonalController;
 Route::get('/api/destajos', [PersonalController::class, 'getDestajos']);
 Route::get('/api/generate-token', [PersonalController::class, 'generateToken']);
 
-// View route for destajos
-Route::get('/destajos-view', function () {
+// View for destajos
+Route::get('/api/destajos/view', function () {
     return view('personal.destajos');
 });
 
@@ -35,3 +35,9 @@ Route::middleware(['auth'])->prefix('personal')->group(function ()
     });
 
 });
+
+// Routes for destajos
+Route::get('/destajos', function () {
+    return view('personal.destajos');
+});
+Route::get('/generate-token', [PersonalController::class, 'generateToken']);
