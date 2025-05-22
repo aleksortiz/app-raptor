@@ -20,6 +20,7 @@ class CatalogoDestajos extends Component
     public $totalPagado;
     public $ordenesDetalle = [];
     public $showModal = false;
+    public $isCurrentWeek = false;
 
     protected $queryString = ['year', 'weekStart'];
 
@@ -28,6 +29,7 @@ class CatalogoDestajos extends Component
         $this->resetPage();
         // Add a small delay to make loading state visible
         usleep(500000); // 500ms delay
+        $this->checkIfCurrentWeek();
     }
 
     public function mount()
@@ -35,6 +37,14 @@ class CatalogoDestajos extends Component
         $this->weekStart = $this->weekStart ? $this->weekStart : Carbon::today()->weekOfYear;
         $this->maxYear = $this->maxYear ? $this->maxYear : Carbon::today()->endOfWeek()->year;
         $this->year = $this->year ? $this->year : $this->maxYear;
+        $this->checkIfCurrentWeek();
+    }
+
+    private function checkIfCurrentWeek()
+    {
+        $currentWeek = Carbon::today()->weekOfYear;
+        $currentYear = Carbon::today()->year;
+        $this->isCurrentWeek = ($this->weekStart == $currentWeek && $this->year == $currentYear);
     }
 
     public function verOrdenes($personalId)

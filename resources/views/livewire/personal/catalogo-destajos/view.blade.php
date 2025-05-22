@@ -55,7 +55,7 @@
             </div>
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <th>Personal</th>
@@ -63,6 +63,9 @@
                             <th>Monto Total</th>
                             <th>Monto Pagado</th>
                             <th>Monto Pendiente</th>
+                            @if($isCurrentWeek)
+                                <th>Imprimir QR</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -77,6 +80,13 @@
                                 <td>${{ number_format($destajo->monto_total, 2) }}</td>
                                 <td>${{ number_format($destajo->monto_pagado, 2) }}</td>
                                 <td>${{ number_format($destajo->monto_pendiente, 2) }}</td>
+                                @if($isCurrentWeek)
+                                    <td>
+                                        <a href="aosprint:destajoqr#{{ $destajo->personal_id }}#{{ $weekStart }}#{{ $year }}" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-qrcode"></i> Código QR
+                                        </a>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
