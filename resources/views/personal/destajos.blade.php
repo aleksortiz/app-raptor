@@ -19,7 +19,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
                 <h1 class="text-2xl font-semibold text-gray-900">
                     @if(isset($resumen) && $resumen->personal)
-                        Destajos de {{ $resumen->personal->nombre }}
+                        {{ $resumen->personal->nombre }}
                     @else
                         Destajos
                     @endif

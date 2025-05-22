@@ -24,6 +24,7 @@ class PersonalFactory extends Factory
             'contacto_emergencia' => $this->faker->name(),
             'notas' => $this->faker->text(),
             'activo' => true,
+            'destajo' => $this->faker->boolean(),
         ];
     }
 }
