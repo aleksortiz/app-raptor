@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Personal;
 
 use App\Http\Controllers\Controller;
 use App\Models\OrdenTrabajo;
+use App\Models\Personal;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -111,6 +112,12 @@ class PersonalController extends Controller
                 return response()->json(['error' => 'Número de semana inválido'], 400);
             }
 
+            // Get personal data
+            $personal = Personal::find($personal_id);
+            if (!$personal) {
+                return response()->json(['error' => 'Personal no encontrado'], 404);
+            }
+
             // Calculate the end of the specified week
             $expiration = Carbon::now()
                 ->setISODate($year, $week)
@@ -129,6 +136,9 @@ class PersonalController extends Controller
 
             return response()->json([
                 'token' => $token,
+                'personal' => $personal->nombre,
+                'week' => $week,
+                'date' => now()->toDateTimeString(),
                 'url' => url('/destajos') . '?token=' . $token,
                 'expires_at' => Carbon::createFromTimestamp($payload['exp'])->toDateTimeString(),
                 'payload' => $payload

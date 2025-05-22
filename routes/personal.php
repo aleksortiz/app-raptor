@@ -29,5 +29,5 @@ Route::middleware(['auth'])->prefix('personal')->group(function ()
 });
 
 // Routes for destajos
-Route::get('/destajos', [PersonalController::class, 'getDestajos']);
-Route::get('/generate-token', [PersonalController::class, 'generateToken']);
+Route::get('/personal/destajos', [PersonalController::class, 'getDestajos']);
+Route::get('/personal/destajos/generate-token', [PersonalController::class, 'generateToken']);
