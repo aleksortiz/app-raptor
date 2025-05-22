@@ -3,10 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Personal\PersonalController;
 
-// Public API route for destajos
-Route::get('/api/destajos', [PersonalController::class, 'getDestajos']);
-Route::get('/api/generate-token', [PersonalController::class, 'generateToken']);
-
 // View for destajos
 Route::get('/api/destajos/view', function () {
     return view('personal.destajos');
@@ -37,7 +33,5 @@ Route::middleware(['auth'])->prefix('personal')->group(function ()
 });
 
 // Routes for destajos
-Route::get('/destajos', function () {
-    return view('personal.destajos');
-});
+Route::get('/destajos', [PersonalController::class, 'getDestajos']);
 Route::get('/generate-token', [PersonalController::class, 'generateToken']);

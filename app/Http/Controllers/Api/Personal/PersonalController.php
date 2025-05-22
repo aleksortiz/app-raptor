@@ -19,31 +19,46 @@ class PersonalController extends Controller
             $token = $request->query('token');
             
             if (!$token) {
-                return response()->json([
-                    'error' => 'Token no proporcionado',
-                ], 401);
+                if ($request->wantsJson()) {
+                    return response()->json([
+                        'error' => 'Token no proporcionado',
+                    ], 401);
+                }
+                return view('personal.destajos');
             }
 
             // Decode JWT token
             try {
                 $decoded = JWT::decode($token, new Key(config('app.jwt_secret'), 'HS256'));
             } catch (\Exception $e) {
-                return response()->json(['error' => 'Token inválido'], 401);
+                if ($request->wantsJson()) {
+                    return response()->json(['error' => 'Token inválido'], 401);
+                }
+                return view('personal.destajos')->with('error', 'Token inválido');
             }
 
             // Validate required fields in token
             if (!isset($decoded->personal_id) || !isset($decoded->week) || !isset($decoded->year)) {
-                return response()->json(['error' => 'Token mal formado'], 400);
+                if ($request->wantsJson()) {
+                    return response()->json(['error' => 'Token mal formado'], 400);
+                }
+                return view('personal.destajos')->with('error', 'Token mal formado');
             }
 
             // Validate week number
             if ($decoded->week < 1 || $decoded->week > 52) {
-                return response()->json(['error' => 'Número de semana inválido'], 400);
+                if ($request->wantsJson()) {
+                    return response()->json(['error' => 'Número de semana inválido'], 400);
+                }
+                return view('personal.destajos')->with('error', 'Número de semana inválido');
             }
 
             // Check token expiration
             if (isset($decoded->exp) && $decoded->exp < time()) {
-                return response()->json(['error' => 'Token expirado'], 401);
+                if ($request->wantsJson()) {
+                    return response()->json(['error' => 'Token expirado'], 401);
+                }
+                return view('personal.destajos')->with('error', 'Token expirado');
             }
 
             // Calculate date range
@@ -65,7 +80,10 @@ class PersonalController extends Controller
             ->first();
 
             if (!$destajos) {
-                return response()->json(['message' => 'No se encontraron destajos para el período especificado'], 404);
+                if ($request->wantsJson()) {
+                    return response()->json(['message' => 'No se encontraron destajos para el período especificado'], 404);
+                }
+                return view('personal.destajos')->with('error', 'No se encontraron destajos para el período especificado');
             }
 
             // Get detailed orders
@@ -86,13 +104,23 @@ class PersonalController extends Controller
                     ];
                 });
 
-            return response()->json([
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'resumen' => $destajos,
+                    'ordenes' => $ordenes
+                ]);
+            }
+
+            return view('personal.destajos', [
                 'resumen' => $destajos,
                 'ordenes' => $ordenes
             ]);
 
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error interno del servidor'], 500);
+            if ($request->wantsJson()) {
+                return response()->json(['error' => 'Error interno del servidor'], 500);
+            }
+            return view('personal.destajos')->with('error', 'Error interno del servidor');
         }
     }
 
