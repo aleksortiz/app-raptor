@@ -139,7 +139,7 @@ class PersonalController extends Controller
                 'personal' => $personal->nombre,
                 'week' => $week,
                 'date' => now()->toDateTimeString(),
-                'url' => url('/destajos') . '?token=' . $token,
+                'url' => url('/personal/destajos-qr') . '?token=' . $token,
                 'expires_at' => Carbon::createFromTimestamp($payload['exp'])->toDateTimeString(),
             ]);
 
