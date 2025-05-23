@@ -11,31 +11,15 @@
                                     <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
                             </select>
-                            <select wire:model="weekStart" class="form-control form-control-sm" style="width: 100px;">
+                            <select wire:model="week" class="form-control form-control-sm" style="width: 100px;">
                                 @for($i = 1; $i <= 52; $i++)
                                     <option value="{{ $i }}">Semana {{ $i }}</option>
                                 @endfor
                             </select>
-                            <select wire:model="weekEnd" class="form-control form-control-sm" style="width: 100px;">
-                                @for($i = $weekStart; $i <= 52; $i++)
-                                    <option value="{{ $i }}">Semana {{ $i }}</option>
-                                @endfor
-                            </select>
-                            <button wire:click="$toggle('viewGraph')" class="btn btn-sm btn-primary">
-                                <i class="fas fa-chart-line"></i> {{ $viewGraph ? 'Ocultar Gráfica' : 'Ver Gráfica' }}
-                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
-                    @if($viewGraph)
-                        <div class="row mb-4">
-                            <div class="col-md-12">
-                                <div id="graph" style="height: 300px;"></div>
-                            </div>
-                        </div>
-                    @endif
-
                     <div class="row">
                         <!-- Vehículos Stats -->
                         <div class="col-md-4">
@@ -168,64 +152,4 @@
             </div>
         </div>
     </div>
-
-    @push('scripts')
-    @if($viewGraph)
-    <script>
-        document.addEventListener('livewire:load', function () {
-            Livewire.on('loadGraphLive', function(weeks, utilidad_neta, utilidad_bruta) {
-                var options = {
-                    series: [{
-                        name: 'Utilidad Neta',
-                        data: utilidad_neta
-                    }, {
-                        name: 'Utilidad Bruta',
-                        data: utilidad_bruta
-                    }],
-                    chart: {
-                        type: 'bar',
-                        height: 300
-                    },
-                    plotOptions: {
-                        bar: {
-                            horizontal: false,
-                            columnWidth: '55%',
-                            endingShape: 'rounded'
-                        },
-                    },
-                    dataLabels: {
-                        enabled: false
-                    },
-                    stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ['transparent']
-                    },
-                    xaxis: {
-                        categories: weeks,
-                    },
-                    yaxis: {
-                        title: {
-                            text: '$ (pesos)'
-                        }
-                    },
-                    fill: {
-                        opacity: 1
-                    },
-                    tooltip: {
-                        y: {
-                            formatter: function (val) {
-                                return "$ " + val.toFixed(2)
-                            }
-                        }
-                    }
-                };
-
-                var chart = new ApexCharts(document.querySelector("#graph"), options);
-                chart.render();
-            });
-        });
-    </script>
-    @endif
-    @endpush
 </div> 

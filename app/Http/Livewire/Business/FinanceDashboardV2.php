@@ -17,26 +17,23 @@ use Illuminate\Support\Facades\DB;
 
 class FinanceDashboardV2 extends Component
 {
-    public $weekStart;
-    public $weekEnd;
+    public $week;
     public $year;
     public $maxYear;
-    public $viewGraph = false;
 
-    protected $queryString = ['weekStart', 'weekEnd', 'year', 'viewGraph'];
+    protected $queryString = ['week', 'year'];
 
     public function mount()
     {
         $today = Carbon::today();
         $this->maxYear = $today->year;
-        $this->weekStart = $this->weekStart ? $this->weekStart : $today->weekOfYear;
-        $this->weekEnd = $this->weekEnd ? $this->weekEnd : $today->weekOfYear;
+        $this->week = $this->week ? $this->week : $today->weekOfYear;
         $this->year = $this->year ? $this->year : $this->maxYear;
     }
 
     protected function getDateRange()
     {
-        $dates = Entrada::getDateRange($this->year, $this->weekStart, $this->weekEnd);
+        $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
         return [
             Carbon::parse($dates[0])->startOfDay(),
             Carbon::parse($dates[1])->endOfDay()
@@ -217,41 +214,6 @@ class FinanceDashboardV2 extends Component
 
     public function render()
     {
-        if ($this->viewGraph) {
-            $this->loadGraph();
-        }
-        
         return view('livewire.business.finance-dashboard-v2.view');
-    }
-
-    protected function loadGraph()
-    {
-        $weeks = [];
-        $utilidad_neta = [];
-        $utilidad_bruta = [];
-        
-        for ($i = $this->weekStart; $i <= $this->weekEnd; $i++) {
-            $weeks[] = "Semana $i";
-            $dates = Entrada::getDateRange($this->year, $i, $i);
-            $start = Carbon::parse($dates[0])->startOfDay();
-            $end = Carbon::parse($dates[1])->endOfDay();
-
-            // Get utilidad bruta
-            $entradas = Entrada::whereBetween('fecha_entrega', [$start, $end])->get();
-            $bruta = $entradas->sum('total_utilidad_global') ?? 0;
-            $utilidad_bruta[] = round($bruta, 2);
-
-            // Calculate neta by subtracting gastos
-            $gastos = (GastoFijoLog::whereBetween('fecha', [$start, $end])->sum('monto') ?? 0)
-                + (Egreso::whereBetween('created_at', [$start, $end])->sum('monto') ?? 0)
-                + (PagoPersonal::whereBetween('fecha', [$start, $end])
-                    ->whereHas('personal', function($q) {
-                        $q->where('administrativo', true);
-                    })->sum('pago') ?? 0);
-
-            $utilidad_neta[] = round($bruta - $gastos, 2);
-        }
-
-        $this->emit('loadGraphLive', $weeks, $utilidad_neta, $utilidad_bruta);
     }
 } 
