@@ -10,6 +10,11 @@ Route::middleware(['auth'])->group(function(){
         return view('livewire.business.finance-dashboard.index');
     });
 
+    Route::middleware('permission:reporte-finanzas')
+    ->get('/reporte-finanzas-v2', function(){
+        return view('livewire.business.finance-dashboard-v2.index');
+    });
+
     Route::get('reporte-facturas', function(){
         return view('livewire.business.reporte-facturas.index');
     });

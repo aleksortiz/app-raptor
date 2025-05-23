@@ -1,0 +1,231 @@
+<div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="card-title">Dashboard Financiero V2</h3>
+                        <div class="d-flex gap-2">
+                            <select wire:model="year" class="form-control form-control-sm" style="width: 100px;">
+                                @for($i = $maxYear; $i >= 2020; $i--)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
+                            </select>
+                            <select wire:model="weekStart" class="form-control form-control-sm" style="width: 100px;">
+                                @for($i = 1; $i <= 52; $i++)
+                                    <option value="{{ $i }}">Semana {{ $i }}</option>
+                                @endfor
+                            </select>
+                            <select wire:model="weekEnd" class="form-control form-control-sm" style="width: 100px;">
+                                @for($i = $weekStart; $i <= 52; $i++)
+                                    <option value="{{ $i }}">Semana {{ $i }}</option>
+                                @endfor
+                            </select>
+                            <button wire:click="$toggle('viewGraph')" class="btn btn-sm btn-primary">
+                                <i class="fas fa-chart-line"></i> {{ $viewGraph ? 'Ocultar Gráfica' : 'Ver Gráfica' }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @if($viewGraph)
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div id="graph" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                    @endif
+
+                    <div class="row">
+                        <!-- Vehículos Stats -->
+                        <div class="col-md-4">
+                            <div class="info-box bg-info">
+                                <span class="info-box-icon"><i class="fas fa-car"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Vehículos Registrados</span>
+                                    <span class="info-box-number">{{ number_format($this->vehiculos_registrados->count ?? 0) }}</span>
+                                    <span class="info-box-text">${{ number_format($this->vehiculos_registrados->total ?? 0, 2) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-box bg-warning">
+                                <span class="info-box-icon"><i class="fas fa-tools"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Vehículos Terminados</span>
+                                    <span class="info-box-number">{{ number_format($this->vehiculos_terminados->count ?? 0) }}</span>
+                                    <span class="info-box-text">${{ number_format($this->vehiculos_terminados->total ?? 0, 2) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-box bg-success">
+                                <span class="info-box-icon"><i class="fas fa-check"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Vehículos Entregados</span>
+                                    <span class="info-box-number">{{ number_format($this->vehiculos_entregados->count ?? 0) }}</span>
+                                    <span class="info-box-text">${{ number_format($this->vehiculos_entregados->total ?? 0, 2) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <!-- Costos y Gastos -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Costos y Gastos</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <td>Materiales</td>
+                                            <td class="text-right">${{ number_format($total_materiales ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nómina Taller</td>
+                                            <td class="text-right">${{ number_format($total_nomina ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nómina Administrativa</td>
+                                            <td class="text-right">${{ number_format($total_nomina_administrativa ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Destajos</td>
+                                            <td class="text-right">${{ number_format($total_destajos ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gastos Fijos</td>
+                                            <td class="text-right">${{ number_format($total_gastos_fijos ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gastos Generales</td>
+                                            <td class="text-right">${{ number_format($total_gastos_generales ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr class="table-primary">
+                                            <td><strong>Total Gastos</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($total_gastos ?? 0, 2) }}</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Utilidad -->
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Utilidad</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <td>Utilidad Bruta</td>
+                                            <td class="text-right">${{ number_format($utilidad_bruta ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Total Gastos</td>
+                                            <td class="text-right">-${{ number_format($total_gastos ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td><strong>Utilidad Neta</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($utilidad_neta ?? 0, 2) }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>% Utilidad Neta</td>
+                                            <td class="text-right">{{ number_format($porc_utilidad_neta ?? 0, 2) }}%</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Proveedores -->
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h3 class="card-title">Proveedores</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <td>Total Pedidos</td>
+                                            <td class="text-right">${{ number_format($total_pedidos ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Pagos Realizados</td>
+                                            <td class="text-right">${{ number_format($total_pagos_proveedores ?? 0, 2) }}</td>
+                                        </tr>
+                                        <tr class="table-warning">
+                                            <td><strong>Pendiente por Pagar</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($total_pendiente_proveedores ?? 0, 2) }}</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('scripts')
+    @if($viewGraph)
+    <script>
+        document.addEventListener('livewire:load', function () {
+            Livewire.on('loadGraphLive', function(weeks, utilidad_neta, utilidad_bruta) {
+                var options = {
+                    series: [{
+                        name: 'Utilidad Neta',
+                        data: utilidad_neta
+                    }, {
+                        name: 'Utilidad Bruta',
+                        data: utilidad_bruta
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 300
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            columnWidth: '55%',
+                            endingShape: 'rounded'
+                        },
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    stroke: {
+                        show: true,
+                        width: 2,
+                        colors: ['transparent']
+                    },
+                    xaxis: {
+                        categories: weeks,
+                    },
+                    yaxis: {
+                        title: {
+                            text: '$ (pesos)'
+                        }
+                    },
+                    fill: {
+                        opacity: 1
+                    },
+                    tooltip: {
+                        y: {
+                            formatter: function (val) {
+                                return "$ " + val.toFixed(2)
+                            }
+                        }
+                    }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#graph"), options);
+                chart.render();
+            });
+        });
+    </script>
+    @endif
+    @endpush
+</div> 
