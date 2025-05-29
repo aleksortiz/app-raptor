@@ -162,7 +162,7 @@ class FinanceDashboardV2 extends Component
         $dates = $this->getDateRange();
         return Pedido::whereBetween('created_at', $dates)
             ->whereNull('canceled_at')
-            ->sum('total') ?? 0;
+            ->sum('importe') ?? 0;
     }
 
     public function getTotalPagosProveedoresProperty()
@@ -170,7 +170,7 @@ class FinanceDashboardV2 extends Component
         $dates = $this->getDateRange();
         return Pedido::whereBetween('pagado', $dates)
             ->whereNull('canceled_at')
-            ->sum('total') ?? 0;
+            ->sum('importe') ?? 0;
     }
 
     public function getTotalPendienteProveedoresProperty()
