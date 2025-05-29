@@ -34,10 +34,7 @@ class FinanceDashboardV2 extends Component
     protected function getDateRange()
     {
         $dates = Entrada::getDateRange($this->year, $this->week, $this->week);
-        return [
-            Carbon::parse($dates[0])->startOfDay(),
-            Carbon::parse($dates[1])->endOfDay()
-        ];
+        return $dates;
     }
 
     protected function getDefaultVehicleStats()
@@ -57,18 +54,21 @@ class FinanceDashboardV2 extends Component
 
     public function getVehiculosRegistradosProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        $entradas = Entrada::whereBetween('created_at', [$start, $end])->get();
+        $dates = $this->getDateRange();
+        $entradas = Entrada::whereBetween('created_at', $dates)->get();
         
         return (object)[
             'count' => $entradas->count(),
-            'total' => $this->calculateTotalForEntradas($entradas)
+            'total' => collect($entradas)->sum('total')
         ];
     }
 
     public function getVehiculosTerminadosProperty()
     {
-        [$start, $end] = $this->getDateRange();
+        $dates = $this->getDateRange();
+        $start = Carbon::parse($dates[0])->startOfDay();
+        $end = Carbon::parse($dates[1])->endOfDay();
+        
         $entradas = Entrada::whereHas('avance', function($q) use ($start, $end) {
             $q->whereBetween('terminado', [$start, $end]);
         })
@@ -77,32 +77,32 @@ class FinanceDashboardV2 extends Component
 
         return (object)[
             'count' => $entradas->count(),
-            'total' => $this->calculateTotalForEntradas($entradas)
+            'total' => collect($entradas)->sum('total')
         ];
     }
 
     public function getVehiculosEntregadosProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        $entradas = Entrada::whereBetween('fecha_entrega', [$start, $end])->get();
+        $dates = $this->getDateRange();
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
 
         return (object)[
             'count' => $entradas->count(),
-            'total' => $this->calculateTotalForEntradas($entradas)
+            'total' => collect($entradas)->sum('total')
         ];
     }
 
     public function getTotalMaterialesProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return EntradaMaterial::whereBetween('created_at', [$start, $end])
+        $dates = $this->getDateRange();
+        return EntradaMaterial::whereBetween('created_at', $dates)
             ->sum('importe') ?? 0;
     }
 
     public function getTotalNominaProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return PagoPersonal::whereBetween('fecha', [$start, $end])
+        $dates = $this->getDateRange();
+        return PagoPersonal::whereBetween('fecha', $dates)
             ->whereHas('personal', function($q) {
                 $q->where('destajo', false)
                 ->where('administrativo', false);
@@ -112,8 +112,8 @@ class FinanceDashboardV2 extends Component
 
     public function getTotalNominaAdministrativaProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return PagoPersonal::whereBetween('fecha', [$start, $end])
+        $dates = $this->getDateRange();
+        return PagoPersonal::whereBetween('fecha', $dates)
             ->whereHas('personal', function($q) {
                 $q->where('administrativo', true);
             })
@@ -122,8 +122,8 @@ class FinanceDashboardV2 extends Component
 
     public function getTotalDestajosProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return OrdenTrabajo::whereBetween('created_at', [$start, $end])
+        $dates = $this->getDateRange();
+        return OrdenTrabajo::whereBetween('created_at', $dates)
             ->sum('monto') ?? 0;
     }
 
@@ -134,30 +134,30 @@ class FinanceDashboardV2 extends Component
 
     public function getTotalGastosFijosProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return GastoFijoLog::whereBetween('fecha', [$start, $end])
+        $dates = $this->getDateRange();
+        return GastoFijoLog::whereBetween('fecha', $dates)
             ->sum('monto') ?? 0;
     }
 
     public function getTotalPagosRealizadosProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return Costo::whereBetween('pagado', [$start, $end])
+        $dates = $this->getDateRange();
+        return Costo::whereBetween('pagado', $dates)
             ->sum('costo') ?? 0;
     }
 
     public function getTotalPedidosProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return Pedido::whereBetween('created_at', [$start, $end])
+        $dates = $this->getDateRange();
+        return Pedido::whereBetween('created_at', $dates)
             ->whereNull('canceled_at')
             ->sum('total') ?? 0;
     }
 
     public function getTotalPagosProveedoresProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return Pedido::whereBetween('pagado', [$start, $end])
+        $dates = $this->getDateRange();
+        return Pedido::whereBetween('pagado', $dates)
             ->whereNull('canceled_at')
             ->sum('total') ?? 0;
     }
@@ -169,8 +169,8 @@ class FinanceDashboardV2 extends Component
 
     public function getTotalGastosGeneralesProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        return Egreso::whereBetween('created_at', [$start, $end])
+        $dates = $this->getDateRange();
+        return Egreso::whereBetween('created_at', $dates)
             ->sum('monto') ?? 0;
     }
 
@@ -183,9 +183,9 @@ class FinanceDashboardV2 extends Component
 
     public function getUtilidadBrutaProperty()
     {
-        [$start, $end] = $this->getDateRange();
-        $entradas = Entrada::whereBetween('fecha_entrega', [$start, $end])->get();
-        return $entradas->sum('total_utilidad_global') ?? 0;
+        $dates = $this->getDateRange();
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        return collect($entradas)->sum('total_utilidad_global') ?? 0;
     }
 
     public function getUtilidadNetaProperty()
@@ -195,13 +195,12 @@ class FinanceDashboardV2 extends Component
 
     public function getPorcUtilidadNetaProperty()
     {
-        $total = $this->vehiculos_entregados->total ?? 0;
-        if ($total <= 0) {
+        if ($this->vehiculos_entregados->total <= 0) {
             return 0;
         }
 
         try {
-            return ($this->utilidad_neta / $total) * 100;
+            return ($this->utilidad_neta / $this->vehiculos_entregados->total) * 100;
         } catch (\Exception $e) {
             return 0;
         }
