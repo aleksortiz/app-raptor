@@ -113,9 +113,10 @@
 
                         <!-- Utilidad -->
                         <div class="col-md-6">
+                            <!-- Utilidad Entradas Entregadas -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Utilidad</h3>
+                                    <h3 class="card-title">Utilidad Entradas Entregadas</h3>
                                 </div>
                                 <div class="card-body p-0">
                                     <table class="table table-striped">
@@ -123,7 +124,7 @@
                                             <td>Utilidad Bruta</td>
                                             <td class="text-right">${{ number_format($this->utilidad_bruta, 2) }}</td>
                                         </tr>
-                                        <tr>
+                                        <tr class="text-danger">
                                             <td>Total Gastos</td>
                                             <td class="text-right">-${{ number_format($this->total_gastos, 2) }}</td>
                                         </tr>
@@ -134,6 +135,33 @@
                                         <tr>
                                             <td>% Utilidad Neta</td>
                                             <td class="text-right">{{ number_format($this->porc_utilidad_neta, 2) }}%</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Utilidad Entradas Terminadas -->
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h3 class="card-title">Utilidad Entradas Terminadas</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <td>Utilidad Bruta</td>
+                                            <td class="text-right">${{ number_format($this->utilidad_bruta_terminadas, 2) }}</td>
+                                        </tr>
+                                        <tr class="text-danger">
+                                            <td>Total Gastos</td>
+                                            <td class="text-right">-${{ number_format($this->total_gastos, 2) }}</td>
+                                        </tr>
+                                        <tr class="table-success">
+                                            <td><strong>Utilidad Neta</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($this->utilidad_neta_terminadas, 2) }}</strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td>% Utilidad Neta</td>
+                                            <td class="text-right">{{ number_format($this->porc_utilidad_neta_terminadas, 2) }}%</td>
                                         </tr>
                                     </table>
                                 </div>
