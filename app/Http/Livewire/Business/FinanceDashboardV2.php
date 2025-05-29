@@ -206,13 +206,6 @@ class FinanceDashboardV2 extends Component
             + $this->total_gastos_generales;
     }
 
-    public function getTotalInformativoEntradasProperty()
-    {
-        return $this->total_materiales
-            + $this->total_nomina
-            + $this->total_destajos;
-    }
-
     public function getUtilidadBrutaProperty()
     {
         $dates = $this->getDateRange();
@@ -241,39 +234,6 @@ class FinanceDashboardV2 extends Component
     public function getQtySemanasProperty()
     {
         return $this->weekEnd - $this->weekStart + 1;
-    }
-
-    public function getUtilidadBrutaTerminadasProperty()
-    {
-        $dates = $this->getDateRange();
-        $start = Carbon::parse($dates[0])->startOfDay();
-        $end = Carbon::parse($dates[1])->endOfDay();
-        
-        $entradas = Entrada::whereHas('avance', function($q) use ($start, $end) {
-            $q->whereBetween('terminado', [$start, $end]);
-        })
-        ->whereNull('fecha_entrega')
-        ->get();
-        
-        return collect($entradas)->sum('total_utilidad_global');
-    }
-
-    public function getUtilidadNetaTerminadasProperty()
-    {
-        return $this->utilidad_bruta_terminadas - $this->total_gastos;
-    }
-
-    public function getPorcUtilidadNetaTerminadasProperty()
-    {
-        if ($this->vehiculos_terminados->total <= 0) {
-            return 0;
-        }
-
-        try {
-            return ($this->utilidad_neta_terminadas / $this->vehiculos_terminados->total) * 100;
-        } catch (\Exception $e) {
-            return 0;
-        }
     }
 
     public function render()

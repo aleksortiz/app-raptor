@@ -55,11 +55,11 @@
                     </div>
 
                     <div class="row mt-4">
-                        <!-- Datos Informativos de Entrada -->
+                        <!-- Costos y Gastos -->
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Datos Informativos de Entrada</h3>
+                                    <h3 class="card-title">Costos y Gastos</h3>
                                 </div>
                                 <div class="card-body p-0">
                                     <table class="table table-striped">
@@ -72,27 +72,12 @@
                                             <td class="text-right">${{ number_format($this->total_nomina, 2) }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Destajos</td>
-                                            <td class="text-right">${{ number_format($this->total_destajos, 2) }}</td>
-                                        </tr>
-                                        <tr class="table-info">
-                                            <td><strong>Total Informativo</strong></td>
-                                            <td class="text-right"><strong>${{ number_format($this->total_informativo_entradas, 2) }}</strong></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Gastos Administrativos -->
-                            <div class="card mt-3">
-                                <div class="card-header">
-                                    <h3 class="card-title">Gastos Administrativos</h3>
-                                </div>
-                                <div class="card-body p-0">
-                                    <table class="table table-striped">
-                                        <tr>
                                             <td>Nómina Administrativa</td>
                                             <td class="text-right">${{ number_format($this->total_nomina_administrativa, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Destajos</td>
+                                            <td class="text-right">${{ number_format($this->total_destajos, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Gastos Fijos</td>
@@ -113,10 +98,9 @@
 
                         <!-- Utilidad -->
                         <div class="col-md-6">
-                            <!-- Utilidad Entradas Entregadas -->
                             <div class="card">
                                 <div class="card-header">
-                                    <h3 class="card-title">Utilidad Entradas Entregadas</h3>
+                                    <h3 class="card-title">Utilidad</h3>
                                 </div>
                                 <div class="card-body p-0">
                                     <table class="table table-striped">
@@ -124,7 +108,7 @@
                                             <td>Utilidad Bruta</td>
                                             <td class="text-right">${{ number_format($this->utilidad_bruta, 2) }}</td>
                                         </tr>
-                                        <tr class="text-danger">
+                                        <tr>
                                             <td>Total Gastos</td>
                                             <td class="text-right">-${{ number_format($this->total_gastos, 2) }}</td>
                                         </tr>
@@ -135,33 +119,6 @@
                                         <tr>
                                             <td>% Utilidad Neta</td>
                                             <td class="text-right">{{ number_format($this->porc_utilidad_neta, 2) }}%</td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Utilidad Entradas Terminadas -->
-                            <div class="card mt-3">
-                                <div class="card-header">
-                                    <h3 class="card-title">Utilidad Entradas Terminadas</h3>
-                                </div>
-                                <div class="card-body p-0">
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <td>Utilidad Bruta</td>
-                                            <td class="text-right">${{ number_format($this->utilidad_bruta_terminadas, 2) }}</td>
-                                        </tr>
-                                        <tr class="text-danger">
-                                            <td>Total Gastos</td>
-                                            <td class="text-right">-${{ number_format($this->total_gastos, 2) }}</td>
-                                        </tr>
-                                        <tr class="table-success">
-                                            <td><strong>Utilidad Neta</strong></td>
-                                            <td class="text-right"><strong>${{ number_format($this->utilidad_neta_terminadas, 2) }}</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td>% Utilidad Neta</td>
-                                            <td class="text-right">{{ number_format($this->porc_utilidad_neta_terminadas, 2) }}%</td>
                                         </tr>
                                     </table>
                                 </div>
