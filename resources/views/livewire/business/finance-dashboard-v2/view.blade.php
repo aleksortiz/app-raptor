@@ -27,8 +27,8 @@
                                 <span class="info-box-icon"><i class="fas fa-car"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Vehículos Registrados</span>
-                                    <span class="info-box-number">{{ number_format($this->vehiculos_registrados->count ?? 0) }}</span>
-                                    <span class="info-box-text">${{ number_format($this->vehiculos_registrados->total ?? 0, 2) }}</span>
+                                    <span class="info-box-number">{{ $vehiculos_registrados->count }}</span>
+                                    <span class="info-box-text">${{ number_format($vehiculos_registrados->total, 2) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -37,8 +37,8 @@
                                 <span class="info-box-icon"><i class="fas fa-tools"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Vehículos Terminados</span>
-                                    <span class="info-box-number">{{ number_format($this->vehiculos_terminados->count ?? 0) }}</span>
-                                    <span class="info-box-text">${{ number_format($this->vehiculos_terminados->total ?? 0, 2) }}</span>
+                                    <span class="info-box-number">{{ $vehiculos_terminados->count }}</span>
+                                    <span class="info-box-text">${{ number_format($vehiculos_terminados->total, 2) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -47,8 +47,8 @@
                                 <span class="info-box-icon"><i class="fas fa-check"></i></span>
                                 <div class="info-box-content">
                                     <span class="info-box-text">Vehículos Entregados</span>
-                                    <span class="info-box-number">{{ number_format($this->vehiculos_entregados->count ?? 0) }}</span>
-                                    <span class="info-box-text">${{ number_format($this->vehiculos_entregados->total ?? 0, 2) }}</span>
+                                    <span class="info-box-number">{{ $vehiculos_entregados->count }}</span>
+                                    <span class="info-box-text">${{ number_format($vehiculos_entregados->total, 2) }}</span>
                                 </div>
                             </div>
                         </div>
@@ -65,31 +65,31 @@
                                     <table class="table table-striped">
                                         <tr>
                                             <td>Materiales</td>
-                                            <td class="text-right">${{ number_format($total_materiales ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_materiales, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Nómina Taller</td>
-                                            <td class="text-right">${{ number_format($total_nomina ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_nomina, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Nómina Administrativa</td>
-                                            <td class="text-right">${{ number_format($total_nomina_administrativa ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_nomina_administrativa, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Destajos</td>
-                                            <td class="text-right">${{ number_format($total_destajos ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_destajos, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Gastos Fijos</td>
-                                            <td class="text-right">${{ number_format($total_gastos_fijos ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_gastos_fijos, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Gastos Generales</td>
-                                            <td class="text-right">${{ number_format($total_gastos_generales ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_gastos_generales, 2) }}</td>
                                         </tr>
                                         <tr class="table-primary">
                                             <td><strong>Total Gastos</strong></td>
-                                            <td class="text-right"><strong>${{ number_format($total_gastos ?? 0, 2) }}</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($total_gastos, 2) }}</strong></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -106,19 +106,19 @@
                                     <table class="table table-striped">
                                         <tr>
                                             <td>Utilidad Bruta</td>
-                                            <td class="text-right">${{ number_format($utilidad_bruta ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($utilidad_bruta, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Total Gastos</td>
-                                            <td class="text-right">-${{ number_format($total_gastos ?? 0, 2) }}</td>
+                                            <td class="text-right">-${{ number_format($total_gastos, 2) }}</td>
                                         </tr>
                                         <tr class="table-success">
                                             <td><strong>Utilidad Neta</strong></td>
-                                            <td class="text-right"><strong>${{ number_format($utilidad_neta ?? 0, 2) }}</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($utilidad_neta, 2) }}</strong></td>
                                         </tr>
                                         <tr>
                                             <td>% Utilidad Neta</td>
-                                            <td class="text-right">{{ number_format($porc_utilidad_neta ?? 0, 2) }}%</td>
+                                            <td class="text-right">{{ number_format($porc_utilidad_neta, 2) }}%</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -133,15 +133,15 @@
                                     <table class="table table-striped">
                                         <tr>
                                             <td>Total Pedidos</td>
-                                            <td class="text-right">${{ number_format($total_pedidos ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_pedidos, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Pagos Realizados</td>
-                                            <td class="text-right">${{ number_format($total_pagos_proveedores ?? 0, 2) }}</td>
+                                            <td class="text-right">${{ number_format($total_pagos_proveedores, 2) }}</td>
                                         </tr>
                                         <tr class="table-warning">
                                             <td><strong>Pendiente por Pagar</strong></td>
-                                            <td class="text-right"><strong>${{ number_format($total_pendiente_proveedores ?? 0, 2) }}</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($total_pendiente_proveedores, 2) }}</strong></td>
                                         </tr>
                                     </table>
                                 </div>

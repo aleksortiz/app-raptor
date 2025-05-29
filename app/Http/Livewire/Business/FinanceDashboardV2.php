@@ -84,7 +84,14 @@ class FinanceDashboardV2 extends Component
     public function getVehiculosEntregadosProperty()
     {
         $dates = $this->getDateRange();
-        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        $start = Carbon::parse($dates[0])->startOfDay();
+        $end = Carbon::parse($dates[1])->endOfDay();
+        
+        $entradas = Entrada::whereHas('avance', function($q) use ($start, $end) {
+            $q->whereBetween('terminado', [$start, $end]);
+        })
+        ->distinct()
+        ->get();
 
         return (object)[
             'count' => $entradas->count(),
@@ -95,8 +102,8 @@ class FinanceDashboardV2 extends Component
     public function getTotalMaterialesProperty()
     {
         $dates = $this->getDateRange();
-        return EntradaMaterial::whereBetween('created_at', $dates)
-            ->sum('importe') ?? 0;
+        $entradas = EntradaMaterial::whereBetween('created_at', $dates)->get();
+        return collect($entradas)->sum('importe');
     }
 
     public function getTotalNominaProperty()
@@ -142,8 +149,12 @@ class FinanceDashboardV2 extends Component
     public function getTotalPagosRealizadosProperty()
     {
         $dates = $this->getDateRange();
-        return Costo::whereBetween('pagado', $dates)
-            ->sum('costo') ?? 0;
+        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        $totalPagado = 0;
+        foreach($entradas as $entrada){
+            $totalPagado += $entrada->total_costos_pagados;
+        }
+        return $totalPagado;
     }
 
     public function getTotalPedidosProperty()
@@ -170,8 +181,8 @@ class FinanceDashboardV2 extends Component
     public function getTotalGastosGeneralesProperty()
     {
         $dates = $this->getDateRange();
-        return Egreso::whereBetween('created_at', $dates)
-            ->sum('monto') ?? 0;
+        $gastos = Egreso::whereBetween('created_at', $dates)->sum('monto');
+        return $gastos;
     }
 
     public function getTotalGastosProperty()
@@ -185,7 +196,7 @@ class FinanceDashboardV2 extends Component
     {
         $dates = $this->getDateRange();
         $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
-        return collect($entradas)->sum('total_utilidad_global') ?? 0;
+        return collect($entradas)->sum('total_utilidad_global');
     }
 
     public function getUtilidadNetaProperty()
