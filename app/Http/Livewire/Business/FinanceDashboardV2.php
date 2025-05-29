@@ -160,17 +160,31 @@ class FinanceDashboardV2 extends Component
     public function getTotalPedidosProperty()
     {
         $dates = $this->getDateRange();
-        return Pedido::whereBetween('created_at', $dates)
+        $pedidos = Pedido::whereBetween('created_at', $dates)
             ->whereNull('canceled_at')
-            ->sum('importe') ?? 0;
+            ->with('conceptos')
+            ->get();
+            
+        return $pedidos->sum(function($pedido) {
+            return $pedido->conceptos->sum(function($concepto) {
+                return $concepto->cantidad * $concepto->precio;
+            });
+        });
     }
 
     public function getTotalPagosProveedoresProperty()
     {
         $dates = $this->getDateRange();
-        return Pedido::whereBetween('pagado', $dates)
+        $pedidos = Pedido::whereBetween('pagado', $dates)
             ->whereNull('canceled_at')
-            ->sum('importe') ?? 0;
+            ->with('conceptos')
+            ->get();
+            
+        return $pedidos->sum(function($pedido) {
+            return $pedido->conceptos->sum(function($concepto) {
+                return $concepto->cantidad * $concepto->precio;
+            });
+        });
     }
 
     public function getTotalPendienteProveedoresProperty()
