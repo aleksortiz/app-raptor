@@ -312,7 +312,7 @@ return [
                     'text' => 'Reporte Finanzas',
                     'can' => ['reporte-finanzas'],
                     'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url' => '/reporte-finanzas',
+                    'url' => '/reporte-finanzas-v2',
                 ],
                 [
                     'text' => 'Control de Facturación',
