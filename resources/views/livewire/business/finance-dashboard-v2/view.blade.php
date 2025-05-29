@@ -55,39 +55,9 @@
                     </div>
 
                     <div class="row mt-4">
-                        <!-- Costos y Gastos -->
+                        <!-- Datos Informativos de Entrada -->
                         <div class="col-md-6">
                             <div class="card">
-                                <div class="card-header">
-                                    <h3 class="card-title">Costos y Gastos</h3>
-                                </div>
-                                <div class="card-body p-0">
-                                    <table class="table table-striped">
-                                        <tr>
-                                            <td colspan="2" class="bg-light"><strong>Gastos Administrativos</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Nómina Administrativa</td>
-                                            <td class="text-right">${{ number_format($this->total_nomina_administrativa, 2) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gastos Fijos</td>
-                                            <td class="text-right">${{ number_format($this->total_gastos_fijos, 2) }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Gastos Generales</td>
-                                            <td class="text-right">${{ number_format($this->total_gastos_generales, 2) }}</td>
-                                        </tr>
-                                        <tr class="table-primary">
-                                            <td><strong>Total Gastos</strong></td>
-                                            <td class="text-right"><strong>${{ number_format($this->total_gastos, 2) }}</strong></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Datos Informativos de Entrada -->
-                            <div class="card mt-3">
                                 <div class="card-header">
                                     <h3 class="card-title">Datos Informativos de Entrada</h3>
                                 </div>
@@ -107,7 +77,34 @@
                                         </tr>
                                         <tr class="table-info">
                                             <td><strong>Total Informativo</strong></td>
-                                            <td class="text-right"><strong>${{ number_format($this->total_materiales + $this->total_nomina + $this->total_destajos, 2) }}</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($this->total_informativo_entradas, 2) }}</strong></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <!-- Gastos Administrativos -->
+                            <div class="card mt-3">
+                                <div class="card-header">
+                                    <h3 class="card-title">Gastos Administrativos</h3>
+                                </div>
+                                <div class="card-body p-0">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <td>Nómina Administrativa</td>
+                                            <td class="text-right">${{ number_format($this->total_nomina_administrativa, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gastos Fijos</td>
+                                            <td class="text-right">${{ number_format($this->total_gastos_fijos, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gastos Generales</td>
+                                            <td class="text-right">${{ number_format($this->total_gastos_generales, 2) }}</td>
+                                        </tr>
+                                        <tr class="table-primary">
+                                            <td><strong>Total Gastos</strong></td>
+                                            <td class="text-right"><strong>${{ number_format($this->total_gastos, 2) }}</strong></td>
                                         </tr>
                                     </table>
                                 </div>

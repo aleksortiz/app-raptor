@@ -206,6 +206,13 @@ class FinanceDashboardV2 extends Component
             + $this->total_gastos_generales;
     }
 
+    public function getTotalInformativoEntradasProperty()
+    {
+        return $this->total_materiales
+            + $this->total_nomina
+            + $this->total_destajos;
+    }
+
     public function getUtilidadBrutaProperty()
     {
         $dates = $this->getDateRange();
