@@ -117,7 +117,7 @@
                                         <a href="/servicios/{{$row->id}}?activeTab=3"><img src="{{ $row->main_photo }}" class="img-fluid" alt="image" style="width: 80px; height: 60px; object-fit: cover; border-radius: 10%; border: solid 1px #ddd;"></a>
                                     </td>
                                     <td><a href="/servicios/{{$row->id}}" class="btn btn-xs btn-primary"><i class="fa fa-car"></i> {{$row->folio_short}}</a></td>
-                                    <td><button data-toggle="tooltip" data-placement="top" title="{{$row->origen}}" class="btn btn-xs btn-{{$row->origen_color}}"><label class="m-0 p-0">{{ $row->origen_short }}</label> </button></td>
+                                    <td><a href="aosprint:{{urlencode(url('/servicios/'.$row->id.'/public-view'))}}" class="btn btn-xs btn-primary"><i class="fa fa-qrcode"></i></a></td>
                                     <td>{{ $row->cliente->nombre }}</td>
                                     <td>{{ $row->orden ? $row->orden : "N/A" }}</td>
                                     <td>{{ $row->vehiculo }}</td>
@@ -168,6 +168,7 @@
                                 <th>Monto</th>
                                 <th>Destajos</th>
                                 <th>Estatus</th>
+                                <th>Folio-QR</th>
                                 <th>Proyección de Entrega</th>
                             </tr>
                         </thead>
@@ -189,13 +190,14 @@
                                     </button>
                                 </td>
                                 <td>{!! $row->estado_button !!}</td>
+                                <td><a href="aosprint:qrcode#{{$row->folio_short}}*{{$row->vehiculo}}#{{urlencode(url('servicios/'.$row->id.'/public-view'))}}" class="btn btn-default btn-xs"><i class="fa fa-qrcode"></i> QR</a>
                                 <td>
                                     <label class="content-input">
                                         <input type="checkbox" wire:click="toggleProyeccion({{$row->id}})" {{ $row->proyeccion_entrega ? 'checked' : '' }}>
                                         <i></i>
                                     </label>
                                     @if($row->proyeccion_entrega)
-                                        <small class="text-muted d-block">{{ \Carbon\Carbon::parse($row->proyeccion_entrega)->format('d/m/Y') }}</small>
+                                    <small class="text-muted d-block">{{ \Carbon\Carbon::parse($row->proyeccion_entrega)->format('d/m/Y') }}</small>
                                     @endif
                                 </td>
                             </tr>
