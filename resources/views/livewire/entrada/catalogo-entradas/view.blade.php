@@ -190,7 +190,7 @@
                                     </button>
                                 </td>
                                 <td>{!! $row->estado_button !!}</td>
-                                <td><a href="aosprint:qrcode#{{$row->folio_short}}*{{$row->vehiculo}}#{{urlencode(url('servicios/'.$row->id.'/public-view'))}}" class="btn btn-default btn-xs"><i class="fa fa-qrcode"></i> QR</a>
+                                <td><a href="aosprint:qrcode#{{$row->folio_short}}*{{$row->vehiculo}}#{{url('servicios/'.$row->id.'/public-view')}}" class="btn btn-default btn-xs"><i class="fa fa-qrcode"></i> QR</a>
                                 <td>
                                     <label class="content-input">
                                         <input type="checkbox" wire:click="toggleProyeccion({{$row->id}})" {{ $row->proyeccion_entrega ? 'checked' : '' }}>
