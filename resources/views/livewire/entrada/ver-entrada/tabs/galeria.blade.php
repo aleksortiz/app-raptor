@@ -1,0 +1,1 @@
+@livewire('entrada.galeria-fotos', ['entrada' => $entrada]) 

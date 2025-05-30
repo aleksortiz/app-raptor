@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EntradaController;
 use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\PdfController;
 use App\Models\Entrada;
@@ -105,3 +106,5 @@ Route::middleware(['auth'])->group(function ()
 
 
 });
+
+Route::get('/servicios/{id}/public-view', [EntradaController::class, 'publicview']);
