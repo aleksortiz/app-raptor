@@ -38,7 +38,7 @@ class UploadMobilePhotos extends Component
     }
 
     public function getDataFromToken($token){
-        $key = env('JWT_SECRET');
+        $key = config('app.jwt_secret');
         try {
             $jwt = JWT::decode($token, new Key($key, 'HS256'));
             $this->model = app($jwt->model_type)->find($jwt->model_id);
