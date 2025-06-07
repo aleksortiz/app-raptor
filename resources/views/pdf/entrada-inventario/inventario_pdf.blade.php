@@ -44,7 +44,7 @@
 
       <td style="vertical-align: top">
         <div>
-          <h2 style="margin: 0px;">Folio #{{$inventario->entrada->folio_short}}</h2>
+          <h2 style="margin: 0px;">Folio: {{$inventario->entrada->folio_short}}</h2>
           
           <p style="margin-top: 5px; line-height: 20px;">
             <b>Inventario:</b> #{{ $inventario->id_paddy }}<br>
