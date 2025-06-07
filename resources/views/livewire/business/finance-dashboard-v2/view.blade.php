@@ -23,34 +23,40 @@
                     <div class="row">
                         <!-- Vehículos Stats -->
                         <div class="col-md-4">
-                            <div class="info-box bg-info">
-                                <span class="info-box-icon"><i class="fas fa-car"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Vehículos Registrados</span>
-                                    <span class="info-box-number">{{ $this->vehiculos_registrados->count }}</span>
-                                    <span class="info-box-text">${{ number_format($this->vehiculos_registrados->total, 2) }}</span>
+                            <a target="_blank" href="/vehiculos-concluidos?year={{ $year }}&weekStart={{ $week }}">
+                                <div class="info-box bg-info">
+                                    <span class="info-box-icon"><i class="fas fa-car"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Vehículos Registrados</span>
+                                        <span class="info-box-number">{{ $this->vehiculos_registrados->count }}</span>
+                                        <span class="info-box-text">${{ number_format($this->vehiculos_registrados->total, 2) }}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-md-4">
-                            <div class="info-box bg-warning">
-                                <span class="info-box-icon"><i class="fas fa-tools"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Vehículos Terminados</span>
-                                    <span class="info-box-number">{{ $this->vehiculos_terminados->count }}</span>
-                                    <span class="info-box-text">${{ number_format($this->vehiculos_terminados->total, 2) }}</span>
+                            <a target="_blank" href="/vehiculos-concluidos?year={{ $year }}&weekStart={{ $week }}">
+                                <div class="info-box bg-warning">
+                                    <span class="info-box-icon"><i class="fas fa-tools"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Vehículos Terminados</span>
+                                        <span class="info-box-number">{{ $this->vehiculos_terminados->count }}</span>
+                                        <span class="info-box-text">${{ number_format($this->vehiculos_terminados->total, 2) }}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                         <div class="col-md-4">
-                            <div class="info-box bg-success">
-                                <span class="info-box-icon"><i class="fas fa-check"></i></span>
-                                <div class="info-box-content">
-                                    <span class="info-box-text">Vehículos Entregados</span>
-                                    <span class="info-box-number">{{ $this->vehiculos_entregados->count }}</span>
-                                    <span class="info-box-text">${{ number_format($this->vehiculos_entregados->total, 2) }}</span>
+                            <a target="_blank" href="/vehiculos-concluidos?year={{ $year }}&weekStart={{ $week }}">
+                                <div class="info-box bg-success">
+                                    <span class="info-box-icon"><i class="fas fa-check"></i></span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text">Vehículos Entregados</span>
+                                        <span class="info-box-number">{{ $this->vehiculos_entregados->count }}</span>
+                                        <span class="info-box-text">${{ number_format($this->vehiculos_entregados->total, 2) }}</span>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
 
