@@ -77,7 +77,8 @@ class FinanceDashboardV2 extends Component
 
         return (object)[
             'count' => $entradas->count(),
-            'total' => collect($entradas)->sum('total')
+            'total' => collect($entradas)->sum('total'),
+            'total_utilidad_global' => collect($entradas)->sum('total_utilidad_global')
         ];
     }
 
@@ -100,7 +101,8 @@ class FinanceDashboardV2 extends Component
 
         return (object)[
             'count' => $entradas->count(),
-            'total' => collect($entradas)->sum('total')
+            'total' => collect($entradas)->sum('total'),
+            'total_utilidad_global' => collect($entradas)->sum('total_utilidad_global')
         ];
     }
 
