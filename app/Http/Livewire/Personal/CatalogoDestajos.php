@@ -82,8 +82,7 @@ class CatalogoDestajos extends Component
 
         $destajos = OrdenTrabajo::with('personal')
         ->whereBetween('created_at', [$start, $end])
-        ->groupBy('personal_id')
-        ->orderBy('monto_total', 'desc');
+        ->groupBy('personal_id');
 
         $this->totalPendiente = OrdenTrabajo::whereBetween('created_at', [$start, $end])
             ->whereNotExists(function ($query) {
