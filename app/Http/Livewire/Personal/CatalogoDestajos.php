@@ -80,14 +80,7 @@ class CatalogoDestajos extends Component
     {
         [$start, $end] = $this->getDateRange();
 
-        $destajos = OrdenTrabajo::select(
-            'personal_id',
-            DB::raw('COUNT(*) as total_ordenes'),
-            DB::raw('SUM(monto) as monto_total'),
-            DB::raw('SUM(CASE WHEN EXISTS (SELECT 1 FROM orden_trabajo_pagos WHERE orden_trabajo_pagos.orden_trabajo_id = ordenes_trabajo.id) THEN monto ELSE 0 END) as monto_pagado'),
-            DB::raw('SUM(CASE WHEN NOT EXISTS (SELECT 1 FROM orden_trabajo_pagos WHERE orden_trabajo_pagos.orden_trabajo_id = ordenes_trabajo.id) THEN monto ELSE 0 END) as monto_pendiente')
-        )
-        ->with('personal')
+        $destajos = OrdenTrabajo::with('personal')
         ->whereBetween('created_at', [$start, $end])
         ->groupBy('personal_id')
         ->orderBy('monto_total', 'desc');
