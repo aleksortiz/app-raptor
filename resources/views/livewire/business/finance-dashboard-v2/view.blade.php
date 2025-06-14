@@ -29,7 +29,7 @@
                                     <div class="info-box-content">
                                         <span class="info-box-text">Vehículos Registrados</span>
                                         <span class="info-box-number">{{ $this->vehiculos_registrados->count }}</span>
-                                        <span class="info-box-text">${{ number_format($this->vehiculos_registrados->total_utilidad_global, 2) }}</span>
+                                        <span class="info-box-text">${{ number_format($this->vehiculos_registrados->total, 2) }}</span>
                                     </div>
                                 </div>
                             </a>
@@ -53,7 +53,7 @@
                                     <div class="info-box-content">
                                         <span class="info-box-text">Vehículos Entregados</span>
                                         <span class="info-box-number">{{ $this->vehiculos_entregados->count }}</span>
-                                        <span class="info-box-text">${{ number_format($this->vehiculos_entregados->total, 2) }}</span>
+                                        <span class="info-box-text">${{ number_format($this->vehiculos_entregados->total_utilidad_global, 2) }}</span>
                                     </div>
                                 </div>
                             </a>
