@@ -105,7 +105,17 @@ class VehiculosConcluidos extends Component
         // Calculate financial statistics
         $this->totalMateriales = $entradasCollection->sum('total_materiales');
         $this->totalCostos = $entradasCollection->sum('total');
-        $this->totalUtilidad = $entradasCollection->sum('total_utilidad_global');
+        
+        $entradasUtilidad = Entrada::whereHas('avance', function ($q) use ($start, $end) {
+            $q->whereBetween('terminado', [$start, $end]);
+        })
+        ->get();
+
+
+        $this->totalUtilidad = $entradasUtilidad->sum(function ($entrada) {
+            return $entrada->total_utilidad_global ?? 0;
+        });
+        // $this->totalUtilidad = $entradasCollection->sum('total_utilidad_global');
 
         return [
             'entradas' => $entradas->paginate(50),
