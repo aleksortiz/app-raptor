@@ -80,24 +80,26 @@ class CatalogoDestajos extends Component
     {
         [$start, $end] = $this->getDateRange();
 
-        $pagos = DB::table('orden_trabajo_pagos')
-        ->select('orden_trabajo_id')
-        ->groupBy('orden_trabajo_id');
-    
+        // Subconsulta para saber si una orden tiene al menos un pago
+        $ordenesConPago = DB::table('orden_trabajo_pagos')
+            ->select('orden_trabajo_id')
+            ->groupBy('orden_trabajo_id');
+
         $destajos = DB::table('ordenes_trabajo')
-        ->leftJoinSub($pagos, 'pagos', function ($join) {
-            $join->on('pagos.orden_trabajo_id', '=', 'ordenes_trabajo.id');
+        ->leftJoinSub($ordenesConPago, 'pagadas', function ($join) {
+            $join->on('pagadas.orden_trabajo_id', '=', 'ordenes_trabajo.id');
         })
         ->select(
             'ordenes_trabajo.personal_id',
             DB::raw('COUNT(*) as total_ordenes'),
             DB::raw('SUM(ordenes_trabajo.monto) as monto_total'),
-            DB::raw('SUM(CASE WHEN pagos.orden_trabajo_id IS NOT NULL THEN ordenes_trabajo.monto ELSE 0 END) as monto_pagado'),
-            DB::raw('SUM(CASE WHEN pagos.orden_trabajo_id IS NULL THEN ordenes_trabajo.monto ELSE 0 END) as monto_pendiente')
+            DB::raw('SUM(IF(pagadas.orden_trabajo_id IS NOT NULL, ordenes_trabajo.monto, 0)) as monto_pagado'),
+            DB::raw('SUM(IF(pagadas.orden_trabajo_id IS NULL, ordenes_trabajo.monto, 0)) as monto_pendiente')
         )
         ->whereBetween('ordenes_trabajo.created_at', [$start, $end])
         ->groupBy('ordenes_trabajo.personal_id')
         ->orderBy('monto_total', 'desc');
+
     
     
 
