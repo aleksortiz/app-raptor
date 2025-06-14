@@ -87,10 +87,15 @@ class FinanceDashboardV2 extends Component
         $start = Carbon::parse($dates[0])->startOfDay();
         $end = Carbon::parse($dates[1])->endOfDay();
         
-        $entradas = Entrada::whereHas('avance', function($q) use ($start, $end) {
-            $q->whereBetween('terminado', [$start, $end]);
-        })
-        ->distinct()
+        // $entradas = Entrada::whereHas('avance', function($q) use ($start, $end) {
+        //     $q->whereBetween('terminado', [$start, $end]);
+        // })
+        // ->whereNotNull('fecha_entrega')
+        // ->distinct()
+        // ->get();
+
+        $entradas = Entrada::whereBetween('fecha_entrega', [$start, $end])
+        ->whereNotNull('fecha_entrega')
         ->get();
 
         return (object)[
