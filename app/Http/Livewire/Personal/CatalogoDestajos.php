@@ -80,12 +80,11 @@ class CatalogoDestajos extends Component
     {
         [$start, $end] = $this->getDateRange();
 
-        // Subconsulta para saber si una orden tiene al menos un pago
         $ordenesConPago = DB::table('orden_trabajo_pagos')
-            ->select('orden_trabajo_id')
-            ->groupBy('orden_trabajo_id');
-
-        $destajos = DB::table('ordenes_trabajo')
+        ->select('orden_trabajo_id')
+        ->groupBy('orden_trabajo_id');
+    
+    $destajos = DB::table('ordenes_trabajo')
         ->leftJoinSub($ordenesConPago, 'pagadas', function ($join) {
             $join->on('pagadas.orden_trabajo_id', '=', 'ordenes_trabajo.id');
         })
