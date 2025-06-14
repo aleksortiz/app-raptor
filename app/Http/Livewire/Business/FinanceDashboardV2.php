@@ -214,7 +214,12 @@ class FinanceDashboardV2 extends Component
     public function getUtilidadBrutaProperty()
     {
         $dates = $this->getDateRange();
-        $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        // $entradas = Entrada::whereBetween('fecha_entrega', $dates)->get();
+        // return collect($entradas)->sum('total_utilidad_global');
+        $entradas = Entrada::whereHas('avance', function($q) use ($dates) {
+            $q->whereBetween('terminado', $dates);
+        })
+        ->get();
         return collect($entradas)->sum('total_utilidad_global');
     }
 
