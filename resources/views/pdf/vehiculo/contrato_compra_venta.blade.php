@@ -88,13 +88,14 @@
         <ul>
             <li>Ser legítimo propietario del vehículo descrito en este contrato.</li>
             <li>Que el vehículo se encuentra libre de gravamen, embargo o adeudo.</li>
-            @if ($contratoIdentificacion)
-                <li>Que su identidad se acredita con <strong>{{ $contratoIdentificacion }}</strong>, con número <strong>{{ $contratoIdentificacionNumero }}</strong>.</li>
-            @endif
+            <li>Los documentos del vehículo se entregan al liquidar.</li>
         </ul>
 
         <p>2. <strong>EL COMPRADOR</strong> declara:</p>
         <ul>
+            @if ($contratoIdentificacion)
+                <li>Que su identidad se acredita con <strong>{{ $contratoIdentificacion }}</strong>, con número <strong>{{ $contratoIdentificacionNumero }}</strong>.</li>
+            @endif
             <li>Que ha inspeccionado el vehículo y acepta su estado físico y mecánico.</li>
             <li>Que ha realizado todas las pruebas y revisiones necesarias, incluyendo mecánicas y documentales, y acepta la compra en las condiciones actuales del vehículo, sin responsabilidad posterior para <strong>EL VENDEDOR</strong>.</li>
             <li>Que ha revisado y está de acuerdo con las condiciones mecánicas del vehículo, aceptando que cualquier reparación o mantenimiento futuro será su responsabilidad exclusiva.</li>
