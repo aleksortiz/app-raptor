@@ -228,12 +228,12 @@ class FinanceDashboardV2 extends Component
 
     public function getPorcUtilidadNetaProperty()
     {
-        if ($this->vehiculos_entregados->total <= 0) {
+        if ($this->utilidad_bruta <= 0) {
             return 0;
         }
 
         try {
-            return ($this->utilidad_neta / $this->vehiculos_entregados->total) * 100;
+            return ($this->utilidad_neta / $this->utilidad_bruta) * 100;
         } catch (\Exception $e) {
             return 0;
         }
@@ -244,6 +244,10 @@ class FinanceDashboardV2 extends Component
         $dates = $this->getDateRange();
         return PagoPersonal::whereBetween('fecha', $dates)
             ->whereNull('entrada_id')
+            ->whereHas('personal', function($q) {
+                $q->where('destajo', false)
+                ->where('administrativo', false);
+            })
             ->sum('pago') ?? 0;
     }
 
