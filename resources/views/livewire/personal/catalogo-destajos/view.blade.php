@@ -71,7 +71,7 @@
                     <tbody>
                         @foreach($destajos as $destajo)
                             <tr>
-                                <td>{{ $destajo->personal->nombre ?? 'N/A' }}</td>
+                                <td>{{ $destajo->nombre ?? 'N/A' }}</td>
                                 <td>
                                     <button class="btn btn-info btn-sm" wire:click="verOrdenes({{ $destajo->personal_id }})">
                                         {{ $destajo->total_ordenes }}

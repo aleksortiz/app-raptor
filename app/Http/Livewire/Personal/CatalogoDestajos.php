@@ -80,43 +80,42 @@ class CatalogoDestajos extends Component
     {
         [$start, $end] = $this->getDateRange();
 
-        $ordenesConPago = DB::table('orden_trabajo_pagos')
-        ->select('orden_trabajo_id')
-        ->groupBy('orden_trabajo_id');
+        $pagosSubquery = DB::table('orden_trabajo_pagos')
+            ->select(
+                'orden_trabajo_id',
+                DB::raw('SUM(monto) as total_pagado')
+            )
+            ->groupBy('orden_trabajo_id');
     
-    $destajos = DB::table('ordenes_trabajo')
-        ->leftJoinSub($ordenesConPago, 'pagadas', function ($join) {
-            $join->on('pagadas.orden_trabajo_id', '=', 'ordenes_trabajo.id');
-        })
-        ->select(
-            'ordenes_trabajo.personal_id',
-            DB::raw('COUNT(*) as total_ordenes'),
-            DB::raw('SUM(ordenes_trabajo.monto) as monto_total'),
-            DB::raw('SUM(IF(pagadas.orden_trabajo_id IS NOT NULL, ordenes_trabajo.monto, 0)) as monto_pagado'),
-            DB::raw('SUM(IF(pagadas.orden_trabajo_id IS NULL, ordenes_trabajo.monto, 0)) as monto_pendiente')
-        )
-        ->whereBetween('ordenes_trabajo.created_at', [$start, $end])
-        ->groupBy('ordenes_trabajo.personal_id')
-        ->orderBy('monto_total', 'desc');
-
-    
-    
-
-        $this->totalPendiente = OrdenTrabajo::whereBetween('created_at', [$start, $end])
-            ->whereNotExists(function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('orden_trabajo_pagos')
-                    ->whereRaw('orden_trabajo_pagos.orden_trabajo_id = ordenes_trabajo.id');
+        $destajos = DB::table('ordenes_trabajo')
+            ->join('personal', 'ordenes_trabajo.personal_id', '=', 'personal.id')
+            ->leftJoinSub($pagosSubquery, 'pagos', function ($join) {
+                $join->on('pagos.orden_trabajo_id', '=', 'ordenes_trabajo.id');
             })
-            ->sum('monto');
+            ->select(
+                'ordenes_trabajo.personal_id',
+                'personal.nombre',
+                DB::raw('COUNT(*) as total_ordenes'),
+                DB::raw('SUM(ordenes_trabajo.monto) as monto_total'),
+                DB::raw('COALESCE(SUM(pagos.total_pagado), 0) as monto_pagado'),
+                DB::raw('SUM(ordenes_trabajo.monto) - COALESCE(SUM(pagos.total_pagado), 0) as monto_pendiente')
+            )
+            ->whereBetween('ordenes_trabajo.created_at', [$start, $end])
+            ->groupBy('ordenes_trabajo.personal_id', 'personal.nombre')
+            ->orderBy('monto_total', 'desc');
 
-        $this->totalPagado = OrdenTrabajo::whereBetween('created_at', [$start, $end])
-            ->whereExists(function ($query) {
-                $query->select(DB::raw(1))
-                    ->from('orden_trabajo_pagos')
-                    ->whereRaw('orden_trabajo_pagos.orden_trabajo_id = ordenes_trabajo.id');
-            })
-            ->sum('monto');
+        $this->totalPendiente = DB::table('ordenes_trabajo')
+            ->leftJoin('orden_trabajo_pagos', 'ordenes_trabajo.id', '=', 'orden_trabajo_pagos.orden_trabajo_id')
+            ->whereBetween('ordenes_trabajo.created_at', [$start, $end])
+            ->select(
+                DB::raw('SUM(ordenes_trabajo.monto) - COALESCE(SUM(orden_trabajo_pagos.monto), 0) as pendiente')
+            )
+            ->first()->pendiente ?? 0;
+
+        $this->totalPagado = DB::table('ordenes_trabajo')
+            ->join('orden_trabajo_pagos', 'ordenes_trabajo.id', '=', 'orden_trabajo_pagos.orden_trabajo_id')
+            ->whereBetween('ordenes_trabajo.created_at', [$start, $end])
+            ->sum('orden_trabajo_pagos.monto');
 
         return [
             'destajos' => $destajos->paginate(50),
