@@ -74,8 +74,12 @@
                                             <td class="text-right">${{ number_format($this->total_materiales, 2) }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Nómina Taller</td>
+                                            <td>Nómina Operativa (Entradas)</td>
                                             <td class="text-right">${{ number_format($this->total_nomina, 2) }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nómina Operativa (Taller)</td>
+                                            <td class="text-right">${{ number_format($this->total_nomina_taller, 2) }}</td>
                                         </tr>
                                         <tr>
                                             <td>Nómina Administrativa</td>

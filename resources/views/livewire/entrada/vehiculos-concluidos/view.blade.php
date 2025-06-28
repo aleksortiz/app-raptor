@@ -117,7 +117,7 @@
                             <strong>Total Materiales:</strong> ${{ number_format($totalMateriales, 2) }}
                         </div>
                         <div class="col-md-4">
-                            <strong>Total Costos:</strong> ${{ number_format($totalCostos, 2) }}
+                            <strong>Total Entradas:</strong> ${{ number_format($totalCostos, 2) }}
                         </div>
                         <div class="col-md-4">
                             <strong>Total Utilidad:</strong> ${{ number_format($totalUtilidad, 2) }}

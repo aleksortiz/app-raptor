@@ -117,6 +117,7 @@ class FinanceDashboardV2 extends Component
     {
         $dates = $this->getDateRange();
         return PagoPersonal::whereBetween('fecha', $dates)
+            ->whereNotNull('entrada_id')
             ->whereHas('personal', function($q) {
                 $q->where('destajo', false)
                 ->where('administrativo', false);
@@ -209,6 +210,7 @@ class FinanceDashboardV2 extends Component
     public function getTotalGastosProperty()
     {
         return $this->total_nomina_administrativa
+            + $this->total_nomina_taller
             + $this->total_gastos_fijos
             + $this->total_gastos_generales;
     }
@@ -235,6 +237,14 @@ class FinanceDashboardV2 extends Component
         } catch (\Exception $e) {
             return 0;
         }
+    }
+
+    public function getTotalNominaTallerProperty()
+    {
+        $dates = $this->getDateRange();
+        return PagoPersonal::whereBetween('fecha', $dates)
+            ->whereNull('entrada_id')
+            ->sum('pago') ?? 0;
     }
 
     public function getQtySemanasProperty()
