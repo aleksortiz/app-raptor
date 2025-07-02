@@ -90,7 +90,7 @@
 
                     <div class="form-group">
                         <label for="notas">Notas Generadas</label>
-                        <textarea class="form-control @error('notas') is-invalid @enderror" id="notas" wire:model="notas" rows="3" readonly></textarea>
+                        <textarea class="form-control @error('notas') is-invalid @enderror" id="notas" wire:model="notas" rows="3"></textarea>
                         @error('notas')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror

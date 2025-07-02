@@ -24,15 +24,24 @@ class MdlCrearOrdenTrabajo extends Component
     public $costo_id;
 
     public $componentes = [
-        'DEFENSA DEL',
-        'DEFENSA TRA',
-        'FENDER TRA IZQ',
+        'COFRE',
+        'COSTADO DER',
+        'COSTADO IZQ',
+        'ESTRIBO',
+        'FACIA DEL',
+        'FACIA TRA',
+        'FENDER DEL DER',
+        'FENDER DEL IZQ',
         'FENDER TRA DER',
-        'PUERTA IZQ DEL',
-        'PUERTA DER DEL',
-        'PUERTA IZQ TRA',
-        'PUERTA DER TRA',
+        'FENDER TRA IZQ',
         'PARRILLA',
+        'PISO CAJUELA',
+        'PUERTA DER DEL',
+        'PUERTA DER TRA',
+        'PUERTA IZQ DEL',
+        'PUERTA IZQ TRA',
+        'QUINTA PUERTA',
+        'TAPA CAJUELA',
     ];
 
     public $acciones = [
