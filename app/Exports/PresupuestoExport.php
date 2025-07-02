@@ -120,6 +120,14 @@ class PresupuestoExport implements FromCollection, WithMapping, WithColumnFormat
         $sheet->getStyle('D5')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
         $sheet->getStyle("A5:G8")->getFont()->setBold(true);
 
+        // Si pago_danos es true, mostrar leyenda llamativa en rojo
+        if ($this->pago_danos) {
+            $sheet->setCellValue('D9', "PAGO DE DAÑOS");
+            $sheet->getStyle('D9')->getFont()->setSize(20)->setBold(true);
+            $sheet->getStyle('D9')->getFont()->getColor()->setARGB('FFFF0000'); // Rojo
+            $sheet->getStyle('D9')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+        }
+
         // Encabezado de cliente y datos
         $sheet->mergeCells('A6:C6');
         $sheet->setCellValue('A6', "Cliente: {$this->presupuesto->cliente->nombre}");
@@ -138,7 +146,7 @@ class PresupuestoExport implements FromCollection, WithMapping, WithColumnFormat
         $sheet->getStyle('E7')->getBorders()->getBottom()->setBorderStyle('thin');
 
         $sheet->mergeCells('A8:C8');
-        $sheet->setCellValue('A8', "Fecha: {$this->presupuesto->fecha_creacion}");
+        $sheet->setCellValue('A8', "Fecha: {$this->presupuesto->fecha_format}");
         $sheet->getStyle('A8')->getBorders()->getBottom()->setBorderStyle('thin');
 
 

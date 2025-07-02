@@ -33,7 +33,7 @@ class Presupuesto extends BaseModel
       static::saving(function($presupuesto){
         $subtotal = $presupuesto->conceptos()->sum('mano_obra') + $presupuesto->conceptos()->sum('refacciones');
         $presupuesto->subtotal = $subtotal;
-        $presupuesto->tasa_iva = $presupuesto->tasa_iva ?? 0.16;
+        $presupuesto->tasa_iva = $presupuesto->tasa_iva ?? 0;
         $presupuesto->iva = $subtotal * $presupuesto->tasa_iva;
         $presupuesto->total = $subtotal + $presupuesto->iva;
       });
@@ -66,5 +66,9 @@ class Presupuesto extends BaseModel
     public function getVehiculoAttribute(){
       $vehiculo = $this->marca . ' ' . $this->modelo . ' ' . $this->year . ' ' . $this->color;
       return trim($vehiculo);
+    }
+
+    public function getFechaFormatAttribute(){
+      return $this->created_at->format('d/M/Y');
     }
 }

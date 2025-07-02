@@ -12,7 +12,7 @@ class VerValuacion extends Component
     public $valuacion;
     public $tab;
 
-    public $tasa_iva = 0.16;
+    public $tasa_iva = 0;
     public $mecanica;
     public $hojalateria;
     public $pintura;
@@ -94,7 +94,7 @@ class VerValuacion extends Component
       $this->hojalateria = $this->presupuesto?->hojalateria ?? 0;
       $this->pintura = $this->presupuesto?->pintura ?? 0;
       $this->armado = $this->presupuesto?->armado ?? 0;
-      $this->tasa_iva = $this->presupuesto?->tasa_iva ?? 0.16;
+      $this->tasa_iva = $this->presupuesto?->tasa_iva ?? 0;
     }
 
     public function render()

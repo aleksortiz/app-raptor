@@ -14,7 +14,7 @@ class AddTasaIvaToPresupuestosTable extends Migration
     public function up()
     {
         Schema::table('presupuestos', function (Blueprint $table) {
-            $table->decimal('tasa_iva', 8, 2)->default(0.16)->after('total');
+            $table->decimal('tasa_iva', 8, 2)->default(0)->after('total');
         });
     }
 

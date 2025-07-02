@@ -51,7 +51,7 @@ class Valuacion extends BaseModel
                 'hojalateria' => 0,
                 'pintura' => 0,
                 'armado' => 0,
-                'tasa_iva' => 0.16,
+                'tasa_iva' => 0,
             ]);
         });
     }
