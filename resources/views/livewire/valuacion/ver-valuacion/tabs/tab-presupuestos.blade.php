@@ -21,7 +21,7 @@
           <button class="btn btn-primary btn-xs" wire:click="addConcepto"><i class="fa fa-plus"></i> Concepto</button>
         @else
           <button class="btn btn-warning btn-xs" wire:click="$set('edit_mode', true)"><i class="fa fa-edit"></i>  Editar</button>
-          <a class="btn btn-success btn-xs" href="/presupuestos/{{$this->presupuesto->id}}/excel" ><i class="fa fa-file-excel"></i> Descargar Excel</a>
+          <a class="btn btn-success btn-xs" href="/presupuestos/{{$this->presupuesto->id}}/excel?pago_danos={{$this->valuacion->pago_danos}}" ><i class="fa fa-file-excel"></i> Descargar Excel</a>
         @endif
       </div>
 

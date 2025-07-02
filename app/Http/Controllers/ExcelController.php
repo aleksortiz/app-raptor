@@ -13,9 +13,10 @@ class ExcelController extends Controller
 
   public function presupuesto(Request $request){
       $id = $request->id;
+      $pago_danos = $request->pago_danos;
       $presupuesto = Presupuesto::find($id);
       $id = $presupuesto->id_paddy;
-      return Excel::download(new PresupuestoExport($presupuesto), "presupuesto_{$id}.xlsx");
+      return Excel::download(new PresupuestoExport($presupuesto, $pago_danos), "presupuesto_{$id}.xlsx");
   }
 
   public function vehiculosPiso(){

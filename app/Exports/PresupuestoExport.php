@@ -23,10 +23,12 @@ class PresupuestoExport implements FromCollection, WithMapping, WithColumnFormat
     private $title = 'Presupuesto';
 
     public $presupuesto;
+    public $pago_danos;
 
-    public function __construct($presupuesto)
+    public function __construct($presupuesto, $pago_danos = false)
     {
         $this->presupuesto = $presupuesto;
+        $this->pago_danos = $pago_danos;
     }
 
     public function drawings()
