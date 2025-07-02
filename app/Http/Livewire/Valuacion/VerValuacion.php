@@ -155,20 +155,13 @@ class VerValuacion extends Component
     public function eliminarConcepto($id){
         $concepto = $this->presupuesto->conceptos()->findOrFail($id);
         $concepto->delete();
+        $this->presupuesto->save();
         $this->presupuesto->load('conceptos');
     }
 
 
     public function savePresupuesto(){
         $this->validate();
-
-        $this->presupuesto->mecanica = $this->mecanica;
-        $this->presupuesto->hojalateria = $this->hojalateria;
-        $this->presupuesto->pintura = $this->pintura;
-        $this->presupuesto->armado = $this->armado;
-        $this->presupuesto->tasa_iva = $this->tasa_iva;
-
-        $this->presupuesto->save();
 
         foreach($this->presupuestoConceptos as $concepto){
             $c = $this->presupuesto->conceptos()->findOrFail($concepto['id']);
@@ -179,6 +172,14 @@ class VerValuacion extends Component
             $c->refacciones = $concepto->refacciones;
             $c->save();
         }
+
+        $this->presupuesto->mecanica = $this->mecanica;
+        $this->presupuesto->hojalateria = $this->hojalateria;
+        $this->presupuesto->pintura = $this->pintura;
+        $this->presupuesto->armado = $this->armado;
+        $this->presupuesto->tasa_iva = $this->tasa_iva;
+
+        $this->presupuesto->save();
 
         $this->presupuesto->load('conceptos');
         cache()->forget("valuacion_{$this->valuacion->id}");
