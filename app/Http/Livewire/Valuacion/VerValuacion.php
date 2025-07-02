@@ -12,7 +12,7 @@ class VerValuacion extends Component
     public $valuacion;
     public $tab;
 
-    public $tasa_iva = 0;
+    public $tasa_iva = 0.16;
     public $mecanica;
     public $hojalateria;
     public $pintura;
@@ -49,6 +49,7 @@ class VerValuacion extends Component
       'hojalateria' => 'required|numeric|min:0',
       'pintura' => 'required|numeric|min:0',
       'armado' => 'required|numeric|min:0',
+      'tasa_iva' => 'required|numeric|min:0|max:1',
     ];
 
     protected $messages = [
@@ -76,6 +77,10 @@ class VerValuacion extends Component
       'armado.required' => 'El costo de armado es obligatorio.',
       'armado.numeric' => 'Debe ser un número.',
       'armado.min' => 'Debe ser al menos 0.',
+      'tasa_iva.required' => 'La tasa de IVA es obligatoria.',
+      'tasa_iva.numeric' => 'La tasa de IVA debe ser un número.',
+      'tasa_iva.min' => 'La tasa de IVA debe ser al menos 0.',
+      'tasa_iva.max' => 'La tasa de IVA debe ser máximo 1.',
     ];
 
     public function mount($id){
@@ -89,6 +94,7 @@ class VerValuacion extends Component
       $this->hojalateria = $this->presupuesto?->hojalateria ?? 0;
       $this->pintura = $this->presupuesto?->pintura ?? 0;
       $this->armado = $this->presupuesto?->armado ?? 0;
+      $this->tasa_iva = $this->presupuesto?->tasa_iva ?? 0.16;
     }
 
     public function render()
@@ -129,6 +135,7 @@ class VerValuacion extends Component
             'hojalateria' => $this->hojalateria,
             'pintura' => $this->pintura,
             'armado' => $this->armado,
+            'tasa_iva' => $this->tasa_iva,
         ]);
       }
 
@@ -159,6 +166,7 @@ class VerValuacion extends Component
         $this->presupuesto->hojalateria = $this->hojalateria;
         $this->presupuesto->pintura = $this->pintura;
         $this->presupuesto->armado = $this->armado;
+        $this->presupuesto->tasa_iva = $this->tasa_iva;
 
         $this->presupuesto->save();
 

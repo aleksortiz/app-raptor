@@ -69,39 +69,51 @@
               </div>
 
               <div class="row">
-                  <div class="col-12 col-md-3">
-                      <div class="form-group">
-                          <label for="color">Color</label>
-                          <input wire:model.defer="color" type="text" class="form-control" id="color" placeholder="Color">
-                          @error('color') <span class="text-danger">{{ $message }}</span> @enderror
-                      </div>
-                  </div>
+                    <div class="col-12 col-md-3">
+                        <div class="form-group">
+                            <label for="color">Color</label>
+                            <input wire:model.defer="color" type="text" class="form-control" id="color" placeholder="Color">
+                            @error('color') <span class="text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
 
-                  <div class="col-12 col-md-2">
-                      <label for="grua">Es grua</label>
-                      <label class="content-input">
-                          <input type="checkbox" id="grua" wire:model.defer="grua">
-                          <i></i>
-                      </label>
-                  </div>
+                    <div class="col-12 col-md-2">
+                        <label for="grua">Es grua</label>
+                        <label class="content-input">
+                            <input type="checkbox" id="grua" wire:model.defer="grua">
+                            <i></i>
+                        </label>
+                    </div>
 
-                  <div class="col-12 col-md-3">
-                      <label for="valuacion_efectuada">Valuación efectuada</label>
-                      <label class="content-input">
-                          <input type="checkbox" id="valuacion_efectuada" wire:model.defer="valuacion_efectuada">
-                          <i></i>
-                      </label>
-                  </div>
+                    <div class="col-12 col-md-3">
+                        <label for="valuacion_efectuada">Valuación efectuada</label>
+                        <label class="content-input">
+                            <input type="checkbox" id="valuacion_efectuada" wire:model.defer="valuacion_efectuada">
+                            <i></i>
+                        </label>
+                    </div>
 
-                  <div class="col-12 col-md-4">
-                      <div class="form-group">
-                          <label for="fecha_cita">Fecha de Cita:</label>
-                          <input wire:model.defer="fecha_cita" type="datetime-local" class="form-control" id="fecha_cita">
-                          @error('fecha_cita') <span class="text-danger">{{ $message }}</span> @enderror
-                      </div>
-                  </div>
+                    <div class="col-12 col-md-2">
+                        <label for="pago_danos">Pago de Daños</label>
+                        <label class="content-input">
+                            <input type="checkbox" id="pago_danos" wire:model.defer="pago_danos">
+                            <i></i>
+                        </label>
+                    </div>
 
               </div>
+
+              <div class="row">
+
+                <div class="col-12 col-md-4">
+                    <div class="form-group">
+                        <label for="fecha_cita">Fecha de Cita:</label>
+                        <input wire:model.defer="fecha_cita" type="datetime-local" class="form-control" id="fecha_cita">
+                        @error('fecha_cita') <span class="text-danger">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+
+             </div>
 
               <div class="row">
                   <div class="col">

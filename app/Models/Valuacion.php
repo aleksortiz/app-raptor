@@ -25,6 +25,7 @@ class Valuacion extends BaseModel
         'valuacion_efectuada',
         'notas',
         'entrada_id',
+        'pago_danos',
     ];
 
     protected static function boot(){
@@ -50,13 +51,15 @@ class Valuacion extends BaseModel
                 'hojalateria' => 0,
                 'pintura' => 0,
                 'armado' => 0,
+                'tasa_iva' => 0.16,
             ]);
         });
     }
 
-    protected $cast = [
+    protected $casts = [
         'fecha_cita' => 'date',
         'valuacion_efectuada' => 'boolean',
+        'pago_danos' => 'boolean',
     ];
 
     public function cliente(){
@@ -131,4 +134,10 @@ class Valuacion extends BaseModel
         }
     }
 
+    public function getPagoDanosSpanAttribute()
+    {
+        return $this->pago_danos ? 
+            '<button class="btn btn-xs btn-success"><i class="fa fa-check"></i> PAGADO</button>' : 
+            '<button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> PENDIENTE</button>';
+    }
 }

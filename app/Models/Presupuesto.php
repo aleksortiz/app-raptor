@@ -25,13 +25,17 @@ class Presupuesto extends BaseModel
         'hojalateria',
         'pintura',
         'armado',
+        'tasa_iva',
     ];
 
     protected static function boot(){
       parent::boot();
       static::saving(function($presupuesto){
-        // $presupuesto->iva = $presupuesto->iva;
-        // $presupuesto->total = $presupuesto->total;
+        $subtotal = $presupuesto->conceptos()->sum('mano_obra') + $presupuesto->conceptos()->sum('refacciones');
+        $presupuesto->subtotal = $subtotal;
+        $presupuesto->tasa_iva = $presupuesto->tasa_iva ?? 0.16;
+        $presupuesto->iva = $subtotal * $presupuesto->tasa_iva;
+        $presupuesto->total = $subtotal + $presupuesto->iva;
       });
     }
 

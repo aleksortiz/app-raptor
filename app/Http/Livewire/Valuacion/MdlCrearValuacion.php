@@ -27,6 +27,7 @@ class MdlCrearValuacion extends Component
     public $valuacion_efectuada = false;
     public $fecha_cita;
     public $notas;
+    public $pago_danos = false;
 
     protected $rules = [
         'numero_reporte' => 'required|digits:11',
@@ -39,6 +40,7 @@ class MdlCrearValuacion extends Component
         'valuacion_efectuada' => 'required|boolean',
         'fecha_cita' => 'nullable|date',
         'notas' => 'nullable|max:255',
+        'pago_danos' => 'required|boolean',
     ];
 
     public function test(){
@@ -105,6 +107,7 @@ class MdlCrearValuacion extends Component
           'fecha_cita' => $this->fecha_cita,
           'valuacion_efectuada' => $this->valuacion_efectuada,
           'notas' => $this->notas,
+          'pago_danos' => $this->pago_danos,
         ]);
 
         if($valuacion->save()){

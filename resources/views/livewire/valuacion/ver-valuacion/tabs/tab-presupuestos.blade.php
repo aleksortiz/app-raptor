@@ -29,15 +29,15 @@
             <label for="concepto">IVA</label>
             <select class="form-control" id="tasa_iva" wire:model="tasa_iva">
               <option value="0">0%</option>
-              <option value="8">8%</option>
-              <option value="16">16%</option>
+              <option value="0.08">8%</option>
+              <option value="0.16">16%</option>
             </select>
           </div>
         </div>
         
         <div class="col">
           <div class="form-group">
-            <label for="mecanica">Mecánica</label>
+            <label for="mecanica">Mecánica</label>
             <input onkeypress="return event.charCode >= 46 && event.charCode <= 57" maxlength="2" style="text-align: center;" type="text" class="form-control" id="mecanica" wire:model.defer="mecanica">
             @error('mecanica') <span class="text-danger">{{ $message }}</span> @enderror
           </div>
@@ -73,20 +73,20 @@
             <div class="col">
               <div class="form-group">
                 <label for="iva">IVA</label>
-                <p class="form-control-static" style="text-align: center;">{{ $tasa_iva }}%</p>
+                <p class="form-control-static" style="text-align: center;">{{ $tasa_iva * 100 }}%</p>
               </div>
             </div>
 
             <div class="col">
               <div class="form-group">
-                <label for="mecanica">Mecánica</label>
+                <label for="mecanica">Mecánica</label>
                 <p class="form-control-static" style="text-align: center;">{{ $mecanica }}</p>
               </div>
             </div>
 
             <div class="col">
               <div class="form-group">
-                <label for="hojalateria">Hojalatería</label>
+                <label for="hojalateria">Hojalatería</label>
                 <p class="form-control-static" style="text-align: center;">{{ $hojalateria }}</p>
               </div>
             </div>
@@ -167,6 +167,35 @@
           </tr>
         @endforeach
       </tbody>
+      <tfoot>
+        <tr>
+          @if ($this->edit_mode)
+            <td colspan="{{ $this->edit_mode ? 4 : 3 }}"></td>
+          @else
+            <td colspan="3"></td>
+          @endif
+          <td class="text-right"><strong>Subtotal:</strong></td>
+          <td class="text-right">${{ number_format($this->presupuesto?->subtotal ?? 0, 2) }}</td>
+        </tr>
+        <tr>
+          @if ($this->edit_mode)
+            <td colspan="{{ $this->edit_mode ? 4 : 3 }}"></td>
+          @else
+            <td colspan="3"></td>
+          @endif
+          <td class="text-right"><strong>IVA ({{ $tasa_iva * 100 }}%):</strong></td>
+          <td class="text-right">${{ number_format($this->presupuesto?->iva ?? 0, 2) }}</td>
+        </tr>
+        <tr>
+          @if ($this->edit_mode)
+            <td colspan="{{ $this->edit_mode ? 4 : 3 }}"></td>
+          @else
+            <td colspan="3"></td>
+          @endif
+          <td class="text-right"><strong>Total:</strong></td>
+          <td class="text-right">${{ number_format($this->presupuesto?->total ?? 0, 2) }}</td>
+        </tr>
+      </tfoot>
     </table>
   @endif
 </div>
