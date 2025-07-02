@@ -177,7 +177,4 @@ class VerValuacion extends Component
 
         $this->edit_mode = false;
     }
-
-    
-
 }

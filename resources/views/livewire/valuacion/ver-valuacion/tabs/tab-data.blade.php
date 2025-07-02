@@ -14,6 +14,14 @@
                 <h5><b>No. Reporte:</b><br> {{ $valuacion->numero_reporte }}</h5>
                 <hr>
 
+                @if($presupuesto)
+                <h5><b>Total Presupuesto:</b><br> ${{ number_format($presupuesto->total, 2) }}</h5>
+                <hr>
+
+                <h5><b>Reemplazos:</b><br> {{ $presupuesto->conceptos->where('nomenclatura', 'E-REEMPLAZO')->count() }} concepto(s)</h5>
+                <hr>
+                @endif
+
                 <h5><b>Fecha de cita:</b><br> {{ $valuacion->fecha_cita_span }}</h5>
                 <hr>
 
@@ -39,6 +47,6 @@
     </div>
 
     <div class="card-footer">
-        {{-- <a class="btn btn-warning" href="/servicios/{{ $this->valuacion->id }}/editar"><i class="fas fa-edit"></i> Editar Valuación</a> --}}
+        {{-- <a class="btn btn-warning" href="/servicios/{{ $this->valuacion->id }}/editar"><i class="fas fa-edit"></i> Editar Valuación</a> --}}
     </div>
 </div>
