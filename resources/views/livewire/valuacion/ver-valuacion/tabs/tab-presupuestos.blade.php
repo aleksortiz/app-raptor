@@ -1,4 +1,10 @@
 <div>
+  @if ($valuacion->pago_danos)
+    <div class="alert alert-danger text-center" style="font-weight: bold; font-size: 18px;">
+      <i class="fa fa-exclamation-triangle"></i> ¡ATENCIÓN! ESTA VALUACIÓN TIENE PAGO DE DAÑOS ACTIVO <i class="fa fa-exclamation-triangle"></i>
+    </div>
+  @endif
+
   @if (false)
     <button class="btn btn-primary btn-md" wire:click="crearPresupuesto"><i class="fa fa-file-alt"></i> Crear Presupuesto</button>
     <br><br>

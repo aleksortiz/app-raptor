@@ -28,6 +28,7 @@ class EditarValuacion extends Component
     public $valuacion_efectuada = false;
     public $fecha_cita;
     public $notas;
+    public $pago_danos;
 
     protected $rules = [
         'numero_reporte' => 'required|digits:11',
@@ -40,6 +41,7 @@ class EditarValuacion extends Component
         'valuacion_efectuada' => 'required|boolean',
         'fecha_cita' => 'nullable|date',
         'notas' => 'nullable|max:255',
+        'pago_danos' => 'required|boolean',
     ];
 
     public function mount($id){
@@ -55,7 +57,7 @@ class EditarValuacion extends Component
         $this->valuacion_efectuada = $valuacion->valuacion_efectuada;
         $this->fecha_cita = $valuacion->fecha_cita;
         $this->notas = $valuacion->notas;
-
+        $this->pago_danos = $valuacion->pago_danos;
         $this->valuacion = $valuacion;
     }
 
@@ -105,6 +107,7 @@ class EditarValuacion extends Component
         $this->valuacion->valuacion_efectuada = $this->valuacion_efectuada;
         $this->valuacion->fecha_cita = $this->fecha_cita;
         $this->valuacion->notas = $this->notas;
+        $this->valuacion->pago_danos = $this->pago_danos;
         
 
 

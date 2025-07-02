@@ -74,6 +74,14 @@
             </div>
 
             <div class="col-12 col-md-2">
+                <label for="pago_danos">Pago de Daños</label>
+                <label class="content-input">
+                    <input type="checkbox" id="pago_danos" wire:model.defer="pago_danos">
+                    <i></i>
+                </label>
+            </div>
+
+            <div class="col-12 col-md-2">
                 <label for="grua">Es grua</label>
                 <label class="content-input">
                     <input type="checkbox" id="grua" wire:model.defer="grua">
@@ -89,6 +97,9 @@
                 </label>
             </div>
 
+        </div>
+
+        <div class="row">
             <div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="fecha_cita">Fecha de Cita:</label>
