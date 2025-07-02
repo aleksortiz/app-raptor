@@ -1,4 +1,3 @@
-
 @section('title', __("Catalogo de Valuaciones"))
 <div class="pt-3">
 
@@ -62,8 +61,9 @@
                     <th>Fecha</th>
                     <th>Folio</th>
                     <th>Número de Reporte</th>
-                    <th>Vehículo</th>
+                    <th>Vehículo</th>
                     <th>Es Grua</th>
+                    <th>Pago de Danos</th>
                     <th>Fecha de Cita</th>
                     <th>Valuación Efectuada</th>
                     <th>Entrada</th>
@@ -80,6 +80,7 @@
                             <td>{{ $item->numero_reporte }}</td>
                             <td>{{ $item->vehiculo }}</td>
                             <td>{!! $item->grua_span !!}</td>
+                            <td>{!! $item->pago_danos_span !!}</td>
                             <td>{!! $item->fecha_cita_span !!}</td>
                             <td>{!! $item->estado_span !!}</td>
                             <td>{!! $item->entrada_span !!}</td>

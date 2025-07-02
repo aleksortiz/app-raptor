@@ -137,7 +137,7 @@ class Valuacion extends BaseModel
     public function getPagoDanosSpanAttribute()
     {
         return $this->pago_danos ? 
-            '<button class="btn btn-xs btn-success"><i class="fa fa-check"></i> PAGADO</button>' : 
-            '<button class="btn btn-xs btn-danger"><i class="fa fa-times"></i> PENDIENTE</button>';
+            '<button class="btn btn-xs btn-danger"><i class="fa fa-money-bill-wave"></i> PDD</button>' : 
+            '<button class="btn btn-xs btn-success"><i class="fa fa-wrench"></i> REP</button>';
     }
 }
