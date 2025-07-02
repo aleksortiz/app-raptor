@@ -63,7 +63,7 @@
                     <th>Número de Reporte</th>
                     <th>Vehículo</th>
                     <th>Es Grua</th>
-                    <th>Pago de Danos</th>
+                    <th>Pago de Daños</th>
                     <th>Fecha de Cita</th>
                     <th>Valuación Efectuada</th>
                     <th>Entrada</th>
