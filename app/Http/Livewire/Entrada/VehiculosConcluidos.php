@@ -58,6 +58,13 @@ class VehiculosConcluidos extends Component
             ->whereHas('avance', function ($avance) use ($start, $end) {
                 $avance->whereBetween('terminado', [$start, $end]);
             })
+            // Exclude vehicles that were also delivered in the same week
+            ->where(function($query) use ($start, $end) {
+                $query->whereNull('fecha_entrega')
+                      ->orWhere(function($q) use ($start, $end) {
+                          $q->whereNotBetween('fecha_entrega', [$start, $end]);
+                      });
+            })
             ->where(function ($q) {
                 $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
                     ->orWhereHas('fabricante', function ($fab) {
@@ -74,6 +81,10 @@ class VehiculosConcluidos extends Component
         // Query for vehicles delivered in the selected week
         $entregados = Entrada::OrderBy('id', 'desc')
             ->whereBetween('fecha_entrega', [$start, $end])
+            // Only include vehicles that were also completed in the same week
+            ->whereHas('avance', function($q) use ($start, $end) {
+                $q->whereBetween('terminado', [$start, $end]);
+            })
             ->where(function ($q) {
                 $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
                     ->orWhereHas('fabricante', function ($fab) {
@@ -91,13 +102,22 @@ class VehiculosConcluidos extends Component
 
         $entradasCollection = $entradas->get();
         
-        // Calculate statistics
-        $this->totalTerminados = $entradasCollection->filter(function ($entrada) {
-            return $entrada->avance && $entrada->avance->terminado && !$entrada->fecha_entrega;
+        // Calculate statistics - update logic to match our query changes
+        $this->totalTerminados = $entradasCollection->filter(function ($entrada) use ($start, $end) {
+            return $entrada->avance && $entrada->avance->terminado && 
+                  (!$entrada->fecha_entrega || 
+                   Carbon::parse($entrada->fecha_entrega)->lt($start) || 
+                   Carbon::parse($entrada->fecha_entrega)->gt($end));
         })->count();
 
-        $this->totalEntregados = $entradasCollection->filter(function ($entrada) {
-            return $entrada->fecha_entrega;
+        $this->totalEntregados = $entradasCollection->filter(function ($entrada) use ($start, $end) {
+            return $entrada->fecha_entrega && 
+                   Carbon::parse($entrada->fecha_entrega)->gte($start) && 
+                   Carbon::parse($entrada->fecha_entrega)->lte($end) &&
+                   $entrada->avance && 
+                   $entrada->avance->terminado &&
+                   Carbon::parse($entrada->avance->terminado)->gte($start) &&
+                   Carbon::parse($entrada->avance->terminado)->lte($end);
         })->count();
 
         $this->totalVehiculos = $entradasCollection->count();
