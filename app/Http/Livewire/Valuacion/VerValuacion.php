@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\Valuacion;
 
+use App\Models\Documento;
 use App\Models\Valuacion;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class VerValuacion extends Component
 {
+    use WithFileUploads;
+    
     public $lastUrl;
     public $valuacion;
     public $tab;
@@ -24,12 +29,20 @@ class VerValuacion extends Component
     public $edit_mode = false;
     
     public $cliente_id;
+    
+    // Document properties
+    public $documento;
+    public $tipoDocumento;
 
     protected $queryString = [
         'tab' => ['except' => ''],
     ];
 
-    protected $listeners = ['eliminarConcepto'];
+    protected $listeners = [
+        'eliminarConcepto',
+        'eliminarDocumento',
+        'refresh' => '$refresh'
+    ];
 
     public function updatingEditMode($value)
     {
@@ -185,5 +198,82 @@ class VerValuacion extends Component
         cache()->forget("valuacion_{$this->valuacion->id}");
 
         $this->edit_mode = false;
+    }
+
+    /**
+     * Check if a document of specified type exists
+     */
+    public function hasDocument($tipo)
+    {
+        return $this->valuacion->documentos()->where('tipo', $tipo)->exists();
+    }
+    
+    /**
+     * Get the document of specified type
+     */
+    public function getDocument($tipo)
+    {
+        return $this->valuacion->documentos()->where('tipo', $tipo)->first();
+    }
+    
+    /**
+     * Get the URL for a document of specified type
+     */
+    public function getDocumentUrl($tipo)
+    {
+        $documento = $this->getDocument($tipo);
+        if ($documento) {
+            // Return a route to download the document
+            return route('valuacion.download-document', $documento->id);
+        }
+        return '#';
+    }
+    
+    /**
+     * Get the formatted date for a document of specified type
+     */
+    public function getDocumentDate($tipo)
+    {
+        $documento = $this->getDocument($tipo);
+        if ($documento) {
+            return $documento->created_at->format('d/m/Y H:i');
+        }
+        return null;
+    }
+    
+    /**
+     * Delete a document by type
+     */
+    public function deleteDocument($tipo)
+    {
+        $documento = $this->getDocument($tipo);
+        
+        if ($documento) {
+            if (Storage::disk('s3')->exists($documento->url)) {
+                Storage::disk('s3')->delete($documento->url);
+            }
+            
+            $documento->delete();
+            $this->valuacion->load('documentos');
+            $this->emit('refresh');
+            $this->emit('ok', 'Documento eliminado correctamente');
+        }
+    }
+    
+    /**
+     * Delete a document by ID
+     */
+    public function eliminarDocumento($id)
+    {
+        $documento = Documento::findOrFail($id);
+        
+        if (Storage::disk('s3')->exists($documento->url)) {
+            Storage::disk('s3')->delete($documento->url);
+        }
+        
+        $documento->delete();
+        $this->valuacion->load('documentos');
+        $this->emit('refresh');
+        $this->emit('ok', 'Documento eliminado correctamente');
     }
 }

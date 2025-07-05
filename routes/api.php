@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AosScanController;
 use App\Http\Controllers\ServicioFlotillaController;
 use App\Mail\SearchAutopartesMail;
 use App\Models\Entrada;
@@ -37,6 +38,8 @@ Route::post('/flotillas', [ServicioFlotillaController::class, 'createFlotilla'])
 Route::post('/flotillas-unidad', [ServicioFlotillaController::class, 'createFlotillaUnidad']);
 Route::post('/flotillas-servicio', [ServicioFlotillaController::class, 'createFlotillaServicio']);
 
+// AosScan document registration route
+Route::post('/aosscan/register-document', [AosScanController::class, 'registerDocument']);
 
 Route::get('/utilidad-neta/{week}', function(Request $request){
     $year = Carbon::now()->year;
@@ -140,8 +143,8 @@ Route::post('/mirror', function(Request $request){
       Storage::disk('public')->copy($originalPath, $processedPath);
 
       // Generar las URLs completas
-      $originalImageUrl = Storage::disk('public')->url($originalPath);
-      $processedImageUrl = Storage::disk('public')->url($processedPath);
+      $originalImageUrl = asset('storage/' . $originalPath);
+      $processedImageUrl = asset('storage/' . $processedPath);
 
       // Generar el timestamp actual
       $timestamp = now()->toIso8601String();

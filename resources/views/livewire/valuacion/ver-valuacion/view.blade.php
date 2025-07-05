@@ -13,7 +13,7 @@
                   <li class="nav-item"><a class="nav-link {{ $tab == 'editar' ? 'active' : '' }}" wire:click="$set('tab','editar')" href="#"><i class="fas fa-edit"></i> Editar</a></li>
                   {{-- <li class="nav-item"><a class="nav-link {{ $tab == 'cliente' ? 'active' : '' }}" wire:click="$set('tab','cliente')" href="#"><i class="fas fa-user"></i> Cliente</a></li> --}}
                   <li class="nav-item"><a class="nav-link {{ $tab == 'fotos' ? 'active' : '' }}" wire:click="$set('tab','fotos')" href="#"><i class="fas fa-camera"></i> Fotos</a></li>
-
+                  <li class="nav-item"><a class="nav-link {{ $tab == 'docs' ? 'active' : '' }}" wire:click="$set('tab','docs')" href="#"><i class="fas fa-file"></i> Documentos</a></li>
               </ul>
           </div>
 
@@ -35,6 +35,10 @@
 
                   <div class="tab-pane {{ $tab == 'fotos' ? 'active' : '' }}">
                       @include('livewire.valuacion.ver-valuacion.tabs.tab-fotos')
+                  </div>
+
+                  <div class="tab-pane {{ $tab == 'docs' ? 'active' : '' }}">
+                      @include('livewire.valuacion.ver-valuacion.tabs.tab-documentos')
                   </div>
 
 

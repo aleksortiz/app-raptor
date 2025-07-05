@@ -9,5 +9,15 @@ class Documento extends BaseModel
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'url', 'tipo'];
+    protected $fillable = [
+        'name',
+        'url',
+        'tipo',
+        'model_id',
+        'model_type',
+    ];
+
+    public function model(){
+        return $this->morphTo();
+    }
 }

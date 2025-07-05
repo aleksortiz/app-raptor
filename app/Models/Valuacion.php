@@ -78,6 +78,10 @@ class Valuacion extends BaseModel
         return $this->morphMany(Foto::class, 'model');
     }
 
+    public function documentos(){
+        return $this->morphMany(Documento::class, 'model');
+    }
+
     public function setMarcaAttribute($value){
         $this->attributes['marca'] = trim(strtoupper($value));
     }
