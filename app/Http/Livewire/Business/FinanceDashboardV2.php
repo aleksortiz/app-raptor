@@ -72,7 +72,13 @@ class FinanceDashboardV2 extends Component
         $entradas = Entrada::whereHas('avance', function($q) use ($start, $end) {
             $q->whereBetween('terminado', [$start, $end]);
         })
-        ->whereNull('fecha_entrega')
+        // Exclude vehicles that were also delivered in the same week
+        ->where(function($query) use ($start, $end) {
+            $query->whereNull('fecha_entrega')
+                  ->orWhere(function($q) use ($start, $end) {
+                      $q->whereNotBetween('fecha_entrega', [$start, $end]);
+                  });
+        })
         ->get();
 
         return (object)[
@@ -88,16 +94,13 @@ class FinanceDashboardV2 extends Component
         $start = Carbon::parse($dates[0])->startOfDay();
         $end = Carbon::parse($dates[1])->endOfDay();
         
-        // $entradas = Entrada::whereHas('avance', function($q) use ($start, $end) {
-        //     $q->whereBetween('terminado', [$start, $end]);
-        // })
-        // ->whereNotNull('fecha_entrega')
-        // ->distinct()
-        // ->get();
-
+        // Only count vehicles that were both completed and delivered in the same week
         $entradas = Entrada::whereBetween('fecha_entrega', [$start, $end])
-        ->whereNotNull('fecha_entrega')
-        ->get();
+            ->whereNotNull('fecha_entrega')
+            ->whereHas('avance', function($q) use ($start, $end) {
+                $q->whereBetween('terminado', [$start, $end]);
+            })
+            ->get();
 
         return (object)[
             'count' => $entradas->count(),
