@@ -148,10 +148,11 @@
                                     </tr>
                                 @endforeach
                                 <tr>
-                                    <td colspan="2">Total</td>
-                                    <td>${{ number_format($totalMonto, 2) }}</td>
-                                    <td>${{ number_format($totalPagado, 2) }}</td>
-                                    <td>${{ number_format($totalPendiente, 2) }}</td>
+                                    <td colspan="2"><b>Total</b></td>
+                                    <td></td>
+                                    <td><b>${{ number_format($totalMonto, 2) }}</b></td>
+                                    <td><b>${{ number_format($totalPagado, 2) }}</b></td>
+                                    <td><b>${{ number_format($totalPendiente, 2) }}</b></td>
                                 </tr>
                             </tbody>
                         </table>
