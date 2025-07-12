@@ -123,6 +123,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @php
+                                    $totalMonto = 0;
+                                    $totalPagado = 0;
+                                    $totalPendiente = 0;
+                                    foreach($ordenesDetalle as $orden) {
+                                        $totalMonto += $orden['monto'];
+                                        $totalPagado += $orden['pagado'];
+                                        $totalPendiente += $orden['pendiente'];
+                                    }
+                                @endphp
                                 @foreach($ordenesDetalle as $orden)
                                     <tr>
                                         <td>
@@ -137,6 +147,12 @@
                                         <td>${{ number_format($orden['pendiente'], 2) }}</td>
                                     </tr>
                                 @endforeach
+                                <tr>
+                                    <td colspan="2">Total</td>
+                                    <td>${{ number_format($totalMonto, 2) }}</td>
+                                    <td>${{ number_format($totalPagado, 2) }}</td>
+                                    <td>${{ number_format($totalPendiente, 2) }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
