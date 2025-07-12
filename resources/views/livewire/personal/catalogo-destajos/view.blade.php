@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="row mb-3">
+            {{-- <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="small-box bg-warning">
                         <div class="inner">
@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="table-responsive">
                 <table class="table table-hover">
@@ -69,6 +69,11 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @php
+                            $totalMonto = 0;
+                            $totalPagado = 0;
+                            $totalPendiente = 0;
+                        @endphp
                         @foreach($destajos as $destajo)
                             <tr>
                                 <td>{{ $destajo->nombre ?? 'N/A' }}</td>
@@ -88,7 +93,19 @@
                                     </td>
                                 @endif
                             </tr>
+                            @php
+                                $totalMonto += $destajo->monto_total;
+                                $totalPagado += $destajo->monto_pagado;
+                                $totalPendiente += $destajo->monto_pendiente;
+                            @endphp
                         @endforeach
+
+                        <tr>
+                            <td colspan="2"><b>Total</b></td>
+                            <td><b>${{ number_format($totalMonto, 2) }}</b></td>
+                            <td><b>${{ number_format($totalPagado, 2) }}</b></td>
+                            <td><b>${{ number_format($totalPendiente, 2) }}</b></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
