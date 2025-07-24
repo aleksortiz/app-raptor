@@ -11,6 +11,10 @@
                     {{ $valuacion->cliente->nombre }}</h5>
                 <hr>
 
+                <h5 style="cursor: pointer" wire:click="$set('activeTab', 4)"><b>Teléfono:</b><br>
+                    {{ $valuacion->cliente->telefono }}</h5>
+                <hr>
+
                 <h5><b>No. Reporte:</b><br> {{ $valuacion->numero_reporte }}</h5>
                 <hr>
 
