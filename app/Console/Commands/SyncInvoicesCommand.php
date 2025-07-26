@@ -14,7 +14,7 @@ class SyncInvoicesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'sync:invoices';
 
     /**
      * The console command description.
