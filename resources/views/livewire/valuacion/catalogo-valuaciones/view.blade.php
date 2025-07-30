@@ -55,7 +55,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                     <label for="search">Búsqueda</label>
-                    <input wire:model.debounce.300ms="search" type="text" class="form-control" id="search" placeholder="Buscar por folio, reporte o vehículo...">
+                    <input wire:model.lazy="search" type="text" class="form-control" id="search" placeholder="Buscar por folio, reporte o vehículo...">
                 </div>
             </div>
 
