@@ -19,8 +19,9 @@ class CatalogoValuaciones extends Component
     public $end;
     public $year;
     public $maxYear;
+    public $search = '';
 
-    protected $queryString = ['year', 'start', 'end'];
+    protected $queryString = ['year', 'start', 'end', 'search'];
 
     public function updated(){
         $this->resetPage();
@@ -40,10 +41,21 @@ class CatalogoValuaciones extends Component
     }
 
     public function getRenderData(){
-      $dates = Entrada::getDateRange($this->year, $this->start, $this->end);
-
-      $valuaciones = Valuacion::orderBy('id', 'desc')
-      ->whereBetween('created_at', $dates);
+      $valuaciones = Valuacion::orderBy('id', 'desc');
+      
+      if (!empty($this->search)) {
+          // Apply search filters
+          $valuaciones->where(function($query) {
+              $query->where('id', 'like', '%' . $this->search . '%')
+                  ->orWhere('numero_reporte', 'like', '%' . $this->search . '%')
+                  ->orWhere('modelo', 'like', '%' . $this->search . '%')
+                  ->orWhere('marca', 'like', '%' . $this->search . '%');
+          });
+      } else {
+          // Apply date range filters only if not searching
+          $dates = Entrada::getDateRange($this->year, $this->start, $this->end);
+          $valuaciones->whereBetween('created_at', $dates);
+      }
 
       return [
         'valuaciones' => $valuaciones->paginate(50),

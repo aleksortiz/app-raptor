@@ -17,7 +17,9 @@
 
           <div class="row p-3">
 
-              <div class="col-1">
+
+
+              <div class="col-1" @if(!empty($search)) style="display: none;" @endif>
                   <div class="form-group">
                       <label for="keyWord">Año</label>
                       <select wire:model.lazy="year" class="form-control" id="year">
@@ -28,7 +30,7 @@
                   </div>
               </div>
 
-              <div class="col-1">
+              <div class="col-1" @if(!empty($search)) style="display: none;" @endif>
                   <div class="form-group">
                       <label for="keyWord">Semana</label>
                       <select wire:model.lazy="start" class="form-control" id="start">
@@ -39,7 +41,7 @@
                   </div>
               </div>
 
-              <div class="col-1">
+              <div class="col-1" @if(!empty($search)) style="display: none;" @endif>
                   <div class="form-group">
                       <label for="keyWord">a la</label>
                       <select wire:model.lazy="end" class="form-control" id="end">
@@ -49,6 +51,13 @@
                       </select>
                   </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                    <label for="search">Búsqueda</label>
+                    <input wire:model.debounce.300ms="search" type="text" class="form-control" id="search" placeholder="Buscar por folio, reporte o vehículo...">
+                </div>
+            </div>
 
           </div>
 
