@@ -38,9 +38,15 @@
                                 </span>
                             </div>
                             <div class="mt-auto">
-                                <a href="aosscan:Valuacion#{{$this->valuacion?->id}}#ODA" class="btn btn-warning btn-block">
-                                    <i class="fas fa-file-upload mr-2"></i>Subir Documento
-                                </a>
+                                <div class="btn-group w-100">
+                                    <a href="aosscan:Valuacion#{{$this->valuacion?->id}}#ODA" class="btn btn-success">
+                                        <i class="fas fa-print mr-1"></i>Usar Escaner
+                                    </a>
+                                    <label class="btn btn-secondary mb-0">
+                                        <i class="fas fa-upload mr-1"></i>Subir desde PC
+                                        <input type="file" wire:model="documentoODA" class="d-none" wire:change="uploadDocument('ODA')">
+                                    </label>
+                                </div>
                             </div>
                         @endif
                     </div>
@@ -82,9 +88,16 @@
                                 </span>
                             </div>
                             <div class="mt-auto">
-                                <a href="aosscan:Valuacion#{{$this->valuacion?->id}}#INE" class="btn btn-warning btn-block">
-                                    <i class="fas fa-file-upload mr-2"></i>Subir Documento
-                                </a>
+                                <div class="btn-group w-100">
+                                    <a href="aosscan:Valuacion#{{$this->valuacion?->id}}#INE" class="btn btn-success">
+                                        <i class="fas fa-print mr-1"></i>Usar Escaner
+                                    </a>
+                                    <label class="btn btn-secondary mb-0">
+                                        <i class="fas fa-upload mr-1"></i>Subir desde PC
+                                        <input type="file" wire:model="documentoINE" class="d-none" wire:change="uploadDocument('INE')">
+                                    </label>
+                                    @error('documentoINE') <label class="text-danger">{{ $message }}</label> @enderror
+                                </div>
                             </div>
                         @endif
                     </div>

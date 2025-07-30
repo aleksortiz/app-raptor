@@ -31,7 +31,8 @@ class VerValuacion extends Component
     public $cliente_id;
     
     // Document properties
-    public $documento;
+    public $documentoODA;
+    public $documentoINE;
     public $tipoDocumento;
 
     protected $queryString = [
@@ -63,6 +64,9 @@ class VerValuacion extends Component
       'pintura' => 'required|numeric|min:0',
       'armado' => 'required|numeric|min:0',
       'tasa_iva' => 'required|numeric|min:0|max:1',
+      
+      'documentoODA' => 'nullable|file|max:10240',
+      'documentoINE' => 'nullable|file|max:10240',
     ];
 
     protected $messages = [
@@ -94,6 +98,11 @@ class VerValuacion extends Component
       'tasa_iva.numeric' => 'La tasa de IVA debe ser un número.',
       'tasa_iva.min' => 'La tasa de IVA debe ser al menos 0.',
       'tasa_iva.max' => 'La tasa de IVA debe ser máximo 1.',
+      
+      'documentoODA.file' => 'El documento ODA debe ser un archivo.',
+      'documentoODA.max' => 'El documento ODA no debe exceder 10MB.',
+      'documentoINE.file' => 'El documento INE debe ser un archivo.',
+      'documentoINE.max' => 'El documento INE no debe exceder 10MB.',
     ];
 
     public function mount($id){
@@ -275,5 +284,55 @@ class VerValuacion extends Component
         $this->valuacion->load('documentos');
         $this->emit('refresh');
         $this->emit('ok', 'Documento eliminado correctamente');
+    }
+    
+    /**
+     * Upload a document from PC
+     */
+    public function uploadDocument($tipo)
+    {
+        // Determine which document property to use based on the tipo
+        $documentProperty = 'documento' . $tipo;
+        
+        // Validate the file
+        $this->validate([
+            $documentProperty => 'required|file|max:10240', // 10MB max size
+        ]);
+        
+        try {
+            // Get the document file from the appropriate property
+            $documento = $this->{$documentProperty};
+            
+            // Get file extension
+            $extension = $documento->getClientOriginalExtension();
+            
+            // Generate a unique filename
+            $filename = 'valuacion_' . $this->valuacion->id . '_' . $tipo . '_' . time() . '.' . $extension;
+            
+            // Store file in S3
+            $path = $documento->storeAs('documentos/valuaciones/' . $this->valuacion->id, $filename, 's3');
+            
+            // Delete existing document of same type if exists
+            $this->deleteDocument($tipo);
+            
+            // Create new document record
+            $this->valuacion->documentos()->create([
+                'tipo' => $tipo,
+                'url' => $path,
+                'nombre' => $filename,
+                'user_id' => auth()->id(),
+            ]);
+            
+            // Reset file input
+            $this->{$documentProperty} = null;
+            
+            // Refresh valuacion
+            $this->valuacion->load('documentos');
+            $this->emit('refresh');
+            $this->emit('ok', 'Documento subido correctamente');
+            
+        } catch (\Exception $e) {
+            $this->emit('error', 'Error al subir el documento: ' . $e->getMessage());
+        }
     }
 }
