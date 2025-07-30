@@ -19,10 +19,15 @@ class CitaReparacion extends BaseModel
       'no_reporte',
       'cita',
       'inventario_id',
+      'valuacion_id',
     ];
 
     public function cliente(){
         return $this->belongsTo(Cliente::class);
+    }
+
+    public function valuacion(){
+        return $this->belongsTo(Valuacion::class);
     }
 
     public function getVehiculoAttribute()

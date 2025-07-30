@@ -34,6 +34,9 @@ class Entrada extends BaseModel
         'domicilio_fiscal',
         'tarea_realizar',
         'proyeccion_entrega',
+        'color',
+        'year',
+        'placas',
     ];
 
     protected $attributes = [

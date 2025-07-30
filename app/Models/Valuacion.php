@@ -144,4 +144,9 @@ class Valuacion extends BaseModel
             '<button class="btn btn-xs btn-danger"><i class="fa fa-money-bill-wave"></i> PDD</button>' : 
             '<button class="btn btn-xs btn-success"><i class="fa fa-wrench"></i> REP</button>';
     }
+
+    public function citasReparacion()
+    {
+        return $this->hasMany(CitaReparacion::class);
+    }
 }
