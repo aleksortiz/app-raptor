@@ -216,6 +216,7 @@ class VerValuacion extends Component
      */
     public function hasDocument($tipo)
     {
+        $tipo = $tipo == 'ODA' ? 'ORDEN ADMISION' : $tipo;
         return $this->valuacion->documentos()->where('tipo', $tipo)->exists();
     }
     
@@ -224,6 +225,7 @@ class VerValuacion extends Component
      */
     public function getDocument($tipo)
     {
+        $tipo = $tipo == 'ODA' ? 'ORDEN ADMISION' : $tipo;
         return $this->valuacion->documentos()->where('tipo', $tipo)->first();
     }
     
@@ -232,6 +234,7 @@ class VerValuacion extends Component
      */
     public function getDocumentUrl($tipo)
     {
+        $tipo = $tipo == 'ODA' ? 'ORDEN ADMISION' : $tipo;
         $documento = $this->getDocument($tipo);
         if ($documento) {
             // Return a route to download the document
@@ -245,6 +248,7 @@ class VerValuacion extends Component
      */
     public function getDocumentDate($tipo)
     {
+        $tipo = $tipo == 'ODA' ? 'ORDEN ADMISION' : $tipo;
         $documento = $this->getDocument($tipo);
         if ($documento) {
             return $documento->created_at->format('d/m/Y H:i');
@@ -257,6 +261,7 @@ class VerValuacion extends Component
      */
     public function deleteDocument($tipo)
     {
+        $tipo = $tipo == 'ODA' ? 'ORDEN ADMISION' : $tipo;
         $documento = $this->getDocument($tipo);
         
         if ($documento) {
@@ -343,13 +348,18 @@ class VerValuacion extends Component
             $path = $documento->storeAs('documentos/valuaciones/' . $this->valuacion->id, $filename, 's3');
             
             // Delete existing document of same type if exists
+            $tipo = $tipo == 'ODA' ? 'ORDEN ADMISION' : $tipo;
+
+            // Delete existing document of same type if exists
             $this->deleteDocument($tipo);
+
+
             
             // Create new document record
             $this->valuacion->documentos()->create([
                 'tipo' => $tipo,
                 'url' => $path,
-                'nombre' => $filename,
+                'name' => $filename,
                 'user_id' => auth()->id(),
             ]);
             
