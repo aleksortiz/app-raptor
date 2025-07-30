@@ -34,6 +34,7 @@ class VerValuacion extends Component
     public $documentoODA;
     public $documentoINE;
     public $tipoDocumento;
+    public $isUploading = false;
 
     protected $queryString = [
         'tab' => ['except' => ''],
@@ -288,11 +289,33 @@ class VerValuacion extends Component
     }
     
     /**
+     * Handle file upload when document property is updated
+     */
+    public function updatedDocumentoODA()
+    {
+        if ($this->documentoODA) {
+            $this->uploadDocument('ODA');
+        }
+    }
+
+    /**
+     * Handle file upload when document property is updated
+     */
+    public function updatedDocumentoINE()
+    {
+        if ($this->documentoINE) {
+            $this->uploadDocument('INE');
+        }
+    }
+    
+    /**
      * Upload a document from PC
      */
     public function uploadDocument($tipo)
     {
-        // Determine which document property to use based on the tipo
+        $this->isUploading = true;
+        $this->emit('ok', 'Procesando documento...');
+        
         $documentProperty = 'documento' . $tipo;
         
         // Validate the file
@@ -303,6 +326,12 @@ class VerValuacion extends Component
         try {
             // Get the document file from the appropriate property
             $documento = $this->{$documentProperty};
+            
+            if (!$documento) {
+                $this->emit('error', 'No se ha seleccionado ningún documento');
+                $this->isUploading = false;
+                return;
+            }
             
             // Get file extension
             $extension = $documento->getClientOriginalExtension();
@@ -334,6 +363,8 @@ class VerValuacion extends Component
             
         } catch (\Exception $e) {
             $this->emit('error', 'Error al subir el documento: ' . $e->getMessage());
+        } finally {
+            $this->isUploading = false;
         }
     }
 }

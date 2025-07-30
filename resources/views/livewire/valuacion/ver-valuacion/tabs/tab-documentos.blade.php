@@ -44,7 +44,7 @@
                                     </a>
                                     <label class="btn btn-secondary mb-0">
                                         <i class="fas fa-upload mr-1"></i>Subir desde PC
-                                        <input type="file" wire:model="documentoODA" class="d-none" wire:loading.attr="disabled" wire:change="uploadDocument('ODA')">
+                                        <input type="file" wire:model="documentoODA" class="d-none" wire:loading.attr="disabled">
                                     </label>
                                 </div>
                                 <div class="mt-2 text-center" wire:loading wire:target="documentoODA">
@@ -100,7 +100,7 @@
                                     </a>
                                     <label class="btn btn-secondary mb-0">
                                         <i class="fas fa-upload mr-1"></i>Subir desde PC
-                                        <input type="file" wire:model="documentoINE" class="d-none" wire:loading.attr="disabled" wire:change="uploadDocument('INE')">
+                                        <input type="file" wire:model="documentoINE" class="d-none" wire:loading.attr="disabled">
                                     </label>
                                     @error('documentoINE') <label class="text-danger">{{ $message }}</label> @enderror
                                 </div>
