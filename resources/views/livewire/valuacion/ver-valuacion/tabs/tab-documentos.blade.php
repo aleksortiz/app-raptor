@@ -26,7 +26,7 @@
                                     <a href="{{ $this->getDocumentUrl('ODA') }}" target="_blank" class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-eye mr-1"></i> Ver
                                     </a>
-                                    <button wire:click="deleteDocument('ODA')" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Está seguro que desea eliminar este documento?')">
+                                    <button class="btn btn-sm btn-outline-danger" onclick="confirm('¿Está seguro que desea eliminar este documento?', 'deleteDocument', 'ODA')">
                                         <i class="fas fa-trash-alt mr-1"></i> Eliminar
                                     </button>
                                 </div>
@@ -44,8 +44,14 @@
                                     </a>
                                     <label class="btn btn-secondary mb-0">
                                         <i class="fas fa-upload mr-1"></i>Subir desde PC
-                                        <input type="file" wire:model="documentoODA" class="d-none" wire:change="uploadDocument('ODA')">
+                                        <input type="file" wire:model="documentoODA" class="d-none" wire:loading.attr="disabled" wire:change="uploadDocument('ODA')">
                                     </label>
+                                </div>
+                                <div class="mt-2 text-center" wire:loading wire:target="documentoODA">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="sr-only">Cargando...</span>
+                                    </div>
+                                    <span class="ml-1 text-primary">Procesando documento...</span>
                                 </div>
                             </div>
                         @endif
@@ -76,7 +82,7 @@
                                     <a href="{{ $this->getDocumentUrl('INE') }}" target="_blank" class="btn btn-sm btn-outline-primary">
                                         <i class="fas fa-eye mr-1"></i> Ver
                                     </a>
-                                    <button wire:click="deleteDocument('INE')" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Está seguro que desea eliminar este documento?')">
+                                    <button class="btn btn-sm btn-outline-danger" onclick="confirm('¿Está seguro que desea eliminar este documento?','deleteDocument', 'INE')">
                                         <i class="fas fa-trash-alt mr-1"></i> Eliminar
                                     </button>
                                 </div>
@@ -94,9 +100,15 @@
                                     </a>
                                     <label class="btn btn-secondary mb-0">
                                         <i class="fas fa-upload mr-1"></i>Subir desde PC
-                                        <input type="file" wire:model="documentoINE" class="d-none" wire:change="uploadDocument('INE')">
+                                        <input type="file" wire:model="documentoINE" class="d-none" wire:loading.attr="disabled" wire:change="uploadDocument('INE')">
                                     </label>
                                     @error('documentoINE') <label class="text-danger">{{ $message }}</label> @enderror
+                                </div>
+                                <div class="mt-2 text-center" wire:loading wire:target="documentoINE">
+                                    <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                        <span class="sr-only">Cargando...</span>
+                                    </div>
+                                    <span class="ml-1 text-primary">Procesando documento...</span>
                                 </div>
                             </div>
                         @endif

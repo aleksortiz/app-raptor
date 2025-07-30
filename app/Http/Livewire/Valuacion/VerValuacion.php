@@ -42,7 +42,8 @@ class VerValuacion extends Component
     protected $listeners = [
         'eliminarConcepto',
         'eliminarDocumento',
-        'refresh' => '$refresh'
+        'refresh' => '$refresh',
+        'deleteDocument'
     ];
 
     public function updatingEditMode($value)
