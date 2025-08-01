@@ -95,16 +95,22 @@
                             <td onclick="window.location.href='/valuaciones/{{ $item->id }}'">{!! $item->estado_span !!}</td>
                             <td>
                                 <div>
-                                    <button type="button" class="btn btn-sm btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
-                                    <div class="dropdown-menu" role="menu">
-                                        <a class="dropdown-item"><b>Valuación: #{{ $item->id_paddy }}</b></a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" style="cursor: pointer;" onclick="window.location.href='/valuaciones/{{ $item->id }}'"><i class="fas fa-eye"></i> Ver Detalles</a>
-                                        <a class="dropdown-item" style="cursor: pointer;" wire:click="crearCitaReparacion({{ $item->id }})"><i class="fas fa-calendar-plus"></i> Crear Cita a Reparación</a>
-                                        <a class="dropdown-item" style="cursor: pointer;" wire:click="crearEntrada({{ $item->id }})"><i class="fas fa-clipboard-check"></i> Crear Entrada</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="/valuaciones/{{ $item->id }}/print" target="_blank"><i class="fas fa-print"></i> Imprimir Valuación</a>
-                                    </div>
+                                    @if($item->entrada)
+                                        {!! $item->entrada_span !!}
+                                    @else
+                                        <button type="button" class="btn btn-sm btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a class="dropdown-item"><b>Valuación: #{{ $item->id_paddy }}</b></a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" style="cursor: pointer;" onclick="window.location.href='/valuaciones/{{ $item->id }}'"><i class="fas fa-eye"></i> Ver Detalles</a>
+                                            @if($item->valuacion_efectuada)
+                                                <a class="dropdown-item" style="cursor: pointer;" wire:click="crearCitaReparacion({{ $item->id }})"><i class="fas fa-calendar-plus"></i> Crear Cita a Reparación</a>
+                                                <a class="dropdown-item" style="cursor: pointer;" wire:click="crearEntrada({{ $item->id }})"><i class="fas fa-clipboard-check"></i> Crear Entrada</a>
+                                            @endif
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="/valuaciones/{{ $item->id }}/print" target="_blank"><i class="fas fa-print"></i> Imprimir Valuación</a>
+                                        </div>
+                                    @endif
                                 </div>
                             </td>
                     </tr>
