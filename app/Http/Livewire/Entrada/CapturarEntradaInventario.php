@@ -8,6 +8,7 @@ use App\Models\EntradaInventario;
 use App\Models\Fabricante;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use App\Models\Valuacion;
 
 class CapturarEntradaInventario extends Component
 {
@@ -271,8 +272,21 @@ class CapturarEntradaInventario extends Component
             'razon_social' => $this->cita->cliente->razon_social,
             'domicilio_fiscal' => $this->cita->cliente->codigo_postal,
           ]);
+          
+          // Si la cita tiene una valuación asociada, transferir sus documentos a la entrada
+          if ($this->cita->valuacion_id) {
+              $valuacion = Valuacion::find($this->cita->valuacion_id);
+              if ($valuacion) {
+                  // Transferir documentos de la valuación a la entrada
+                  foreach ($valuacion->documentos as $documento) {
+                      // Actualizar el documento para que pertenezca a la entrada en lugar de la valuación
+                      $documento->model_id = $this->entrada->id;
+                      $documento->model_type = Entrada::class;
+                      $documento->save();
+                  }
+              }
+          }
         }
-
 
 
         $inventario->entrada_id = $this->entrada->id;

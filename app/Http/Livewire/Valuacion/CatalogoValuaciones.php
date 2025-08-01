@@ -189,6 +189,14 @@ class CatalogoValuaciones extends Component
         if ($valuacion) {
             $valuacion->entrada_id = $entrada->id;
             $valuacion->save();
+            
+            // Transferir documentos de la valuación a la entrada
+            foreach ($valuacion->documentos as $documento) {
+                // Actualizar el documento para que pertenezca a la entrada en lugar de la valuación
+                $documento->model_id = $entrada->id;
+                $documento->model_type = Entrada::class;
+                $documento->save();
+            }
         }
         
         $this->showModalEntrada = false;
