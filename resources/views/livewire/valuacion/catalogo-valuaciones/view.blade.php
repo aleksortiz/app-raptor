@@ -108,7 +108,7 @@
                                                 <a class="dropdown-item" style="cursor: pointer;" wire:click="crearEntrada({{ $item->id }})"><i class="fas fa-clipboard-check"></i> Crear Entrada</a>
                                             @endif
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="/valuaciones/{{ $item->id }}/print" target="_blank"><i class="fas fa-print"></i> Imprimir Valuación</a>
+                                            <a class="dropdown-item" style="cursor: pointer;" onclick="destroy({{ $item->id }}, 'Valuación', 'deleteValuacion')"><i class="fas fa-trash text-danger"></i> Eliminar Valuación</a>
                                         </div>
                                     @endif
                                 </div>

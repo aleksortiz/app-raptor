@@ -6,6 +6,7 @@ use App\Models\Entrada;
 use App\Models\Valuacion;
 use App\Models\CitaReparacion;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,7 +15,10 @@ class CatalogoValuaciones extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
-    protected $listeners = ['reloadCitasValuacion' => '$refresh'];
+    protected $listeners = [
+        'reloadCitasValuacion' => '$refresh',
+        'deleteValuacion',
+    ];
 
     public $start;
     public $end;
@@ -198,5 +202,44 @@ class CatalogoValuaciones extends Component
         $this->showModalCita = false;
         $this->showModalEntrada = false;
         $this->emit('closeModal');
+    }
+
+    public function deleteValuacion($id)
+    {
+        $valuacion = Valuacion::find($id);
+        if (!$valuacion) {
+            $this->emit('error', 'Valuación no encontrada');
+            return;
+        }
+
+        $photosToDelete = [];
+        foreach($valuacion->fotos as $foto) {
+            $originalPath = str_replace(env('AWS_BUCKET_URL'), '', $foto->url);
+            $thumbPath = str_replace(env('AWS_BUCKET_URL'), '', $foto->url_thumb);
+            $photosToDelete[] = $originalPath;
+            $photosToDelete[] = $thumbPath;
+        }
+        Storage::disk('s3')->delete($photosToDelete);
+
+        $docsToDelete = [];
+        foreach($valuacion->documentos as $documento) {
+            $filePath = str_replace(env('AWS_BUCKET_URL'), '', $documento->url);
+            $docsToDelete[] = $filePath;
+            $documento->delete();
+        }
+        Storage::disk('s3')->delete($docsToDelete);
+
+        foreach($valuacion->citasReparacion()->get() as $cita) {
+            $cita->delete();
+        }
+
+        foreach($valuacion->presupuestos as $presupuesto) {
+            $presupuesto->conceptos()->delete();
+            $presupuesto->delete();
+        }
+
+        $valuacion->delete();
+        $this->emit('ok', 'Valuación eliminada correctamente');
+        $this->emit('reloadCitasValuacion');
     }
 }
