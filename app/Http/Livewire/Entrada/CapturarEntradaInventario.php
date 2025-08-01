@@ -115,7 +115,7 @@ class CapturarEntradaInventario extends Component
       if($this->entrada){
         $this->cita = new CitaReparacion([
           'cliente_id' => $this->entrada->cliente_id,
-          'marca' => $this->entrada->fabricante->nombre,
+          'marca' => $this->entrada->marca,
           'modelo' => $this->entrada->modelo,
           'no_reporte' => $this->entrada->orden,
           'cliente_id' => $this->entrada->cliente_id,
