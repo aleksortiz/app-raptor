@@ -149,4 +149,16 @@ class Valuacion extends BaseModel
     {
         return $this->hasMany(CitaReparacion::class);
     }
+
+    public function getHasCitaReparacionAttribute()
+    {
+        return $this->citasReparacion()->count() > 0;
+    }
+
+    public function getCitaReparacionSpanAttribute()
+    {
+        return $this->hasCitaReparacion ? 
+            '<a href="/citas-reparacion" class="btn btn-xs btn-warning"><i class="fa fa-calendar"></i> CITA</a>' : 
+            "SIN CITA";
+    }
 }

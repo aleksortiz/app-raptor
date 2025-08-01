@@ -98,6 +98,8 @@
                                 <div>
                                     @if($item->entrada)
                                         {!! $item->entrada_span !!}
+                                    @elseif($item->hasCitaReparacion)
+                                        {!! $item->cita_reparacion_span !!}
                                     @else
                                         <button type="button" class="btn btn-sm btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
                                         <div class="dropdown-menu" role="menu">
