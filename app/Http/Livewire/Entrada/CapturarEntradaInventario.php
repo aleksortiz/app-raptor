@@ -277,7 +277,9 @@ class CapturarEntradaInventario extends Component
           if ($this->cita->valuacion_id) {
               $valuacion = Valuacion::find($this->cita->valuacion_id);
               if ($valuacion) {
-                  // Transferir documentos de la valuación a la entrada
+                  $valuacion->entrada_id = $this->entrada->id;
+                  $valuacion->save();
+
                   foreach ($valuacion->documentos as $documento) {
                       // Actualizar el documento para que pertenezca a la entrada en lugar de la valuación
                       $documento->model_id = $this->entrada->id;
