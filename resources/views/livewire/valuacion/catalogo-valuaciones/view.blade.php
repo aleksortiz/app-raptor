@@ -1,9 +1,10 @@
 @section('title', __("Catalogo de Valuaciones"))
 <div class="pt-3">
 
-  @livewire('valuacion.mdl-crear-valuacion')
-  @include('livewire.valuacion.catalogo-valuaciones.modal-cita-reparacion')
-  @include('livewire.valuacion.catalogo-valuaciones.modal-crear-entrada')
+    @livewire('valuacion.mdl-crear-valuacion')
+    @include('livewire.valuacion.catalogo-valuaciones.modal-cita-reparacion')
+    @include('livewire.valuacion.catalogo-valuaciones.modal-crear-entrada')
+    @livewire('cliente.common.mdl-select-cliente')
 
   <div class="card">
       <div class="card-header">

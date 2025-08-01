@@ -79,12 +79,10 @@ class CatalogoEntradas extends Component
         })
         ->where(function ($q){
             $q->orWhere('modelo', 'LIKE', "%{$this->keyWord}%")
-            ->orWhereHas('fabricante', function($fab){
-                $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
-            })
             ->orWhereHas('cliente', function($fab){
                 $fab->where('nombre', 'LIKE', "%{$this->keyWord}%");
             })
+            ->orWhere('marca', 'LIKE', "{$this->keyWord}%")
             ->orWhere('folio', 'LIKE', "{$this->keyWord}%")
             ->orWhere('serie', 'LIKE', "{$this->keyWord}%")
             ->orWhere('orden', 'LIKE', "%{$this->keyWord}%")

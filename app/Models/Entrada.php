@@ -37,6 +37,7 @@ class Entrada extends BaseModel
         'color',
         'year',
         'placas',
+        'marca',
     ];
 
     protected $attributes = [
