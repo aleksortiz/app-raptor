@@ -22,7 +22,9 @@ class CatalogoCitasReparacion extends Component
     }
 
     private function getRenderData(){
-        $citas = CitaReparacion::orderBy('cita', 'asc')->where('inventario_id', null);
+        $citas = CitaReparacion::orderBy('cita', 'asc')
+        ->whereNotNull('valuacion_id')
+        ->where('inventario_id', null);
 
         return [
             'citas' => $citas->paginate(50),

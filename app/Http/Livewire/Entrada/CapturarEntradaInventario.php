@@ -122,6 +122,8 @@ class CapturarEntradaInventario extends Component
         ]);
         $this->cliente = $this->entrada->cliente;
         $this->vehiculo = $this->entrada->vehiculo;
+        $this->year = $this->entrada->year;
+        $this->color = $this->entrada->color;
         return;
       }
       $this->entradaId = null;
@@ -130,6 +132,8 @@ class CapturarEntradaInventario extends Component
       $this->cita = CitaReparacion::find($this->folioCita);
       $this->cliente = $this->cita->cliente;
       $this->vehiculo = $this->cita->vehiculo;
+      $this->year = $this->cita->valuacion->year;
+      $this->color = $this->cita->valuacion->color;
       if(!$this->cita || $this->cita->inventario_id){
         abort(404, 'Cita no encontrada');
       }
@@ -250,14 +254,15 @@ class CapturarEntradaInventario extends Component
         }
         $this->cita->save();
 
-        $fabricante = Fabricante::where('nombre', $this->cita->marca)->first();
+        $fabricante = $this->cita->marca;
 
         if(!$this->entrada){
           $this->entrada = Entrada::create([
             'user_id' => Auth::id(),
             'sucursal_id' => 1,
             'aseguradora_id' => 1,
-            'fabricante_id' => $fabricante->id,
+            'fabricante_id' => 1,
+            'marca' => $fabricante,
             'cliente_id' => $this->cita->cliente_id,
             'origen' => 'ASEGURADORA',
             'modelo' => $this->cita->modelo,

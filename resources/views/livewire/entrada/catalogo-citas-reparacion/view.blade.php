@@ -13,7 +13,7 @@
         </div>
         <div class="card-body p-0">
 
-            <a href="/registrar-cita-reparacion" class="btn btn-success btn-xs m-3"><i class="fa fa-plus"></i> Registrar Cita</a>
+            {{-- <a href="/registrar-cita-reparacion" class="btn btn-success btn-xs m-3"><i class="fa fa-plus"></i> Registrar Cita</a> --}}
             <table class="table table-hover">
                 <thead>
                     <tr>
