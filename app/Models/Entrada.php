@@ -118,9 +118,11 @@ class Entrada extends BaseModel
 
     public function getVehiculoAttribute()
     {
-        $fab = strtoupper($this->fabricante->nombre);
+        $fab = strtoupper($this->marca);
         $modelo = strtoupper($this->modelo);
-        return "{$fab} {$modelo}";
+        $year = strtoupper($this->year);
+        $color = strtoupper($this->color);
+        return "{$fab} {$modelo} {$year} {$color}";
     }
 
     public static function generarFolio()
@@ -321,6 +323,11 @@ class Entrada extends BaseModel
         }
 
         return $data;
+    }
+
+    public function setMarcaAttribute($value)
+    {
+        $this->attributes['marca'] = trim(strtoupper($value));
     }
 
     public function setSerieAttribute($value)
