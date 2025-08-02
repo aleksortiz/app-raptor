@@ -12,6 +12,7 @@ class EntradaAvance extends Model
 
     protected $fillable = [
         'entrada_id',
+        'mecanica',
         'carroceria',
         'preparado',
         'pintura',
@@ -32,6 +33,11 @@ class EntradaAvance extends Model
     public function entrada()
     {
         return $this->belongsTo(Entrada::class);
+    }
+
+    public function getMecanicaFormatAttribute()
+    {
+        return $this->mecanica ? Carbon::parse($this->mecanica)->format('d/m/Y h:i A') : null;
     }
 
     public function getCarroceriaFormatAttribute()
@@ -78,6 +84,8 @@ class EntradaAvance extends Model
             return 'PREPARADO';
         } elseif ($this->carroceria) {
             return 'CARROCERIA';
+        } elseif ($this->mecanica) {
+            return 'MECANICA';
         }
         return null;
     }
