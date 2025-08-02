@@ -13,7 +13,9 @@
         <tbody>
             <tr>
                 <td>
-                    @if (!$avance?->mecanica)
+                    @if ($avance?->carroceria)
+                        <span class="text-muted">OMITIDO</span>
+                    @elseif (!$avance?->mecanica)
                         <label class="content-input">
                             <input wire:click="check('mecanica')" type="checkbox"/>
                             <i></i>
@@ -90,7 +92,7 @@
                                 <i></i>
                             </label>
                         @else
-                            PENDIENTE MECANICA/ARMADO
+                            PENDIENTE MECANICA O ARMADO
                         @endif
                     @else
                         <button class="btn btn-xs btn-success" ><i class="fa fa-check"></i></button> {{ $avance?->terminado_format }}
