@@ -102,9 +102,8 @@ class FacturacionSemanal extends Component
         $this->selectedFactura = RegistroFactura::find($id);
         if ($this->selectedFactura) {
             $this->notas = $this->selectedFactura->notas;
+            $this->emit('showModal', '#' . $this->modalId);
         }
-        
-        $this->emit('showModal', '#' . $this->modalId);
     }
     
     public function saveNotas()

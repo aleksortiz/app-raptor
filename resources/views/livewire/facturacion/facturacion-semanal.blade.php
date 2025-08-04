@@ -183,7 +183,9 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="notas">Notas:</label>
-                        <textarea wire:model="notas" id="notas" class="form-control" rows="5"></textarea>
+                        <div wire:key="textarea-{{ $selectedFactura ? $selectedFactura->id : 'new' }}">
+                            <textarea wire:model.lazy="notas" id="notas" class="form-control" rows="5"></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
