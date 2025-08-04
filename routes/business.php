@@ -27,5 +27,9 @@ Route::middleware(['auth'])->group(function(){
         return view('livewire.business.capturar-egresos.index');
     });
 
+    Route::get('/facturacion/semanal', function () {
+        return view('livewire.facturacion.index');
+    })->name('facturacion.semanal');
+
 });
 

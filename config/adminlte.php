@@ -309,6 +309,11 @@ return [
             'can' => ['reporte-finanzas', 'reporte-facturas', 'reporte-depositos', 'gastos-generales', 'gastos-fijos'],
             'submenu' => [
                 [
+                    'text' => 'Facturación Semanal',
+                    'icon' => 'fas fa-fw fa-file-invoice-dollar',
+                    'url'  => '/facturacion/semanal',
+                ],
+                [
                     'text' => 'Reporte Finanzas',
                     'can' => ['reporte-finanzas'],
                     'icon'   => 'fas fa-fw fa-chevron-right',
