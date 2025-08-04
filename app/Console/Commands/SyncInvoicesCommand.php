@@ -43,53 +43,55 @@ class SyncInvoicesCommand extends Command
         $json = [
             [
                 "model_type" => "App\\Models\\Entrada",
-                "model_folio" => "24-04-25",
-                "numero_factura" => "A2507",
-                "monto" => 7001.79,
+                "model_folio" => "18-07-25",
+                "numero_factura" => "A2539",
+                "monto" => 18290.10,
                 "fecha_pago" => null,
                 "notas" => ""
             ],
             [
                 "model_type" => "App\\Models\\Entrada",
-                "model_folio" => "26-10-25",
-                "numero_factura" => "A2508",
-                "monto" => 8764.00,
+                "model_folio" => "28-11-25",
+                "numero_factura" => "A2541",
+                "monto" => 3362.84,
+                "fecha_pago" => "2025-07-11",
+                "notas" => ""
+            ],
+            [
+                "model_type" => "App\\Models\\Entrada",
+                "model_folio" => "26-01-25",
+                "numero_factura" => "A2543",
+                "monto" => 16820.00,
                 "fecha_pago" => null,
                 "notas" => ""
             ],
             [
                 "model_type" => "App\\Models\\Entrada",
-                "model_folio" => "25-04-25",
-                "numero_factura" => "A2509",
-                "monto" => 20447.58,
+                "model_folio" => "25-06-25",
+                "numero_factura" => "A2545",
+                "monto" => 6190.24,
                 "fecha_pago" => null,
                 "notas" => ""
             ],
             [
                 "model_type" => "App\\Models\\Entrada",
-                "model_folio" => "25-12-25",
-                "numero_factura" => "A2510",
-                "monto" => 20709.29,
+                "model_folio" => "25-02-25",
+                "numero_factura" => "A2546",
+                "monto" => 13940.68,
                 "fecha_pago" => null,
                 "notas" => ""
             ],
             [
                 "model_type" => "App\\Models\\Entrada",
-                "model_folio" => "25-03-25",
-                "numero_factura" => "A2511",
-                "monto" => 4644.94,
-                "fecha_pago" => null,
-                "notas" => ""
-            ],
-            [
-                "model_type" => "App\\Models\\Entrada",
-                "model_folio" => "24-08-25",
-                "numero_factura" => "A2512",
-                "monto" => 5486.22,
+                "model_folio" => "26-07-25",
+                "numero_factura" => "A2547",
+                "monto" => 7932.28,
                 "fecha_pago" => null,
                 "notas" => ""
             ]
         ];
+        
+        
         
         
         $total = 0;
