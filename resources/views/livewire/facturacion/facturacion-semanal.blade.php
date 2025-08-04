@@ -139,7 +139,7 @@
                                             @endif
                                         </button>
                                         
-                                        <button wire:click="selectFactura({{ $factura->id }})" type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#editNotasModal">
+                                        <button wire:click="selectFactura({{ $factura->id }})" type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#{{ $modalId }}">
                                             <i class="fas fa-sticky-note"></i> Notas
                                         </button>
                                     </div>
@@ -165,11 +165,11 @@
     </div>
     
     <!-- Modal para editar notas -->
-    <div class="modal fade" id="editNotasModal" tabindex="-1" role="dialog" aria-labelledby="editNotasModalLabel" aria-hidden="true" wire:ignore.self>
+    <div wire:ignore.self class="modal fade" data-backdrop="static" id="{{ $modalId }}">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editNotasModalLabel">
+                    <h5 class="modal-title">
                         @if($selectedFactura)
                             Notas - Factura {{ $selectedFactura->numero_factura }}
                         @else

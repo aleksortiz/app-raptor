@@ -24,16 +24,4 @@
     </style>
 @stop
 
-@section('js')
-    <script>
-        document.addEventListener('livewire:load', function () {
-            window.livewire.on('facturaActualizada', () => {
-                toastr.success('La factura ha sido actualizada correctamente');
-            });
-            
-            window.livewire.on('closeModal', () => {
-                $('#editNotasModal').modal('hide');
-            });
-        });
-    </script>
-@stop 
+ 

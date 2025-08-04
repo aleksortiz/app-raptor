@@ -22,6 +22,7 @@ class FacturacionSemanal extends Component
     
     public $selectedFactura;
     public $notas;
+    public $modalId = 'editNotasModal';
 
     public function mount()
     {
@@ -92,7 +93,7 @@ class FacturacionSemanal extends Component
             $factura->fecha_pago = $factura->fecha_pago ? null : Carbon::now();
             $factura->save();
             
-            $this->emit('facturaActualizada');
+            $this->emit('ok', 'La factura ha sido actualizada correctamente');
         }
     }
     
@@ -102,6 +103,8 @@ class FacturacionSemanal extends Component
         if ($this->selectedFactura) {
             $this->notas = $this->selectedFactura->notas;
         }
+        
+        $this->emit('showModal', '#' . $this->modalId);
     }
     
     public function saveNotas()
@@ -110,8 +113,11 @@ class FacturacionSemanal extends Component
             $this->selectedFactura->notas = $this->notas;
             $this->selectedFactura->save();
             
-            $this->emit('facturaActualizada');
-            $this->emit('closeModal');
+            $this->selectedFactura = null;
+            $this->notas = '';
+            
+            $this->emit('ok', 'Las notas han sido guardadas correctamente');
+            $this->emit('closeModal', '#' . $this->modalId);
         }
     }
 
