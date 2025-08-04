@@ -5,10 +5,13 @@
 @include('shared.system.loader')
 <br><br><br>
 <center>
-    <img width="60%" src="{{ asset('images/logo.png') }}">
+    <div class="mt-5 logo-container">
+        <img width="60%" src="{{ asset('images/logo.png') }}">
+    <h1 style="font-size: 3rem; color: black;">{{env('BUSSINESS_DESCRIPTION')}}</h1>
+
+    </div>
     {{-- <h1>{{env('APP_FULL_NAME')}}</h1> --}}
-    <h1 style="color: white;">Autoservicio Raptor</h1>
-    <h2 style="color: white;">{{env('BUSSINESS_DESCRIPTION')}}</h2>
+    {{-- <h2 class="text-white" style="font-size: 1.5rem;">{{env('BUSSINESS_DESCRIPTION')}}</h2> --}}
     {{-- <br>
     <br>
     <h3><a href="/aos/tickets-soporte">Solicitud de soporte para errores y/o modificaciones</a></h3> --}}
@@ -41,6 +44,14 @@
     .bg-container {
         position: relative;
         z-index: 1;
+    }
+    
+    .logo-container {
+        background-color: rgba(255, 255, 255, 0.6);
+        display: inline-block;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 15px;
     }
 </style>
 @endsection
