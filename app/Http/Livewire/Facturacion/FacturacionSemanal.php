@@ -130,13 +130,12 @@ class FacturacionSemanal extends Component
         $startDateFormatted = $startDate->format('d/m/Y');
         $endDateFormatted = $endDate->format('d/m/Y');
         
-        // Build query
-        $query = RegistroFactura::query()
+        // Base query: week range + search term (do not include status filter here)
+        $baseQuery = RegistroFactura::query()
             ->whereBetween('created_at', [$startDate, $endDate]);
-            
-        // Apply search filter
+        
         if (!empty($this->searchTerm)) {
-            $query->where(function ($q) {
+            $baseQuery->where(function ($q) {
                 $q->where('numero_factura', 'like', '%' . $this->searchTerm . '%')
                   ->orWhere('notas', 'like', '%' . $this->searchTerm . '%')
                   ->orWhereHas('model', function ($subquery) {
@@ -145,20 +144,23 @@ class FacturacionSemanal extends Component
             });
         }
         
-        // Apply payment status filter
+        // Listing query: start from base and apply status filter if any
+        $listQuery = clone $baseQuery;
         if ($this->filterStatus === 'pagado') {
-            $query->whereNotNull('fecha_pago');
+            $listQuery->whereNotNull('fecha_pago');
         } elseif ($this->filterStatus === 'pendiente') {
-            $query->whereNull('fecha_pago');
+            $listQuery->whereNull('fecha_pago');
         }
         
-        // Get data with pagination
-        $facturas = $query->orderBy('created_at', 'desc')->paginate(10);
+        // Get data with pagination for the table
+        $facturas = (clone $listQuery)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         
-        // Calculate totals
-        $totalMonto = $query->sum('monto');
-        $totalPagado = $query->whereNotNull('fecha_pago')->sum('monto');
-        $totalPendiente = $query->whereNull('fecha_pago')->sum('monto');
+        // Calculate totals from a fresh clone each time to avoid condition accumulation
+        $totalMonto = (clone $baseQuery)->sum('monto');
+        $totalPagado = (clone $baseQuery)->whereNotNull('fecha_pago')->sum('monto');
+        $totalPendiente = (clone $baseQuery)->whereNull('fecha_pago')->sum('monto');
         
         return view('livewire.facturacion.facturacion-semanal', [
             'facturas' => $facturas,

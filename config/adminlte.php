@@ -310,7 +310,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Facturación Semanal',
-                    'icon' => 'fas fa-fw fa-file-invoice-dollar',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
                     'url'  => '/facturacion/semanal',
                 ],
                 [
