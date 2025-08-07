@@ -24,6 +24,11 @@ class FacturacionSemanal extends Component
     public $notas;
     public $modalId = 'editNotasModal';
 
+    // Sync weekNumber to the URL as ?week=
+    protected $queryString = [
+        'weekNumber' => ['as' => 'week'],
+    ];
+
     public function mount()
     {
         // Set default year to current year
@@ -32,6 +37,15 @@ class FacturacionSemanal extends Component
         // Set default week to current week
         $this->weekNumber = Carbon::now()->weekOfYear;
         $this->currentWeek = $this->weekNumber;
+
+        // If query string contains ?week=, prefer it
+        $requestedWeek = request()->query('week');
+        if ($requestedWeek !== null && is_numeric($requestedWeek)) {
+            $requestedWeek = (int) $requestedWeek;
+            // Clamp to 1..53 to avoid invalid ISO week numbers
+            $this->weekNumber = max(1, min(53, $requestedWeek));
+            $this->currentWeek = $this->weekNumber;
+        }
         
         // Get available years from data
         $minYear = RegistroFactura::selectRaw('YEAR(created_at) as year')
