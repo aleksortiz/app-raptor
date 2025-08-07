@@ -15,5 +15,9 @@ Route::middleware(['auth'])->prefix('control-facturacion')->group(function(){
         return view('livewire.facturacion.facturas-registradas.index');
     });
 
+    Route::get('/importar-pdf', function(){
+        return view('livewire.facturacion.importar-pdf.index');
+    });
+
 });
 
