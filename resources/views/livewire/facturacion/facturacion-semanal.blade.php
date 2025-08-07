@@ -103,7 +103,8 @@
                             <th>Monto</th>
                             <th>Estado</th>
                             <th>Fecha Pago</th>
-                            <th>Acciones</th>
+                            <th>Pago</th>
+                            <th>Notas</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,24 +131,28 @@
                                     {!! $factura->fecha_pago_span !!}
                                 </td>
                                 <td>
-                                    <div class="btn-group">
-                                        <button wire:click="markAsPaid({{ $factura->id }})" class="btn btn-sm {{ $factura->pagado ? 'btn-danger' : 'btn-success' }}">
-                                            @if($factura->pagado)
-                                                <i class="fas fa-times"></i> Marcar no pagado
-                                            @else
-                                                <i class="fas fa-check"></i> Marcar pagado
-                                            @endif
-                                        </button>
-                                        
-                                        <button wire:click="selectFactura({{ $factura->id }})" type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#{{ $modalId }}">
-                                            <i class="fas fa-sticky-note"></i> Notas
-                                        </button>
-                                    </div>
+                                    <button wire:click="markAsPaid({{ $factura->id }})" class="btn btn-sm {{ $factura->pagado ? 'btn-danger' : 'btn-success' }}">
+                                        @if($factura->pagado)
+                                            <i class="fas fa-times"></i> Marcar no pagado
+                                        @else
+                                            <i class="fas fa-check"></i> Marcar pagado
+                                        @endif
+                                    </button>
+                                </td>
+                                <td>
+                                    <button wire:click="selectFactura({{ $factura->id }})" type="button" class="btn btn-sm {{ !empty($factura->notas) ? 'btn-warning' : 'btn-info' }}" data-toggle="modal" data-target="#{{ $modalId }}" title="{{ !empty($factura->notas) ? 'Tiene nota guardada' : 'Agregar nota' }}">
+                                        <i class="fas fa-sticky-note"></i>
+                                        @if(!empty($factura->notas))
+                                            Notas <span class="badge badge-light ml-1">1</span>
+                                        @else
+                                            Notas
+                                        @endif
+                                    </button>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center py-4">
+                                <td colspan="8" class="text-center py-4">
                                     <div class="alert alert-info mb-0">
                                         <i class="fas fa-info-circle mr-2"></i> No se encontraron facturas para esta semana
                                     </div>
