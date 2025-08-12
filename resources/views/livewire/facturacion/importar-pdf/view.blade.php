@@ -18,22 +18,11 @@
                     @enderror
                 </div>
 
-                <div class="form-group mt-3">
-                    <label for="prompt">Prompt/Esquema JSON</label>
-                    <textarea id="prompt" rows="6" class="form-control @error('prompt') is-invalid @enderror" wire:model.defer="prompt" placeholder="Especifica aquí el esquema JSON esperado y reglas de parseo."></textarea>
-                    @error('prompt')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
                 <div class="mt-3 d-flex align-items-center">
-                    <button class="btn btn-primary" type="submit" @if($isLoading) disabled @endif>
-                        @if($isLoading)
-                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            Procesando...
-                        @else
-                            Enviar a OpenAI
-                        @endif
+                    <button class="btn btn-success" type="submit" @if($isLoading) disabled @endif wire:loading.attr="disabled" wire:target="procesar">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" wire:loading wire:target="procesar"></span>
+                        <span wire:loading wire:target="procesar">Procesando con IA... <i class="fa fa-robot"></i></span>
+                        <span wire:loading.remove wire:target="procesar"><i class="fa fa-check"></i> Procesar</span>
                     </button>
 
                     <div class="ml-3 text-muted small">
@@ -44,13 +33,40 @@
         </div>
     </div>
 
-    @if($responseText)
+    @if(!empty($rows))
         <div class="card mt-3">
             <div class="card-header">
-                <h3 class="card-title mb-0">Resultado (JSON)</h3>
+                <h3 class="card-title mb-0">Resultado</h3>
             </div>
-            <div class="card-body">
-                <pre class="mb-0" style="white-space: pre-wrap; word-break: break-word;">{{ $responseText }}</pre>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-striped mb-0">
+                        <thead>
+                            <tr>
+                                <th>Folio</th>
+                                <th>Número de Factura</th>
+                                <th class="text-right">Monto</th>
+                                <th>Fecha de Pago</th>
+                                <th>Notas</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($rows as $row)
+                                <tr>
+                                    <td>
+                                        <a href="{{ $row['_entrada_url'] ?? '#' }}" target="_blank" class="btn btn-xs {{ !empty($row['_entrada_exists']) ? 'btn-primary' : 'btn-danger' }}">
+                                            {{ $row['model_folio'] ?? '' }}
+                                        </a>
+                                    </td>
+                                    <td>{{ $row['numero_factura'] ?? '' }}</td>
+                                    <td class="text-right">{{ isset($row['monto']) ? number_format((float)$row['monto'], 2, '.', ',') : '' }}</td>
+                                    <td>{{ $row['fecha_pago'] ?? '' }}</td>
+                                    <td>{{ $row['notas'] ?? '' }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     @endif
