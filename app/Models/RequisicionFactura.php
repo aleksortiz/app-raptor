@@ -17,6 +17,7 @@ class RequisicionFactura extends Model
         'forma_pago',
         'descripcion',
         'monto',
+        'aseguradora',
         'numero_factura',
         'fecha_facturacion',
         'fecha_pago',

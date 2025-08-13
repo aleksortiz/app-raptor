@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <div class="table-responsive">
+    <div class="">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -57,14 +57,16 @@
                                 <div class="dropdown-menu" role="menu">
                                     <a class="dropdown-item"><b>Req: #{{ $req->id }}</b></a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" style="cursor: pointer;" wire:click="openDetalles({{ $req->id }})"><i class="fas fa-eye"></i> Ver Detalles</a>
                                     @if (!$hasFactura)
-                                        <a class="dropdown-item" style="cursor: pointer;" wire:click="openCapturaFactura({{ $req->id }})"><i class="fas fa-file-invoice"></i> Capturar Factura y Pago</a>
+                                        
                                         <a class="dropdown-item text-danger" style="cursor: pointer;" onclick="destroy({{ $req->id }}, 'Requisición #{{ $req->id }}', 'deleteRequisicion')"><i class="fas fa-trash"></i> Eliminar</a>
                                     @elseif ($hasFactura && !$hasPago)
-                                        <a class="dropdown-item" style="cursor: pointer;" wire:click="openCapturaPago({{ $req->id }})"><i class="fas fa-dollar-sign"></i> Registrar Pago</a>
+                                        
                                     @else
                                         <a class="dropdown-item disabled"><i class="fas fa-check"></i> Sin acciones</a>
                                     @endif
+                                    
                                 </div>
                             </div>
                         </td>
@@ -222,6 +224,89 @@
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
                     <button type="button" class="btn btn-success" wire:click="saveCapturaPago"><i class="fas fa-check"></i> Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Detalles Requisición -->
+    <div wire:ignore.self class="modal fade" data-backdrop="static" id="{{$this->mdlNameDetalles}}">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalles Requisición #{{ $this->detalleReq?->id }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="mt-3">
+                                @php
+                                    $hasFactura = !empty($this->detalleReq?->numero_factura);
+                                    $hasPago = !empty($this->detalleReq?->fecha_pago);
+                                @endphp
+                                @if (!$hasFactura || ($hasFactura && !$hasPago))
+                                    <div class="card">
+                                        <div class="card-body">
+                                            @if (!$hasFactura)
+                                                <div class="form-group">
+                                                    <label>Número de Factura</label>
+                                                    <input type="text" class="form-control" wire:model.defer="numeroFactura">
+                                                    @error('numeroFactura') <span class="error text-danger">{{ $message }}</span> @enderror
+                                                </div>
+                                            @endif
+                                            <div class="form-group">
+                                                <label>Fecha de Pago @if(!$hasFactura) <small>(opcional)</small> @endif</label>
+                                                <input type="date" class="form-control" wire:model.defer="fechaPago">
+                                                @error('fechaPago') <span class="error text-danger">{{ $message }}</span> @enderror
+                                            </div>
+                                            <div class="text-right">
+                                                <button class="btn btn-success btn-sm" wire:click="saveFacturaPago"><i class="fas fa-check"></i> Guardar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <table class="table table-sm">
+                                <tr><th>Cliente</th><td>{{ $this->detalleReq?->cliente?->nombre }}</td></tr>
+                                <tr><th>Uso CFDI</th><td>{{ $this->detalleReq?->uso_cfdi }}</td></tr>
+                                <tr><th>Forma Pago</th><td>{{ $this->detalleReq?->forma_pago }}</td></tr>
+                                <tr><th>Monto</th><td>@money($this->detalleReq?->monto)</td></tr>
+                                <tr><th>Número Factura</th><td>{{ $this->detalleReq?->numero_factura ?? 'N/A' }}</td></tr>
+                                <tr><th>Fecha Facturación</th><td>{{ $this->detalleReq?->fecha_facturacion ?? 'N/A' }}</td></tr>
+                                <tr><th>Fecha Pago</th><td>{{ $this->detalleReq?->fecha_pago ?? 'N/A' }}</td></tr>
+                                <tr><th>Entrada</th><td>
+                                    @if ($this->detalleReq?->model_type === \App\Models\Entrada::class && $this->detalleReq?->model_id)
+                                        {!! optional(\App\Models\Entrada::find($this->detalleReq->model_id))->folio_button !!}
+                                    @else
+                                        <span class="badge badge-secondary">SIN ENTRADA</span>
+                                    @endif
+                                </td></tr>
+                            </table>
+                            <div class="mt-2">
+                                <label>Conceptos de Facturación</label>
+                                <div class="border rounded p-2" style="white-space: pre-wrap;">{{ $this->detalleReq?->descripcion }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>CONSTANCIA FISCAL</h5>
+                            @if ($this->constanciaUrl)
+                                <div class="embed-responsive embed-responsive-4by3">
+                                    <iframe class="embed-responsive-item" src="{{ $this->constanciaUrl }}#toolbar=0" allowfullscreen></iframe>
+                                </div>
+                            @else
+                                <div class="alert alert-secondary">Sin constancia cargada</div>
+                            @endif
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cerrar</button>
                 </div>
             </div>
         </div>

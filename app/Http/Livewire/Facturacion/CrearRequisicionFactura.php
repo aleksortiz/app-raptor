@@ -36,6 +36,11 @@ class CrearRequisicionFactura extends Component
     public $numeroFactura;
     public $fechaPago;
 
+    // Modal detalles
+    public $mdlNameDetalles = 'mdlDetallesRequisicion';
+    public $detalleReq;
+    public $constanciaUrl;
+
     protected $listeners = [
         'setCliente' => 'setCliente',
         'setEntrada' => 'setEntrada',
@@ -277,5 +282,54 @@ class CrearRequisicionFactura extends Component
         $req->delete();
         $this->emit('ok', 'Requisición eliminada');
         $this->resetPage('requisicionesPage');
+    }
+
+    // ==== Detalles ====
+    public function openDetalles($id)
+    {
+        $req = RequisicionFactura::with('cliente')->findOrFail($id);
+        $this->detalleReq = $req;
+        $this->selectedRequisicionId = $req->id;
+        $this->numeroFactura = $req->numero_factura;
+        $this->fechaPago = $req->fecha_pago;
+        $doc = $req->cliente?->documentos()->where('tipo', 'CONSTANCIA FISCAL')->first();
+        $this->constanciaUrl = $this->buildS3Url($doc?->url);
+        $this->emit('showModal', "#{$this->mdlNameDetalles}");
+    }
+
+    public function saveFacturaPago()
+    {
+        $req = RequisicionFactura::findOrFail($this->selectedRequisicionId);
+        if (empty($req->numero_factura)) {
+            $this->validate([
+                'numeroFactura' => 'required|string|max:100',
+                'fechaPago' => 'nullable|date',
+            ]);
+            $req->numero_factura = $this->numeroFactura;
+            if ($this->fechaPago) {
+                $req->fecha_pago = $this->fechaPago;
+            }
+        } elseif (empty($req->fecha_pago)) {
+            $this->validate([
+                'fechaPago' => 'required|date',
+            ]);
+            $req->fecha_pago = $this->fechaPago;
+        }
+        $req->save();
+        $this->detalleReq = $req->fresh('cliente');
+        $this->emit('ok', 'Datos actualizados');
+    }
+
+    private function buildS3Url(?string $path): ?string
+    {
+        if (!$path) return null;
+        $bucket = env('AWS_BUCKET_URL');
+        if (!$bucket) return $path;
+        $bucket = rtrim($bucket, '/');
+        $path = ltrim($path, '/');
+        if (str_contains($path, $bucket)) {
+            return $path;
+        }
+        return "$bucket/$path";
     }
 }

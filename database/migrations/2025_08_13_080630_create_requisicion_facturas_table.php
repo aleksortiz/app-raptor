@@ -21,6 +21,7 @@ class CreateRequisicionFacturasTable extends Migration
             $table->string('forma_pago');
             $table->text('descripcion');
             $table->decimal('monto', 10, 2);
+            $table->boolean('aseguradora')->default(false);
             $table->string('numero_factura')->nullable();
             $table->date('fecha_facturacion')->nullable();
             $table->date('fecha_pago')->nullable();
