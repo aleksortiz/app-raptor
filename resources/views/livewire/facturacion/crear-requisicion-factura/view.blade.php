@@ -17,9 +17,11 @@
                 <tr>
                     <th>ID</th>
                     <th>Cliente</th>
+                    <th>Entrada</th>
                     <th>Descripción</th>
                     <th>Monto</th>
                     <th>Estado</th>
+                    <th>Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,6 +29,13 @@
                     <tr>
                         <td>{{ $req->id }}</td>
                         <td>{{ $req->cliente?->nombre }}</td>
+                        <td>
+                            @if ($req->model_type === \App\Models\Entrada::class && $req->model_id)
+                                {!! optional(\App\Models\Entrada::find($req->model_id))->folio_button !!}
+                            @else
+                                <span class="badge badge-secondary">SIN ENTRADA</span>
+                            @endif
+                        </td>
                         <td>{{ Str::limit($req->descripcion, 60) }}</td>
                         <td>@money($req->monto)</td>
                         <td>
@@ -41,6 +50,23 @@
                             @else
                                 <button type="button" class="btn btn-xs btn-success"><i class="fa fa-check"></i> PAGADO</button>
                             @endif
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm btn-default" data-toggle="dropdown"><i class="fa fa-cog"></i> Opciones</button>
+                                <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item"><b>Req: #{{ $req->id }}</b></a>
+                                    <div class="dropdown-divider"></div>
+                                    @if (!$hasFactura)
+                                        <a class="dropdown-item" style="cursor: pointer;" wire:click="openCapturaFactura({{ $req->id }})"><i class="fas fa-file-invoice"></i> Capturar Factura y Pago</a>
+                                        <a class="dropdown-item text-danger" style="cursor: pointer;" onclick="destroy({{ $req->id }}, 'Requisición #{{ $req->id }}', 'deleteRequisicion')"><i class="fas fa-trash"></i> Eliminar</a>
+                                    @elseif ($hasFactura && !$hasPago)
+                                        <a class="dropdown-item" style="cursor: pointer;" wire:click="openCapturaPago({{ $req->id }})"><i class="fas fa-dollar-sign"></i> Registrar Pago</a>
+                                    @else
+                                        <a class="dropdown-item disabled"><i class="fas fa-check"></i> Sin acciones</a>
+                                    @endif
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
@@ -145,4 +171,59 @@
 
     @livewire('cliente.common.mdl-select-cliente')
     @livewire('entrada.common.mdl-select-entrada', ['emitAction' => 'setEntrada'])
+
+    <!-- Modal Captura Factura/Pago -->
+    <div wire:ignore.self class="modal fade" data-backdrop="static" id="{{$this->mdlNameFactura}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Capturar Factura</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Número de Factura</label>
+                        <input type="text" class="form-control" wire:model.defer="numeroFactura">
+                        @error('numeroFactura') <span class="error text-danger">{{ $message }}</span> @enderror
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Pago (opcional)</label>
+                        <input type="date" class="form-control" wire:model.defer="fechaPago">
+                        @error('fechaPago') <span class="error text-danger">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
+                    <button type="button" class="btn btn-success" wire:click="saveCapturaFactura"><i class="fas fa-check"></i> Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Captura Pago -->
+    <div wire:ignore.self class="modal fade" data-backdrop="static" id="{{$this->mdlNamePago}}">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Pago</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Fecha de Pago</label>
+                        <input type="date" class="form-control" wire:model.defer="fechaPago">
+                        @error('fechaPago') <span class="error text-danger">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
+                    <button type="button" class="btn btn-success" wire:click="saveCapturaPago"><i class="fas fa-check"></i> Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

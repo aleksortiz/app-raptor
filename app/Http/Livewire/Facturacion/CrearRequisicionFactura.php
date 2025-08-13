@@ -29,9 +29,17 @@ class CrearRequisicionFactura extends Component
     // Documento Constancia Fiscal
     public $constanciaFiscalFile; // Livewire UploadedFile
 
+    // Modales de actualización
+    public $mdlNameFactura = 'mdlCapturaFactura';
+    public $mdlNamePago = 'mdlCapturaPago';
+    public $selectedRequisicionId;
+    public $numeroFactura;
+    public $fechaPago;
+
     protected $listeners = [
         'setCliente' => 'setCliente',
         'setEntrada' => 'setEntrada',
+        'deleteRequisicion',
     ];
 
     protected function rules()
@@ -209,5 +217,65 @@ class CrearRequisicionFactura extends Component
         ]);
 
         $this->constanciaFiscalFile = null;
+    }
+
+    // ==== Captura Factura / Pago ====
+    public function openCapturaFactura($id)
+    {
+        $req = RequisicionFactura::findOrFail($id);
+        $this->selectedRequisicionId = $req->id;
+        $this->numeroFactura = $req->numero_factura;
+        $this->fechaPago = $req->fecha_pago;
+        $this->emit('showModal', "#{$this->mdlNameFactura}");
+    }
+
+    public function saveCapturaFactura()
+    {
+        $this->validate([
+            'numeroFactura' => 'required|string|max:100',
+            'fechaPago' => 'nullable|date',
+        ]);
+        $req = RequisicionFactura::findOrFail($this->selectedRequisicionId);
+        $req->numero_factura = $this->numeroFactura;
+        if ($this->fechaPago) {
+            $req->fecha_pago = $this->fechaPago;
+        }
+        $req->save();
+        $this->emit('ok', 'Datos de factura actualizados');
+        $this->emit('closeModal', "#{$this->mdlNameFactura}");
+        $this->reset(['selectedRequisicionId', 'numeroFactura', 'fechaPago']);
+    }
+
+    public function openCapturaPago($id)
+    {
+        $req = RequisicionFactura::findOrFail($id);
+        $this->selectedRequisicionId = $req->id;
+        $this->fechaPago = $req->fecha_pago;
+        $this->emit('showModal', "#{$this->mdlNamePago}");
+    }
+
+    public function saveCapturaPago()
+    {
+        $this->validate([
+            'fechaPago' => 'required|date',
+        ]);
+        $req = RequisicionFactura::findOrFail($this->selectedRequisicionId);
+        $req->fecha_pago = $this->fechaPago;
+        $req->save();
+        $this->emit('ok', 'Fecha de pago registrada');
+        $this->emit('closeModal', "#{$this->mdlNamePago}");
+        $this->reset(['selectedRequisicionId', 'fechaPago']);
+    }
+
+    public function deleteRequisicion($id)
+    {
+        $req = RequisicionFactura::findOrFail($id);
+        if (!empty($req->numero_factura)) {
+            $this->emit('error', 'No se puede eliminar: la requisición ya tiene número de factura.');
+            return;
+        }
+        $req->delete();
+        $this->emit('ok', 'Requisición eliminada');
+        $this->resetPage('requisicionesPage');
     }
 }
