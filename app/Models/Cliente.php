@@ -97,5 +97,10 @@ class Cliente extends CancelableModel
     $this->save();
   }
 
+  public function documentos()
+  {
+    return $this->morphMany(Documento::class, 'model');
+  }
+
 
 }
