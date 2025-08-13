@@ -14,7 +14,7 @@ class RequisicionFactura extends Model
         'model_id',
         'model_type',
         'uso_cfdi',
-        'metodo_pago',
+        'forma_pago',
         'descripcion',
         'monto',
         'numero_factura',

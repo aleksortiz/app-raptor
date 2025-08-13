@@ -18,7 +18,7 @@ class CreateRequisicionFacturasTable extends Migration
             $table->foreignId('cliente_id')->constrained('clientes');
             $table->nullableMorphs('model');
             $table->string('uso_cfdi');
-            $table->string('metodo_pago');
+            $table->string('forma_pago');
             $table->text('descripcion');
             $table->decimal('monto', 10, 2);
             $table->string('numero_factura')->nullable();

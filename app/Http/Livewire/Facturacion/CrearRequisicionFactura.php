@@ -4,14 +4,17 @@ namespace App\Http\Livewire\Facturacion;
 
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\WithFileUploads;
 use App\Models\RequisicionFactura;
 use App\Models\Cliente;
 use App\Models\Entrada;
+use App\Models\Documento;
 use App\Classes\FacturacionConstants;
+use Illuminate\Support\Facades\Storage;
 
 class CrearRequisicionFactura extends Component
 {
-    use WithPagination;
+    use WithPagination, WithFileUploads;
 
     protected $paginationTheme = 'bootstrap';
 
@@ -23,6 +26,9 @@ class CrearRequisicionFactura extends Component
     public $selectedClienteNombre;
     public $selectedEntradaFolio;
 
+    // Documento Constancia Fiscal
+    public $constanciaFiscalFile; // Livewire UploadedFile
+
     protected $listeners = [
         'setCliente' => 'setCliente',
         'setEntrada' => 'setEntrada',
@@ -31,17 +37,16 @@ class CrearRequisicionFactura extends Component
     protected function rules()
     {
         $usoCfdiKeys = implode(',', array_keys(FacturacionConstants::USO_CFDI));
+        $formasPagoKeys = implode(',', array_keys(FacturacionConstants::FORMAS_PAGO));
         return [
             'requisicion.cliente_id' => 'required|integer|exists:clientes,id',
             'requisicion.model_id' => 'nullable|integer',
             'requisicion.model_type' => 'nullable|string',
-            'requisicion.uso_cfdi' => "nullable|in:{$usoCfdiKeys}",
-            'requisicion.metodo_pago' => 'nullable|string|max:50',
-            'requisicion.descripcion' => 'nullable|string|max:1000',
-            'requisicion.monto' => 'nullable|numeric|min:0',
-            'requisicion.numero_factura' => 'nullable|string|max:100',
-            'requisicion.fecha_facturacion' => 'nullable|date',
-            'requisicion.fecha_pago' => 'nullable|date',
+            'requisicion.uso_cfdi' => "required|in:{$usoCfdiKeys}",
+            'requisicion.forma_pago' => "required|in:{$formasPagoKeys}",
+            'requisicion.descripcion' => 'required|string|max:1000',
+            'requisicion.monto' => 'required|numeric|min:0',
+            'constanciaFiscalFile' => 'nullable|file|max:10240',
         ];
     }
 
@@ -69,7 +74,7 @@ class CrearRequisicionFactura extends Component
                 $q->orWhere('numero_factura', 'LIKE', "%{$key}%")
                   ->orWhere('descripcion', 'LIKE', "%{$key}%")
                   ->orWhere('uso_cfdi', 'LIKE', "%{$key}%")
-                  ->orWhere('metodo_pago', 'LIKE', "%{$key}%")
+                  ->orWhere('forma_pago', 'LIKE', "%{$key}%")
                   ->orWhere('monto', 'LIKE', "%{$key}%")
                   ->orWhereHas('cliente', function ($cq) use ($key) {
                       $cq->where('nombre', 'LIKE', "%{$key}%");
@@ -80,6 +85,8 @@ class CrearRequisicionFactura extends Component
         return [
             'requisiciones' => $query->paginate(25, ['*'], 'requisicionesPage'),
             'usoCfdiOptions' => FacturacionConstants::USO_CFDI,
+            'formasPagoOptions' => FacturacionConstants::FORMAS_PAGO,
+            'clienteNecesitaConstanciaFiscal' => $this->clienteNecesitaConstanciaFiscal(),
         ];
     }
 
@@ -88,6 +95,7 @@ class CrearRequisicionFactura extends Component
         $this->requisicion = new RequisicionFactura();
         $this->selectedClienteNombre = null;
         $this->selectedEntradaFolio = null;
+        $this->constanciaFiscalFile = null;
         $this->emit('showModal', "#{$this->mdlNameCreate}");
     }
 
@@ -141,12 +149,65 @@ class CrearRequisicionFactura extends Component
     public function save()
     {
         $this->validate();
+
+        // Antes de guardar, asegurar CONSTANCIA FISCAL
+        if ($this->clienteNecesitaConstanciaFiscal()) {
+            // si no hay archivo cargado, avisar
+            if (!$this->constanciaFiscalFile) {
+                $this->emit('error', 'El cliente no tiene CONSTANCIA FISCAL. Cárguela para continuar.');
+                return;
+            }
+
+            $this->uploadConstanciaFiscal();
+        }
+
         $this->requisicion->save();
         $this->emit('ok', 'Requisición registrada correctamente');
         $this->emit('closeModal', "#{$this->mdlNameCreate}");
         $this->requisicion = new RequisicionFactura();
         $this->selectedClienteNombre = null;
         $this->selectedEntradaFolio = null;
+        $this->constanciaFiscalFile = null;
         $this->resetPage('requisicionesPage');
+    }
+
+    public function clienteNecesitaConstanciaFiscal(): bool
+    {
+        if (empty($this->requisicion->cliente_id)) {
+            return false;
+        }
+        $cliente = Cliente::with('documentos')->find($this->requisicion->cliente_id);
+        if (!$cliente) return false;
+        return !$cliente->documentos()->where('tipo', 'CONSTANCIA FISCAL')->exists();
+    }
+
+    public function uploadConstanciaFiscal()
+    {
+        $this->validateOnly('constanciaFiscalFile');
+
+        $cliente = Cliente::find($this->requisicion->cliente_id);
+        if (!$cliente) return;
+
+        $ext = $this->constanciaFiscalFile->getClientOriginalExtension();
+        $filename = 'cliente_' . $cliente->id . '_CONSTANCIA_FISCAL_' . time() . '.' . $ext;
+        $path = $this->constanciaFiscalFile->storeAs('documentos/clientes/' . $cliente->id, $filename, 's3');
+
+        // Eliminar existente si hubiera
+        $existing = $cliente->documentos()->where('tipo', 'CONSTANCIA FISCAL')->first();
+        if ($existing) {
+            if (Storage::disk('s3')->exists($existing->url)) {
+                Storage::disk('s3')->delete($existing->url);
+            }
+            $existing->delete();
+        }
+
+        $cliente->documentos()->create([
+            'tipo' => 'CONSTANCIA FISCAL',
+            'url' => $path,
+            'name' => $filename,
+            'user_id' => auth()->id(),
+        ]);
+
+        $this->constanciaFiscalFile = null;
     }
 }

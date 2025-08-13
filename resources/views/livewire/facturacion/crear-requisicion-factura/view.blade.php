@@ -36,7 +36,7 @@
     </div>
 
     <div wire:ignore.self class="modal fade" data-backdrop="static" id="{{$this->mdlNameCreate}}">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Registrar Requisición</h5>
@@ -81,9 +81,14 @@
                             @error('requisicion.uso_cfdi') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group col-md-4">
-                            <label>Método de Pago</label>
-                            <input type="text" class="form-control" wire:model.defer="requisicion.metodo_pago">
-                            @error('requisicion.metodo_pago') <span class="error text-danger">{{ $message }}</span> @enderror
+                            <label>Forma de Pago</label>
+                            <select class="form-control" wire:model.defer="requisicion.forma_pago">
+                                <option value="">Seleccione...</option>
+                                @foreach ($formasPagoOptions as $key => $label)
+                                    <option value="{{$key}}">{{$key}} - {{$label}}</option>
+                                @endforeach
+                            </select>
+                            @error('requisicion.forma_pago') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                         <div class="form-group col-md-4">
                             <label>Monto</label>
@@ -94,11 +99,27 @@
 
                     <div class="row">
                         <div class="form-group col-md-12">
-                            <label>Descripción</label>
-                            <textarea class="form-control" rows="6" wire:model.defer="requisicion.descripcion"></textarea>
+                            @if ($clienteNecesitaConstanciaFiscal)
+                                <div class="alert alert-warning">
+                                    <i class="fa fa-exclamation-triangle"></i> El cliente no tiene documento "CONSTANCIA FISCAL". Cárguelo para continuar.
+                                </div>
+                                <label>Subir CONSTANCIA FISCAL (PDF/Imagen, máx 10MB)</label>
+                                <input type="file" class="form-control-file" wire:model="constanciaFiscalFile" accept="application/pdf,image/*">
+                                @error('constanciaFiscalFile') <span class="error text-danger">{{ $message }}</span> @enderror
+                                <div wire:loading wire:target="constanciaFiscalFile" class="text-muted mt-1"><i class="fa fa-spinner fa-spin"></i> Cargando...</div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Conceptos de Facturación</label>
+                            <textarea class="form-control" rows="5" wire:model.defer="requisicion.descripcion"></textarea>
                             @error('requisicion.descripcion') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
                     </div>
+
+
                 </div>
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-window-close"></i> Cancelar</button>
