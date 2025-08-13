@@ -19,6 +19,7 @@
                     <th>Cliente</th>
                     <th>Descripción</th>
                     <th>Monto</th>
+                    <th>Estado</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,19 @@
                         <td>{{ $req->cliente?->nombre }}</td>
                         <td>{{ Str::limit($req->descripcion, 60) }}</td>
                         <td>@money($req->monto)</td>
+                        <td>
+                            @php
+                                $hasFactura = !empty($req->numero_factura);
+                                $hasPago = !empty($req->fecha_pago);
+                            @endphp
+                            @if (!$hasFactura)
+                                <button type="button" class="btn btn-xs btn-warning"><i class="fa fa-clock"></i> PENDIENTE</button>
+                            @elseif ($hasFactura && !$hasPago)
+                                <button type="button" class="btn btn-xs btn-primary"><i class="fa fa-file-invoice"></i> FACTURADO</button>
+                            @else
+                                <button type="button" class="btn btn-xs btn-success"><i class="fa fa-check"></i> PAGADO</button>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
