@@ -45,6 +45,21 @@ class Cliente extends CancelableModel
     $this->attributes['estado'] = strtoupper($value);
   }
 
+  public function setRfcAttribute($value)
+  {
+    $this->attributes['rfc'] = trim(strtoupper($value));
+  }
+
+  public function setRazonSocialAttribute($value)
+  {
+    $this->attributes['razon_social'] = trim(strtoupper($value));
+  }
+  
+  public function setNombreAttribute($value)
+  {
+    $this->attributes['nombre'] = trim(strtoupper($value));
+  }
+
   public function getDireccionAttribute()
   {
     $dir = "";
