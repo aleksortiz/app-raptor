@@ -325,6 +325,11 @@ return [
                     'url' => '/control-facturacion',
                     'can' => ['reporte-facturas'],
                 ],
+                [
+                    'text' => 'Requisiciones de Facturas',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url' => '/control-facturacion/requisicion-facturas',
+                ],
                 // [
                 //     'text' => 'Reporte de Facturas',
                 //     'icon'   => 'fas fa-fw fa-chevron-right',
