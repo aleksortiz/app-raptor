@@ -7,7 +7,7 @@
 <center>
     <div class="mt-5 logo-container">
         <img width="60%" src="{{ asset('images/logo.png') }}">
-    <h1 style="font-size: 3rem; color: black;">{{env('BUSSINESS_DESCRIPTION')}}</h1>
+    <h1 style="font-size: 2rem; color: black;">{{env('BUSSINESS_DESCRIPTION')}}</h1>
 
     </div>
     {{-- <h1>{{env('APP_FULL_NAME')}}</h1> --}}

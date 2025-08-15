@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Models\Entrada;
 use App\Models\Pendiente;
+use App\Models\RequisicionFactura;
 use App\Observers\EntradaObserver;
 use App\Observers\PendienteObserver;
+use App\Observers\RequisicionFacturaObserver;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Blade;
 
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Pendiente::observe(PendienteObserver::class);
         Entrada::observe(EntradaObserver::class);
+        RequisicionFactura::observe(RequisicionFacturaObserver::class);
         
         Blade::directive('qty', function ($amount) {
             return "<?php echo number_format($amount); ?>";
