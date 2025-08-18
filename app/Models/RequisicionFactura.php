@@ -23,6 +23,10 @@ class RequisicionFactura extends Model
         'fecha_pago',
     ];
 
+    protected $attributes = [
+        'uso_cfdi' => 'G03',
+    ];
+
     public function cliente()
     {
         return $this->belongsTo(Cliente::class);
