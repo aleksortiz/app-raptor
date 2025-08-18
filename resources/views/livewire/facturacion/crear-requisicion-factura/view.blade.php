@@ -28,7 +28,7 @@
                 @foreach ($requisiciones as $req)
                     <tr>
                         <td>{{ $req->id }}</td>
-                        <td>{{ $req->cliente?->nombre }}</td>
+                        <td>{{ $req->nombre_cliente }}</td>
                         <td>
                             @if ($req->model_type === \App\Models\Entrada::class && $req->model_id)
                                 {!! optional(\App\Models\Entrada::find($req->model_id))->folio_button !!}
@@ -287,7 +287,7 @@
                             </div>
 
                             <table class="table table-sm">
-                                <tr><th>Cliente</th><td>{{ $this->detalleReq?->cliente?->nombre }}</td></tr>
+                                <tr><th>Cliente</th><td>{{ $this->detalleReq?->nombre_cliente }}</td></tr>
                                 <tr><th>Uso CFDI</th><td>{{ $this->detalleReq?->uso_cfdi }}</td></tr>
                                 <tr><th>Forma Pago</th><td>{{ $this->detalleReq?->forma_pago }}</td></tr>
                                 <tr><th>Monto</th><td>@money($this->detalleReq?->monto)</td></tr>

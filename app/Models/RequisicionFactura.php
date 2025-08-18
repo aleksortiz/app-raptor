@@ -32,4 +32,13 @@ class RequisicionFactura extends Model
     {
         return $this->morphTo();
     }
+
+    public function getNombreClienteAttribute()
+    {
+        if ($this->cliente) {
+            return $this->cliente->nombre;
+        }
+
+        return $this->aseguradora;
+    }
 }
