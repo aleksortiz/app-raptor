@@ -149,7 +149,7 @@ class ImportRequisiciones extends Command
                 'model_id'          => $entrada->id,
                 'model_type'        => Entrada::class,
                 // 'uso_cfdi'          => null,
-                'forma_pago'        => null,
+                'forma_pago'        => 'TRANSFERENCIA',
                 'descripcion'       => $this->cleanString($descripcion),
                 'monto'             => $total,
                 'aseguradora'       => 'QUALITAS',
