@@ -41,6 +41,13 @@ class CrearRequisicionFactura extends Component
     public $detalleReq;
     public $constanciaUrl;
 
+    // Opciones Aseguradora (Facturar A)
+    public array $aseguradoraOptions = [
+        'QUALITAS' => 'QUALITAS',
+        'CENTAURO' => 'CENTAURO',
+        'PARTICULAR' => 'PARTICULAR',
+    ];
+
     protected $listeners = [
         'setCliente' => 'setCliente',
         'setEntrada' => 'setEntrada',
@@ -51,8 +58,11 @@ class CrearRequisicionFactura extends Component
     {
         $usoCfdiKeys = implode(',', array_keys(FacturacionConstants::USO_CFDI));
         $formasPagoKeys = implode(',', array_keys(FacturacionConstants::FORMAS_PAGO));
+        $aseguradoraKeys = implode(',', array_keys($this->aseguradoraOptions));
+        $clienteIdRule = ($this->requisicion->aseguradora === 'PARTICULAR') ? 'required' : 'nullable';
         return [
-            'requisicion.cliente_id' => 'required|integer|exists:clientes,id',
+            'requisicion.aseguradora' => "required|in:{$aseguradoraKeys}",
+            'requisicion.cliente_id' => "{$clienteIdRule}|integer|exists:clientes,id",
             'requisicion.model_id' => 'nullable|integer',
             'requisicion.model_type' => 'nullable|string',
             'requisicion.uso_cfdi' => "required|in:{$usoCfdiKeys}",
@@ -99,6 +109,7 @@ class CrearRequisicionFactura extends Component
             'requisiciones' => $query->paginate(25, ['*'], 'requisicionesPage'),
             'usoCfdiOptions' => FacturacionConstants::USO_CFDI,
             'formasPagoOptions' => FacturacionConstants::FORMAS_PAGO,
+            'aseguradoraOptions' => $this->aseguradoraOptions,
             'clienteNecesitaConstanciaFiscal' => $this->clienteNecesitaConstanciaFiscal(),
         ];
     }
@@ -114,6 +125,10 @@ class CrearRequisicionFactura extends Component
 
     public function setCliente($clienteId)
     {
+        // Solo permitir seleccionar cliente si es PARTICULAR
+        if ($this->requisicion->aseguradora !== 'PARTICULAR') {
+            return;
+        }
         $cliente = Cliente::find($clienteId);
         if ($cliente) {
             // Al seleccionar cliente manualmente, limpiamos entrada para evitar conflictos
@@ -133,9 +148,16 @@ class CrearRequisicionFactura extends Component
         if ($entrada) {
             $this->requisicion->model_type = Entrada::class;
             $this->requisicion->model_id = $entrada->id;
-            $this->requisicion->cliente_id = $entrada->cliente_id;
-            $this->selectedClienteNombre = $entrada->cliente?->nombre;
             $this->selectedEntradaFolio = $entrada->folio;
+
+            // Asignar cliente desde entrada solo si es PARTICULAR
+            if ($this->requisicion->aseguradora === 'PARTICULAR') {
+                $this->requisicion->cliente_id = $entrada->cliente_id;
+                $this->selectedClienteNombre = $entrada->cliente?->nombre;
+            } else {
+                $this->requisicion->cliente_id = null;
+                $this->selectedClienteNombre = null;
+            }
         }
     }
 
@@ -331,5 +353,12 @@ class CrearRequisicionFactura extends Component
             return $path;
         }
         return "$bucket/$path";
+    }
+
+    public function updatedRequisicionAseguradora($value)
+    {
+        if ($value !== 'PARTICULAR') {
+            $this->clearCliente(false);
+        }
     }
 }

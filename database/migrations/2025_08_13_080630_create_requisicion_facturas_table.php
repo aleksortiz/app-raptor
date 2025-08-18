@@ -15,13 +15,13 @@ class CreateRequisicionFacturasTable extends Migration
     {
         Schema::create('requisicion_facturas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id')->constrained('clientes');
+            $table->foreignId('cliente_id')->nullable()->constrained('clientes');
             $table->nullableMorphs('model');
             $table->string('uso_cfdi');
             $table->string('forma_pago');
             $table->text('descripcion');
             $table->decimal('monto', 10, 2);
-            $table->boolean('aseguradora')->default(false);
+            $table->string('aseguradora');
             $table->string('numero_factura')->nullable();
             $table->date('fecha_facturacion')->nullable();
             $table->date('fecha_pago')->nullable();

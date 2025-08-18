@@ -88,6 +88,20 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="form-group col-md-4">
+                            <label>Facturar A</label>
+                            <select class="form-control" wire:model="requisicion.aseguradora">
+                                <option value="">Seleccione...</option>
+                                @foreach ($aseguradoraOptions as $key => $label)
+                                    <option value="{{$key}}">{{$label}}</option>
+                                @endforeach
+                            </select>
+                            @error('requisicion.aseguradora') <span class="error text-danger">{{ $message }}</span> @enderror
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @if ($requisicion->aseguradora === 'PARTICULAR')
                         <div class="form-group col-md-8">
                             <label>Cliente</label>
                             <div class="input-group">
@@ -99,6 +113,7 @@
                             </div>
                             @error('requisicion.cliente_id') <span class="error text-danger">{{ $message }}</span> @enderror
                         </div>
+                        @endif
                         <div class="form-group col-md-4">
                             <label>Entrada seleccionada</label>
                             <div class="input-group">
