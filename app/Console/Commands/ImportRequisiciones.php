@@ -148,7 +148,7 @@ class ImportRequisiciones extends Command
                 'cliente_id'        => $entrada->cliente_id,
                 'model_id'          => $entrada->id,
                 'model_type'        => Entrada::class,
-                'uso_cfdi'          => null,
+                // 'uso_cfdi'          => null,
                 'forma_pago'        => null,
                 'descripcion'       => $this->cleanString($descripcion),
                 'monto'             => $total,
