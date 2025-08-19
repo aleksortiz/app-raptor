@@ -35,8 +35,15 @@
 
     @if(!empty($rows))
         <div class="card mt-3">
-            <div class="card-header">
+            <div class="card-header d-flex align-items-center justify-content-between">
                 <h3 class="card-title mb-0">Resultado</h3>
+                <div>
+                    <button class="btn btn-primary btn-sm" type="button" wire:click="registrarRequisiciones" wire:loading.attr="disabled" wire:target="registrarRequisiciones">
+                        <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" wire:loading wire:target="registrarRequisiciones"></span>
+                        <span wire:loading wire:target="registrarRequisiciones">Registrando...</span>
+                        <span wire:loading.remove wire:target="registrarRequisiciones"><i class="fa fa-save"></i> Registrar requisiciones</span>
+                    </button>
+                </div>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">

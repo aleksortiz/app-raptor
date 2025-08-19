@@ -8,6 +8,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use App\Models\Entrada;
+use App\Models\RequisicionFactura;
 
 class ImportarPDF extends Component
 {
@@ -330,5 +331,68 @@ PROMPT;
     public function resetForm(): void
     {
         $this->reset(['pdf', 'responseText', 'isLoading', 'rows']);
+    }
+
+    public function registrarRequisiciones(): void
+    {
+        $inserted = 0;
+        $updated = 0;
+        $skippedNoEntrada = 0;
+        $skippedSinNumeroFactura = 0;
+        $skippedDuplicado = 0;
+        $processed = 0;
+
+        foreach ($this->rows as $row) {
+            $processed++;
+
+            $modelId = $row['model_id'] ?? null;
+            $modelType = $row['model_type'] ?? null;
+            if (!$modelId || $modelType !== Entrada::class) {
+                $skippedNoEntrada++;
+                continue;
+            }
+
+            $numeroFacturaRaw = $row['numero_factura'] ?? null;
+            $numeroFactura = is_string($numeroFacturaRaw) ? trim(strtoupper($numeroFacturaRaw)) : '';
+            if ($numeroFactura === '') {
+                $skippedSinNumeroFactura++;
+                continue;
+            }
+
+            $fechaPago = $row['fecha_pago'] ?? null; // YYYY-MM-DD o null
+
+            // Buscar existente por numero_factura
+            $existing = RequisicionFactura::where('numero_factura', $numeroFactura)->first();
+            if ($existing) {
+                // Si no tiene fecha_pago y ahora sí hay, actualizar
+                if (empty($existing->fecha_pago) && !empty($fechaPago)) {
+                    $existing->fecha_pago = $fechaPago;
+                    $existing->save();
+                    $updated++;
+                } else {
+                    $skippedDuplicado++;
+                }
+                continue;
+            }
+
+            // Insertar nueva
+            $req = new RequisicionFactura();
+            $req->aseguradora = $row['aseguradora'] ?? 'PARTICULAR';
+            $req->cliente_id = $row['cliente_id'] ?? null;
+            $req->model_type = Entrada::class;
+            $req->model_id = $modelId;
+            $req->uso_cfdi = $row['uso_cfdi'] ?? 'G03';
+            $req->forma_pago = $row['forma_pago'] ?? '99';
+            $req->descripcion = isset($row['descripcion']) ? trim((string) $row['descripcion']) : '';
+            $req->monto = isset($row['monto']) ? (float) $row['monto'] : 0;
+            $req->numero_factura = $numeroFactura;
+            $req->fecha_facturacion = $row['fecha_facturacion'] ?? null;
+            $req->fecha_pago = $fechaPago;
+            $req->save();
+            $inserted++;
+        }
+
+        $message = "Procesadas: {$processed}. Insertadas: {$inserted}. Actualizadas: {$updated}. Omitidas sin entrada: {$skippedNoEntrada}. Omitidas sin número de factura: {$skippedSinNumeroFactura}. Omitidas duplicadas: {$skippedDuplicado}.";
+        $this->emit('ok', $message);
     }
 } 
