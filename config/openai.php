@@ -11,5 +11,5 @@ return [
     'default_model' => env('OPENAI_MODEL', 'gpt-4.1-mini'),
 
     // Default timeout for requests (seconds)
-    'timeout' => env('OPENAI_TIMEOUT', 60),
+    'timeout' => env('OPENAI_TIMEOUT', 120),
 ]; 
