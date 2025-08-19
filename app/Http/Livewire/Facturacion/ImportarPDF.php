@@ -84,8 +84,11 @@ Reglas de mapeo:
 
 3) model_folio (proviene de “FOLIO INTERNO”)
    - Extrae folios como 18-07, 28-11, etc.
-   - Si el folio no incluye el año, agrega -25 (ej.: 18-07 → 18-07-25).
-   - Si ya incluye -25, déjalo tal cual.
+   - Si el folio no incluye el año, infiere el año con la semana (primeros 2 dígitos del folio):
+     • Si la semana > 40, agrega -24.
+     • En caso contrario, agrega -25.
+     • Ej.: 18-07 → 18-07-25; 45-03 → 45-03-24.
+   - Si ya incluye año (-24 o -25), déjalo tal cual.
    - Si la fila no tiene folio interno, omite esa fila.
 
 4) numero_reporte (fallback si no hay folio)
