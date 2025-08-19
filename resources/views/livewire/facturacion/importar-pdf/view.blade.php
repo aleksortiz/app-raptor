@@ -96,4 +96,9 @@
             </div>
         </div>
     @endif
+    @if($registroResumen)
+        <div class="alert alert-info mt-3">
+            {{ $registroResumen }}
+        </div>
+    @endif
 </div> 

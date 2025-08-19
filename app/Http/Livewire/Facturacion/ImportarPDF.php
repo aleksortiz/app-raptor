@@ -18,6 +18,7 @@ class ImportarPDF extends Component
     public ?string $responseText = null;
     public bool $isLoading = false;
     public array $rows = [];
+    public ?string $registroResumen = null;
 
     protected function rules(): array
     {
@@ -38,6 +39,7 @@ class ImportarPDF extends Component
         $this->isLoading = true;
         $this->responseText = null;
         $this->rows = [];
+        $this->registroResumen = null;
 
         try {
             $client = new OpenAIClient();
@@ -332,7 +334,7 @@ PROMPT;
 
     public function resetForm(): void
     {
-        $this->reset(['pdf', 'responseText', 'isLoading', 'rows']);
+        $this->reset(['pdf', 'responseText', 'isLoading', 'rows', 'registroResumen']);
     }
 
     public function registrarRequisiciones(): void
@@ -401,6 +403,7 @@ PROMPT;
         }
 
         $message = "Procesadas: {$processed}. Insertadas: {$inserted}. Actualizadas: {$updated}. Omitidas manualmente: {$skippedOmit}. Omitidas sin entrada: {$skippedNoEntrada}. Omitidas sin número de factura: {$skippedSinNumeroFactura}. Omitidas duplicadas: {$skippedDuplicado}.";
+        $this->registroResumen = $message;
         $this->emit('ok', $message);
     }
 
