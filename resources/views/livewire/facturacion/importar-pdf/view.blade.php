@@ -53,6 +53,7 @@
                                 <th>#</th>
                                 <th>Folio</th>
                                 <th>No. Reporte</th>
+                                <th>Vehículo</th>
                                 <th>Número de Factura</th>
                                 <th class="text-right">Monto</th>
                                 <th>Fecha de Pago</th>
@@ -71,6 +72,7 @@
                                     </td>
                                     <td>{{ $row['numero_reporte'] ?? ($row['_numero_reporte'] ?? '') }}</td>
                                     <td>{{ $row['numero_factura'] ?? '' }}</td>
+                                    <td>{{ $row['vehiculo'] ?? '' }}</td>
                                     <td class="text-right">{{ isset($row['monto']) ? number_format((float)$row['monto'], 2, '.', ',') : '' }}</td>
                                     <td>{{ $row['fecha_pago'] ?? '' }}</td>
                                     <td>{{ $row['notas'] ?? '' }}</td>

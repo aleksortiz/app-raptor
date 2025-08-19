@@ -431,6 +431,8 @@ PROMPT;
             $row['_cliente_nombre'] = $entrada->cliente?->nombre;
         }
 
+        $row['vehiculo'] = $entrada->vehiculo;
+
         $this->rows[$rowIndex] = $row;
         $this->emit('ok', "Actualizado a folio {$newFolio}.");
     }
