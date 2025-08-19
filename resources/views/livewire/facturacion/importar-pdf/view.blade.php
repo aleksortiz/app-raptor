@@ -58,6 +58,7 @@
                                 <th class="text-right">Monto</th>
                                 <th>Fecha de Pago</th>
                                 <th>Notas</th>
+                                <th>Omitir</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -76,6 +77,9 @@
                                     <td class="text-right">{{ isset($row['monto']) ? number_format((float)$row['monto'], 2, '.', ',') : '' }}</td>
                                     <td>{{ $row['fecha_pago'] ?? '' }}</td>
                                     <td>{{ $row['notas'] ?? '' }}</td>
+                                    <td>
+                                        <input type="checkbox" wire:model="rows.{{ $loop->index }}.omit">
+                                    </td>
                                     <td>
                                         @if(empty($row['_entrada_exists']))
                                             <button class="btn btn-warning btn-xs" type="button" wire:click="cambiarA24({{ $loop->index }})" wire:loading.attr="disabled" wire:target="cambiarA24({{ $loop->index }})">

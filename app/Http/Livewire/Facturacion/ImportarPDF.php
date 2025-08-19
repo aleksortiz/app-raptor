@@ -309,6 +309,7 @@ PROMPT;
                         '_cliente_nombre' => $clienteNombre,
                         '_numero_reporte' => $repNorm,
                         'vehiculo' => $entrada?->vehiculo,
+                        'omit' => false,
                     ];
                 }
 
@@ -341,10 +342,16 @@ PROMPT;
         $skippedNoEntrada = 0;
         $skippedSinNumeroFactura = 0;
         $skippedDuplicado = 0;
+        $skippedOmit = 0;
         $processed = 0;
 
         foreach ($this->rows as $row) {
             $processed++;
+
+            if (!empty($row['omit'])) {
+                $skippedOmit++;
+                continue;
+            }
 
             $modelId = $row['model_id'] ?? null;
             $modelType = $row['model_type'] ?? null;
@@ -393,7 +400,7 @@ PROMPT;
             $inserted++;
         }
 
-        $message = "Procesadas: {$processed}. Insertadas: {$inserted}. Actualizadas: {$updated}. Omitidas sin entrada: {$skippedNoEntrada}. Omitidas sin número de factura: {$skippedSinNumeroFactura}. Omitidas duplicadas: {$skippedDuplicado}.";
+        $message = "Procesadas: {$processed}. Insertadas: {$inserted}. Actualizadas: {$updated}. Omitidas manualmente: {$skippedOmit}. Omitidas sin entrada: {$skippedNoEntrada}. Omitidas sin número de factura: {$skippedSinNumeroFactura}. Omitidas duplicadas: {$skippedDuplicado}.";
         $this->emit('ok', $message);
     }
 
