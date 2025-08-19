@@ -308,6 +308,7 @@ PROMPT;
                             : url('/servicios/busqueda?folio=' . urlencode($folio)),
                         '_cliente_nombre' => $clienteNombre,
                         '_numero_reporte' => $repNorm,
+                        'vehiculo' => $entrada?->vehiculo,
                     ];
                 }
 
