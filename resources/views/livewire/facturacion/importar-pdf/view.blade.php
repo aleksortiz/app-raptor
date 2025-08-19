@@ -57,6 +57,7 @@
                                 <th class="text-right">Monto</th>
                                 <th>Fecha de Pago</th>
                                 <th>Notas</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,6 +74,14 @@
                                     <td class="text-right">{{ isset($row['monto']) ? number_format((float)$row['monto'], 2, '.', ',') : '' }}</td>
                                     <td>{{ $row['fecha_pago'] ?? '' }}</td>
                                     <td>{{ $row['notas'] ?? '' }}</td>
+                                    <td>
+                                        @if(empty($row['_entrada_exists']))
+                                            <button class="btn btn-warning btn-xs" type="button" wire:click="cambiarA24({{ $loop->index }})" wire:loading.attr="disabled" wire:target="cambiarA24({{ $loop->index }})">
+                                                <span class="spinner-border spinner-border-sm mr-1" role="status" aria-hidden="true" wire:loading wire:target="cambiarA24({{ $loop->index }})"></span>
+                                                CAMBIAR A 24
+                                            </button>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

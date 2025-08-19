@@ -395,4 +395,43 @@ PROMPT;
         $message = "Procesadas: {$processed}. Insertadas: {$inserted}. Actualizadas: {$updated}. Omitidas sin entrada: {$skippedNoEntrada}. Omitidas sin número de factura: {$skippedSinNumeroFactura}. Omitidas duplicadas: {$skippedDuplicado}.";
         $this->emit('ok', $message);
     }
+
+    public function cambiarA24($rowIndex): void
+    {
+        if (!isset($this->rows[$rowIndex])) {
+            return;
+        }
+        $row = $this->rows[$rowIndex];
+        $folio = (string) ($row['model_folio'] ?? '');
+        if ($folio === '') {
+            $this->emit('error', 'No hay folio para intentar el cambio a -24.');
+            return;
+        }
+
+        if (substr($folio, -3) !== '-25') {
+            $this->emit('error', 'El folio no termina en -25, no se puede cambiar a -24 automáticamente.');
+            return;
+        }
+
+        $newFolio = substr($folio, 0, -3) . '-24';
+        $entrada = Entrada::with('cliente')->where('folio', $newFolio)->first();
+        if (!$entrada) {
+            $this->emit('error', "No se encontró ENTRADA con folio {$newFolio}.");
+            return;
+        }
+
+        $row['model_folio'] = $newFolio;
+        $row['model_type'] = Entrada::class;
+        $row['model_id'] = $entrada->id;
+        $row['_entrada_exists'] = true;
+        $row['_entrada_url'] = url('/servicios/' . $entrada->id);
+
+        if (($row['aseguradora'] ?? 'PARTICULAR') === 'PARTICULAR') {
+            $row['cliente_id'] = $entrada->cliente_id;
+            $row['_cliente_nombre'] = $entrada->cliente?->nombre;
+        }
+
+        $this->rows[$rowIndex] = $row;
+        $this->emit('ok', "Actualizado a folio {$newFolio}.");
+    }
 } 
