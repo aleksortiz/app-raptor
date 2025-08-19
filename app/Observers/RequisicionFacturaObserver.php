@@ -11,7 +11,7 @@ class RequisicionFacturaObserver
     {
         $to = env('REQUISICION_FACTURA_TO', 'alejandro_ortiz426@hotmail.com');
         if ($to) {
-            SendRequisicionFacturaEmail::dispatch($requisicionFactura->fresh(), $to);
+            // SendRequisicionFacturaEmail::dispatch($requisicionFactura->fresh(), $to);
         }
     }
 } 

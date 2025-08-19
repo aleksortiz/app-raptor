@@ -8,7 +8,6 @@ use Livewire\WithFileUploads;
 use App\Models\RequisicionFactura;
 use App\Models\Cliente;
 use App\Models\Entrada;
-use App\Models\Documento;
 use App\Classes\FacturacionConstants;
 use Illuminate\Support\Facades\Storage;
 

@@ -52,85 +52,107 @@ class ImportarPDF extends Component
             $systemPrompt = 'Eres un asistente que lee un archivo PDF y devuelve EXCLUSIVAMENTE un JSON válido siguiendo estrictamente el esquema indicado en el prompt del usuario. Si hay valores faltantes, usa null. No agregues comentarios ni explicaciones.';
 
             $userPrompt = <<<'PROMPT'
-You are given a PDF in Spanish containing weekly billing data (e.g., “SEM 28”) with rows that include “FOLIO INTERNO”, client, invoice number (e.g., “A2541”), and monetary columns (labor, parts, VAT, TOTAL, etc.), plus a separate section listing payments with dates and invoice references.
+Se te proporciona un PDF en español con cortes/semanas de facturación (p. ej., “SEM 28”) que contiene filas con “FOLIO INTERNO”, cliente/aseguradora, número de factura (p. ej., “A2541”) y columnas monetarias (mano de obra, refacciones, IVA, TOTAL, etc.), además de una sección separada de pagos con fechas y referencias a facturas.
 
-Goal: Extract only the invoice rows and produce a JSON array of objects with this exact schema (and nothing else in the output):
+Objetivo: Extrae únicamente las filas de facturas y produce un arreglo JSON de objetos con EXACTAMENTE el siguiente esquema (y nada más en la salida):
 
-\[
-{
-"model_type": "App\\Models\\Entrada",
-"model_folio": "NN-NN-25",
-"numero_factura": "AXXXX",
-"monto": 0.00,
-"fecha_pago": null,
-"notas": ""
-}
+[
+  {
+    "aseguradora": "QUALITAS" | "CENTAURO" | "PARTICULAR",
+    "model_type": "App\\Models\\Entrada",
+    "model_folio": "NN-NN-25",
+    "numero_reporte": "111111111" | null,
+    "numero_factura": "AXXXX",
+    "monto": 0.00,
+    "fecha_facturacion": null,
+    "fecha_pago": null,
+    "descripcion": "",
+    "uso_cfdi": "G03",
+    "forma_pago": "99"
+  }
 ]
 
-Mapping rules:
+Reglas de mapeo:
 
-1. model_type
+1) aseguradora
+   - Determina si la factura es para una aseguradora conocida (QUALITAS, CENTAURO) o PARTICULAR.
+   - Si el texto indica una aseguradora (p. ej., QUALITAS, CENTAURO), usa exactamente ese valor en mayúsculas.
+   - Si no hay mención clara de aseguradora, usa "PARTICULAR".
 
-   * Always the literal string: App\Models\Entrada
+2) model_type
+   - Siempre la cadena literal: App\Models\Entrada
 
-2. model_folio (comes from “FOLIO INTERNO”)
+3) model_folio (proviene de “FOLIO INTERNO”)
+   - Extrae folios como 18-07, 28-11, etc.
+   - Si el folio no incluye el año, agrega -25 (ej.: 18-07 → 18-07-25).
+   - Si ya incluye -25, déjalo tal cual.
+   - Si la fila no tiene folio interno, omite esa fila.
 
-   * Extract the folio like 18-07, 28-11, etc.
-   * If the folio does not include the year, append -25 (e.g., 18-07 → 18-07-25).
-   * If it already includes -25, keep as is.
-   * If the row has no folio interno, skip that row.
+4) numero_reporte (fallback si no hay folio)
+   - Si existe un "número de reporte" en el PDF, normalízalo a EXACTAMENTE 9 dígitos:
+     • Elimina espacios, separadores y guiones internos.
+     • Ignora una terminación tipo "-X" al final (una letra después de guion), si la hubiera.
+     • Ej.: "111 111 111 - T" → "111111111".
+   - Si tras normalizar no hay exactamente 9 dígitos, usa null.
+   - Conserva este valor para permitir búsqueda en sistema cuando falte folio.
 
-3. numero_factura
+5) numero_factura
+   - Extrae el número que empieza con “A” seguido de dígitos (p. ej., A2539, A2541). Mayúsculas y trim.
+   - Si falta o es inválido, deja "numero_factura" como null.
 
-   * Extract the invoice number that starts with “A” followed by digits (e.g., A2539, A2541).
-   * Uppercase and trim.
-   * If missing or malformed, skip the row.
+6) monto
+   - Usa la columna TOTAL de esa fila (no ABONO ni SALDO).
+   - Convierte a número (float). Quita separadores de miles y usa . como separador decimal.
+   - Ejemplo: $ 13,940.68 → 13940.68
+   - Si falta TOTAL, intenta mano_obra + refacciones + IVA; si no se puede, omite esa fila.
 
-4. monto
+7) fecha_facturacion
+   - Si hay una fecha de emisión de la factura en la fila, conviértela a YYYY-MM-DD; si no, usa null.
 
-   * Use the TOTAL column for that row (not ABONO nor SALDO).
-   * Convert to a number (float). Remove thousands separators and use . as the decimal separator.
-   * Example: $ 13,940.68 → 13940.68
-   * If TOTAL is missing, try to compute labor + parts + VAT, otherwise skip the row.
+8) fecha_pago
+   - Busca en la sección de pagos (líneas como: QUALITAS 11/07/2025 ... SEM 28 A2539-A2540 24492332).
+   - Si una línea menciona exactamente el número de factura de esta fila, establece "fecha_pago" con esa fecha en formato YYYY-MM-DD.
+   - Si hay múltiples pagos para la misma factura, elige la fecha más temprana.
+   - Si no hay pago, deja null.
 
-5. fecha_pago
+9) descripcion
+   - Texto breve útil para captura, máx. ~120 caracteres.
+   - Sugerencia: "SEM XX - {numero_factura} - {cliente/aseguradora} - {folio}" si la información está disponible.
 
-   * Look up the payments section (e.g., lines like: QUALITAS 11/07/2025 ... SEM 28 A2539-A2540 24492332).
-   * If a payment line mentions the exact invoice number for this row, set fecha_pago to that payment’s date in YYYY-MM-DD format (e.g., 2025-07-11).
-   * If multiple payments reference the same invoice, pick the earliest date.
-   * If no payment found for that invoice, set fecha_pago to null.
+10) uso_cfdi
+   - Usa "G03" por defecto salvo que el PDF indique claramente otro.
 
-6. notas
+11) forma_pago
+   - Usa "99" (Por definir) por defecto salvo que el PDF indique claramente otro código SAT.
 
-   * Default to an empty string "" unless there is a clear, short note on the same invoice row specifically tied to that entry. If unsure, leave "".
+Guía de parsing y restricciones:
+* El PDF está en español; números usan $, separador de miles "," y separador decimal ".".
+* Ignora totales generales, ABONO, SALDO, subtotales y agregados que no correspondan a una factura específica.
+* Ignora otras hojas/bloques como históricos a menos que coincidan con la misma semana y tengan FOLIO INTERNO válido y TOTAL.
+* Algunos renglones no alinean visualmente; apóyate en patrones:
+  - FOLIO INTERNO: NN-NN o NN-NN-25
+  - numero_factura: A + dígitos (si existe)
+  - TOTAL: cifra monetaria más a la derecha del renglón principal
+* Des-duplica por (model_folio, numero_factura). Si no hay numero_factura, des-duplica por model_folio.
+* Fechas en el PDF están en DD/MM/YYYY. Convierte a YYYY-MM-DD.
+* Devuelve únicamente el arreglo JSON con los objetos. Sin Markdown, sin comentarios, sin fences.
 
-Parsing guidance & constraints:
+Validación:
+* Asegúrate que cada objeto contenga todas las llaves anteriores con tipos correctos:
+  - aseguradora: string
+  - model_type: string
+  - model_folio: string
+  - numero_reporte: string (9 dígitos) o null
+  - numero_factura: string o null
+  - monto: number
+  - fecha_facturacion: string YYYY-MM-DD o null
+  - fecha_pago: string YYYY-MM-DD o null
+  - descripcion: string
+  - uso_cfdi: string
+  - forma_pago: string
+* Si no hay filas válidas, devuelve [].
 
-* The PDF is in Spanish; numbers use $, thousands separators , and decimal separator .
-* Ignore summary totals, ABONO, SALDO, subtotals, and any aggregate rows not tied to a specific invoice.
-* Ignore other sheets/blocks like historical tables or unrelated “FACTURAS DE CLIENTES” unless they match the same week’s invoice rows and include a valid FOLIO INTERNO + Axxxx.
-* Some invoice rows may not visually align; rely on patterns:
-
-  * FOLIO INTERNO: patterns like NN-NN or NN-NN-25
-  * numero_factura: A followed by digits
-  * TOTAL: rightmost monetary figure on the invoice’s main row
-* De-duplicate by (model_folio, numero_factura). Keep the latest parsed occurrence if duplicates conflict.
-* Dates in the PDF are DD/MM/YYYY. Convert to YYYY-MM-DD.
-* Output only the JSON array with the extracted objects. No Markdown, no comments, no code fences.
-
-Validation:
-
-* Ensure every object contains all required keys with correct types:
-
-  * model_type: string
-  * model_folio: string
-  * numero_factura: string
-  * monto: number
-  * fecha_pago: string in YYYY-MM-DD or null
-  * notas: string
-* If no valid rows are found, output [].
-
-Return only the JSON array as the final answer.
+Devuelve solo el arreglo JSON como respuesta final.
 PROMPT;
 
             $resultText = $client->createResponseWithFile(
@@ -144,7 +166,7 @@ PROMPT;
             // 3) Intentar decodificar el JSON para mostrarlo en tabla
             $decoded = json_decode($resultText, true);
             if (json_last_error() === JSON_ERROR_NONE && is_array($decoded)) {
-                // Enriquecer filas con referencia a Entrada existente
+                // Enriquecer filas con referencia a Entrada existente y preparar datos para RequisicionFactura
                 $folios = [];
                 foreach ($decoded as $item) {
                     if (isset($item['model_folio']) && is_string($item['model_folio']) && $item['model_folio'] !== '') {
@@ -153,26 +175,135 @@ PROMPT;
                 }
                 $folios = array_values(array_unique($folios));
 
-                $folioToId = [];
+                $folioToEntrada = [];
                 if (!empty($folios)) {
-                    $folioToId = Entrada::whereIn('folio', $folios)->pluck('id', 'folio')->toArray();
+                    $folioToEntrada = Entrada::whereIn('folio', $folios)
+                        ->with('cliente:id,nombre')
+                        ->get()
+                        ->keyBy('folio');
                 }
+
+                // Preparar búsqueda por número de reporte normalizado (9 dígitos) cuando falte folio
+                $normalizeReport = function ($value) {
+                    if (!is_string($value)) return null;
+                    $raw = strtoupper(trim($value));
+                    // eliminar todo lo que no sea dígito
+                    $digits = preg_replace('/[^0-9]/', '', $raw);
+                    if (!$digits || strlen($digits) !== 9) {
+                        return null;
+                    }
+                    return $digits;
+                };
+
+                $reportNumbers = [];
+                foreach ($decoded as $item) {
+                    $rep = $normalizeReport($item['numero_reporte'] ?? null);
+                    if ($rep) { $reportNumbers[] = $rep; }
+                }
+                $reportNumbers = array_values(array_unique($reportNumbers));
+
+                $reportToEntrada = [];
+                foreach ($reportNumbers as $repNum) {
+                    // Buscar candidatos por LIKE usando los primeros 5 dígitos para reducir resultados
+                    $likeNeedle = substr($repNum, 0, 5);
+                    $candidates = Entrada::whereNotNull('orden')
+                        ->whereRaw('TRIM(orden) LIKE ?', ["%{$likeNeedle}%"])
+                        ->with('cliente:id,nombre')
+                        ->limit(25)
+                        ->get();
+                    $matched = null;
+                    foreach ($candidates as $cand) {
+                        $candNorm = preg_replace('/[^0-9]/', '', strtoupper((string) $cand->orden));
+                        if ($candNorm === $repNum) {
+                            $matched = $cand;
+                            break;
+                        }
+                    }
+                    if ($matched) {
+                        $reportToEntrada[$repNum] = $matched;
+                    }
+                }
+
+                // Normalizar aseguradora a valores válidos
+                $validAseguradoras = ['QUALITAS', 'CENTAURO', 'PARTICULAR'];
 
                 $prepared = [];
                 foreach ($decoded as $item) {
                     $folio = (string) ($item['model_folio'] ?? '');
-                    $entradaId = $folio !== '' && isset($folioToId[$folio]) ? (int) $folioToId[$folio] : null;
+                    /** @var \App\Models\Entrada|null $entrada */
+                    $entrada = $folio !== '' && isset($folioToEntrada[$folio]) ? $folioToEntrada[$folio] : null;
+                    if (!$entrada) {
+                        $repNorm = $normalizeReport($item['numero_reporte'] ?? null);
+                        if ($repNorm && isset($reportToEntrada[$repNorm])) {
+                            $entrada = $reportToEntrada[$repNorm];
+                        }
+                    }
+                    $entradaId = $entrada?->id;
+
+                    $aseg = strtoupper((string) ($item['aseguradora'] ?? ''));
+                    if (!in_array($aseg, $validAseguradoras, true)) {
+                        $aseg = 'PARTICULAR';
+                    }
+
+                    // cliente_id: si es PARTICULAR y hay entrada, usamos el cliente de la entrada
+                    $clienteId = null;
+                    $clienteNombre = null;
+                    if ($aseg === 'PARTICULAR' && $entrada) {
+                        $clienteId = $entrada->cliente_id;
+                        $clienteNombre = $entrada->cliente?->nombre;
+                    }
+
+                    $repNorm = $normalizeReport($item['numero_reporte'] ?? null);
+
+                    $numeroFactura = isset($item['numero_factura']) && is_string($item['numero_factura']) && $item['numero_factura'] !== ''
+                        ? strtoupper(trim($item['numero_factura']))
+                        : null;
+
+                    $monto = isset($item['monto']) ? (float) $item['monto'] : null;
+
+                    $descripcion = isset($item['descripcion']) && is_string($item['descripcion'])
+                        ? trim($item['descripcion'])
+                        : '';
+                    if ($descripcion === '') {
+                        $descParts = [];
+                        if (isset($item['uso_semana'])) { $descParts[] = (string) $item['uso_semana']; }
+                        if ($numeroFactura) { $descParts[] = $numeroFactura; }
+                        if ($aseg) { $descParts[] = $aseg; }
+                        if ($folio) { $descParts[] = $folio; }
+                        $descripcion = trim(implode(' - ', array_filter($descParts))); // fallback corto
+                    }
+
+                    $usoCfdi = isset($item['uso_cfdi']) && is_string($item['uso_cfdi']) && $item['uso_cfdi'] !== ''
+                        ? strtoupper($item['uso_cfdi'])
+                        : 'G03';
+
+                    $formaPago = isset($item['forma_pago']) && is_string($item['forma_pago']) && $item['forma_pago'] !== ''
+                        ? $item['forma_pago']
+                        : '99';
 
                     $prepared[] = [
-                        'model_folio' => $folio,
-                        'numero_factura' => $item['numero_factura'] ?? '',
-                        'monto' => $item['monto'] ?? null,
+                        // Campos para crear RequisicionFactura
+                        'aseguradora' => $aseg,
+                        'cliente_id' => $clienteId,
+                        'model_type' => $entradaId ? Entrada::class : null,
+                        'model_id' => $entradaId,
+                        'uso_cfdi' => $usoCfdi,
+                        'forma_pago' => $formaPago,
+                        'descripcion' => $descripcion,
+                        'monto' => $monto,
+                        'numero_reporte' => $repNorm,
+                        'numero_factura' => $numeroFactura,
+                        'fecha_facturacion' => $item['fecha_facturacion'] ?? null,
                         'fecha_pago' => $item['fecha_pago'] ?? null,
-                        'notas' => $item['notas'] ?? '',
+
+                        // Metadatos para la UI
+                        'model_folio' => $folio,
                         '_entrada_exists' => $entradaId !== null,
                         '_entrada_url' => $entradaId
                             ? url('/servicios/' . $entradaId)
                             : url('/servicios/busqueda?folio=' . urlencode($folio)),
+                        '_cliente_nombre' => $clienteNombre,
+                        '_numero_reporte' => $repNorm,
                     ];
                 }
 

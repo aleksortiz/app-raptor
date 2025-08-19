@@ -43,7 +43,9 @@
                     <table class="table table-striped mb-0">
                         <thead>
                             <tr>
+                                <th>#</th>
                                 <th>Folio</th>
+                                <th>No. Reporte</th>
                                 <th>Número de Factura</th>
                                 <th class="text-right">Monto</th>
                                 <th>Fecha de Pago</th>
@@ -53,11 +55,13 @@
                         <tbody>
                             @foreach($rows as $row)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>
                                         <a href="{{ $row['_entrada_url'] ?? '#' }}" target="_blank" class="btn btn-xs {{ !empty($row['_entrada_exists']) ? 'btn-primary' : 'btn-danger' }}">
                                             {{ $row['model_folio'] ?? '' }}
                                         </a>
                                     </td>
+                                    <td>{{ $row['numero_reporte'] ?? ($row['_numero_reporte'] ?? '') }}</td>
                                     <td>{{ $row['numero_factura'] ?? '' }}</td>
                                     <td class="text-right">{{ isset($row['monto']) ? number_format((float)$row['monto'], 2, '.', ',') : '' }}</td>
                                     <td>{{ $row['fecha_pago'] ?? '' }}</td>
