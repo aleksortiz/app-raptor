@@ -192,7 +192,7 @@
         <div class="col-md-5">
             <!-- Constancia Fiscal -->
             <div class="card">
-                <div class="card-header bg-warning">
+                <div class="card-header bg-{{ $constanciaUrl ? 'success' : 'warning' }}">
                     <h3 class="card-title">
                         <i class="fas fa-file-pdf mr-2"></i>
                         Constancia Fiscal
@@ -223,7 +223,7 @@
             <!-- Documento INE (si existe entrada) -->
             @if($entrada)
             <div class="card mt-4">
-                <div class="card-header bg-danger">
+                <div class="card-header bg-{{ $ineUrl ? 'success' : 'warning' }}">
                     <h3 class="card-title">
                         <i class="fas fa-id-card mr-2"></i>
                         Identificación INE
@@ -255,7 +255,7 @@
             <!-- Orden de Admisión (si existe) -->
             @if($entrada)
             <div class="card mt-4">
-                <div class="card-header bg-info">
+                <div class="card-header bg-{{ $ordenAdmisionUrl ? 'success' : 'warning' }}">
                     <h3 class="card-title">
                         <i class="fas fa-file-alt mr-2"></i>
                         Orden de Admisión
