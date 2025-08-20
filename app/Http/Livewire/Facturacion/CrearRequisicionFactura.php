@@ -21,6 +21,12 @@ class CrearRequisicionFactura extends Component
 
     public $searchKey;
     public $mdlNameCreate = 'mdlCreateRequisicion';
+    
+    // Filtros por semana
+    public $start;
+    public $end;
+    public $year;
+    public $maxYear;
 
     public $selectedClienteNombre;
     public $selectedEntradaFolio;
@@ -54,6 +60,8 @@ class CrearRequisicionFactura extends Component
         'setEntrada' => 'setEntrada',
         'deleteRequisicion',
     ];
+    
+    protected $queryString = ['year', 'start', 'end', 'searchKey'];
 
     protected function rules()
     {
@@ -77,6 +85,12 @@ class CrearRequisicionFactura extends Component
     public function mount()
     {
         $this->requisicion = new RequisicionFactura();
+        
+        // Inicializar filtros de semana
+        $this->start = $this->start ? $this->start : \Carbon\Carbon::today()->weekOfYear;
+        $this->end = $this->end ? $this->end : \Carbon\Carbon::today()->weekOfYear;
+        $this->maxYear = $this->maxYear ? $this->maxYear : \Carbon\Carbon::today()->endOfWeek()->year;
+        $this->year = $this->year ? $this->year : $this->maxYear;
     }
 
     public function updatingSearchKey()
@@ -92,11 +106,14 @@ class CrearRequisicionFactura extends Component
     public function getRenderData()
     {
         $query = RequisicionFactura::query()->orderBy('id', 'desc');
+        
         if ($this->searchKey) {
+            // Apply search filters
             $key = trim($this->searchKey);
             $query->where(function ($q) use ($key) {
                 $q->orWhere('numero_factura', 'LIKE', "%{$key}%")
                   ->orWhere('descripcion', 'LIKE', "%{$key}%")
+                  ->orWhere('aseguradora', 'LIKE', "%{$key}%")
                   ->orWhere('uso_cfdi', 'LIKE', "%{$key}%")
                   ->orWhere('forma_pago', 'LIKE', "%{$key}%")
                   ->orWhere('monto', 'LIKE', "%{$key}%")
@@ -104,6 +121,10 @@ class CrearRequisicionFactura extends Component
                       $cq->where('nombre', 'LIKE', "%{$key}%");
                   });
             });
+        } else {
+            // Apply date range filters only if not searching
+            $dates = Entrada::getDateRange($this->year, $this->start, $this->end);
+            $query->whereBetween('created_at', $dates);
         }
 
         return [

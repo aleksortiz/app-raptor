@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\shared\BaseModel;
 
-class RequisicionFactura extends Model
+class RequisicionFactura extends BaseModel
 {
-    use HasFactory;
-
     protected $fillable = [
         'cliente_id',
         'model_id',

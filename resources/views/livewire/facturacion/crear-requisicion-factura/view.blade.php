@@ -1,11 +1,35 @@
 <div>
     <div class="mb-3">
         <div class="row">
+            <div class="col-md-1" @if(!empty($searchKey)) style="display: none;" @endif>
+                <label>Año</label>
+                <select wire:model.lazy="year" class="form-control">
+                    @foreach (range(2021, $this->maxYear) as $item)
+                        <option value="{{ $item }}">{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-1" @if(!empty($searchKey)) style="display: none;" @endif>
+                <label>Semana</label>
+                <select wire:model.lazy="start" class="form-control">
+                    @foreach (range(1, 52) as $item)
+                        <option value="{{ $item }}">{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-1" @if(!empty($searchKey)) style="display: none;" @endif>
+                <label>a la</label>
+                <select wire:model.lazy="end" class="form-control">
+                    @foreach (range(1, 52) as $item)
+                        <option value="{{ $item }}">{{ $item }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="col-md-3">
                 <label>Buscar</label>
                 <input type="text" wire:model.lazy="searchKey" class="form-control" placeholder="Buscar por cliente, factura, descripción...">
             </div>
-            <div class="col-md-9 d-flex align-items-end justify-content-end">
+            <div class="col-md-6 d-flex align-items-end justify-content-end">
                 <button class="btn btn-primary btn-sm" wire:click="openCreate"><i class="fa fa-plus"></i> Nueva Requisición</button>
             </div>
         </div>
@@ -27,7 +51,7 @@
             <tbody>
                 @foreach ($requisiciones as $req)
                     <tr>
-                        <td>{{ $req->id }}</td>
+                        <td>{{ $req->id_paddy }}</td>
                         <td>{{ $req->nombre_cliente }}</td>
                         <td>
                             @if ($req->model_type === \App\Models\Entrada::class && $req->model_id)
