@@ -26,7 +26,50 @@
     <div class="row">
         <!-- Columna de información principal -->
         <div class="col-md-7">
+
+            <!-- Sección de Facturación y Pago -->
             <div class="card">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">
+                        <i class="fas fa-file-invoice mr-2"></i>
+                        Datos de Facturación y Pago
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form wire:submit.prevent="saveFacturaPago">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Número de Factura</label>
+                                    <input type="text" class="form-control" wire:model.defer="numeroFactura" 
+                                        {{ !empty($requisicion->numero_factura) ? 'disabled' : '' }}>
+                                    @error('numeroFactura') <span class="error text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Fecha de Pago</label>
+                                    <input type="date" class="form-control" wire:model.defer="fechaPago" 
+                                        {{ !empty($requisicion->fecha_pago) ? 'disabled' : '' }}>
+                                    @error('fechaPago') <span class="error text-danger">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        @if(empty($requisicion->numero_factura) || empty($requisicion->fecha_pago))
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fas fa-save mr-1"></i> Guardar Cambios
+                                </button>
+                            </div>
+                        </div>
+                        @endif
+                    </form>
+                </div>
+            </div>
+
+            <div class="card mt-4">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">
                         <i class="fas fa-info-circle mr-2"></i>
@@ -145,47 +188,7 @@
                 </div>
             </div>
 
-            <!-- Sección de Facturación y Pago -->
-            <div class="card mt-4">
-                <div class="card-header bg-success">
-                    <h3 class="card-title">
-                        <i class="fas fa-file-invoice mr-2"></i>
-                        Datos de Facturación y Pago
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <form wire:submit.prevent="saveFacturaPago">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Número de Factura</label>
-                                    <input type="text" class="form-control" wire:model.defer="numeroFactura" 
-                                        {{ !empty($requisicion->numero_factura) ? 'disabled' : '' }}>
-                                    @error('numeroFactura') <span class="error text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Fecha de Pago</label>
-                                    <input type="date" class="form-control" wire:model.defer="fechaPago" 
-                                        {{ !empty($requisicion->fecha_pago) ? 'disabled' : '' }}>
-                                    @error('fechaPago') <span class="error text-danger">{{ $message }}</span> @enderror
-                                </div>
-                            </div>
-                        </div>
 
-                        @if(empty($requisicion->numero_factura) || empty($requisicion->fecha_pago))
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="fas fa-save mr-1"></i> Guardar Cambios
-                                </button>
-                            </div>
-                        </div>
-                        @endif
-                    </form>
-                </div>
-            </div>
         </div>
 
         <!-- Columna de documentos -->
@@ -275,6 +278,7 @@
                         </div>
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe class="embed-responsive-item" src="{{ $ordenAdmisionUrl }}" allowfullscreen></iframe>
+                            {{ $ordenAdmisionUrl }}
                         </div>
                     @else
                         <div class="alert alert-warning">
@@ -306,6 +310,7 @@
                     </div>
                     <div class="embed-responsive embed-responsive-16by9">
                         <iframe class="embed-responsive-item" src="{{ $valuacionPdfUrl }}" allowfullscreen></iframe>
+                        {{ $valuacionPdfUrl }}
                     </div>
                 </div>
             </div>
