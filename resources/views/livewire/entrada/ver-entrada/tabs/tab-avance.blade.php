@@ -2,14 +2,14 @@
     <div class="card-body">
         @livewire('entrada.captura-avance-entrada', ['id' => $entrada->id])
 
-        @if($entrada->estado === 'TERMINADO')
+        @if($entrada->estado === 'TERMINADO' || $entrada->estado === 'ENTREGADO')
             <div class="mt-4">
                 <div class="card card-success">
                     <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-file-invoice-dollar mr-2"></i> Requisición de Factura</h3>
                     </div>
                     <div class="card-body">
-                        <p>El vehículo está <strong>TERMINADO</strong>. Puede generar una requisición de factura.</p>
+                        <p>El vehículo está <strong>{{ $entrada->estado }}</strong>. Puede generar una requisición de factura.</p>
                         <button type="button" class="btn btn-primary" wire:click="iniciarCreacionRequisicion">
                             <i class="fas fa-plus mr-1"></i> Generar Requisición de Factura
                         </button>
