@@ -500,4 +500,12 @@ class Entrada extends BaseModel
     public function final_checklist(){
         return $this->hasOne(FinalChecklist::class, 'entrada_id');
     }
+    
+    /**
+     * Obtiene las requisiciones de factura asociadas a esta entrada
+     */
+    public function requisiciones_factura()
+    {
+        return $this->morphMany(RequisicionFactura::class, 'model');
+    }
 }

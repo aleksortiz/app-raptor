@@ -22,6 +22,7 @@ use App\Models\Refaccion;
 use App\Models\Servicio;
 use App\Models\Sueldo;
 use App\Models\Documento;
+use App\Models\RequisicionFactura;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -54,6 +55,13 @@ class VerEntrada extends Component
     public $lastUrl;
 
     public $inventario;
+    
+    // Requisición data
+    public $requisicionData = [
+        'aseguradora' => '',
+        'monto' => '',
+        'descripcion' => '',
+    ];
 
     public $notasCosto;
     public $selectedCostoId;
@@ -85,6 +93,15 @@ class VerEntrada extends Component
         'refresh' => '$refresh',
         'eliminarOrdenTrabajo',
         'eliminarDocumento',
+    ];
+    
+    /**
+     * Reglas de validación para la requisición
+     */
+    protected $requisicionRules = [
+        'requisicionData.aseguradora' => 'required|in:QUALITAS,CENTAURO,PARTICULAR',
+        'requisicionData.monto' => 'required|numeric|min:0',
+        'requisicionData.descripcion' => 'required|string',
     ];
 
     protected $queryString = ['activeTab'];
@@ -155,8 +172,8 @@ class VerEntrada extends Component
     {
         $this->lastUrl = url()->previous();
         $this->entrada = $entrada;
+        $this->entrada->load('requisiciones_factura');
         $this->inventario = EntradaInventario::where('entrada_id', $entrada->id)->first();
-
     }
 
     public function render()
@@ -708,5 +725,67 @@ class VerEntrada extends Component
         return response($contents)
             ->header('Content-Type', 'application/octet-stream')
             ->header('Content-Disposition', 'attachment; filename="' . $documento->name . '"');
+    }
+    
+    /**
+     * Inicializa el formulario de creación de requisición
+     */
+    public function iniciarCreacionRequisicion()
+    {
+        // Verificar que el vehículo esté TERMINADO
+        if ($this->entrada->estado !== 'TERMINADO') {
+            $this->emit('error', 'Solo se pueden generar requisiciones para vehículos TERMINADOS');
+            return;
+        }
+        
+        // Inicializar el formulario con valores por defecto
+        $this->requisicionData = [
+            'aseguradora' => '',
+            'monto' => '',
+            'descripcion' => 'Servicio de reparación de vehículo ' . $this->entrada->marca . ' ' . 
+                              $this->entrada->modelo . ' ' . $this->entrada->year . ' ' . 
+                              $this->entrada->color . ' con folio ' . $this->entrada->folio . '.',
+        ];
+        
+        // Mostrar el modal
+        $this->emit('showModal', '#mdlCreateRequisicion');
+    }
+    
+    /**
+     * Crea una nueva requisición de factura
+     */
+    public function crearRequisicion()
+    {
+        // Validar datos
+        $this->validate($this->requisicionRules);
+        
+        // Verificar que el vehículo esté TERMINADO
+        if ($this->entrada->estado !== 'TERMINADO') {
+            $this->emit('error', 'Solo se pueden generar requisiciones para vehículos TERMINADOS');
+            return;
+        }
+        
+        // Crear la requisición
+        $requisicion = new RequisicionFactura();
+        $requisicion->aseguradora = $this->requisicionData['aseguradora'];
+        $requisicion->monto = $this->requisicionData['monto'];
+        $requisicion->descripcion = $this->requisicionData['descripcion'];
+        $requisicion->uso_cfdi = 'G03'; // Valor por defecto
+        $requisicion->forma_pago = '99'; // Valor por defecto
+        
+        // Si es PARTICULAR, asignar el cliente de la entrada
+        if ($this->requisicionData['aseguradora'] === 'PARTICULAR' && $this->entrada->cliente_id) {
+            $requisicion->cliente_id = $this->entrada->cliente_id;
+        }
+        
+        // Guardar la relación con la entrada
+        $this->entrada->requisiciones_factura()->save($requisicion);
+        
+        // Recargar las requisiciones
+        $this->entrada->load('requisiciones_factura');
+        
+        // Cerrar el modal y mostrar mensaje de éxito
+        $this->emit('closeModal', '#mdlCreateRequisicion');
+        $this->emit('ok', 'Requisición de factura generada correctamente');
     }
 }

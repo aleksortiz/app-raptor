@@ -18,11 +18,25 @@ class DocumentoController extends Controller
             'jpg' => 'image/jpeg',
             'jpeg' => 'image/jpeg',
             'png' => 'image/png',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'webp' => 'image/webp',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
             'doc' => 'application/msword',
             'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
             'xls' => 'application/vnd.ms-excel',
             'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'pptx' => 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
             'txt' => 'text/plain',
+            'csv' => 'text/csv',
+            'html' => 'text/html',
+            'htm' => 'text/html',
+            'xml' => 'application/xml',
+            'zip' => 'application/zip',
+            'rar' => 'application/x-rar-compressed',
+            '7z' => 'application/x-7z-compressed',
         ];
         
         return $mimes[strtolower($extension)] ?? 'application/octet-stream';
@@ -34,7 +48,18 @@ class DocumentoController extends Controller
     public function download(Request $request)
     {
         $url = $request->input('url');
-        $filename = $request->input('filename', 'documento.pdf');
+        $filename = $request->input('filename', 'documento');
+        
+        // Determinar la extensión basada en la URL original si no está en el nombre de archivo
+        if (!pathinfo($filename, PATHINFO_EXTENSION)) {
+            $urlExtension = pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_EXTENSION);
+            if ($urlExtension) {
+                $filename .= '.' . $urlExtension;
+            } else {
+                // Extensión por defecto si no se puede determinar
+                $filename .= '.pdf';
+            }
+        }
         
         if (empty($url)) {
             abort(404, 'URL no proporcionada');
