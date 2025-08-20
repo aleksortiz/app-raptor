@@ -13,6 +13,7 @@ use App\Models\EntradaInventario;
 use App\Models\EntradaMaterial;
 use App\Models\Foto;
 use App\Models\Gasto;
+use App\Models\Cliente;
 use App\Models\Material;
 use App\Models\OrdenPago;
 use App\Models\OrdenTrabajo;
@@ -72,6 +73,9 @@ class VerEntrada extends Component
         'precio' => null,
     ];
 
+    // Documento Constancia Fiscal (para PARTICULAR)
+    public $constanciaFiscalFile; // Livewire UploadedFile
+
     // Document properties
     public $documento;
     public $tipoDocumento;
@@ -99,7 +103,7 @@ class VerEntrada extends Component
      * Reglas de validación para la requisición
      */
     protected $requisicionRules = [
-        'requisicionData.aseguradora' => 'required|in:QUALITAS,CENTAURO,PARTICULAR',
+        'requisicionData.aseguradora' => 'required|string',
         'requisicionData.monto' => 'required|numeric|min:0',
         'requisicionData.descripcion' => 'required|string',
     ];
@@ -764,6 +768,23 @@ class VerEntrada extends Component
             $this->emit('error', 'Solo se pueden generar requisiciones para vehículos TERMINADOS');
             return;
         }
+
+        // Si es PARTICULAR, debe tomar cliente de la entrada y validar CONSTANCIA FISCAL
+        if ($this->requisicionData['aseguradora'] === 'PARTICULAR') {
+            if (!$this->entrada->cliente_id) {
+                $this->emit('error', 'La entrada no tiene cliente asignado. No es posible facturar como PARTICULAR.');
+                return;
+            }
+
+            // Si el cliente necesita constancia, requerir archivo y subirlo
+            if ($this->clienteNecesitaConstanciaFiscal) {
+                if (!$this->constanciaFiscalFile) {
+                    $this->emit('error', 'El cliente no tiene CONSTANCIA FISCAL. Cárguela para continuar.');
+                    return;
+                }
+                $this->uploadConstanciaFiscal();
+            }
+        }
         
         // Crear la requisición
         $requisicion = new RequisicionFactura();
@@ -787,5 +808,51 @@ class VerEntrada extends Component
         // Cerrar el modal y mostrar mensaje de éxito
         $this->emit('closeModal', '#mdlCreateRequisicion');
         $this->emit('ok', 'Requisición de factura generada correctamente');
+    }
+
+    public function getClienteNecesitaConstanciaFiscalProperty(): bool
+    {
+        try {
+            if (empty($this->entrada->cliente_id)) {
+                return false;
+            }
+            $cliente = Cliente::with('documentos')->find($this->entrada->cliente_id);
+            if (!$cliente) return false;
+            return !$cliente->documentos()->where('tipo', 'CONSTANCIA FISCAL')->exists();
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function uploadConstanciaFiscal()
+    {
+        $this->validate([
+            'constanciaFiscalFile' => 'required|file|max:10240',
+        ]);
+
+        $cliente = Cliente::find($this->entrada->cliente_id);
+        if (!$cliente) return;
+
+        $ext = $this->constanciaFiscalFile->getClientOriginalExtension();
+        $filename = 'cliente_' . $cliente->id . '_CONSTANCIA_FISCAL_' . time() . '.' . $ext;
+        $path = $this->constanciaFiscalFile->storeAs('documentos/clientes/' . $cliente->id, $filename, 's3');
+
+        // Eliminar existente si hubiera
+        $existing = $cliente->documentos()->where('tipo', 'CONSTANCIA FISCAL')->first();
+        if ($existing) {
+            if (Storage::disk('s3')->exists($existing->url)) {
+                Storage::disk('s3')->delete($existing->url);
+            }
+            $existing->delete();
+        }
+
+        $cliente->documentos()->create([
+            'tipo' => 'CONSTANCIA FISCAL',
+            'url' => $path,
+            'name' => $filename,
+            'user_id' => auth()->id(),
+        ]);
+
+        $this->constanciaFiscalFile = null;
     }
 }

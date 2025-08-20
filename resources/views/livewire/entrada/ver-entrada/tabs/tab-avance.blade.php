@@ -90,10 +90,29 @@
                         <option value="">Seleccione...</option>
                         <option value="QUALITAS">QUALITAS</option>
                         <option value="CENTAURO">CENTAURO</option>
+                        <option value="AUTOS JUVENTUD CHIHUAHUA">AUTOS JUVENTUD CHIHUAHUA</option>
+                        <option value="TU MEJOR AGENCIA">TU MEJOR AGENCIA</option>
                         <option value="PARTICULAR">PARTICULAR</option>
                     </select>
                     @error('requisicionData.aseguradora') <span class="text-danger">{{ $message }}</span> @enderror
                 </div>
+                @if(isset($requisicionData['aseguradora']) && $requisicionData['aseguradora'] === 'PARTICULAR')
+                <div class="form-group">
+                    <label>Cliente de la entrada</label>
+                    <input type="text" class="form-control" value="{{ $entrada->cliente?->nombre ?? 'SIN CLIENTE' }}" readonly>
+                </div>
+                @if($this->clienteNecesitaConstanciaFiscal)
+                <div class="form-group">
+                    <div class="alert alert-warning">
+                        <i class="fa fa-exclamation-triangle"></i> El cliente no tiene documento "CONSTANCIA FISCAL". Cárguelo para continuar.
+                    </div>
+                    <label>Subir CONSTANCIA FISCAL (PDF/Imagen, máx 10MB)</label>
+                    <input type="file" class="form-control-file" wire:model="constanciaFiscalFile" accept="application/pdf,image/*">
+                    @error('constanciaFiscalFile') <span class="text-danger">{{ $message }}</span> @enderror
+                    <div wire:loading wire:target="constanciaFiscalFile" class="text-muted mt-1"><i class="fa fa-spinner fa-spin"></i> Cargando...</div>
+                </div>
+                @endif
+                @endif
                 <div class="form-group">
                     <label for="monto">Monto:</label>
                     <input type="number" step="0.01" class="form-control" id="monto" wire:model.defer="requisicionData.monto" required>

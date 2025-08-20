@@ -267,7 +267,7 @@ class FinalChecklist extends Component
         }
         
         $this->emit('ok', 'Checklist guardado correctamente');
-        $this->redirect('/servicios');
+        $this->redirect("/servicios/{$this->entrada->id}?activeTab=11");
     }
 
     public function render()

@@ -57,8 +57,8 @@
                                 <div class="dropdown-menu" role="menu">
                                     <a class="dropdown-item"><b>Req: #{{ $req->id }}</b></a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" style="cursor: pointer;" wire:click="openDetalles({{ $req->id }})"><i class="fas fa-eye"></i> Ver Detalles (Modal)</a>
-                                    <a class="dropdown-item" href="{{ route('facturacion.requisicion.ver', $req->id) }}"><i class="fas fa-external-link-alt"></i> Ver en Pantalla Completa</a>
+                                    {{-- <a class="dropdown-item" style="cursor: pointer;" wire:click="openDetalles({{ $req->id }})"><i class="fas fa-eye"></i> Ver Detalles (Modal)</a> --}}
+                                    <a class="dropdown-item" href="{{ route('facturacion.requisicion.ver', $req->id) }}"><i class="fas fa-external-link-alt"></i> Ver Requisición</a>
                                     @if (!$hasFactura)
                                         
                                         <a class="dropdown-item text-danger" style="cursor: pointer;" onclick="destroy({{ $req->id }}, 'Requisición #{{ $req->id }}', 'deleteRequisicion')"><i class="fas fa-trash"></i> Eliminar</a>

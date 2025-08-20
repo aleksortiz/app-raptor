@@ -231,7 +231,7 @@ PROMPT;
                 }
 
                 // Normalizar aseguradora a valores válidos
-                $validAseguradoras = ['QUALITAS', 'CENTAURO', 'PARTICULAR'];
+                $validAseguradoras = ['QUALITAS', 'CENTAURO', 'PARTICULAR', 'AUTOS JUVENTUD CHIHUAHUA', 'TU MEJOR AGENCIA'];
 
                 $prepared = [];
                 foreach ($decoded as $item) {

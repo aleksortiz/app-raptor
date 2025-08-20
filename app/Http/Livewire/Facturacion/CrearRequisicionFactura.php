@@ -44,6 +44,8 @@ class CrearRequisicionFactura extends Component
     public array $aseguradoraOptions = [
         'QUALITAS' => 'QUALITAS',
         'CENTAURO' => 'CENTAURO',
+        'AUTOS JUVENTUD CHIHUAHUA' => 'AUTOS JUVENTUD CHIHUAHUA',
+        'TU MEJOR AGENCIA' => 'TU MEJOR AGENCIA',
         'PARTICULAR' => 'PARTICULAR',
     ];
 
