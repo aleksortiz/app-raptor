@@ -285,6 +285,31 @@
                 </div>
             </div>
             @endif
+            
+            <!-- PDF de Valuación (si existe) -->
+            @if($valuacionPdfUrl)
+            <div class="card mt-4">
+                <div class="card-header bg-success">
+                    <h3 class="card-title">
+                        <i class="fas fa-clipboard-check mr-2"></i>
+                        Presupuesto de Valuación
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <a href="{{ $valuacionPdfUrl }}" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-eye mr-1"></i> Ver Documento
+                        </a>
+                        <a href="{{ $valuacionPdfUrl }}" class="btn btn-secondary ml-2" download="presupuesto_valuacion_{{ $valuacion->id }}.pdf">
+                            <i class="fas fa-download mr-1"></i> Descargar
+                        </a>
+                    </div>
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe class="embed-responsive-item" src="{{ $valuacionPdfUrl }}" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+            @endif
         </div>
     </div>
     @else

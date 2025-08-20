@@ -20,7 +20,9 @@ class VerRequisicionFactura extends Component
     public $constanciaUrl;
     public $ordenAdmisionUrl;
     public $ineUrl;
+    public $valuacionPdfUrl;
     public $entrada;
+    public $valuacion;
     
     protected $listeners = [
         'saveFacturaPago'
@@ -56,9 +58,12 @@ class VerRequisicionFactura extends Component
         // Obtener URL de orden de admisión e INE si hay entrada relacionada
         $this->ordenAdmisionUrl = null;
         $this->ineUrl = null;
+        $this->valuacionPdfUrl = null;
         $this->entrada = null;
+        $this->valuacion = null;
+        
         if ($req->model_type === Entrada::class && $req->model_id) {
-            $entrada = Entrada::find($req->model_id);
+            $entrada = Entrada::with('valuaciones.presupuestos')->find($req->model_id);
             if ($entrada) {
                 $this->entrada = $entrada;
                 $docOrdenAdmision = $entrada->documentos()->where('tipo', 'ORDEN ADMISION')->first();
@@ -67,6 +72,17 @@ class VerRequisicionFactura extends Component
                 // Obtener URL del INE de la entrada
                 $docIne = $entrada->documentos()->where('tipo', 'INE')->first();
                 $this->ineUrl = $this->buildS3Url($docIne?->url);
+                
+                // Obtener la primera valuación asociada a la entrada
+                if ($entrada->valuaciones && $entrada->valuaciones->count() > 0) {
+                    $this->valuacion = $entrada->valuaciones->first();
+                    // Generar URL para el PDF de la valuación
+                    if ($this->valuacion && $this->valuacion->presupuestos && $this->valuacion->presupuestos->count() > 0) {
+                        $presupuesto = $this->valuacion->presupuestos->first();
+                        $this->valuacionPdfUrl = url("/presupuestos/{$presupuesto->id}/pdf?pago_danos=" . 
+                            ($this->valuacion->pago_danos ? 'true' : 'false'));
+                    }
+                }
             }
         }
     }
