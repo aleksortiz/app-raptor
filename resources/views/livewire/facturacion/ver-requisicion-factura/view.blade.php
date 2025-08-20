@@ -190,7 +190,8 @@
 
         <!-- Columna de documentos -->
         <div class="col-md-5">
-            <!-- Constancia Fiscal -->
+            <!-- Constancia Fiscal (solo para PARTICULAR) -->
+            @if($requisicion->aseguradora === 'PARTICULAR')
             <div class="card">
                 <div class="card-header bg-{{ $constanciaUrl ? 'success' : 'warning' }}">
                     <h3 class="card-title">
@@ -219,6 +220,7 @@
                     @endif
                 </div>
             </div>
+            @endif
 
             <!-- Documento INE (si existe entrada) -->
             @if($entrada)
