@@ -79,7 +79,7 @@ class VerRequisicionFactura extends Component
                     // Generar URL para el PDF de la valuación
                     if ($this->valuacion && $this->valuacion->presupuestos && $this->valuacion->presupuestos->count() > 0) {
                         $presupuesto = $this->valuacion->presupuestos->first();
-                        $this->valuacionPdfUrl = url("/presupuestos/{$presupuesto->id}/pdf?pago_danos=" . 
+                        $this->valuacionPdfUrl = url("/presupuestos/{$presupuesto->id}/pdf-view?pago_danos=" . 
                             ($this->valuacion->pago_danos ? 'true' : 'false'));
                     }
                 }

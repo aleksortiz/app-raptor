@@ -308,40 +308,35 @@ return [
             'icon' => 'fas fa-fw fa-building',
             'can' => ['reporte-finanzas', 'reporte-facturas', 'reporte-depositos', 'gastos-generales', 'gastos-fijos'],
             'submenu' => [
-                [
-                    'text' => 'Facturación Semanal',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url'  => '/facturacion/semanal',
-                ],
+                // [
+                //     'text' => 'Facturación Semanal',
+                //     'icon'   => 'fas fa-fw fa-chevron-right',
+                //     'url'  => '/facturacion/semanal',
+                // ],
                 [
                     'text' => 'Reporte Finanzas',
                     'can' => ['reporte-finanzas'],
                     'icon'   => 'fas fa-fw fa-chevron-right',
                     'url' => '/reporte-finanzas-v2',
                 ],
-                [
-                    'text' => 'Control de Facturación',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url' => '/control-facturacion',
-                    'can' => ['reporte-facturas'],
-                ],
-                [
-                    'text' => 'Requisiciones de Facturas',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url' => '/control-facturacion/requisicion-facturas',
-                ],
+                // [
+                //     'text' => 'Control de Facturación',
+                //     'icon'   => 'fas fa-fw fa-chevron-right',
+                //     'url' => '/control-facturacion',
+                //     'can' => ['reporte-facturas'],
+                // ],
                 // [
                 //     'text' => 'Reporte de Facturas',
                 //     'icon'   => 'fas fa-fw fa-chevron-right',
                 //     'url' => '/control-facturas',
                 //     'can' => ['reporte-facturas'],
                 // ],
-                [
-                    'text' => 'Depósitos',
-                    'icon'   => 'fas fa-fw fa-chevron-right',
-                    'url' => '/ingresos',
-                    'can' => ['reporte-depositos'],
-                ],
+                // [
+                //     'text' => 'Depósitos',
+                //     'icon'   => 'fas fa-fw fa-chevron-right',
+                //     'url' => '/ingresos',
+                //     'can' => ['reporte-depositos'],
+                // ],
                 [
                     'text' => 'Gastos Generales',
                     'icon'   => 'fas fa-fw fa-chevron-right',
@@ -388,6 +383,17 @@ return [
                     'url'    => '/vehiculos-concluidos',
                     'can' => ['vehiculos-entregados'],
                 ]
+            ]
+        ],
+        [
+            'text' => 'Facturación',
+            'icon'   => 'fas fa-fw fa-file-invoice-dollar',
+            'submenu' => [
+                [
+                    'text' => 'Requisiciones de Facturas',
+                    'icon'   => 'fas fa-fw fa-chevron-right',
+                    'url' => '/control-facturacion/requisicion-facturas',
+                ],
             ]
         ],
         [

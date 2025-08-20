@@ -38,4 +38,20 @@ class ExcelController extends Controller
       $pdf->setPaper('A4', 'portrait');
       return $pdf->download("presupuesto_{$id}.pdf");
   }
+  
+  /**
+   * Muestra el PDF del presupuesto en el navegador sin descargarlo
+   */
+  public function presupuestoPdfView(Request $request){
+      $id = $request->id;
+      $pago_danos = $request->pago_danos;
+      $presupuesto = Presupuesto::find($id);
+      $id = $presupuesto->id_paddy ?? $presupuesto->id;
+      $pdf = PDF::loadView('pdf.valuacion.presupuesto_pdf', [
+          'presupuesto' => $presupuesto,
+          'pago_danos' => filter_var($pago_danos, FILTER_VALIDATE_BOOLEAN),
+      ]);
+      $pdf->setPaper('A4', 'portrait');
+      return $pdf->stream("presupuesto_{$id}.pdf");
+  }
 }
