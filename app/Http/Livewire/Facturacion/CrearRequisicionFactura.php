@@ -358,6 +358,15 @@ class CrearRequisicionFactura extends Component
     {
         if ($value !== 'PARTICULAR') {
             $this->clearCliente(false);
+        } else {
+            // Si cambia a PARTICULAR y hay una entrada seleccionada, obtener el cliente de esa entrada
+            if ($this->requisicion->model_type === Entrada::class && $this->requisicion->model_id) {
+                $entrada = Entrada::with('cliente')->find($this->requisicion->model_id);
+                if ($entrada && $entrada->cliente_id) {
+                    $this->requisicion->cliente_id = $entrada->cliente_id;
+                    $this->selectedClienteNombre = $entrada->cliente?->nombre;
+                }
+            }
         }
     }
 }
