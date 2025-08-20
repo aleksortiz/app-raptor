@@ -36,6 +36,7 @@
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 7 ? 'active' : '' }}" wire:click="$set('activeTab',7)" href="#"><i class="fas fa-hand-holding-usd"></i> Sueldos</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 8 ? 'active' : '' }}" wire:click="$set('activeTab',8)" href="#"><i class="fas fa-hand-holding-usd"></i> Destajos</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 9 ? 'active' : '' }}" wire:click="$set('activeTab',9)" href="#"><i class="fas fa-money-bill"></i> Gastos</a></li>
+                    <li class="nav-item"><a class="nav-link {{ $activeTab == 13 ? 'active' : '' }}" wire:click="$set('activeTab',13)" href="#"><i class="fas fa-clipboard-check"></i> Valuaciones</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 10 ? 'active' : '' }}" wire:click="$set('activeTab',10)" href="#"><i class="fas fa-tasks"></i> Asignaciones</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 11 ? 'active' : '' }}" wire:click="$set('activeTab',11)" href="#"><i class="fas fa-arrow-right"></i> Avance</a></li>
                     <li class="nav-item"><a class="nav-link {{ $activeTab == 12 ? 'active' : '' }}" wire:click="$set('activeTab',12)" href="#"><i class="fas fa-file"></i> Documentos</a></li>
@@ -91,6 +92,10 @@
 
                     <div class="tab-pane {{ $activeTab == 12 ? 'active' : '' }}" id="tab_12">
                         @include('livewire.entrada.ver-entrada.tabs.tab-documentos')
+                    </div>
+
+                    <div class="tab-pane {{ $activeTab == 13 ? 'active' : '' }}" id="tab_13">
+                        @include('livewire.entrada.ver-entrada.tabs.tab-valuaciones')
                     </div>
 
                 </div>

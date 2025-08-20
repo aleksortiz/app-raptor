@@ -508,4 +508,12 @@ class Entrada extends BaseModel
     {
         return $this->morphMany(RequisicionFactura::class, 'model');
     }
+    
+    /**
+     * Obtiene las valuaciones asociadas a esta entrada
+     */
+    public function valuaciones()
+    {
+        return $this->hasMany(Valuacion::class);
+    }
 }
