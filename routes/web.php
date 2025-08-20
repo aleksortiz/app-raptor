@@ -22,4 +22,5 @@ Route::middleware(['auth'])->group(function ()
     Route::get('/personal/asignaciones', App\Http\Livewire\Personal\CatalogoAsignaciones::class)->name('personal.asignaciones');
     Route::get('/entrada/download-document/{id}', [App\Http\Controllers\EntradaController::class, 'downloadDocument'])->name('entrada.download-document');
     Route::get('/valuacion/download-document/{id}', [App\Http\Controllers\ValuacionController::class, 'downloadDocument'])->name('valuacion.download-document');
+    Route::get('/documento/download', [App\Http\Controllers\DocumentoController::class, 'download'])->name('documento.download');
 });

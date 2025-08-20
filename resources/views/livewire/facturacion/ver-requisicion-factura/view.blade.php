@@ -199,7 +199,7 @@
                             <a href="{{ $constanciaUrl }}" target="_blank" class="btn btn-primary">
                                 <i class="fas fa-eye mr-1"></i> Ver Documento
                             </a>
-                            <a href="{{ $constanciaUrl }}" download class="btn btn-secondary ml-2">
+                            <a href="{{ route('documento.download', ['url' => $constanciaUrl, 'filename' => 'constancia_fiscal_' . ($requisicion->cliente?->nombre ?? 'cliente') . '.pdf']) }}" class="btn btn-secondary ml-2">
                                 <i class="fas fa-download mr-1"></i> Descargar
                             </a>
                         </div>
@@ -230,7 +230,7 @@
                             <a href="{{ $ineUrl }}" target="_blank" class="btn btn-primary">
                                 <i class="fas fa-eye mr-1"></i> Ver Documento
                             </a>
-                            <a href="{{ $ineUrl }}" download class="btn btn-secondary ml-2">
+                            <a href="{{ route('documento.download', ['url' => $ineUrl, 'filename' => 'ine_' . ($entrada->cliente?->nombre ?? $entrada->folio) . '.pdf']) }}" class="btn btn-secondary ml-2">
                                 <i class="fas fa-download mr-1"></i> Descargar
                             </a>
                         </div>
@@ -262,7 +262,7 @@
                             <a href="{{ $ordenAdmisionUrl }}" target="_blank" class="btn btn-primary">
                                 <i class="fas fa-eye mr-1"></i> Ver Documento
                             </a>
-                            <a href="{{ $ordenAdmisionUrl }}" download class="btn btn-secondary ml-2">
+                            <a href="{{ route('documento.download', ['url' => $ordenAdmisionUrl, 'filename' => 'orden_admision_' . $entrada->folio . '.pdf']) }}" class="btn btn-secondary ml-2">
                                 <i class="fas fa-download mr-1"></i> Descargar
                             </a>
                         </div>
