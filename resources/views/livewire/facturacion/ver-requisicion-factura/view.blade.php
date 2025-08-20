@@ -8,6 +8,11 @@
                         Detalles de Requisición de Factura #{{ $requisicion->id ?? '' }}
                     </h3>
                     <div class="card-tools">
+                        @if($requisicion)
+                        <button type="button" class="btn btn-info mr-2" wire:click="downloadTodosDocumentos">
+                            <i class="fas fa-file-archive"></i> DESCARGAR TODOS LOS DOCUMENTOS
+                        </button>
+                        @endif
                         <button type="button" class="btn btn-secondary" wire:click="goBack">
                             <i class="fas fa-arrow-left"></i> Volver
                         </button>
