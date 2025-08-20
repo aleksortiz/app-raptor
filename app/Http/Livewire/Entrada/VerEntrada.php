@@ -737,8 +737,8 @@ class VerEntrada extends Component
     public function iniciarCreacionRequisicion()
     {
         // Verificar que el vehículo esté TERMINADO
-        if ($this->entrada->estado !== 'TERMINADO') {
-            $this->emit('error', 'Solo se pueden generar requisiciones para vehículos TERMINADOS');
+        if ($this->entrada->estado !== 'TERMINADO' && $this->entrada->estado !== 'ENTREGADO') {
+            $this->emit('ok', 'Solo se pueden generar requisiciones para vehículos TERMINADOS o ENTREGADOS');
             return;
         }
         
@@ -764,8 +764,8 @@ class VerEntrada extends Component
         $this->validate($this->requisicionRules);
         
         // Verificar que el vehículo esté TERMINADO
-        if ($this->entrada->estado !== 'TERMINADO') {
-            $this->emit('error', 'Solo se pueden generar requisiciones para vehículos TERMINADOS');
+        if ($this->entrada->estado !== 'TERMINADO' && $this->entrada->estado !== 'ENTREGADO') {
+            $this->emit('ok', 'Solo se pueden generar requisiciones para vehículos TERMINADOS o ENTREGADOS');
             return;
         }
 
