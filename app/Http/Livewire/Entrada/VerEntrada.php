@@ -81,7 +81,9 @@ class VerEntrada extends Component
     public $tipoDocumento;
     public $requiredDocs = [
         'ORDEN ADMISION',
-        'VALUACION',
+        'INE',
+        'FINIQUITO',
+        'VALE MO'
     ];
 
     protected $listeners = [
