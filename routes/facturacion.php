@@ -21,7 +21,11 @@ Route::middleware(['auth'])->prefix('control-facturacion')->group(function(){
 
     Route::get('/requisicion-facturas', function(){
         return view('livewire.facturacion.crear-requisicion-factura.index');
-    });
+    })->name('facturacion.requisiciones');
+
+    Route::get('/requisicion-factura/{id}', function($id){
+        return view('livewire.facturacion.ver-requisicion-factura.index', ['id' => $id]);
+    })->name('facturacion.requisicion.ver');
 
 });
 
