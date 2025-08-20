@@ -7,6 +7,7 @@ use App\Exports\VehiculosPisoExport;
 use App\Models\Presupuesto;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Excel as ExcelFormat;
 
 class ExcelController extends Controller
 {
@@ -22,5 +23,13 @@ class ExcelController extends Controller
   public function vehiculosPiso(){
       $date = date('Y-m-d');
       return Excel::download(new VehiculosPisoExport(), "vehiculos_piso_{$date}.xlsx");
+  }
+
+  public function presupuestoPdf(Request $request){
+      $id = $request->id;
+      $pago_danos = $request->pago_danos;
+      $presupuesto = Presupuesto::find($id);
+      $id = $presupuesto->id_paddy;
+      return Excel::download(new PresupuestoExport($presupuesto, $pago_danos), "presupuesto_{$id}.pdf", ExcelFormat::DOMPDF);
   }
 }

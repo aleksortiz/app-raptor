@@ -22,5 +22,6 @@ Route::middleware(['auth'])->prefix('valuaciones')->group(function () {
 Route::middleware(['auth'])->prefix('presupuestos')->group(function () {
 
   Route::get('/{id}/excel', [ExcelController::class, 'presupuesto']);
+  Route::get('/{id}/pdf', [ExcelController::class, 'presupuestoPdf']);
 
 });
