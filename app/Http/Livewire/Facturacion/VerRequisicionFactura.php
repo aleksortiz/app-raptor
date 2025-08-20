@@ -61,7 +61,7 @@ class VerRequisicionFactura extends Component
             $entrada = Entrada::find($req->model_id);
             if ($entrada) {
                 $this->entrada = $entrada;
-                $docOrdenAdmision = $entrada->documentos()->where('tipo', 'ORDEN_ADMISION')->first();
+                $docOrdenAdmision = $entrada->documentos()->where('tipo', 'ORDEN ADMISION')->first();
                 $this->ordenAdmisionUrl = $this->buildS3Url($docOrdenAdmision?->url);
                 
                 // Obtener URL del INE de la entrada
