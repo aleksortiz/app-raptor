@@ -25,7 +25,7 @@
     @if($requisicion)
     <div class="row">
         <!-- Columna de información principal -->
-        <div class="col-md-8">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header bg-primary">
                     <h3 class="card-title">
@@ -189,7 +189,7 @@
         </div>
 
         <!-- Columna de documentos -->
-        <div class="col-md-4">
+        <div class="col-md-5">
             <!-- Constancia Fiscal -->
             <div class="card">
                 <div class="card-header bg-warning">
