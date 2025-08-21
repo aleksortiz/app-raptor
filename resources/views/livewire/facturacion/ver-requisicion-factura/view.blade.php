@@ -9,8 +9,13 @@
                     </h3>
                     <div class="card-tools">
                         @if($requisicion)
-                        <button type="button" class="btn btn-info mr-2" wire:click="downloadTodosDocumentos">
-                            <i class="fas fa-file-archive"></i> DESCARGAR TODOS LOS DOCUMENTOS
+                        <button type="button" class="btn btn-info mr-2" wire:click="downloadTodosDocumentos" wire:loading.attr="disabled" wire:target="downloadTodosDocumentos">
+                            <span wire:loading.remove wire:target="downloadTodosDocumentos">
+                                <i class="fas fa-file-archive"></i> DESCARGAR TODOS LOS DOCUMENTOS
+                            </span>
+                            <span wire:loading wire:target="downloadTodosDocumentos">
+                                <i class="fas fa-spinner fa-spin"></i> DESCARGANDO DOCUMENTOS...
+                            </span>
                         </button>
                         @endif
                         <button type="button" class="btn btn-secondary" wire:click="goBack">
