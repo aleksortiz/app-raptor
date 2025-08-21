@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="bg-container">
-@include('shared.system.loader')
+{{-- @include('shared.system.loader') --}}
 <br><br><br>
 <center>
     <div class="mt-5 logo-container">
