@@ -74,7 +74,8 @@
                             <a target="_blank" href="/materiales/vales/{{$item->id}}/pdf" class="btn btn-secondary btn-sm"><i class="fa fa-ticket-alt"></i> Ver Vale</a>
                         </td>
                         <td>
-                            <a target="_blank" wire:click="$emit('print', 'vale_material#{{$item->id}}')" class="btn btn-secondary btn-sm"><i class="fa fa-print"></i> Imprimir</a>
+                            {{-- <a target="_blank" wire:click="$emit('print', 'vale_material#{{$item->id}}')" class="btn btn-secondary btn-sm"><i class="fa fa-print"></i> Imprimir</a> --}}
+                            <a target="_blank" href="aosprint:vale_material#{{$item->id}}" class="btn btn-secondary btn-sm"><i class="fa fa-print"></i> Imprimir</a>
                         </td>
 
                     </tr>
