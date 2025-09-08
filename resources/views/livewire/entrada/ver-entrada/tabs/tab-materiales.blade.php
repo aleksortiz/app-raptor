@@ -23,7 +23,6 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            {{-- <th></th> --}}
                             <th>Fecha</th>
                             <th>Trabajador</th>
                             <th>Número de Parte</th>
@@ -31,12 +30,12 @@
                             <th>Cantidad</th>
                             <th>Precio</th>
                             <th>Importe</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($this->entrada->materiales as $item)
                         <tr>
-                            {{-- <td><button class="btn btn-xs btn-danger" onclick="destroy({{$item->id}},'material','destroyMaterial')"><i class="fa fa-trash-alt"></i></button></td> --}}
                             <td>{{$item->fecha_creacion}}</td>
                             <td>{{$item->vale_material?->personal->nombre ?? 'INDEFINIDO'}}</td>
                             <td>{{$item->numero_parte}}</td>
@@ -44,6 +43,9 @@
                             <td>{{$item->cantidad}}</td>
                             <td>@money($item->precio)</td>
                             <td>@money($item->importe)</td>
+                            <td>
+                                <button class="btn btn-xs btn-danger" onclick="confirm('¿Desea eliminar material?','destroyMaterial', {{$item->id}})"><i class="fa fa-trash-alt"></i></button>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -51,4 +53,27 @@
             </div>
         </div>
     </div>
+
+
+    <div wire:ignore.self class="modal fade" id="mdlConfirmDevolverStock" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Devolver stock</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Desea devolver el stock al material asociado?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" wire:click="eliminarMaterialSinDevolver">Eliminar sin devolver</button>
+                <button type="button" class="btn btn-success" wire:click="eliminarMaterialDevolviendo">Eliminar y devolver</button>
+            </div>
+            </div>
+        </div>
+    </div>
 </div>
+

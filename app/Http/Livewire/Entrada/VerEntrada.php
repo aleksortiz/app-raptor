@@ -66,6 +66,7 @@ class VerEntrada extends Component
 
     public $notasCosto;
     public $selectedCostoId;
+    public $selectedEntradaMaterialId;
 
     public $materialManual = [
         'descripcion' => null,
@@ -93,6 +94,9 @@ class VerEntrada extends Component
         'removePhoto',
         'setMaterial',
         'destroyMaterial',
+        'initEliminarMaterial',
+        'eliminarMaterialSinDevolver',
+        'eliminarMaterialDevolviendo',
         'reload',
         'removeOrdenPago',
         'eliminarAsignacion',
@@ -286,17 +290,139 @@ class VerEntrada extends Component
     public function destroyMaterial($id)
     {
         $elem = EntradaMaterial::findOrFail($id);
-        if ($elem->delete()) {
-            $this->emit('ok', "Se ha eliminado material");
-            Material::where('id', $elem->material_id)->increment('existencia', $elem->cantidad);
-            $this->entrada->load('materiales');
 
-            if($elem->pedido_concepto_id){
-                $pedidoConcepto = PedidoConcepto::findOrFail($elem->pedido_concepto_id);
-                $pedidoConcepto->cantidad_recibida -= $elem->cantidad;
-                $pedidoConcepto->save();
+        // Caso sin relaciones: eliminar directo
+        if (is_null($elem->material_id) && is_null($elem->pedido_concepto_id)) {
+            if ($elem->delete()) {
+                $this->entrada->load('materiales');
+                $this->emit('ok', 'Se ha eliminado material');
             }
+            return;
         }
+
+        // Caso con material: mostrar modal para decidir devolución de stock
+        if (!is_null($elem->material_id)) {
+            $this->selectedEntradaMaterialId = $elem->id;
+            $this->emit('showModal', '#mdlConfirmDevolverStock');
+            return;
+        }
+
+        // Caso solo con pedido_concepto: eliminar entrada_material y el pedido_concepto
+        if (!is_null($elem->pedido_concepto_id)) {
+            $pedidoConceptoId = $elem->pedido_concepto_id;
+            if ($elem->delete()) {
+                $pedidoConcepto = PedidoConcepto::find($pedidoConceptoId);
+                if ($pedidoConcepto) {
+                    $pedidoConcepto->delete();
+                }
+                $this->entrada->load('materiales');
+                $this->emit('ok', 'Se ha eliminado material');
+            }
+            return;
+        }
+    }
+
+    public function initEliminarMaterial($id)
+    {
+        $elem = EntradaMaterial::findOrFail($id);
+        // Sin relaciones: eliminar directo
+        if (is_null($elem->material_id) && is_null($elem->pedido_concepto_id)) {
+            $this->selectedEntradaMaterialId = $elem->id;
+            $this->eliminarMaterialSinDevolver();
+            return;
+        }
+
+        // Con material: preguntar devolución de stock
+        if (!is_null($elem->material_id)) {
+            $this->selectedEntradaMaterialId = $elem->id;
+            $this->emit('showModal', '#mdlConfirmDevolverStock');
+            return;
+        }
+
+        // Solo pedido_concepto: eliminar sin devolver stock
+        if (!is_null($elem->pedido_concepto_id)) {
+            $this->selectedEntradaMaterialId = $elem->id;
+            $this->eliminarMaterialSinDevolver();
+            return;
+        }
+    }
+
+    public function eliminarMaterialSinDevolver()
+    {
+        $id = $this->selectedEntradaMaterialId;
+        if (!$id) { return; }
+        $elem = EntradaMaterial::find($id);
+        if (!$elem) { return; }
+
+        $pedidoConceptoId = $elem->pedido_concepto_id;
+        if ($elem->delete()) {
+            if ($pedidoConceptoId) {
+                $pedidoConcepto = PedidoConcepto::find($pedidoConceptoId);
+                if ($pedidoConcepto) {
+                    $pedidoConcepto->delete();
+                }
+            }
+            $this->entrada->load('materiales');
+            $this->emit('ok', 'Material eliminado');
+            $this->emit('closeModal', '#mdlConfirmDevolverStock');
+        }
+        $this->selectedEntradaMaterialId = null;
+    }
+
+    public function eliminarMaterialDevolviendo()
+    {
+        $id = $this->selectedEntradaMaterialId;
+        if (!$id) { return; }
+        $elem = EntradaMaterial::find($id);
+        if (!$elem) { return; }
+
+        $materialId = $elem->material_id;
+        $cantidad = $elem->cantidad;
+        $pedidoConceptoId = $elem->pedido_concepto_id;
+
+        if ($elem->delete()) {
+            if ($materialId) {
+                Material::where('id', $materialId)->increment('existencia', $cantidad);
+            }
+            if ($pedidoConceptoId) {
+                $pedidoConcepto = PedidoConcepto::find($pedidoConceptoId);
+                if ($pedidoConcepto) {
+                    $pedidoConcepto->delete();
+                }
+            }
+            $this->entrada->load('materiales');
+            $this->emit('ok', 'Material eliminado y stock devuelto');
+            $this->emit('closeModal', '#mdlConfirmDevolverStock');
+        }
+        $this->selectedEntradaMaterialId = null;
+    }
+
+    public function destroyMaterialManual()
+    {
+        $this->validate([
+            'materialManual.descripcion' => 'string|required|max:255',
+            'materialManual.cantidad' => 'numeric|required|min:0',
+            'materialManual.precio' => 'numeric|required|min:0',
+        ]);
+
+        EntradaMaterial::create([
+            'entrada_id' => $this->entrada->id,
+            'material_id' => null,
+            'cantidad' => $this->materialManual['cantidad'],
+            'numero_parte' => "MANUAL",
+            'material' => $this->materialManual['descripcion'],
+            'unidad_medida' => 'pz',
+            'precio' => $this->materialManual['precio'],
+        ]);
+
+        $this->entrada->load('materiales');
+        $this->materialManual = [
+            'descripcion' => null,
+            'cantidad' => null,
+            'precio' => null,
+        ];
+        $this->emit('ok', 'Se ha registrado material');
+        $this->emit('closeModal', '#mdlMaterialManual');
     }
 
     public function deleteGasto($id){
