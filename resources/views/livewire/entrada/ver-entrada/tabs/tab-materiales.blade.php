@@ -30,7 +30,9 @@
                             <th>Cantidad</th>
                             <th>Precio</th>
                             <th>Importe</th>
+                            @can('administrar-materiales')
                             <th></th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -43,9 +45,11 @@
                             <td>{{$item->cantidad}}</td>
                             <td>@money($item->precio)</td>
                             <td>@money($item->importe)</td>
+                            @can('administrar-materiales')
                             <td>
                                 <button class="btn btn-xs btn-danger" onclick="confirm('¿Desea eliminar material?','destroyMaterial', {{$item->id}})"><i class="fa fa-trash-alt"></i></button>
                             </td>
+                            @endcan
                         </tr>
                         @endforeach
                     </tbody>
