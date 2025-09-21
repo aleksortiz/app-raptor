@@ -36,8 +36,8 @@
                     <tr>
                         <th>#</th>
                         <th>Vehículo</th>
-                        <th>Serie</th>
-                        <th>Placas</th>
+                        <th>Costo Real</th>
+                        <th>Costo Estimado</th>
                         <th>Utilidad Estimada</th>
                         <th>Utilidad Real</th>
                         <th>Estatus</th>
@@ -48,8 +48,10 @@
                         <tr style="cursor: pointer" onclick="window.location.href='/vehiculos/{{$item->id}}'; return false;">
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->descripcion }}</td>
-                            <td>{{ $item->serie }}</td>
-                            <td>{{ $item->placa }}</td>
+                            <td>@money($item->total_gastos)</td>
+                            <td>@money($item->total_gastos_estimacion)</td>
+                            <td>@money($item->precio_venta)</td>
+                            <td>@money($item->precio_venta_mxn)</td>
                             <td>@money($item->utilidad_estimada)</td>
                             <td>@money($item->utilidad_final)</td>
                             <td>{!! $item->estado_span !!}</td>
