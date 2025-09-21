@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -40,7 +41,33 @@ class LoginController extends Controller
     }
 
     protected function credentials(Request $request) {
-        return array_merge($request->only($this->username(), 'password'), ['active' => 1]);
+        $login = $request->input('login');
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'nickname';
+        
+        return array_merge([$field => $login, 'password' => $request->input('password')], ['active' => 1]);
+    }
+
+    public function username()
+    {
+        return 'login';
+    }
+
+    protected function validateLogin(Request $request)
+    {
+        $request->validate([
+            'login' => 'required|string',
+            'password' => 'required|string',
+        ], [
+            'login.required' => 'El campo Email o Nickname es obligatorio.',
+            'password.required' => 'El campo contraseña es obligatorio.'
+        ]);
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            'login' => [trans('auth.failed')],
+        ]);
     }
   
 }
