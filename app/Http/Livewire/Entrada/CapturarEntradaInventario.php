@@ -40,6 +40,7 @@ class CapturarEntradaInventario extends Component
     public $extra;
     public $herramientas;
     public $cables;
+    public $ac;
 
     //TESTIGOS
     public $abs;
@@ -90,14 +91,7 @@ class CapturarEntradaInventario extends Component
         'extra' => 'required|string',
         'herramientas' => 'required|string',
         'cables' => 'required|string',
-
-        'estereo' => 'required|string',
-        'tapetes' => 'required|string',
-        'parabrisas' => 'required|string',
-        'gato' => 'required|string',
-        'extra' => 'required|string',
-        'herramientas' => 'required|string',
-        'cables' => 'required|string',
+        'ac' => 'required|string',
         'carroceria_otro_text' => 'required_if:carroceria_otro,true',
         'falla_mecanica_text' => 'required_if:falla_mecanica,true',
         'suspension_text' => 'required_if:suspension,true',
@@ -196,6 +190,7 @@ class CapturarEntradaInventario extends Component
             'extra' => $this->extra,
             'herramientas' => $this->herramientas,
             'cables' => $this->cables,
+            'ac' => $this->ac,
           ]),
           'testigos' => json_encode([
             'abs' => $this->abs,
