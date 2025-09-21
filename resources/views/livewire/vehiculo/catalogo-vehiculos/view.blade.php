@@ -50,8 +50,6 @@
                             <td>{{ $item->descripcion }}</td>
                             <td>@money($item->total_gastos)</td>
                             <td>@money($item->total_gastos_estimacion)</td>
-                            <td>@money($item->precio_venta)</td>
-                            <td>@money($item->precio_venta_mxn)</td>
                             <td>@money($item->utilidad_estimada)</td>
                             <td>@money($item->utilidad_final)</td>
                             <td>{!! $item->estado_span !!}</td>
