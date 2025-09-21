@@ -56,6 +56,10 @@ class Entrada extends BaseModel
             $model->folio = Entrada::generarFolio();
             $model->area_trabajo = '[]';
         });
+
+        self::saving(function ($model) {
+            $model->marca = $model->fabricante->nombre;
+        });
     }
 
     public function usuario()

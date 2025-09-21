@@ -87,6 +87,7 @@ class CrearEntrada extends Component
     public function create(){
         $this->validate();
         $this->entrada->user_id = Auth::user()->id;
+        $this->entrada->marca = $this->entrada->fabricante->nombre;
         if($this->entrada->save()){
 
             foreach ($this->costos as $costo) {
