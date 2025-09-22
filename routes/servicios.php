@@ -80,8 +80,12 @@ Route::middleware(['auth'])->group(function ()
       return view('livewire.entrada-inventario.catalogo-inventarios.index');
     });
 
-    Route::get('/registro-inventario', function(){
+    Route::get('/registro-inventario-old', function(){
       return view('livewire.entrada.capturar-entrada-inventario.index');
+    });
+
+    Route::get('/registro-inventario', function(){
+      return view('livewire.entrada.capturar-entrada-inventario.wizard-layout');
     });
 
     Route::get('/inventarios/{inventario}/pdf', [PdfController::class, 'inventario_pdf']);
