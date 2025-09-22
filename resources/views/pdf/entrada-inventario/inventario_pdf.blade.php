@@ -367,72 +367,88 @@
     <div class="section-content">
         <div class="two-column">
             <div class="column-left">
+                @if(isset($inventarioData['estereo']))
                 <div class="field-row">
                     <div class="field-label">Estéreo:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['estereo'] === 'FUNCIONAL' ? 'ok' : ($inventarioData['estereo'] === 'NO TIENE' ? 'warning' : 'error') }}">
-                            {{ $inventarioData['estereo'] ?? 'N/A' }}
+                            {{ $inventarioData['estereo'] }}
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($inventarioData['tapetes']))
                 <div class="field-row">
                     <div class="field-label">Tapetes:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['tapetes'] === 'COMPLETOS' ? 'ok' : ($inventarioData['tapetes'] === 'INCOMPLETOS' ? 'warning' : 'error') }}">
-                            {{ $inventarioData['tapetes'] ?? 'N/A' }}
+                            {{ $inventarioData['tapetes'] }}
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($inventarioData['parabrisas']))
                 <div class="field-row">
                     <div class="field-label">Parabrisas:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['parabrisas'] === 'SIN DETALLES' ? 'ok' : 'error' }}">
-                            {{ $inventarioData['parabrisas'] ?? 'N/A' }}
+                            {{ $inventarioData['parabrisas'] }}
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($inventarioData['ac']))
                 <div class="field-row">
                     <div class="field-label">Aire Acondicionado:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['ac'] === 'FUNCIONAL' ? 'ok' : ($inventarioData['ac'] === 'SIN GAS' ? 'warning' : 'error') }}">
-                            {{ $inventarioData['ac'] ?? 'N/A' }}
+                            {{ $inventarioData['ac'] }}
                         </span>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="column-right">
+                @if(isset($inventarioData['gato']))
                 <div class="field-row">
                     <div class="field-label">Gato:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['gato'] === 'TIENE' ? 'ok' : 'error' }}">
-                            {{ $inventarioData['gato'] ?? 'N/A' }}
+                            {{ $inventarioData['gato'] }}
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($inventarioData['extra']))
                 <div class="field-row">
                     <div class="field-label">Extras:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['extra'] === 'TIENE' ? 'ok' : 'warning' }}">
-                            {{ $inventarioData['extra'] ?? 'N/A' }}
+                            {{ $inventarioData['extra'] }}
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($inventarioData['herramientas']))
                 <div class="field-row">
                     <div class="field-label">Herramientas:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['herramientas'] === 'TIENE' ? 'ok' : 'warning' }}">
-                            {{ $inventarioData['herramientas'] ?? 'N/A' }}
+                            {{ $inventarioData['herramientas'] }}
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($inventarioData['cables']))
                 <div class="field-row">
                     <div class="field-label">Cables:</div>
                     <div class="field-value">
                         <span class="status-{{ $inventarioData['cables'] === 'TIENE' ? 'ok' : 'warning' }}">
-                            {{ $inventarioData['cables'] ?? 'N/A' }}
+                            {{ $inventarioData['cables'] }}
                         </span>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -440,8 +456,10 @@
     <!-- WARNING LIGHTS SECTION -->
     <div class="section-title">TESTIGOS DE ADVERTENCIA</div>
     <div class="section-content">
+        @if($testigosData)
         <div class="two-column">
             <div class="column-left">
+                @if(isset($testigosData['abs']))
                 <div class="field-row">
                     <div class="field-label">ABS:</div>
                     <div class="field-value">
@@ -450,6 +468,8 @@
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($testigosData['check_engine']))
                 <div class="field-row">
                     <div class="field-label">Check Engine:</div>
                     <div class="field-value">
@@ -458,6 +478,8 @@
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($testigosData['antiderrapante']))
                 <div class="field-row">
                     <div class="field-label">Antiderrapante:</div>
                     <div class="field-value">
@@ -466,8 +488,10 @@
                         </span>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="column-right">
+                @if(isset($testigosData['brake']))
                 <div class="field-row">
                     <div class="field-label">Brake:</div>
                     <div class="field-value">
@@ -476,6 +500,8 @@
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($testigosData['bolsas']))
                 <div class="field-row">
                     <div class="field-label">Bolsas de Aire:</div>
                     <div class="field-value">
@@ -484,6 +510,8 @@
                         </span>
                     </div>
                 </div>
+                @endif
+                @if(isset($testigosData['stability_track']))
                 <div class="field-row">
                     <div class="field-label">Stability Track:</div>
                     <div class="field-value">
@@ -492,8 +520,10 @@
                         </span>
                     </div>
                 </div>
+                @endif
             </div>
         </div>
+        @endif
     </div>
 
 
