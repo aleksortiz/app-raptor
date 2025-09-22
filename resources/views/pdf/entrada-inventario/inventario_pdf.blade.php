@@ -289,10 +289,8 @@
     <div class="header">
   <table width="100%">
     <tr>
-                <td class="logo-section">
-        <div class="logo">
-                        <img width="200px" src="" alt="Logo">
-        </div>
+      <td class="logo-section">
+        @include('pdf.entrada-inventario.logo')
       </td>
                 <td class="info-section">
                     <h1 class="folio-title">Folio: {{$inventario->entrada->folio_short}}</h1>
