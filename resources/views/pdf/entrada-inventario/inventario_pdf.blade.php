@@ -457,7 +457,6 @@
         @if($testigosData)
         <div class="two-column">
             <div class="column-left">
-                @if(isset($testigosData['abs']))
                 <div class="field-row">
                     <div class="field-label">ABS:</div>
                     <div class="field-value">
@@ -466,8 +465,6 @@
                         </span>
                     </div>
                 </div>
-                @endif
-                @if(isset($testigosData['check_engine']))
                 <div class="field-row">
                     <div class="field-label">Check Engine:</div>
                     <div class="field-value">
@@ -476,8 +473,6 @@
                         </span>
                     </div>
                 </div>
-                @endif
-                @if(isset($testigosData['antiderrapante']))
                 <div class="field-row">
                     <div class="field-label">Antiderrapante:</div>
                     <div class="field-value">
@@ -486,10 +481,8 @@
                         </span>
                     </div>
                 </div>
-                @endif
             </div>
             <div class="column-right">
-                @if(isset($testigosData['brake']))
                 <div class="field-row">
                     <div class="field-label">Brake:</div>
                     <div class="field-value">
@@ -498,8 +491,6 @@
                         </span>
                     </div>
                 </div>
-                @endif
-                @if(isset($testigosData['bolsas']))
                 <div class="field-row">
                     <div class="field-label">Bolsas de Aire:</div>
                     <div class="field-value">
@@ -508,8 +499,6 @@
                         </span>
                     </div>
                 </div>
-                @endif
-                @if(isset($testigosData['stability_track']))
                 <div class="field-row">
                     <div class="field-label">Stability Track:</div>
                     <div class="field-value">
@@ -518,7 +507,6 @@
                         </span>
                     </div>
                 </div>
-                @endif
             </div>
         </div>
         @endif
