@@ -29,6 +29,7 @@ class EntradaInventario extends BaseModel
         'firma',
         'diagrama',
         'entrada_id',
+        'email',
     ];
 
     public function user(){

@@ -41,6 +41,24 @@
                                 <li class="list-group-item"><strong>Herramientas:</strong> {{$inv->herramientas}}</li>
                                 <li class="list-group-item"><strong>Cables:</strong> {{$inv->cables}}</li>
                             </ul>
+                            
+                            <!-- Email Section -->
+                            <div class="mt-4">
+                                <h5 class="text-secondary mb-3"><i class="fa fa-envelope"></i> Envío por Email</h5>
+                                <div class="form-group">
+                                    <input type="email" 
+                                           wire:model="email" 
+                                           class="form-control @error('email') is-invalid @enderror" 
+                                           placeholder="Ingrese email del cliente">
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                
+                                <small class="text-muted">
+                                    <i class="fa fa-info-circle"></i> Ingresa correo para recibir inventario
+                                </small>
+                            </div>
                         </div>
                     </div>
                 </div>

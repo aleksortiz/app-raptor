@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\EntradaInventario;
 
+use App\Jobs\SendInventarioPdfEmail;
 use App\Models\EntradaInventario;
 use Livewire\Component;
 
@@ -12,12 +13,22 @@ class TomarFotosInventario extends Component
     public $inventario;
 
     public $firma = false;
+    public $email = '';
 
     protected $listeners = ['saveSign'];
+
+    protected $rules = [
+        'email' => 'nullable|email',
+    ];
+
+    protected $messages = [
+        'email.email' => 'Por favor ingrese un email válido.',
+    ];
 
     public function mount(EntradaInventario $inventario){
         $this->inventario = $inventario;
         $this->entrada = $inventario->entrada;
+        $this->email = $inventario->email ?? '';
     }
 
     public function render()
@@ -43,10 +54,26 @@ class TomarFotosInventario extends Component
 
     public function saveSign($image){
         $this->inventario->firma = $image;
+        
+        // Validar y guardar email si se proporcionó
+        if ($this->email) {
+            $this->validate();
+            $this->inventario->email = $this->email;
+        }
+        
         $this->inventario->save();
-        $this->emit('ok', 'Firma guardada correctamente');
+        
+        // Enviar email si se proporcionó un email válido
+        if ($this->email) {
+            SendInventarioPdfEmail::dispatch($this->inventario, $this->email);
+            $this->emit('ok', 'Firma guardada correctamente y correo enviado a: ' . $this->email);
+        } else {
+            $this->emit('ok', 'Firma guardada correctamente');
+        }
+        
         return redirect()->to('/');
     }
+
 
 
 }
