@@ -82,10 +82,27 @@
                                 <i class="fas fa-palette me-1"></i>
                                 Color
                             </label>
-                            <input type="text" wire:model.defer="color" id="color" 
+                            <input list="colors" type="text" wire:model.defer="color" id="color" 
                                    class="form-control form-control-lg" 
                                    style="text-transform: uppercase;" 
                                    placeholder="Color del vehículo">
+                                   <datalist id="colors">
+                                    <option value="AMARILLO">AMARILLO</option>
+                                    <option value="AZUL">AZUL</option>
+                                    <option value="BLANCO">BLANCO</option>
+                                    <option value="CAFE">CAFE</option>
+                                    <option value="DORADO">DORADO</option>
+                                    <option value="GUINDA">GUINDA</option>
+                                    <option value="GRIS">GRIS</option>
+                                    <option value="NARANJA">NARANJA</option>
+                                    <option value="NEGRO">NEGRO</option>
+                                    <option value="PERLA">PERLA</option>
+                                    <option value="PLATA">PLATA</option>
+                                    <option value="PURPURA">PURPURA</option>
+                                    <option value="ROJO">ROJO</option>
+                                    <option value="ROSA">ROSA</option>
+                                    <option value="VERDE">VERDE</option>
+                                   </datalist>
                             @error('color') <span class="text-danger small">{{ $message }}</span> @enderror
                         </div>
                     </div>
