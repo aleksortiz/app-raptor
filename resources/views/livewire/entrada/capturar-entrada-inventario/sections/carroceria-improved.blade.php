@@ -237,7 +237,7 @@
                             <label class="form-check-label damage-label" for="facia">
                                 <div class="damage-content">
                                     <div class="damage-icon bg-success">
-                                        <i class="fas fa-car-front"></i>
+                                        <i class="fas fa-car"></i>
                                     </div>
                                     <div class="damage-info">
                                         <h6 class="damage-title">Facia</h6>
