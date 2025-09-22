@@ -211,23 +211,33 @@ class CapturarEntradaInventarioWizard extends Component
     {
         switch ($step) {
             case 1:
+                // Información General
                 return $this->validateStepFields([
                     'year', 'kilometros', 'color', 'placas', 'gasolina'
                 ]);
-            case 3:
+            case 2:
+                // Inventario (antes step 3)
                 return $this->validateStepFields([
                     'estereo', 'tapetes', 'parabrisas', 'gato', 
                     'extra', 'herramientas', 'cables', 'ac'
                 ]);
-            case 5:
+            case 3:
+                // Testigos (antes step 4) - opcional
+                return true;
+            case 4:
+                // Carrocería (antes step 5)
                 return $this->validateStepFields([
                     'carroceria_otro_text', 'falla_mecanica_text', 
                     'suspension_text', 'mecanica_otro_text'
                 ]);
+            case 5:
+                // Diagrama (antes step 2) - opcional
+                return true;
             case 6:
+                // Finalizar
                 return $this->validateStepFields(['notas']);
             default:
-                return true; // Steps 2 y 4 no requieren validación
+                return true;
         }
     }
 
@@ -438,9 +448,9 @@ class CapturarEntradaInventarioWizard extends Component
             }
         }
 
-        // Step 3 fields  
-        $step3Fields = ['estereo', 'tapetes', 'parabrisas', 'gato', 'extra', 'herramientas', 'cables', 'ac'];
-        foreach ($step3Fields as $field) {
+        // Step 2 fields (Inventario)
+        $step2Fields = ['estereo', 'tapetes', 'parabrisas', 'gato', 'extra', 'herramientas', 'cables', 'ac'];
+        foreach ($step2Fields as $field) {
             $totalFields++;
             if (!empty($this->$field)) {
                 $completedFields++;

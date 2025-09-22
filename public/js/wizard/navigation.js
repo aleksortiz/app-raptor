@@ -30,13 +30,13 @@ class InventarioWizard {
     }
 
     setupValidations() {
-        // Validaciones por paso
-        this.stepValidations.set(1, () => this.validateStep1());
-        this.stepValidations.set(2, () => this.validateStep2());
-        this.stepValidations.set(3, () => this.validateStep3());
-        this.stepValidations.set(4, () => this.validateStep4());
-        this.stepValidations.set(5, () => this.validateStep5());
-        this.stepValidations.set(6, () => this.validateStep6());
+        // Validaciones por paso (nuevo orden)
+        this.stepValidations.set(1, () => this.validateStep1()); // Información General
+        this.stepValidations.set(2, () => this.validateStep2()); // Inventario (antes step 3)
+        this.stepValidations.set(3, () => this.validateStep3()); // Testigos (antes step 4)
+        this.stepValidations.set(4, () => this.validateStep4()); // Carrocería (antes step 5)
+        this.stepValidations.set(5, () => this.validateStep5()); // Diagrama (antes step 2)
+        this.stepValidations.set(6, () => this.validateStep6()); // Finalizar
     }
 
     bindEvents() {
@@ -142,23 +142,32 @@ class InventarioWizard {
     initializeStepComponents() {
         switch(this.currentStep) {
             case 1:
+                // Información General - Range Slider
                 if (!this.rangeSliderInitialized) {
                     this.initRangeSlider();
                 }
                 break;
             case 2:
+                // Inventario - Form Events
+                this.loadFormEvents();
+                break;
+            case 3:
+                // Testigos - Form Events
+                this.loadFormEvents();
+                break;
+            case 4:
+                // Carrocería - Form Events
+                this.loadFormEvents();
+                break;
+            case 5:
+                // Diagrama - Canvas
                 if (!this.canvasInitialized) {
                     this.initCanvas();
                     this.canvasInitialized = true;
                 }
                 break;
-            case 3:
-                this.loadFormEvents();
-                break;
-            case 5:
-                this.loadFormEvents();
-                break;
             case 6:
+                // Finalizar - Summary
                 this.updateSummary();
                 break;
         }
@@ -252,11 +261,7 @@ class InventarioWizard {
     }
 
     validateStep2() {
-        // El diagrama es opcional, siempre válido
-        return true;
-    }
-
-    validateStep3() {
+        // Inventario - Validar selects requeridos
         const requiredSelects = [
             'estereo', 'tapetes', 'parabrisas', 'gato', 
             'extra', 'herramientas', 'cables', 'ac'
@@ -277,13 +282,13 @@ class InventarioWizard {
         return isValid;
     }
 
-    validateStep4() {
-        // Los testigos son opcionales
+    validateStep3() {
+        // Testigos - Los testigos son opcionales
         return true;
     }
 
-    validateStep5() {
-        // Validar campos condicionales
+    validateStep4() {
+        // Carrocería - Validar campos condicionales
         let isValid = true;
         
         // Validar campos de texto condicionales
@@ -307,6 +312,11 @@ class InventarioWizard {
         });
         
         return isValid;
+    }
+
+    validateStep5() {
+        // Diagrama - El diagrama es opcional, siempre válido
+        return true;
     }
 
     validateStep6() {

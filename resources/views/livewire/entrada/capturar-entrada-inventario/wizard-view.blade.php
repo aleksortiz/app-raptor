@@ -9,10 +9,10 @@
             </div>
             <div class="d-flex justify-content-between mt-2">
                 <small class="text-muted step-label active" data-step="1">Información General</small>
-                <small class="text-muted step-label" data-step="2">Diagrama</small>
-                <small class="text-muted step-label" data-step="3">Inventario</small>
-                <small class="text-muted step-label" data-step="4">Testigos</small>
-                <small class="text-muted step-label" data-step="5">Carrocería</small>
+                <small class="text-muted step-label" data-step="2">Inventario</small>
+                <small class="text-muted step-label" data-step="3">Testigos</small>
+                <small class="text-muted step-label" data-step="4">Carrocería</small>
+                <small class="text-muted step-label" data-step="5">Diagrama</small>
                 <small class="text-muted step-label" data-step="6">Finalizar</small>
             </div>
         </div>
@@ -136,8 +136,23 @@
         </div>
     </div>
 
-    <!-- Step 2: Diagrama -->
+    <!-- Step 2: Inventario -->
     <div class="wizard-step d-none" id="step-2">
+        @include('livewire.entrada.capturar-entrada-inventario.sections.inventario')
+    </div>
+
+    <!-- Step 3: Testigos -->
+    <div class="wizard-step d-none" id="step-3">
+        @include('livewire.entrada.capturar-entrada-inventario.sections.testigos-improved')
+    </div>
+
+    <!-- Step 4: Carrocería y Mecánica -->
+    <div class="wizard-step d-none" id="step-4">
+        @include('livewire.entrada.capturar-entrada-inventario.sections.carroceria-improved')
+    </div>
+
+    <!-- Step 5: Diagrama -->
+    <div class="wizard-step d-none" id="step-5">
         <div class="card shadow-sm">
             <div class="card-header bg-warning text-dark">
                 <h4 class="mb-0">
@@ -157,21 +172,6 @@
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- Step 3: Inventario -->
-    <div class="wizard-step d-none" id="step-3">
-        @include('livewire.entrada.capturar-entrada-inventario.sections.inventario')
-    </div>
-
-    <!-- Step 4: Testigos -->
-    <div class="wizard-step d-none" id="step-4">
-        @include('livewire.entrada.capturar-entrada-inventario.sections.testigos-improved')
-    </div>
-
-    <!-- Step 5: Carrocería y Mecánica -->
-    <div class="wizard-step d-none" id="step-5">
-        @include('livewire.entrada.capturar-entrada-inventario.sections.carroceria-improved')
     </div>
 
     <!-- Step 6: Finalizar -->
