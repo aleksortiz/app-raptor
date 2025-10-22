@@ -54,10 +54,32 @@
                   </div>
               </div>
 
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                     <label for="search">Búsqueda</label>
                     <input wire:model.lazy="search" type="text" class="form-control" id="search" placeholder="Buscar por folio, reporte o vehículo...">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="filtroPagoDanos">Pago de Daños</label>
+                    <select wire:model.lazy="filtroPagoDanos" class="form-control" id="filtroPagoDanos">
+                        <option value="">Todos</option>
+                        <option value="1">Pago de Daños</option>
+                        <option value="0">Reparación</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="filtroGrua">Grúa</label>
+                    <select wire:model.lazy="filtroGrua" class="form-control" id="filtroGrua">
+                        <option value="">Todos</option>
+                        <option value="1">Con Grúa</option>
+                        <option value="0">Sin Grúa</option>
+                    </select>
                 </div>
             </div>
 

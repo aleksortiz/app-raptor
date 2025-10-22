@@ -23,7 +23,7 @@
             <table class="table table-hover">
 
                 <thead>
-                    <tr>
+                    
                         <th>ID</th>
                         <th>Fecha</th>
                         <th>Sucursal</th>

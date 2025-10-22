@@ -25,6 +25,10 @@ class CatalogoValuaciones extends Component
     public $year;
     public $maxYear;
     public $search = '';
+    
+    // Filtros
+    public $filtroPagoDanos = null;
+    public $filtroGrua = null;
 
     // Modal CitaReparacion
     public $showModalCita = false;
@@ -91,6 +95,16 @@ class CatalogoValuaciones extends Component
           // Apply date range filters only if not searching
           $dates = Entrada::getDateRange($this->year, $this->start, $this->end);
           $valuaciones->whereBetween('created_at', $dates);
+      }
+
+      // Aplicar filtro de pago de daños
+      if ($this->filtroPagoDanos !== null) {
+          $valuaciones->where('pago_danos', $this->filtroPagoDanos);
+      }
+
+      // Aplicar filtro de grúa
+      if ($this->filtroGrua !== null) {
+          $valuaciones->where('grua', $this->filtroGrua);
       }
 
       return [
