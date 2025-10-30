@@ -82,6 +82,10 @@ class Valuacion extends BaseModel
         return $this->morphMany(Documento::class, 'model');
     }
 
+    public function videos(){
+        return $this->morphMany(Video::class, 'model');
+    }
+
     public function setMarcaAttribute($value){
         $this->attributes['marca'] = trim(strtoupper($value));
     }

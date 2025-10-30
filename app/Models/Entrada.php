@@ -87,6 +87,11 @@ class Entrada extends BaseModel
         return $this->morphMany(Documento::class, 'model');
     }
 
+    public function videos()
+    {
+        return $this->morphMany(Video::class, 'model');
+    }
+
     public function refacciones()
     {
         return $this->morphMany(Refaccion::class, 'model');

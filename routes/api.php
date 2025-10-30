@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AosScanController;
 use App\Http\Controllers\ServicioFlotillaController;
+use App\Http\Controllers\VideoController;
 use App\Mail\SearchAutopartesMail;
 use App\Models\Entrada;
 use App\Models\GastoFijoLog;
@@ -40,6 +41,16 @@ Route::post('/flotillas-servicio', [ServicioFlotillaController::class, 'createFl
 
 // AosScan document registration route
 Route::post('/aosscan/register-document', [AosScanController::class, 'registerDocument']);
+
+// Video routes
+Route::get('/videos/test', function() {
+    return response()->json(['success' => true, 'message' => 'API funcionando correctamente']);
+});
+Route::post('/videos', [VideoController::class, 'store']);
+Route::get('/videos', [VideoController::class, 'index']);
+Route::get('/videos/{id}', [VideoController::class, 'show']);
+Route::put('/videos/{id}', [VideoController::class, 'update']);
+Route::delete('/videos/{id}', [VideoController::class, 'destroy']);
 
 Route::get('/utilidad-neta/{week}', function(Request $request){
     $year = Carbon::now()->year;
